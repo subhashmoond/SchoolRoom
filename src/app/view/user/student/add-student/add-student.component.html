@@ -1,0 +1,46 @@
+<p-toast />
+
+
+    <div class="w-full">
+        <h4 class="m-0 font-semibold line-height-sm">Add Student</h4>
+        <!-- <p class="m-0 font-semibold line-height-sm">Enter details to create student account manually</p> -->
+        <form [formGroup]="addStudent" (ngSubmit)="submitStudent()" class="w-full flex flex-wrap mt-7">
+            <div class="flex flex-wrap w-full mb-4">
+                <div class="w-full">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Name
+                        <!-- <span class="input-required-color">*</span> -->
+                    </label>
+                    <input class="w-full block text-sm" pInputText formControlName="name"
+                        placeholder="Enter you name" required="true" />
+                </div>
+            </div>
+
+            <div class="flex flex-wrap w-full mb-4">
+                <div class="w-full">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Mobile
+                        <span class="input-required-color">*</span>
+                    </label>
+                    <input class="w-full block text-sm" pInputText formControlName="mobile"
+                        placeholder="Enter you mobile" required="true" />
+                </div>
+            </div>
+
+            <div class="flex flex-wrap w-full ">
+                <div class="w-full">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Password
+                        <span class="input-required-color">*</span>
+                    </label>
+                    <input class="w-full block text-sm" pInputText formControlName="password"
+                        placeholder="Enter you email" required="true" />
+                </div>
+            </div>
+           
+            <div
+                class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+                <button pButton pRipple (click)="closeButton()" label="Cancel"
+                    class="primary-border-button px-5 mr-3 text-sm"></button>
+                <button type="submit" pButton pRipple label="Submit"
+                    class="primary-button px-5 text-sm"></button>
+            </div>
+        </form>
+    </div>

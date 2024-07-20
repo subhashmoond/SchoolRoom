@@ -1,0 +1,149 @@
+@if(togglesidebar){
+<div class="side-bar h-sidebar pl-3 pr-3 fixed ls-2 mt-6 z-5">
+
+    <div class="sidebar w-full">
+
+        <ul class="sidebar-menu p-0	m-0 pt-4">
+            @for(menuItem of menuItems; track menuItem.title){
+            <li class="fl" [class.hover-remove]="isHoverRemoved" (mouseleave)="onMouseLeave(menuItem)">
+                <!-- (mouseenter)="onMouseEnter(menuItem)" -->
+
+                <!-- for sub menu -->
+                @if(menuItem.type === 'sub'){
+                <a href="javascript:void(0)" (click)="toggleNavActive(menuItem)" [ngClass]="{'active':activeSubMenu  === menuItem}" routerLinkActive="active" (click)="toggleSubMenu(menuItem)" class="sidebar-header flex align-items-center px-3">
+                    <img [src]=menuItem.icon>   
+                    <span> {{menuItem.title}} </span>
+                        <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+                }
+
+                <!-- for link menu -->
+                @if(menuItem.type === 'link'){
+                <a [routerLink]="menuItem.path" (click)="toggleNavActive(menuItem)" [ngClass]="{'active':activeMenuItem === menuItem}" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                    <img [src]=menuItem.icon>
+                    <span> {{menuItem.title}} </span>
+                </a>
+                }
+
+                <!-- for childern link  -->
+                @if(menuItem.children && isSubMenuOpen(menuItem)){
+                <ul class="sidebar-submenu p-0 mr-3 ml-3">
+                    @for(childernItem of menuItem.children; track childernItem){
+                    <li>
+                        <a [routerLink]="childernItem.path" (click)="toggleNavActive(childernItem)" [ngClass]="{'active':activeMenuItem === childernItem}" routerLinkActive="active" class="flex align-items-center px-3">
+                            <img [src]=childernItem.icon>
+                            <span> {{childernItem.title}} </span>
+                        </a>
+
+                    </li>
+                    }
+                </ul>
+                }
+            </li>
+            }
+        </ul>
+
+    </div>
+
+    <div class="grid sidebar-footer flex justify-content-center relative mt-auto mb-0">
+
+        <div class="col-12 flex justify-content-center">
+            <p-button label="Command Center" [raised]="true"> <img
+                    src="../../../../assets/images/icon/command-center.svg"> </p-button>
+        </div>
+        <div class="col-12 flex justify-content-center mt-2 relative">
+            <h6 (mouseenter)="onProfileMouseEnter()" class="capitalize">
+                @if(profileToggle){
+                <div class="absolute profile-menu" (mouseleave)="onProfileMouseLeave()">
+                    <!-- <p-menu [model]="profileMenuItems"></p-menu> -->
+                    <p-menu [model]="profileMenuItems">
+                        <ng-template pTemplate="item" let-item>
+                            <a (click)="profileAction(item)"><i class="{{item.icon}}"></i> {{item.label}}</a>
+                        </ng-template>
+                    </p-menu>
+                </div>
+                }
+                <p-avatar label="{{userName.username | uppercase | slice:0:1}}" shape="circle"
+                    class="mr-1"></p-avatar>{{userName.username}}
+            </h6>
+        </div>
+
+        <div class="col-12 flex justify-content-center text-center my-4">
+            <p class="m-0 copyright-column">
+                Release Version: R_release-dfl - efba18292 - 8/2/2022| Graviton Copyright © 2024 Kugelblitz Private
+                Limited
+            </p>
+        </div>
+
+    </div>
+
+</div>
+}
+
+@else{
+<div class="side-bar h-sidebar pl-3 pr-3 fixed mt-6 z-5" [ngClass]="togglesidebar ? 'ls-2' : 'ls-1'">
+
+    <div class="sidebar w-full">
+
+        <ul class="sidebar-menu p-0	m-0 pt-4">
+            @for(menuItem of menuItems; track menuItem.title){
+            <li class="fl relative" [class.hover-remove]="isHoverRemoved">
+                <!-- for sub menu -->
+                @if(menuItem.type === 'sub'){
+                <a href="javascript:void(0)" (click)="toggleSubMenu(menuItem)" (click)="toggleNavActive(menuItem)" [ngClass]="{'active':activeMenuItem === menuItem}" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                    <img [src]=menuItem.icon>
+                </a>
+                }
+
+                <!-- for link menu -->
+                @if(menuItem.type === 'link'){
+                <a [routerLink]="menuItem.path" (click)="toggleNavActive(menuItem)" [ngClass]="{'active':activeMenuItem === menuItem}" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                    <img [src]=menuItem.icon>
+                </a>
+                }
+
+                <!-- for childern link  -->
+                @if(menuItem.children && isSubMenuOpen(menuItem)){
+                <ul class="sidebar-submenu p-0 mr-3 ml-3" (mouseleave)="onMouseLeave(menuItem)">
+                    @for(childernItem of menuItem.children; track childernItem){
+                    <li>
+                        <a [routerLink]="childernItem.path" (click)="toggleNavActive(childernItem)" [ngClass]="{'active':activeSubMenu === childernItem}" routerLinkActive="active" class="flex align-items-center px-3">
+                            <img [src]=childernItem.icon>
+                        </a>
+
+                    </li>
+                    }
+                </ul>
+                }
+            </li>
+            }
+        </ul>
+
+    </div>
+
+    <div class="w-full grid sidebar-footer flex justify-content-center relative mt-auto mb-0">
+
+        <div class="col-12 flex justify-content-center">
+            <p-button [raised]="true"> <img src="../../../../assets/images/icon/command-center.svg"> </p-button>
+        </div>
+        <div class="col-12 flex justify-content-center mt-2">
+            <h6 class="capitalize" (mouseenter)="onProfileMouseEnter()">
+                @if(profileToggle){
+
+
+                <div class="absolute profile-menu" (mouseleave)="onProfileMouseLeave()">
+                    <p-menu [model]="profileMenuItems">
+                        <ng-template pTemplate="item" let-item>
+                            <a (click)="profileAction(item)"><i class="{{item.icon}}"></i> </a>
+                        </ng-template>
+                    </p-menu>
+                </div>
+
+                }
+                <p-avatar label="{{userName.username | uppercase | slice:0:1}}" shape="circle" class="mr-1"></p-avatar>
+            </h6>
+        </div>
+    </div>
+
+</div>
+}

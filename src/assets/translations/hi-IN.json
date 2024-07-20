@@ -1,0 +1,53 @@
+{
+    "APP_NAME": " Graviton ",
+    "errors": {
+        "Email not valid": "ईमेल मान्य नहीं है"
+    },
+    "labels": {
+        "breadcrumbs": {
+            "Home": "Home"
+        },
+        "buttons": {
+            "Add": "Add"
+        },
+        "commons": {
+            "is required": "is required"
+        },
+        "heading": {
+            "Change Password": "Change Password"
+        },
+        "inputs": {
+            "Email": "Enter your email"
+        },
+        "menus": {
+            "Admin": "Admin"
+        },
+        "placeholders": {
+        },
+        "status": {
+            "Active": "Active",
+            "Approved": "Approved",
+            "Closed": "Closed",
+            "Pending": "Pending",
+            "Rejected": "Rejected"
+        },
+        "dialogContext": {
+            "Are you sure you want": "Are you sure you want "
+        },
+        "text": {
+            "A": "A"
+        },
+        "titles": {
+            "Dashboard": "Dashboard",
+            "Home": "Home",
+            "Login": "Login"
+        }
+    },
+    "languages": {
+        "en-US": "English",
+        "hi-IN": "Hindi"
+    },
+    "tooltips": {
+        "B" : "b"
+    }
+}

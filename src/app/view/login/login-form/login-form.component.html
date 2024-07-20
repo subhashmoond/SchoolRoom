@@ -1,0 +1,40 @@
+<h2>{{ 'labels.heading.LogIn' | translate}}</h2>
+<form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+    <div class="field mb-5 w-full float-left">
+        <label>{{ 'labels.inputs.Username' | translate}}</label>
+        <input type="text" pInputText id="username" formControlName="username" class="w-full"
+            placeholder=" {{ 'labels.placeholders.Enter username' | translate }}" autocomplete="off" />
+        @if(loginForm.get('username')?.errors?.['required'] && loginForm.get('username')?.touched){
+        <small id="username-help" class="p-error">{{ 'errors.Username is required' | translate}}</small>
+        }
+    </div>
+    <div class="field relative w-full float-left">
+        <label>{{ 'labels.inputs.Password' | translate}}</label>
+        <input type="{{ showPassword ? 'text' : 'password' }}" id="password" pInputText formControlName="password"
+            class="w-full" placeholder="{{ 'labels.placeholders.Enter password' | translate }}" autocomplete="off" />
+
+        @if(loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched){
+        <small id="username-help" class="p-error">{{ 'errors.Password is required' | translate}}</small>
+        }
+
+        @if(showPassword){
+        <i class="viewpassword absolute fa fa-solid fa-eye" (click)="viewPassword()"></i>
+        }
+        @else{
+        <i class="viewpassword absolute fa fa-solid fa-eye-slash" (click)="viewPassword()"></i>
+        }
+
+    </div>
+
+    <div class="forgot-password flex justify-content-end flex-wrap w-full float-left">
+        <h6>{{ 'labels.menus.Forgot password' | translate }}</h6>
+    </div>
+
+    <div class="flex justify-content-end flex-wrap pt-5 w-full float-left">
+        <button type="submit" pButton pRipple label=" {{'labels.buttons.Login' | translate}}" class="primary-button deshbord-login-button"
+            [disabled]="loginForm.invalid"></button>
+    </div>
+</form>
+
+
+<p-toast></p-toast>

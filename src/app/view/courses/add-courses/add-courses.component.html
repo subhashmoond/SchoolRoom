@@ -1,0 +1,132 @@
+<p-toast></p-toast>
+
+<p-card>
+
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-6">
+            <h3 class="m-0 font-semibold">Create Course</h3>
+        </div>
+        <div class="col-6 flex justify-content-end	">
+            <button type="submit" pButton pRipple (click)="submit()" label="Next"
+                class="secondary-button px-6 text-sm"></button>
+        </div>
+
+    </div>
+
+
+    <form [formGroup]="coursesForm" class="w-full flex flex-wrap create-client-main">
+
+        <div class="w-full flex flex-wrap align-items-center">
+            <div class="grid nested-grid mt-3">
+
+
+                <div class="col-7">
+                    <div class="w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Courses Name
+                            <span>*</span></label>
+                        <input class="w-full capitalize" pInputText formControlName="name"
+                            placeholder="Enter Course Name" required="true" />
+                    </div>
+
+                </div>
+
+
+                <div class="col-7 mt-4">
+                    <div class="w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Description
+                        </label>
+                        <textarea rows="5" style="width: 100%;" pInputTextarea
+                            formControlName="description"> </textarea>
+                    </div>
+                </div>
+
+                <div class="col-7 mt-4">
+
+                    <div class="grid">
+                        <div class="col-6">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Price</label>
+                            <input class="w-full" pInputText placeholder="Enter price" formControlName="price" />
+                        </div>
+
+                        <div class="col-6">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Discounted
+                                price * </label>
+                            <input class="w-full" pInputText placeholder="Enter price" formControlName="price" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-7 mt-4">
+                    <div class="grid">
+
+                        <div class="col-6">
+                            <label
+                                class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Duration</label>
+                            <input class="w-full" pInputText placeholder="Enter Duration" formControlName="duration" />
+                        </div>
+
+                        <div class="col-6">
+                            <p-checkbox [binary]="true" Id="ny" formControlName="isFixDuration"></p-checkbox>
+                            <label for="ny" class="ml-2 w-auto">Fix Duration</label>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <div class="col-7 mt-4">
+                    <div class="w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Start Date</label>
+                        <p-calendar id="dateid" [showIcon]="true" class="w-full text-sm" [iconDisplay]="'input'"
+                            formControlName="startDate" placeholder="mm/hh/yyyy" [readonlyInput]="true"></p-calendar>
+                    </div>
+                </div>
+
+                <div class="col-7 mt-4">
+
+                    <div class="grid">
+
+                        <div class="col-6">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Class Start
+                                Time</label>
+                            <!-- <p-calendar id="dateid" [showIcon]="true" class="w-full text-sm" [iconDisplay]="'input'"
+                                formControlName="classStart" placeholder="mm/hh/yyyy"
+                                [readonlyInput]="true"></p-calendar> -->
+
+                                <p-calendar formControlName="classStart" [iconDisplay]="'input'" [showIcon]="true" [timeOnly]="true"
+                                inputId="templatedisplay">
+                                <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
+                                    <i class="pi pi-user pointer-events-none" (click)="clickCallBack($event)"></i>
+                                </ng-template>
+                            </p-calendar>
+
+                        </div>
+
+                        <div class="col-6">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Class End
+                                Time</label>
+                            
+                            <p-calendar formControlName="classEnd" [iconDisplay]="'input'" [showIcon]="true" [timeOnly]="true"
+                                inputId="templatedisplay">
+                                <ng-template pTemplate="inputicon" let-clickCallBack="clickCallBack">
+                                    <i class="pi pi-user pointer-events-none" (click)="clickCallBack($event)"></i>
+                                </ng-template>
+                            </p-calendar>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+    </form>
+
+</p-card>

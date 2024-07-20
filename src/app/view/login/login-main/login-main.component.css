@@ -1,0 +1,29 @@
+
+.timeanddate h1{
+    color: #fff;
+    font-size: 96px;
+    text-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+    mix-blend-mode: exclusion;
+    font-weight: 600;
+    z-index: 9999;
+    position: relative;
+}
+
+.timeanddate h3{
+    font-weight: 400;
+    color: #fff;
+    font-size: 38px;
+    text-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+    mix-blend-mode: exclusion;
+    z-index: 9999;
+    position: relative;
+}
+
+.h-custome{
+    height: calc(100vh);
+    object-fit: fill;
+}
+
+span.t-center {
+    text-align: center;
+}
