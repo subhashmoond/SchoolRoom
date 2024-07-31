@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UrlHandlerService } from '../../../shared/services/url-handler.service';
+import Gemini from 'gemini-ai';
 
 
 @Component({
@@ -34,6 +35,8 @@ export class LoginFormComponent {
 
   ngOnInit() {
 
+    this.giminiAPI()
+
     const deviceId = this._authService.getDeviceId();
 
     console.log(deviceId, "device id")
@@ -51,6 +54,11 @@ export class LoginFormComponent {
       username: ['', [Validators.required]],
       password: ['', Validators.required]
     })
+  }
+
+  async giminiAPI(){
+    const gemini = new Gemini('AIzaSyAlaH60kwBTOjUYQcJcXeqfwbMEZ_zzPYA');
+    console.log(await gemini.ask("Hi!"), "gemini response");
   }
 
   viewPassword() {

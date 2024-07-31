@@ -22,19 +22,17 @@
 
 
             <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
-                selectionMode="single" class="client-data-table" [value]="studentList">
+                selectionMode="single" class="client-data-table" [value]="coursesList">
 
                 <ng-template pTemplate="header" class="p-4">
                     <tr class="w-full flex flex-wrap">
-                        <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Name
+                        <th style="width:25%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Name
                         </th>
-                        <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Subject
+                        <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Price
                         </th>
-                        <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Fees
+                        <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">No. Students
                         </th>
-                        <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Student
-                        </th>
-                        <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Action
+                        <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Action
                         </th>
                     </tr>
 
@@ -42,20 +40,16 @@
 
                 <ng-template pTemplate="body" let-data>
                     <tr class="w-full flex flex-wrap">
-                        <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
-                            {{data.name}}
+                        <td style="width: 25%;word-break:break-all;" class="pl-4 capitalize">
+                            {{data.title}}
                         </td>
-                        <td style="width: 20%;word-break:break-all;" class="pl-4">
-                            {{data.email}}
+                        <td style="width: 25%;word-break:break-all;" class="pl-4">
+                            {{data.price}}
                         </td>
-                        <td style="width: 20%;word-break:break-all;" class="pl-4">
-                            {{data.lastlogin}}
+                        <td style="width: 25%;word-break:break-all;" class="pl-4">
+                            {{data.number_students}}
                         </td>
-                        <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
-                            {{data.joined}}
-                        </td>
-
-                        <td style="width: 20%;" class="pl-4">
+                        <td style="width: 25%;" class="pl-4">
                                 <span (click)="courseBullder()" class="relative flex flex-wrap align-items-center"><img
                                     src="../../../../assets/images/icon/mdi_eye.svg"
                                     class="search-icon client-view-icon"></span>
@@ -205,3 +199,7 @@
         }
     
 </p-card>
+
+<p-sidebar [(visible)]="addCourseSideBar" [fullScreen]="true">
+       <app-add-courses></app-add-courses>
+    </p-sidebar>

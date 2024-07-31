@@ -81,6 +81,12 @@ h6 {
     padding: 0px;
 }
 
+.m-0-a{
+    margin: 0px auto;
+}
+.w-98{
+    width: 98%;
+}
 .letter-spacing {
     letter-spacing: 1px;
 }

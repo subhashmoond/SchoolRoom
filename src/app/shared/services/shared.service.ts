@@ -18,20 +18,10 @@ export class SharedService {
     this.toggleButtonSubject.next(value);
   }
 
-  sendOTPToMobileNumber(mobileNumber: string) {
-    const url = `${environment.basePath}fineract-provider/api/v1/onboarding/otp?mobile=${mobileNumber}`;
-    return this._dataService.get(url); 
-  }
-
-
-  verifyOTP(mobileNumber : any, otp: string) {
-    const url = `${environment.basePath}fineract-provider/api/v1/onboarding/verifyotp?mobile=${mobileNumber}&otp=${otp}`;
-    return this._dataService.get(url); 
-  }
-
-  getCodeValueOptions(){
-    const url = `${environment.basePath}fineract-provider/api/v1/codes/65/codevalues`;
+  getGeminiAPI(){
+    const url = `${environment.basePath}membership/gemini_api_key/`;
     return this._dataService.get(url);
   }
+
 
 }

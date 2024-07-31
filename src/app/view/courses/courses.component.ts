@@ -12,6 +12,7 @@ import { CardModule } from 'primeng/card';
 import { RippleModule } from 'primeng/ripple';
 import { SkeletonModule } from 'primeng/skeleton';
 import { AddCoursesComponent } from './add-courses/add-courses.component';
+import { CoursesService } from '../../core/services/courses.service';
 
 @Component({
   selector: 'app-courses',
@@ -27,26 +28,24 @@ export class CoursesComponent {
   limit = 15;
   addCourseSideBar: boolean = false;
 
-  studentList: any = [];
+  coursesList: any = [];
 
-  constructor(private renderer: Renderer2, private _router: Router, private _userService: UserService) {
+  constructor(private renderer: Renderer2, private _router: Router, private _coursesService : CoursesService) {
   }
 
   ngOnInit() {
-    this.getStudentData();
+    this.getCourses();
   }
 
-
-  getStudentData() {
-    this._userService.getStudentData().subscribe(res => {
-      this.studentList = res.studentList
+  getCourses() {
+    this._coursesService.getCoursesList().subscribe(res => {
+      this.coursesList = res.courses
     })
   }
 
   openSidebar() {
-    // this.addCourseSideBar = true;
-    this._router.navigate(['/course/add']);
-    
+    this.addCourseSideBar = true;
+    // this._router.navigate(['/course/add']);
   }
 
   onPageChange(event: any) {
@@ -55,7 +54,7 @@ export class CoursesComponent {
 
   closeSideBar(){
     this.addCourseSideBar = false;
-    this.getStudentData();
+    this.getCourses();
   }
 
   courseBullder(){

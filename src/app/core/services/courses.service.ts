@@ -16,4 +16,9 @@ export class CoursesService {
     return this._dataService.post(url, body);
   }
 
+  getCoursesList(){
+    const url = `${environment.basePath}course/list/`;
+    return this._dataService.get(url)
+  }
+
 }
