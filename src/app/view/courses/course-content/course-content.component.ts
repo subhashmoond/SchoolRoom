@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ToolbarModule } from 'primeng/toolbar';
 import Gemini from 'gemini-ai';
+import { CurriculumComponent } from './curriculum/curriculum.component';
 
 @Component({
   selector: 'app-course-content',
   standalone: true,
-  imports: [FileUploadModule, CommonModule, ToolbarModule],
+  imports: [FileUploadModule, CommonModule, ToolbarModule, CurriculumComponent],
   templateUrl: './course-content.component.html',
   styleUrl: './course-content.component.css'
 })
@@ -25,10 +26,6 @@ export class CourseContentComponent {
 
   async ngOnInit(){
 
-    const gemini = new Gemini('AIzaSyAlaH60kwBTOjUYQcJcXeqfwbMEZ_zzPYA');
-    console.log(await gemini.ask("Hi!"));
-
-    
     this._sharedService.settoggleButtonValue(false);
 
     this._sharedService.getGeminiAPI().subscribe(res => {

@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { provideAnimations } from '@angular/platform-browser/animations'
@@ -27,7 +27,9 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes), provideStore(),
     provideAnimations(),
-    provideHttpClient(),
+    provideHttpClient(
+      withFetch(),
+    ),
     provideCharts(withDefaultRegisterables()),
     importProvidersFrom([
       HttpClientModule,

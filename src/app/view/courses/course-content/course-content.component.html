@@ -1,4 +1,4 @@
-<p-toolbar>
+<!-- <p-toolbar>
     <div class="p-toolbar-group-start">
         <i class="pi pi-arrow-left mr-2" style="font-size: 1rem"></i> Course Name
     </div>
@@ -7,69 +7,75 @@
         <p-button label="Publish course" [outlined]="true" class="mr-4" />
         <p-button label="Save course" icon="pi pi-check" />
     </div>
-</p-toolbar>
+</p-toolbar> -->
 
 
 <div class="grid grid-nogutter nested-grid">
-    <div class="col-3">
+    <div class="col-2">
 
-        <div class="w-full mb-4 p-5">
-            <div class="border-dashed border-round-lg border-2 flex flex-wrap align-items-center justify-content-center user-image relative h-9rem">
-                <img width="100" height="100"
-                    [src]="selectedFileObjectUrl ? selectedFileObjectUrl : '../../../../assets/images/icon/upload-image.svg'"
-                    alt="Image Preview" [ngClass]="selectedFileObjectUrl ? 'w-full h-full' : 'w-4rem h-4rem'" />
-                @if(selectedFile){
-                <i class="pi pi-times profile-remove-icon" (click)="profileImageRemove()"
-                    style="font-size: 1rem"></i>
-                }
-
-            </div>
-            <span class="flex flex-wrap align-items-center justify-content-center mt-2">
-                @if(!selectedFileObjectUrl){
-                <img class="h-1rem w-1rem" src="../../../../assets/images/icon/upload-icon.svg">
-                }
-                <p-fileUpload #fileUpload mode="basic" class="bg-none text-base text-700 border-0 z-2"
-                    chooseLabel="Add course cover" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
-                    accept="image/*" (onSelect)="onFileSelect($event)" cancelStyleClass="null"></p-fileUpload>
-
+        <div class="w-full">
+            <span class="h-1rem">
+                <img src="../../../../assets/images/loan-account.png">
             </span>
         </div>
-        <hr>
+
+        <ul class="sidebar-menu">
+            <li>
+                <a href="javascript:void(0)" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                    <span> Curriculum </span>
+                        <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                    <span> Certificates </span>
+                        <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                    <span> Information </span>
+                        <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                    <span> Pricing </span>
+                        <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                    <span> Coupons </span>
+                        <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                    <span> Comment </span>
+                        <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                    <span> Students </span>
+                        <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                    <span> Reports </span>
+                        <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+
+        
 
 
        
     </div>
-    <div class="col-9 bg-white p-5">
-        
-        <div class="card surface-100 p-4">
-                <div class="grid grid-nogutter">
-                    <div class="col-9">
-                        <h4>Now easily add content to your courses </h4>
-                        <p>AI will quickly create an outline for your course, which you can easily edit and modify. You can add chapters, edit names, and make changes to your content quickly and easily </p>
-                    </div>
-                    <div class="col-3 flex justify-content-end align-items-center">
-                        <p-button label="Generate outline using AI" severity="secondary" />
-                    </div>
-                </div>
-        </div>
-
-        <div class="flex justify-content-center">
-            <h2>Or</h2>
-        </div>
-
-
-        <div class="card surface-100 p-4">
-                <div class="grid grid-nogutter">
-                    <div class="col-9">
-                        <h4>Add first chapter manually</h4>
-                        <p>use Headings for adding Chapter ContentChapter Item for adding Chapter Content</p>
-                    </div>
-                    <div class="col-3 flex justify-content-end align-items-center">
-                        <p-button label="Add manually" severity="secondary" />
-                    </div>
-                </div>
-        </div>
-
-        
+    <div class="col-10 bg-white content-body">
+        <app-curriculum></app-curriculum>
     </div>
 </div>

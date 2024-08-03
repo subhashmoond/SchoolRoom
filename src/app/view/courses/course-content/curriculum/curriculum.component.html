@@ -1,0 +1,84 @@
+<div class="card">
+
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-6">
+            <h4 class="subheading-color">Curriculum</h4>
+        </div>
+        <div class="col-6 flex justify-content-end	">
+            <button type="submit" pButton pRipple label="Preview" class="secondary-button px-6 text-sm"></button>
+        </div>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="col-12">
+
+            <div class="content-card">
+                <div class="p-3">
+                    <i class="pi pi-microsoft font-bold"></i>
+                </div>
+
+                <div class="p-3 border-left">
+
+                    <div class="grid grid-nogutter client-dashborad-header mb-4 align-items-center">
+                        <div class="col-6">
+                            <h4 class="subheading-color">CBSE - 12th Hindi Subject</h4>
+                        </div>
+                        <div class="col-6 flex justify-content-end	">
+                            <p-button class="mr-2 border-round-md button-shadow">Publish All</p-button>
+                        </div>
+
+                        <div class="col-12">
+                                <p-pickList 
+                                    [source]="sourceProducts" 
+                                    [dragdrop]="true" 
+                                    [responsive]="true"
+                                    [showSourceControls]="false"
+                                    [sourceStyle]="{ height: '30rem' }" 
+                                    breakpoint="1400px">
+                                        <ng-template let-product pTemplate="item">
+                                            <div class="flex flex-wrap p-2 align-items-center gap-3">
+                                                <img 
+                                                    class="w-4rem shadow-2 flex-shrink-0 border-round" 
+                                                    src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}"
+                                                    alt="{item.name}" />
+                                                <div class="flex-1 flex flex-column gap-2">
+                                                    <span class="font-bold">
+                                                        {{ product.name }}
+                                                    </span>
+                                                    <div class="flex align-items-center gap-2">
+                                                        <i class="pi pi-tag text-sm"></i>
+                                                        <span>
+                                                            {{ product.category }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <span class="font-bold text-900">
+                                                    {{ '$' + product.price }}
+                                                </span>
+                                            </div>
+                                        </ng-template>
+                                </p-pickList>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-12">
+            <span
+                class="border-dashed w-full h-5rem m-2 surface-overlay font-bold flex align-items-center justify-content-start pl-4">
+                <i class="pi pi-plus mr-2 font-bold"></i>
+                Create New Subject
+            </span>
+        </div>
+    </div>
+
+
+
+</div>

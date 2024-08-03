@@ -24,13 +24,14 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SharedService } from '../../../shared/services/shared.service';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { GeminiAiComponent } from '../../../shared/components/gemini-ai/gemini-ai.component';
 
 @Component({
   selector: 'app-add-courses',
   standalone: true,
   imports: [ReactiveFormsModule, InputGroupModule, InputGroupAddonModule, DropdownModule, CardModule, CalendarModule, KeyFilterModule,
     ButtonModule, InputTextModule, FileUploadModule, ToastModule, InputNumberModule, CheckboxModule, MessagesModule, AccordionModule,
-    TranslateModule, BlockUIModule, CommonModule, InputSwitchModule],
+    TranslateModule, BlockUIModule, CommonModule, InputSwitchModule, GeminiAiComponent],
   providers: [MessageService],
   templateUrl: './add-courses.component.html',
   styleUrl: './add-courses.component.css'
@@ -64,7 +65,7 @@ export class AddCoursesComponent {
       "name": this.coursesForm.get('name')?.value,
       "price": this.coursesForm.get('price')?.value,
       "describe": this.coursesForm.get('description')?.value,
-      "language": 1,
+      "language": 2,
       "is_paid": this.coursesForm.get('ispaid')?.value
     }
     this._courseService.addCourses(body).subscribe(res => {
