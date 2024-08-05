@@ -1,52 +1,100 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { PickListModule } from 'primeng/picklist';
+import { InputTextModule } from 'primeng/inputtext';
+import { CoursesService } from '../../../../core/services/courses.service';
 
 @Component({
   selector: 'app-curriculum',
   standalone: true,
-  imports: [CardModule, ButtonModule, PickListModule ],
+  imports: [CardModule, ButtonModule, ReactiveFormsModule, InputTextModule],
   templateUrl: './curriculum.component.html',
   styleUrl: './curriculum.component.css'
 })
 export class CurriculumComponent {
+  addForm!: FormGroup;
+  isSavedCourses: boolean[] = [];
+  courseId: any;
 
-  sourceProducts: any = [];
-
-  targetProducts:any = [];
-
-  constructor(
-    private cdr: ChangeDetectorRef
-  ) {}
-
-  ngOnInit() {
-      this.sourceProducts = [
-        {
-          id: '1000',
-          code: 'f230fh0g3',
-          name: 'Bamboo Watch',
-          description: 'Product Description',
-          image: 'bamboo-watch.jpg',
-          price: 65,
-          category: 'Accessories',
-          quantity: 24,
-          inventoryStatus: 'INSTOCK',
-          rating: 5
-      },
-      {
-        id: '1000',
-        code: 'f230fh0g3',
-        name: 'Bamboo Watch',
-        description: 'Product Description',
-        image: 'bamboo-watch.jpg',
-        price: 65,
-        category: 'Accessories',
-        quantity: 24,
-        inventoryStatus: 'INSTOCK',
-        rating: 5
-    }
-      ]
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private _courseService: CoursesService) {
+    this.route.paramMap.subscribe(params => {
+      this.courseId = params.get('id')!;
+    });
   }
 
+  ngOnInit() {
+    this.addForm = this.fb.group({
+      courses: this.fb.array([])
+    });
+
+    // Optionally add initial items for debugging
+    this.addCourse();
+    this.getCoursesList();
+  }
+
+  getCoursesList() {
+    this._courseService.getCourseDetailById(this.courseId).subscribe(res => {
+      console.log(res, "Courses List Datas ")
+    })
+  }
+
+  get courses(): FormArray {
+    return this.addForm.get('courses') as FormArray;
+  }
+
+  lessons(index: number): FormArray {
+    return this.courses.at(index).get('lessons') as FormArray;
+  }
+
+  addCourse(): void {
+    this.courses.push(this.fb.group({
+      items: ['', Validators.required],
+      lessons: this.fb.array([])
+    }));
+    this.isSavedCourses.push(false);
+  }
+
+  addLesson(courseIndex: number): void {
+    this.lessons(courseIndex).push(this.fb.group({
+      items: ['', Validators.required]
+    }));
+  }
+
+  saveCourse(index: number): void {
+    this.isSavedCourses[index] = true;
+
+    const course = this.courses.at(index);
+    const subjectPayload = {
+      name: course.get('items')?.value,
+      course_id : this.courseId
+    };
+
+    this._courseService.addSubject(subjectPayload).subscribe(res => {
+      console.log('Course saved successfully', res);
+    }, error => {
+      console.error('Error saving course', error);
+    });
+  }
+
+  // saveCourse(index: number): void {
+  //   this.isSavedCourses[index] = true;
+
+  //   const body = {
+  //     "name": "bstc 3 subject",
+  //     "course_id": 2
+  //   }
+
+  //   this._courseService.addSubject(body).subscribe(res => {
+
+  //   })
+
+  // }
+
+  saveLesson(courseIndex: number, lessonIndex: number): void {
+    const lessonsControl = this.lessons(courseIndex);
+    lessonsControl.at(lessonIndex).markAsDirty();
+    lessonsControl.at(lessonIndex).updateValueAndValidity();
+  }
 }

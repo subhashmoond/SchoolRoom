@@ -1120,6 +1120,14 @@ img.qr-code {
     border: none;
 }
 
+.outline-icon-button {
+    padding: 0.625rem !important;
+    background: transparent !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    width: 25% !important;
+}
+
 .create-button .p-button {
     background-color: #473289 !important;
     color: #ffffff;
@@ -1930,21 +1938,14 @@ small.p-error {
 
 
 
-.outline-icon-button {
-    padding: 0.625rem;
-    background: transparent;
-    font-size: 0.875rem;
-    font-weight: 500;
-    width: 100%;
-}
 
 .edit-button {
-    border-color: #7A6CAB;
+    border: 1px solid#7A6CAB !important;
 }
 
 .edit-button .p-button-label,
 .edit-button .p-button-icon {
-    color: #7A6CAB;
+    color: #7A6CAB !important;
 }
 
 .delete-button {
@@ -2713,4 +2714,10 @@ small.p-error {
 
 .border-left{
     border-left: 1px solid #edeef6;
+}
+.border-bottom-light{
+    border-bottom: 1px solid #edeef6;
+}
+.border-top-light{
+    border-top: 1px solid #edeef6;
 }

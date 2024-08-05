@@ -7,6 +7,6 @@ export const routes: Routes = [
     // { path: '', redirectTo: 'batche', pathMatch: 'full' },
     { path: '', component: CoursesComponent },
     {path : 'add', component : AddCoursesComponent},
-    {path : 'content', component : CourseContentComponent}
+    {path : 'content/:id', component : CourseContentComponent}
 ];
 

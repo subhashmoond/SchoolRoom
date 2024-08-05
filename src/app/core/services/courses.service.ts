@@ -21,4 +21,14 @@ export class CoursesService {
     return this._dataService.get(url)
   }
 
+  getCourseDetailById(id : number){
+    const url = `${environment.basePath}course/${id}/content`;
+    return this._dataService.get(url);
+  }
+
+  addSubject(body: any){
+    const url = `${environment.basePath}educator/subject/add/`
+    return this._dataService.post(url, body)
+  }
+
 }

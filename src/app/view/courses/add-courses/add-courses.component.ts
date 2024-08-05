@@ -68,9 +68,12 @@ export class AddCoursesComponent {
       "language": 2,
       "is_paid": this.coursesForm.get('ispaid')?.value
     }
-    this._courseService.addCourses(body).subscribe(res => {
+    this._courseService.addCourses(body).subscribe((res:any) => {
+      if(res.status == "Success"){
+        const courseId = res.course.id
+        this._router.navigate(['/course/content', courseId]);
+      }
       // this.isThumbnail = true;
-      this._router.navigate(['/course/content']);
     })
 
   }

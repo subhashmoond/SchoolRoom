@@ -57,8 +57,8 @@ export class CoursesComponent {
     this.getCourses();
   }
 
-  courseBullder(){
-    this._router.navigate(['/course/content']);
+  courseBullder(id : number){
+    this._router.navigate(['/course/content', id]);
   }
 
 

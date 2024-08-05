@@ -1,4 +1,4 @@
-<div class="card">
+<div class="cards">
 
     <div class="grid client-dashborad-header mb-4 align-items-center">
         <div class="col-6">
@@ -15,68 +15,94 @@
 
         <div class="col-12">
 
-            <div class="content-card">
-                <div class="p-3">
-                    <i class="pi pi-microsoft font-bold"></i>
-                </div>
-
-                <div class="p-3 border-left">
-
-                    <div class="grid grid-nogutter client-dashborad-header mb-4 align-items-center">
-                        <div class="col-6">
-                            <h4 class="subheading-color">CBSE - 12th Hindi Subject</h4>
-                        </div>
-                        <div class="col-6 flex justify-content-end	">
-                            <p-button class="mr-2 border-round-md button-shadow">Publish All</p-button>
-                        </div>
-
-                        <div class="col-12">
-                                <p-pickList 
-                                    [source]="sourceProducts" 
-                                    [dragdrop]="true" 
-                                    [responsive]="true"
-                                    [showSourceControls]="false"
-                                    [sourceStyle]="{ height: '30rem' }" 
-                                    breakpoint="1400px">
-                                        <ng-template let-product pTemplate="item">
-                                            <div class="flex flex-wrap p-2 align-items-center gap-3">
-                                                <img 
-                                                    class="w-4rem shadow-2 flex-shrink-0 border-round" 
-                                                    src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}"
-                                                    alt="{item.name}" />
-                                                <div class="flex-1 flex flex-column gap-2">
-                                                    <span class="font-bold">
-                                                        {{ product.name }}
-                                                    </span>
-                                                    <div class="flex align-items-center gap-2">
-                                                        <i class="pi pi-tag text-sm"></i>
-                                                        <span>
-                                                            {{ product.category }}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <span class="font-bold text-900">
-                                                    {{ '$' + product.price }}
-                                                </span>
-                                            </div>
-                                        </ng-template>
-                                </p-pickList>
-                        </div>
-
+            <form [formGroup]="addForm">
+                <div formArrayName="courses">
+                  @for(course of courses.controls; track course; let i = $index){
+                  <div [formGroupName]="i" class="content-card mb-4">
+                    <div class="p-3">
+                      <i class="pi pi-microsoft font-bold text-primary-color"></i>
                     </div>
-
+                    <div class="border-left">
+                      <div class="grid grid-nogutter client-dashborad-header align-items-center border-bottom-light p-3 card">
+                        <div class="col-6 flex">
+                          <i class="pi pi-microsoft font-bold pr-4 pt-1 text-primary-color"></i>
+                          <div>
+              
+                            @if(!isSavedCourses[i]){
+                            <input class="w-full" pInputText formControlName="items" />
+                            }
+                            @else{
+                            <span>{{ course.get('items')?.value }}</span>
+                            }
+              
+                          </div>
+                        </div>
+                        <div class="col-6 flex justify-content-end">
+                          @if(!isSavedCourses[i]){
+                          <button type="button" pButton pRipple label="Save" (click)="saveCourse(i)"
+                            class="secondary-button px-6 text-sm"></button>
+                          }
+                          @else{
+                          <p-button class="mr-2 border-round-md button-shadow">Publish All</p-button>
+                          }
+              
+                        </div>
+                      </div>
+              
+                      <div formArrayName="lessons">
+                        @for(lesson of lessons(i).controls; track lesson; let j = $index){
+                        <div [formGroupName]="j" class="grid grid-nogutter p-3">
+                          <div class="col-6 flex">
+                            <i class="pi pi-microsoft font-bold pr-4 pt-1 text-primary-color"></i>
+                            <div>
+                              @if(!lesson.dirty){
+                              <input class="w-full" pInputText formControlName="items" />
+                              }
+                              @else{
+                              <span>{{ lesson.get('items')?.value }}</span>
+                              }
+                            </div>
+                          </div>
+                          <div class="col-6 flex justify-content-end">
+                            @if(!lesson.dirty){
+                              <button type="button" pButton pRipple label="Save" (click)="saveLesson(i, j)"
+                                class="secondary-button px-6 text-sm"></button>
+                            }
+                            @else{
+                              <button type="button" pButton label="Publish" class="outline-icon-button edit-button"></button>
+                            }
+                          </div>
+                        </div>
+                        }
+                        <!-- Subject Card Footer (Action) -->
+                        <div
+                          class="grid grid-nogutter client-dashborad-header align-items-center border-bottom-light p-3 border-top-light">
+                          <div class="col-6">
+                            <p-button icon="pi pi-plus" (click)="addLesson(i)" label="New Lesson" [text]="true"
+                              severity="secondary"></p-button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  }
                 </div>
-            </div>
+              </form>
+
+
 
         </div>
 
         <div class="col-12">
             <span
-                class="border-dashed w-full h-5rem m-2 surface-overlay font-bold flex align-items-center justify-content-start pl-4">
+                class="border-dashed w-full h-5rem m-2 surface-overlay font-bold flex align-items-center justify-content-start pl-4"
+                (click)="addCourse()">
                 <i class="pi pi-plus mr-2 font-bold"></i>
                 Create New Subject
             </span>
         </div>
+
+
     </div>
 
 
