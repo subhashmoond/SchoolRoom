@@ -37,8 +37,6 @@ export class CurriculumComponent {
 
   getCoursesList() {
     this._courseService.getCourseDetailById(this.courseId).subscribe(res => {
-      console.log(res, "Courses List Datas ")
-      
     })
   }
 
@@ -61,10 +59,9 @@ export class CurriculumComponent {
     this.addForm.setControl('courses', this.fb.array(courseArray));
   }
 
-  contentAdd(lessonId : any){
-    console.log(lessonId, "id");
-
-    this._router.navigate(['/course/lesson']);
+  lessonDetail(lessonId : any){
+    this._courseService.setCourseID(this.courseId)
+    this._router.navigate(['/course/lesson', lessonId]);
 
   }
 

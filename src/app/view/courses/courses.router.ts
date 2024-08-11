@@ -9,6 +9,6 @@ export const routes: Routes = [
     { path: '', component: CoursesComponent },
     {path : 'add', component : AddCoursesComponent},
     {path : 'content/:id', component : CourseContentComponent},
-    {path : 'lesson', component : ChapterContentComponent}
+    {path : 'lesson/:id', component : ChapterContentComponent}
 ];
 

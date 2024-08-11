@@ -1,0 +1,13 @@
+.content-type {
+    display: grid;
+    /* grid-auto-flow: column; */
+    grid-template-columns: 2fr 2fr 2fr;
+    gap: 1rem;
+}
+
+.type {
+    display: grid;
+    padding: 20px;
+    border: 1px solid #eee;
+    cursor: pointer;
+}

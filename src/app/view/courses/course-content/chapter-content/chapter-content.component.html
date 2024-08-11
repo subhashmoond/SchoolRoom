@@ -1,1 +1,142 @@
-<p>chapter-content works!</p>
+<div class="grid client-dashborad-header mb-4 align-items-center">
+    <div class="col-6">
+        <h4 class="subheading-color">Lesson Name</h4>
+    </div>
+    <div class="col-6 flex justify-content-end	">
+        <button type="submit" pButton pRipple label="Add Content" (click)="addContent()"
+            class="secondary-button px-6 text-sm"></button>
+    </div>
+
+</div>
+
+<div class="content-card">
+    <div class="p-3">
+        <i class="pi pi-microsoft font-bold text-primary-color"></i>
+    </div>
+    <div class="border-left">
+
+        <div class="card">
+            <p-panel [toggleable]="true">
+                <ng-template pTemplate="header">
+                    <div class="flex align-items-center gap-2">
+                        <span class="font-bold">
+                            Chapter Name
+                        </span>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="icons">
+                    <!-- <button class="p-panel-header-icon p-link mr-2" (click)="menu.toggle($event)"> -->
+                    <button class="p-panel-header-icon p-link mr-2">
+                        <span class="pi pi-cog"></span>
+                    </button>
+                    <!-- <p-menu #menu id="config_menu" [model]="items" [popup]="true" /> -->
+                </ng-template>
+                <p class="m-0">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                    nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                    mollit anim id est laborum.
+                </p>
+            </p-panel>
+        </div>
+
+
+    </div>
+</div>
+
+
+<!-- Add Lesson Contents  -->
+
+<p-dialog header="Add Content" [modal]="true" [(visible)]="addContentPopup"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
+    [resizable]="false">
+
+    <div class="content-type">
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('text')">
+            <i class="pi pi-align-left font-bold flex mb-2 justify-content-center"></i>
+            <h4>Text</h4>
+        </div>
+
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('Video')">
+            <i class="pi pi-play font-bold flex mb-2 justify-content-center"></i>
+            <h4>Video</h4>
+        </div>
+
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('pdf')">
+            <i class="pi pi-file font-bold flex mb-2 justify-content-center"></i>
+            <h4>PDF</h4>
+        </div>
+
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('image')">
+            <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
+            <h4>Image</h4>
+        </div>
+
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('audio')">
+            <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
+            <h4>Audio</h4>
+        </div>
+
+
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('youtubevideo')">
+            <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
+            <h4>Youtube Video</h4>
+        </div>
+
+
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('resource')">
+            <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
+            <h4>Resource</h4>
+        </div>
+
+    </div>
+
+</p-dialog>
+
+
+<p-dialog header="Add Content" [modal]="true" [(visible)]="uploadContents"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
+    [resizable]="false">
+    <app-upload-content [lessonId]="lessonId" [contentTypes]="contentTypes"></app-upload-content>
+</p-dialog>
+
+<p-dialog header="Add Content" [modal]="true" [(visible)]="isImage"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
+    [resizable]="false">
+    <app-image [lessonId]="lessonId" [contentTypes]="contentTypes"></app-image>
+</p-dialog>
+
+<p-dialog header="Add Content" [modal]="true" [(visible)]="isVideo"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
+    [resizable]="false">
+    <app-upload-video [lessonId]="lessonId" [contentTypes]="contentTypes"></app-upload-video>
+</p-dialog>
+
+
+<p-dialog header="Add Content" [modal]="true" [(visible)]="isAudio"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
+    [resizable]="false">
+    <app-audio [lessonId]="lessonId" [contentTypes]="contentTypes"></app-audio>
+</p-dialog>
+
+<p-dialog header="Add Content" [modal]="true" [(visible)]="isResource"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
+    [resizable]="false">
+    <app-re-source [lessonId]="lessonId" [contentTypes]="contentTypes"></app-re-source>
+</p-dialog>
+
+<p-dialog header="Add Content" [modal]="true" [(visible)]="isYoutubevideo"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
+    [resizable]="false">
+    <app-youtube-video [lessonId]="lessonId" [contentTypes]="contentTypes"></app-youtube-video>
+</p-dialog>
+
+<p-dialog header="Add Content" [modal]="true" [(visible)]="isText"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
+    [resizable]="false">
+    <app-text [lessonId]="lessonId" [contentTypes]="contentTypes"></app-text>
+</p-dialog>
+

@@ -59,7 +59,7 @@
                               <input class="w-full" pInputText formControlName="items" />
                               }
                               @else{
-                              <span (click)="contentAdd(lesson.get('id')?.value)">{{ lesson.get('items')?.value }}</span>
+                              <span (click)="lessonDetail(lesson.get('id')?.value)">{{ lesson.get('items')?.value }}</span>
                               }
                             </div>
                           </div>
