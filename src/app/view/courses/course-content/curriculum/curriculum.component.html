@@ -55,16 +55,16 @@
                           <div class="col-6 flex">
                             <i class="pi pi-microsoft font-bold pr-4 pt-1 text-primary-color"></i>
                             <div>
-                              @if(!lesson.dirty){
+                              @if(!lesson.touched || !lesson.valid){
                               <input class="w-full" pInputText formControlName="items" />
                               }
                               @else{
-                              <span>{{ lesson.get('items')?.value }}</span>
+                              <span (click)="contentAdd(lesson.get('id')?.value)">{{ lesson.get('items')?.value }}</span>
                               }
                             </div>
                           </div>
                           <div class="col-6 flex justify-content-end">
-                            @if(!lesson.dirty){
+                            @if(!lesson.touched || !lesson.valid){
                               <button type="button" pButton pRipple label="Save" (click)="saveLesson(i, j)"
                                 class="secondary-button px-6 text-sm"></button>
                             }

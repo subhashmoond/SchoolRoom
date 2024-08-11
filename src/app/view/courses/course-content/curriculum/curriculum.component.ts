@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
@@ -18,7 +18,7 @@ export class CurriculumComponent {
   isSavedCourses: boolean[] = [];
   courseId: any;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private _courseService: CoursesService) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private _router : Router, private _courseService: CoursesService) {
     this.route.paramMap.subscribe(params => {
       this.courseId = params.get('id')!;
     });
@@ -32,13 +32,43 @@ export class CurriculumComponent {
     // Optionally add initial items for debugging
     this.addCourse();
     this.getCoursesList();
+    this.getSubjectAndChapter();
   }
 
   getCoursesList() {
     this._courseService.getCourseDetailById(this.courseId).subscribe(res => {
       console.log(res, "Courses List Datas ")
+      
     })
   }
+
+  getSubjectAndChapter(){
+    this._courseService.getCourseChapterAndSubject(this.courseId).subscribe(res => {
+      console.log(res)
+      this.setCourses(res)
+    })
+  }
+
+  setCourses(data : any) {
+    const courseArray = data.course.lectures_section.map((course:any) => this.fb.group({
+      items: [course.name],
+      lessons: this.fb.array(course.lectures_lession.map((lesson : any) => this.fb.group({
+        items: [lesson.name, Validators.required],
+        id: [lesson.id]
+      })))
+    }));
+    
+    this.addForm.setControl('courses', this.fb.array(courseArray));
+  }
+
+  contentAdd(lessonId : any){
+    console.log(lessonId, "id");
+
+    this._router.navigate(['/course/lesson']);
+
+  }
+
+ 
 
   get courses(): FormArray {
     return this.addForm.get('courses') as FormArray;
@@ -71,30 +101,19 @@ export class CurriculumComponent {
       course_id : this.courseId
     };
 
-    this._courseService.addSubject(subjectPayload).subscribe(res => {
+    this._courseService.addSubject(this.courseId, subjectPayload).subscribe(res => {
       console.log('Course saved successfully', res);
     }, error => {
       console.error('Error saving course', error);
     });
   }
 
-  // saveCourse(index: number): void {
-  //   this.isSavedCourses[index] = true;
-
-  //   const body = {
-  //     "name": "bstc 3 subject",
-  //     "course_id": 2
-  //   }
-
-  //   this._courseService.addSubject(body).subscribe(res => {
-
-  //   })
-
-  // }
 
   saveLesson(courseIndex: number, lessonIndex: number): void {
     const lessonsControl = this.lessons(courseIndex);
     lessonsControl.at(lessonIndex).markAsDirty();
     lessonsControl.at(lessonIndex).updateValueAndValidity();
+
+    console.log(lessonsControl, "New Details Course Id")
   }
 }

@@ -26,8 +26,14 @@ export class CoursesService {
     return this._dataService.get(url);
   }
 
-  addSubject(body: any){
-    const url = `${environment.basePath}educator/subject/add/`
+  getCourseChapterAndSubject(id : number){
+    const url = `${environment.basePath}course/3/lecture_section_lesson`;
+    return this._dataService.get(url);
+  }
+
+
+  addSubject(courseId: any, body: any){
+    const url = `${environment.basePath}course/${courseId}/section/create`
     return this._dataService.post(url, body)
   }
 
