@@ -1,17 +1,14 @@
 import { Component } from '@angular/core';
 import { AccordionModule } from 'primeng/accordion';
-import { CourseContentComponent } from '../course-content.component';
 import { CoursesService } from '../../../../core/services/courses.service';
 import { ActivatedRoute } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { ToolbarModule } from 'primeng/toolbar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { AvatarModule } from 'primeng/avatar';
 import { UploadContentComponent } from './upload-content/upload-content.component';
-import { Sidebar, SidebarModule } from 'primeng/sidebar';
-import { flatMap } from 'rxjs';
+import { SidebarModule } from 'primeng/sidebar';
 import { ImageComponent } from './image/image.component';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
 import { AudioComponent } from './audio/audio.component';
@@ -41,15 +38,17 @@ export class ChapterContentComponent {
   isYoutubevideo : boolean = false;
   isAudio : boolean = false;
 
+  chapterDataList : any[] = [];
 
   items: { label?: string; icon?: string; separator?: boolean }[] = [];
-
-
-
 
   constructor(private _coursesService: CoursesService, private route: ActivatedRoute) {
     this.route.paramMap.subscribe(params => {
       this.lessonId = params.get('id')!;
+    });
+
+    this.route.queryParams.subscribe(params => {
+      this.coursesId = params['courseId'];
     });
 
   }
@@ -75,29 +74,23 @@ export class ChapterContentComponent {
       }
     ];
 
-    this._coursesService.currentCourseId$.subscribe(res => {
-      this.coursesId = res
-      this.getChapterContent();
-    })
-
-
-
+    this.getChapterContent()
 
   }
 
   getChapterContent() {
     this._coursesService.getChapterContentList(this.coursesId, this.lessonId).subscribe(res => {
-      console.log(res)
+      this.chapterDataList = res.data
     })
   }
 
 
   addContent() {
     this.addContentPopup = true
-
   }
 
   uploadContent(contentType: any) {
+
     this.contentTypes = contentType
 
     switch (contentType) {
@@ -118,22 +111,17 @@ export class ChapterContentComponent {
         this.isImage = true
         break;
 
-
       case 'audio':
         this.isAudio = true
         break;
-
 
       case 'youtubevideo':
         this.isYoutubevideo = true
         break;
 
-
       case 'resource':
         this.isResource = true
         break;
-
-
     }
 
   }

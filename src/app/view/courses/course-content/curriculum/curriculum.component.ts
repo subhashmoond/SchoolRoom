@@ -16,9 +16,10 @@ import { CoursesService } from '../../../../core/services/courses.service';
 export class CurriculumComponent {
   addForm!: FormGroup;
   isSavedCourses: boolean[] = [];
+  isEditLesson: boolean[][] = [];
   courseId: any;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private _router : Router, private _courseService: CoursesService) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private _router: Router, private _courseService: CoursesService) {
     this.route.paramMap.subscribe(params => {
       this.courseId = params.get('id')!;
     });
@@ -29,43 +30,42 @@ export class CurriculumComponent {
       courses: this.fb.array([])
     });
 
-    // Optionally add initial items for debugging
-    this.addCourse();
     this.getCoursesList();
     this.getSubjectAndChapter();
   }
 
   getCoursesList() {
     this._courseService.getCourseDetailById(this.courseId).subscribe(res => {
-    })
+      // Handle the response
+    });
   }
 
-  getSubjectAndChapter(){
+  getSubjectAndChapter() {
     this._courseService.getCourseChapterAndSubject(this.courseId).subscribe(res => {
-      console.log(res)
-      this.setCourses(res)
-    })
+      this.setCourses(res);
+    });
   }
 
-  setCourses(data : any) {
-    const courseArray = data.course.lectures_section.map((course:any) => this.fb.group({
-      items: [course.name],
-      lessons: this.fb.array(course.lectures_lession.map((lesson : any) => this.fb.group({
-        items: [lesson.name, Validators.required],
-        id: [lesson.id]
-      })))
-    }));
-    
+  setCourses(data: any) {
+    const courseArray = data.course.lectures_section.map((course: any, index: number) => {
+      this.isSavedCourses[index] = false;  // Initialize the isSavedCourses array
+      this.isEditLesson[index] = [];       // Initialize the isEditLesson array
+
+      return this.fb.group({
+        id: [course.id],
+        items: [course.name],
+        lessons: this.fb.array(course.lectures_lession.map((lesson: any, lessonIndex: number) => {
+          this.isEditLesson[index][lessonIndex] = false;  // Initialize each lesson's edit state
+          return this.fb.group({
+            id: [lesson.id],
+            items: [lesson.name, Validators.required]
+          });
+        }))
+      });
+    });
+
     this.addForm.setControl('courses', this.fb.array(courseArray));
   }
-
-  lessonDetail(lessonId : any){
-    this._courseService.setCourseID(this.courseId)
-    this._router.navigate(['/course/lesson', lessonId]);
-
-  }
-
- 
 
   get courses(): FormArray {
     return this.addForm.get('courses') as FormArray;
@@ -75,27 +75,41 @@ export class CurriculumComponent {
     return this.courses.at(index).get('lessons') as FormArray;
   }
 
+  lessonDetail(lessonId: any) {
+    this._router.navigate(['/course/lesson', lessonId], { queryParams: { courseId: this.courseId } });
+  }
+
   addCourse(): void {
     this.courses.push(this.fb.group({
       items: ['', Validators.required],
       lessons: this.fb.array([])
     }));
-    this.isSavedCourses.push(false);
+    this.isSavedCourses.push(true);
+    this.isEditLesson.push([]);
   }
 
   addLesson(courseIndex: number): void {
     this.lessons(courseIndex).push(this.fb.group({
       items: ['', Validators.required]
     }));
+    this.isEditLesson[courseIndex].push(true); // Set the new lesson to edit mode
+  }
+
+  enableEditCourse(index: number): void {
+    this.isSavedCourses[index] = true;
+  }
+
+  enableEditLesson(courseIndex: number, lessonIndex: number): void {
+    this.isEditLesson[courseIndex].fill(false); // Disable all lessons for the course
+    this.isEditLesson[courseIndex][lessonIndex] = true; // Enable only the clicked lesson
   }
 
   saveCourse(index: number): void {
-    this.isSavedCourses[index] = true;
-
+    this.isSavedCourses[index] = false;
     const course = this.courses.at(index);
     const subjectPayload = {
       name: course.get('items')?.value,
-      course_id : this.courseId
+      course_id: this.courseId
     };
 
     this._courseService.addSubject(this.courseId, subjectPayload).subscribe(res => {
@@ -105,12 +119,22 @@ export class CurriculumComponent {
     });
   }
 
-
-  saveLesson(courseIndex: number, lessonIndex: number): void {
+  saveLesson(courseIndex: number, lessonIndex: number, subjectId: any): void {
+    this.isEditLesson[courseIndex][lessonIndex] = false;  // Close the input after saving
     const lessonsControl = this.lessons(courseIndex);
     lessonsControl.at(lessonIndex).markAsDirty();
     lessonsControl.at(lessonIndex).updateValueAndValidity();
 
-    console.log(lessonsControl, "New Details Course Id")
+    const body = {
+      "subject_id": subjectId,
+      "name": lessonsControl.value[lessonIndex].items  // Update to use the correct lesson index
+    }
+
+    this._courseService.addChapter(body, this.courseId).subscribe(res => {
+      this.getSubjectAndChapter();
+    }, error => {
+      console.error('Error saving lesson', error);
+    });
   }
+  
 }

@@ -9,15 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CoursesService {
 
-  private courseId = new BehaviorSubject<string>('');
-  currentCourseId$ = this.courseId.asObservable();
-
   constructor(private http: HttpClient, private _dataService: DataMethodService) { }
-
-  setCourseID(courseId: string) {
-    this.courseId.next(courseId);
-  }
-
 
   addCourses(body : any){
     const url = `${environment.basePath}course/create/`;
@@ -25,7 +17,7 @@ export class CoursesService {
   }
 
   getCoursesList(){
-    const url = `${environment.basePath}course/list/`;
+    const url = `${environment.basePath}course/getList/`;
     return this._dataService.get(url)
   }
 
@@ -42,6 +34,11 @@ export class CoursesService {
 
   addSubject(courseId: any, body: any){
     const url = `${environment.basePath}course/${courseId}/section/create`
+    return this._dataService.post(url, body)
+  }
+
+  addChapter(body:any, courseId: any){
+    const url = `${environment.basePath}course/${courseId}/lectures/create/`;
     return this._dataService.post(url, body)
   }
 
