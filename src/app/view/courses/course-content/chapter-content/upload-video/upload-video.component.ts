@@ -20,6 +20,7 @@ export class UploadVideoComponent {
 
   @Input() contentTypes : any;
   @Input() lessonId : any;
+  @Input() contentId : any;
 
   addContent!: FormGroup;
   submitbutton: boolean = false;
@@ -34,6 +35,7 @@ export class UploadVideoComponent {
 
   ngOnInit() {
     this.formGroup();
+    console.log(this.contentId, "video Edit ")
   }
 
   formGroup() {

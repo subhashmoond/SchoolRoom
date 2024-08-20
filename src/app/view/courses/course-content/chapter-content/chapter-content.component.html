@@ -1,5 +1,4 @@
-
-
+<!-- <p-toast /> -->
 <div class="grid client-dashborad-header mb-4 align-items-center">
     <div class="col-6">
         <h4 class="subheading-color">Lesson Name</h4>
@@ -12,67 +11,102 @@
 </div>
 
 @for(data of chapterDataList; track data){
-    <div class="content-card">
-        <div class="p-3">
-            <i class="pi pi-microsoft font-bold text-primary-color"></i>
-        </div>
-        <div class="border-left">
-    
-            <div class="card">
-                <p-panel [toggleable]="true">
-                    <ng-template pTemplate="header">
-                        <div class="flex align-items-center gap-2">
-                            <span class="font-bold">
-                                Chapter Name
-                            </span>
-                        </div>
-                    </ng-template>
-    
-                    <ng-template pTemplate="icons">
-                        <!-- <button class="p-panel-header-icon p-link mr-2" (click)="menu.toggle($event)"> -->
-                        <button class="p-panel-header-icon p-link mr-2">
-                            <span class="pi pi-cog"></span>
-                        </button>
-                        <!-- <p-menu #menu id="config_menu" [model]="items" [popup]="true" /> -->
-                    </ng-template>
+<div class="content-card">
+    <div class="p-3">
+        <i class="pi pi-microsoft font-bold text-primary-color"></i>
+    </div>
+    <div class="border-left">
 
+        <div class="card">
+            <p-panel [toggleable]="true">
+                <ng-template pTemplate="header">
+                    <div class="flex align-items-center gap-2">
+                        <span class="font-bold">
+                            Chapter Name
+                        </span>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="icons">
+
+
+
+                    <!-- <button class="p-panel-header-icon p-link mr-2" (click)="menu.toggle($event)"> -->
+                    <button class="p-panel-header-icon p-link mr-2" (click)="editContent(data.type, data.id)">
+                        <span class="pi pi-cog"></span>
+                    </button>
 
                     @switch (data.type) {
-                        @case ("article") {
-                            <p class="m-0">
-                                {{data.text}}
-                            </p>
-                        }
-                        @case ("video") {
-                            <video width="600" controls>
-                                <source src="../../../../../assets/images/mp4.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        }
-                        @case ("notes") {
-                            <img src="../../../../../assets/images/client-profile.png">
-                        }
-                        @case ("image") {
-                            <img src="../../../../../assets/images/client-profile.png">
-                        }
-                        @case ("youtube_video") {
-                            <video width="600" controls>
-                                <source [src]="data.url" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        }
-                        @case ("resource") {
-                            <img src="../../../../../assets/images/client-profile.png">
-                        }
+                    @case ("article") {
+                    <a > Edit </a>
+                    }
+                    @case ("video") {
+                    <button class="p-panel-header-icon p-link mr-2">
+                        <span class="pi pi-cog"></span>
+                    </button>
+                    }
+                    @case ("notes") {
+                    <button class="p-panel-header-icon p-link mr-2">
+                        <span class="pi pi-cog"></span>
+                    </button>
+                    }
+                    @case ("image") {
+                    <button class="p-panel-header-icon p-link mr-2">
+                        <span class="pi pi-cog"></span>
+                    </button>
+                    }
+                    @case ("youtube_video") {
+                    <button class="p-panel-header-icon p-link mr-2">
+                        <span class="pi pi-cog"></span>
+                    </button>
+                    }
+                    @case ("resource") {
+                    <button class="p-panel-header-icon p-link mr-2">
+                        <span class="pi pi-cog"></span>
+                    </button>
+                    }
                     }
 
+                    <!-- <p-menu #menu id="config_menu" [model]="items" [popup]="true" /> -->
+                </ng-template>
 
-                </p-panel>
-            </div>
-    
-    
+
+                @switch (data.type) {
+                @case ("article") {
+                <p class="m-0">
+                    {{data.text}}
+                </p>
+                }
+                @case ("video") {
+                <video width="600" controls>
+                    <source src="../../../../../assets/images/mp4.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                }
+                @case ("notes") {
+                <img src="../../../../../assets/images/client-profile.png">
+                }
+                @case ("image") {
+                <img src="../../../../../assets/images/client-profile.png">
+                }
+                @case ("youtube_video") {
+                <video width="600" controls>
+                    <source [src]="data.url" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                }
+                @case ("resource") {
+                <img src="../../../../../assets/images/client-profile.png">
+                }
+                }
+
+
+            </p-panel>
         </div>
+
+
     </div>
+</div>
 }
 
 
@@ -128,7 +162,7 @@
 <p-dialog header="Add Content" [modal]="true" [(visible)]="uploadContents"
     [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
     [resizable]="false">
-    <app-upload-content [lessonId]="lessonId" [contentTypes]="contentTypes"></app-upload-content>
+    <app-upload-content [lessonId]="lessonId" [contentId]="contentId" [contentTypes]="contentTypes"></app-upload-content>
 </p-dialog>
 
 <p-dialog header="Add Content" [modal]="true" [(visible)]="isImage"
@@ -162,9 +196,7 @@
     <app-youtube-video [lessonId]="lessonId" [contentTypes]="contentTypes"></app-youtube-video>
 </p-dialog>
 
-<p-dialog header="Add Content" [modal]="true" [(visible)]="isText"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
-    [resizable]="false">
+<p-dialog header="Add Content" [modal]="true" [(visible)]="isText" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+    [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
     <app-text [lessonId]="lessonId" [contentTypes]="contentTypes"></app-text>
 </p-dialog>
-

@@ -15,12 +15,14 @@ import { AudioComponent } from './audio/audio.component';
 import { ReSourceComponent } from './re-source/re-source.component';
 import { YoutubeVideoComponent } from './youtube-video/youtube-video.component';
 import { TextComponent } from './text/text.component';
+import { MenuModule } from 'primeng/menu';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-chapter-content',
   standalone: true,
   imports: [AccordionModule, ButtonModule, SplitButtonModule, DialogModule, PanelModule, AvatarModule, UploadContentComponent, SidebarModule, 
-    ImageComponent, UploadVideoComponent, AudioComponent, ReSourceComponent, YoutubeVideoComponent, TextComponent],
+    ImageComponent, UploadVideoComponent, AudioComponent, ReSourceComponent, YoutubeVideoComponent, TextComponent, MenuModule, ToastModule ],
   templateUrl: './chapter-content.component.html',
   styleUrl: './chapter-content.component.css'
 })
@@ -37,6 +39,7 @@ export class ChapterContentComponent {
   isResource : boolean = false;
   isYoutubevideo : boolean = false;
   isAudio : boolean = false;
+  contentId : any;
 
   chapterDataList : any[] = [];
 
@@ -58,8 +61,8 @@ export class ChapterContentComponent {
 
     this.items = [
       {
-        label: 'Refresh',
-        icon: 'pi pi-refresh'
+        label: 'Setting',
+        icon: 'pi pi-cog'
       },
       {
         label: 'Search',
@@ -90,7 +93,6 @@ export class ChapterContentComponent {
   }
 
   uploadContent(contentType: any) {
-
     this.contentTypes = contentType
 
     switch (contentType) {
@@ -126,6 +128,46 @@ export class ChapterContentComponent {
 
   }
 
+
+  editContent(contentType: any, contentId : any) {
+
+    console.log(contentType, " New Design Data Table ")
+
+    this.contentTypes = contentType
+    this.contentId = contentId;
+
+    switch (contentType) {
+
+      case 'article':
+        this.isText = true
+        break;
+
+      case 'video':
+        this.isVideo = true
+        break;
+
+      case 'notes':
+        this.uploadContents = true
+        break;
+
+      case 'image':
+        this.isImage = true
+        break;
+
+      case 'audio':
+        this.isAudio = true
+        break;
+
+      case 'youtube_video':
+        this.isYoutubevideo = true
+        break;
+
+      case 'resource':
+        this.isResource = true
+        break;
+    }
+
+  }
 
 
 }
