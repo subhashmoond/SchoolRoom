@@ -22,14 +22,14 @@ import { ToastModule } from 'primeng/toast';
   selector: 'app-chapter-content',
   standalone: true,
   imports: [AccordionModule, ButtonModule, SplitButtonModule, DialogModule, PanelModule, AvatarModule, UploadContentComponent, SidebarModule, 
-    ImageComponent, UploadVideoComponent, AudioComponent, ReSourceComponent, YoutubeVideoComponent, TextComponent, MenuModule, ToastModule ],
+    ImageComponent, UploadVideoComponent, AudioComponent, ReSourceComponent, YoutubeVideoComponent, TextComponent, MenuModule, ToastModule, SidebarModule  ],
   templateUrl: './chapter-content.component.html',
   styleUrl: './chapter-content.component.css'
 })
 export class ChapterContentComponent {
   lessonId: any;
   coursesId: any;
-  contentTypes!: string;
+  contentTypes : any;
   addContentPopup: boolean = false;
   uploadContents: boolean = false;
   isText: boolean = false;
@@ -92,8 +92,9 @@ export class ChapterContentComponent {
     this.addContentPopup = true
   }
 
-  uploadContent(contentType: any) {
-    this.contentTypes = contentType
+  uploadContent(contentType: any, action : any) {
+
+    this.contentTypes = action;
 
     switch (contentType) {
 
@@ -105,7 +106,7 @@ export class ChapterContentComponent {
         this.isVideo = true
         break;
 
-      case 'pdf':
+      case 'notes':
         this.uploadContents = true
         break;
 
@@ -125,6 +126,7 @@ export class ChapterContentComponent {
         this.isResource = true
         break;
     }
+    this.addContentPopup = false
 
   }
 

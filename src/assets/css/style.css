@@ -2721,3 +2721,8 @@ small.p-error {
 .border-top-light{
     border-top: 1px solid #edeef6;
 }
+.p-sidebar-header {
+    position: absolute;
+    right: 0px;
+    z-index: 999;
+}

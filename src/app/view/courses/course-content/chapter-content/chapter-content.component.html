@@ -32,36 +32,36 @@
 
 
                     <!-- <button class="p-panel-header-icon p-link mr-2" (click)="menu.toggle($event)"> -->
-                    <button class="p-panel-header-icon p-link mr-2" (click)="editContent(data.type, data.id)">
+                    <!-- <button class="p-panel-header-icon p-link mr-2" (click)="editContent(data.type, data.id)">
                         <span class="pi pi-cog"></span>
-                    </button>
+                    </button> -->
 
                     @switch (data.type) {
                     @case ("article") {
-                    <a > Edit </a>
+                    <a (click)="uploadContent('text', 'edit')"> Edit </a>
                     }
                     @case ("video") {
-                    <button class="p-panel-header-icon p-link mr-2">
+                    <button (click)="uploadContent('Video', 'edit')" class="p-panel-header-icon p-link mr-2">
                         <span class="pi pi-cog"></span>
                     </button>
                     }
                     @case ("notes") {
-                    <button class="p-panel-header-icon p-link mr-2">
+                    <button (click)="uploadContent('notes', 'edit')" class="p-panel-header-icon p-link mr-2">
                         <span class="pi pi-cog"></span>
                     </button>
                     }
                     @case ("image") {
-                    <button class="p-panel-header-icon p-link mr-2">
+                    <button (click)="uploadContent('image', 'edit')" class="p-panel-header-icon p-link mr-2">
                         <span class="pi pi-cog"></span>
                     </button>
                     }
                     @case ("youtube_video") {
-                    <button class="p-panel-header-icon p-link mr-2">
+                    <button (click)="uploadContent('youtubevideo', 'edit')" class="p-panel-header-icon p-link mr-2">
                         <span class="pi pi-cog"></span>
                     </button>
                     }
                     @case ("resource") {
-                    <button class="p-panel-header-icon p-link mr-2">
+                    <button (click)="uploadContent('resource', 'edit')" class="p-panel-header-icon p-link mr-2">
                         <span class="pi pi-cog"></span>
                     </button>
                     }
@@ -84,6 +84,7 @@
                 </video>
                 }
                 @case ("notes") {
+                    <p>PDF</p>
                 <img src="../../../../../assets/images/client-profile.png">
                 }
                 @case ("image") {
@@ -112,91 +113,89 @@
 
 <!-- Add Lesson Contents  -->
 
-<p-dialog header="Add Content" [modal]="true" [(visible)]="addContentPopup"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
-    [resizable]="false">
-
+<p-sidebar [(visible)]="addContentPopup" position="right" [style]="{width:'27.6%'}">
+    <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Add Content </h4>
     <div class="content-type">
-        <div class="type justify-content-center align-items-center" (click)="uploadContent('text')">
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('text', 'add')">
             <i class="pi pi-align-left font-bold flex mb-2 justify-content-center"></i>
             <h4>Text</h4>
         </div>
 
-        <div class="type justify-content-center align-items-center" (click)="uploadContent('Video')">
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('Video', 'add')">
             <i class="pi pi-play font-bold flex mb-2 justify-content-center"></i>
             <h4>Video</h4>
         </div>
 
-        <div class="type justify-content-center align-items-center" (click)="uploadContent('pdf')">
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('notes', 'add')">
             <i class="pi pi-file font-bold flex mb-2 justify-content-center"></i>
             <h4>PDF</h4>
         </div>
 
-        <div class="type justify-content-center align-items-center" (click)="uploadContent('image')">
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('image', 'add')">
             <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
             <h4>Image</h4>
         </div>
 
-        <div class="type justify-content-center align-items-center" (click)="uploadContent('audio')">
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('audio', 'add')">
             <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
             <h4>Audio</h4>
         </div>
 
 
-        <div class="type justify-content-center align-items-center" (click)="uploadContent('youtubevideo')">
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('youtubevideo', 'add')">
             <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
             <h4>Youtube Video</h4>
         </div>
 
 
-        <div class="type justify-content-center align-items-center" (click)="uploadContent('resource')">
+        <div class="type justify-content-center align-items-center" (click)="uploadContent('resource', 'add')">
             <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
             <h4>Resource</h4>
         </div>
 
     </div>
+</p-sidebar>
 
-</p-dialog>
+@if(uploadContents){
+    <p-sidebar [(visible)]="uploadContents" position="right" [style]="{width:'27.6%'}">
+        <app-upload-content [lessonId]="lessonId" [contentId]="contentId"
+            [contentTypes]="contentTypes"></app-upload-content>
+    </p-sidebar>
+}
 
+@if(isImage){
+    <p-sidebar [(visible)]="isImage" position="right" [style]="{width:'27.6%'}">
+        <app-image [lessonId]="lessonId" [contentTypes]="contentTypes"></app-image>
+    </p-sidebar>
+}
 
-<p-dialog header="Add Content" [modal]="true" [(visible)]="uploadContents"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
-    [resizable]="false">
-    <app-upload-content [lessonId]="lessonId" [contentId]="contentId" [contentTypes]="contentTypes"></app-upload-content>
-</p-dialog>
+@if(isVideo){
+    <p-sidebar [(visible)]="isVideo" position="right" [style]="{width:'27.6%'}">
+        <app-upload-video [lessonId]="lessonId" [contentTypes]="contentTypes"></app-upload-video>
+    </p-sidebar>
+}
 
-<p-dialog header="Add Content" [modal]="true" [(visible)]="isImage"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
-    [resizable]="false">
-    <app-image [lessonId]="lessonId" [contentTypes]="contentTypes"></app-image>
-</p-dialog>
+@if(isAudio){
+    <p-sidebar [(visible)]="isAudio" position="right" [style]="{width:'27.6%'}">
+        <app-audio [lessonId]="lessonId" [contentTypes]="contentTypes"></app-audio>
+    </p-sidebar>
+}
 
-<p-dialog header="Add Content" [modal]="true" [(visible)]="isVideo"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
-    [resizable]="false">
-    <app-upload-video [lessonId]="lessonId" [contentTypes]="contentTypes"></app-upload-video>
-</p-dialog>
+@if(isResource){
+    <p-sidebar [(visible)]="isResource" position="right" [style]="{width:'27.6%'}">
+        <app-re-source [lessonId]="lessonId" [contentTypes]="contentTypes"></app-re-source>
+    </p-sidebar>
+}
 
+@if(isYoutubevideo){
+    <p-sidebar [(visible)]="isYoutubevideo" position="right" [style]="{width:'27.6%'}">
+        <app-youtube-video [lessonId]="lessonId" [contentTypes]="contentTypes"></app-youtube-video>
+    </p-sidebar>
+}
 
-<p-dialog header="Add Content" [modal]="true" [(visible)]="isAudio"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
-    [resizable]="false">
-    <app-audio [lessonId]="lessonId" [contentTypes]="contentTypes"></app-audio>
-</p-dialog>
+@if(isText){
+    <p-sidebar [(visible)]="isText" position="right" [style]="{width:'27.6%'}">
+        <app-text [lessonId]="lessonId" [contentTypes]="contentTypes"></app-text>
+    </p-sidebar>
+}
 
-<p-dialog header="Add Content" [modal]="true" [(visible)]="isResource"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
-    [resizable]="false">
-    <app-re-source [lessonId]="lessonId" [contentTypes]="contentTypes"></app-re-source>
-</p-dialog>
-
-<p-dialog header="Add Content" [modal]="true" [(visible)]="isYoutubevideo"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
-    [resizable]="false">
-    <app-youtube-video [lessonId]="lessonId" [contentTypes]="contentTypes"></app-youtube-video>
-</p-dialog>
-
-<p-dialog header="Add Content" [modal]="true" [(visible)]="isText" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
-    [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
-    <app-text [lessonId]="lessonId" [contentTypes]="contentTypes"></app-text>
-</p-dialog>

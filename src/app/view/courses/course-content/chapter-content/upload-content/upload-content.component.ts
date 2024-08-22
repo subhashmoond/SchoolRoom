@@ -19,21 +19,26 @@ import { CoursesService } from '../../../../../core/services/courses.service';
 export class UploadContentComponent {
   @Input() contentTypes : any;
   @Input() lessonId : any;
+  @Input() contentId : any;
 
   addContent!: FormGroup;
+  settingContent! : FormGroup;
   submitbutton: boolean = false;
   selectFiles: any;
   oldFile: any;
+  editForm : boolean = false;
 
 
 
   constructor(private _fb: FormBuilder, private _messageService: MessageService, private translate: TranslateService, private _coursesService : CoursesService, private _confirmationService: ConfirmationService) {
-    translate.setDefaultLang('en-US')
+    translate.setDefaultLang('en-US');
   }
 
   ngOnInit() {
     this.formGroup();
-    // this.getClientSignature();
+    if(this.contentTypes === 'edit'){
+      this.editForm = true
+    }
   }
 
   formGroup() {
@@ -72,6 +77,10 @@ export class UploadContentComponent {
     //   const errorMsg = error.error.errors[0].developerMessage
     //     this._messageService.add({ severity: 'error', detail: errorMsg });
     // })
+  }
+
+  settingSubmit(){
+    
   }
 
   
