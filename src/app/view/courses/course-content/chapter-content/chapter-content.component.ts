@@ -21,27 +21,27 @@ import { ToastModule } from 'primeng/toast';
 @Component({
   selector: 'app-chapter-content',
   standalone: true,
-  imports: [AccordionModule, ButtonModule, SplitButtonModule, DialogModule, PanelModule, AvatarModule, UploadContentComponent, SidebarModule, 
-    ImageComponent, UploadVideoComponent, AudioComponent, ReSourceComponent, YoutubeVideoComponent, TextComponent, MenuModule, ToastModule, SidebarModule  ],
+  imports: [AccordionModule, ButtonModule, SplitButtonModule, DialogModule, PanelModule, AvatarModule, UploadContentComponent, SidebarModule,
+    ImageComponent, UploadVideoComponent, AudioComponent, ReSourceComponent, YoutubeVideoComponent, TextComponent, MenuModule, ToastModule, SidebarModule],
   templateUrl: './chapter-content.component.html',
   styleUrl: './chapter-content.component.css'
 })
 export class ChapterContentComponent {
   lessonId: any;
   coursesId: any;
-  contentTypes : any;
+  contentTypes: any;
   addContentPopup: boolean = false;
   uploadContents: boolean = false;
   isText: boolean = false;
   isImage: boolean = false;
   isVideo: boolean = false;
   isPDF: boolean = false;
-  isResource : boolean = false;
-  isYoutubevideo : boolean = false;
-  isAudio : boolean = false;
-  contentId : any;
+  isResource: boolean = false;
+  isYoutubevideo: boolean = false;
+  isAudio: boolean = false;
+  contentId: any;
 
-  chapterDataList : any[] = [];
+  chapterDataList: any[] = [];
 
   items: { label?: string; icon?: string; separator?: boolean }[] = [];
 
@@ -59,23 +59,6 @@ export class ChapterContentComponent {
 
   ngOnInit() {
 
-    this.items = [
-      {
-        label: 'Setting',
-        icon: 'pi pi-cog'
-      },
-      {
-        label: 'Search',
-        icon: 'pi pi-search'
-      },
-      {
-        separator: true
-      },
-      {
-        label: 'Delete',
-        icon: 'pi pi-times'
-      }
-    ];
 
     this.getChapterContent()
 
@@ -92,9 +75,16 @@ export class ChapterContentComponent {
     this.addContentPopup = true
   }
 
-  uploadContent(contentType: any, action : any) {
+  uploadContent(data?: any, contentType?: any, action?: any) {
+    
+    if (data) {
+      this.contentId = data.id;
+    } else {
+      this.contentId = null;
+    }
 
     this.contentTypes = action;
+
 
     switch (contentType) {
 
@@ -131,7 +121,7 @@ export class ChapterContentComponent {
   }
 
 
-  editContent(contentType: any, contentId : any) {
+  editContent(contentType: any, contentId: any) {
 
     console.log(contentType, " New Design Data Table ")
 
@@ -169,6 +159,12 @@ export class ChapterContentComponent {
         break;
     }
 
+  }
+
+  deleteContent(id: any) {
+    this._coursesService.deletePDF(id).subscribe(res => {
+      this.getChapterContent()
+    })
   }
 
 

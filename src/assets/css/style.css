@@ -2726,3 +2726,8 @@ small.p-error {
     right: 0px;
     z-index: 999;
 }
+
+
+.p-checkbox, body p-checkbox {
+    display: inline-flex;
+}

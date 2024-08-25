@@ -5,97 +5,117 @@
     <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Add PDF</h4>
 
     <!-- <h4 class="m-0 font-semibold line-height-sm">{{"labels.heading.Add Signature" | translate}}</h4> -->
-     @if(!editForm){
-         <form [formGroup]="addContent" (ngSubmit)="submitForm()" class="w-full flex flex-wrap">
-             <div class="flex flex-wrap w-full mb-6">
-                 <div class="w-full">
-                     <label class="label-required w-full mb-1 text-sm font-medium line-height-exsm inline-block">{{'labels.inputs.File' |
-                         translate}}
-                         <span>*</span>
-                     </label>
-                     <div
-                         class="border-dashed border-round-lg border-2 w-full h-12rem flex flex-wrap align-items-center justify-content-center user-image relative">
-                         <div class="w-full">
-                             @if(selectFiles){
-                                 <div class="w-full flex flex-wrap align-items-center justify-content-center">
-                                     <img [src]="selectFiles.objectURL" alt="Selected Image" width="100">
-                                 </div>
-                                 <i class="pi pi-times profile-remove-icon" (click)="fileRemove()" style="font-size: 1rem"></i>
-                             }@else{
-                             <span
-                                 class="block w-full text-center text-sm font-medium text-primary-color mb-2">{{'labels.inputs.Drag and drop a file' | translate}}</span>
-                             <span
-                                 class="block w-full text-center text-sm font-medium text-primary-color mt-1">{{'labels.inputs.or'
-                                 | translate}}</span>
-                             <span class="block w-full flex flex-wrap align-items-center justify-content-center mt-2">
-                                 <p-fileUpload name="demo[]" styleClass="p-0 m-0 signature-upload"
-                                     uploadStyleClass="signature-remove-button" cancelStyleClass="signature-remove-button"
-                                     chooseLabel="{{'labels.inputs.Select File' | translate}}" [multiple]="true"
-                                     progress="10" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*"
-                                     (onSelect)="onFileSelect($event)" />
-                             </span>
-                         }
-                         </div>
-                     </div>
-                 </div>
-                
-             </div>
-             <div
-                 class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
-                 <button pButton pRipple label="{{'labels.buttons.Cancel' | translate}}"
-                     class="primary-border-button px-5 mr-3 text-sm"></button>
-                 <button type="submit" pButton pRipple label="{{'labels.buttons.Add' | translate}}"
-                     class="primary-button px-5 text-sm"></button>
-             </div>
-         </form>
-     }
-     @else{
-
-        <form [formGroup]="settingContent" (ngSubmit)="settingSubmit()" class="w-full flex flex-wrap">
-
-            <div class="grid nested-grid mt-3">
-    
-                <div class="col-12">
+    @if(!editForm){
+    <form [formGroup]="addContent" (ngSubmit)="submitForm()" class="w-full flex flex-wrap">
+        <div class="flex flex-wrap w-full mb-6">
+            <div class="w-full">
+                <label
+                    class="label-required w-full mb-1 text-sm font-medium line-height-exsm inline-block">{{'labels.inputs.File'
+                    |
+                    translate}}
+                    <span>*</span>
+                </label>
+                <div
+                    class="border-dashed border-round-lg border-2 w-full h-12rem flex flex-wrap align-items-center justify-content-center user-image relative">
                     <div class="w-full">
+                        @if(selectFiles){
+                        <div class="w-full flex flex-wrap align-items-center justify-content-center">
+                            <img [src]="selectFiles.objectURL" alt="Selected Image" width="100">
+                        </div>
+                        <i class="pi pi-times profile-remove-icon" (click)="fileRemove()" style="font-size: 1rem"></i>
+                        }@else{
+                        <span
+                            class="block w-full text-center text-sm font-medium text-primary-color mb-2">{{'labels.inputs.Drag
+                            and drop a file' | translate}}</span>
+                        <span
+                            class="block w-full text-center text-sm font-medium text-primary-color mt-1">{{'labels.inputs.or'
+                            | translate}}</span>
+                        <span class="block w-full flex flex-wrap align-items-center justify-content-center mt-2">
+                            <p-fileUpload name="demo[]" styleClass="p-0 m-0 signature-upload"
+                                uploadStyleClass="signature-remove-button" cancelStyleClass="signature-remove-button"
+                                chooseLabel="{{'labels.inputs.Select File' | translate}}" [multiple]="true"
+                                progress="10" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*"
+                                (onSelect)="onFileSelect($event)" />
+                        </span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div
+            class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+            <button pButton pRipple label="{{'labels.buttons.Cancel' | translate}}"
+                class="primary-border-button px-5 mr-3 text-sm"></button>
+            <button type="submit" pButton pRipple label="{{'labels.buttons.Add' | translate}}"
+                class="primary-button px-5 text-sm"></button>
+        </div>
+    </form>
+    }
+    @else{
+
+    <form [formGroup]="settingContent" (ngSubmit)="settingSubmit()" class="w-full flex flex-wrap">
+
+        <div class="grid nested-grid mt-3">
+
+            <div class="col-12">
+                <div class="grid">
+                    <div class="col-12">
                         <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Title
                             <span>*</span></label>
-                        <input type="text" pInputText formControlName="title" />
+                        <input class="w-full capitalize" type="text" pInputText formControlName="title" />
                     </div>
 
-                    <div class="w-full">
-                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Downloadable
-                            <span>*</span></label>
-                        <input type="text" pInputText formControlName="downloadable" />
-                    </div>
-
-                    <div class="w-full">
-                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Always Available
-                            <span>*</span></label>
-                        <input type="text" pInputText formControlName="available" />
+                    <div class="col-12">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Tags
+                        </label>
+                        <p-chips formControlName="tags" />
                     </div>
 
 
-                    <div class="w-full">
-                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Downloadable
-                            <span>*</span></label>
-                        <input type="text" pInputText formControlName="downloadable" />
+                    <div class="col-6">
+                        <div class="flex align-items-center">
+                            <p-checkbox formControlName="downloadable" label="Download" name="Downloadable"
+                                [binary]="true" />
+                        </div>
                     </div>
 
+                    <div class="col-6">
+
+                        <div class="flex align-items-center">
+                            <p-checkbox formControlName="available" label="Always Available" name="available"
+                                [binary]="true" />
+                        </div>
+
+                    </div>
+
+                    @if(settingContent.get('available')?.value == false){
+                    <div class="col-6">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> From Date </label>
+                        <p-calendar formControlName="formdate" />
+                    </div>
+
+                    <div class="col-6">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> To Date </label>
+                        <p-calendar formControlName="todate" />
+                    </div>
+                    }
 
                 </div>
-    
-    
-    
             </div>
-    
-            <div
-                class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
-                <button pButton pRipple label="{{'labels.buttons.Cancel' | translate}}"
-                    class="primary-border-button px-5 mr-3 text-sm"></button>
-                <button type="submit" pButton pRipple label="{{'labels.buttons.Add' | translate}}"
-                    class="primary-button px-5 text-sm"></button>
-            </div>
-        </form>
 
-     }
+
+
+        </div>
+
+        <div
+            class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+            <button pButton pRipple label="{{'labels.buttons.Cancel' | translate}}"
+                class="primary-border-button px-5 mr-3 text-sm"></button>
+            <button type="submit" pButton pRipple label="{{'labels.buttons.Add' | translate}}"
+                class="primary-button px-5 text-sm"></button>
+        </div>
+    </form>
+
+    }
 </div>
