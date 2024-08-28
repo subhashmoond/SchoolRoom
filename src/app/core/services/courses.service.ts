@@ -111,6 +111,16 @@ export class CoursesService {
     return this._dataService.post(url, body)
   }
 
+  editAudioSetting(id:any, payload:any){
+    const url = `${environment.basePath}content/audio/${id}/`;
+    return this._dataService.post(url, payload);
+  }
+
+  getAudioSetting(id:any){
+    const url = `${environment.basePath}content/audio/${id}/`;
+    return this._dataService.get(url);
+  }
+
   // Start Resource 
   addResource(body : any){
     const url = `${environment.basePath}content/resource/upload/`;
@@ -148,6 +158,16 @@ export class CoursesService {
   addText(body : any){
     const url = `${environment.basePath}content/article/create/`;
     return this._dataService.post(url, body)
+  }
+
+  editTextContent(id : any, payload : any){
+    const url = `${environment.basePath}content/articles/${id}/`;
+    return this._dataService.post(url, payload);
+  }
+
+  getTextContent(id : any){
+    const url = `${environment.basePath}content/articles/${id}/`;
+    return this._dataService.get(url);
   }
 
 
