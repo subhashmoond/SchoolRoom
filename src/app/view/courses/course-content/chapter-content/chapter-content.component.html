@@ -45,6 +45,11 @@
                         <span class="pi pi-cog"></span>
                     </button>
                     }
+                    @case ("audio") {
+                        <button (click)="uploadContent(data, 'Video', 'edit')" class="p-panel-header-icon p-link mr-2">
+                            <span class="pi pi-cog"></span>
+                        </button>
+                        }
                     @case ("notes") {
                     <button (click)="uploadContent(data, 'notes', 'edit')" class="p-panel-header-icon p-link mr-2">
                         <span class="pi pi-cog"></span>
@@ -90,6 +95,9 @@
                 @case ("notes") {
                     <p>PDF</p>
                 <img src="../../../../../assets/images/client-profile.png">
+                }
+                @case ("audio") {
+                    <p>Audio Content File Type</p>
                 }
                 @case ("image") {
                 <img src="../../../../../assets/images/client-profile.png">
@@ -181,7 +189,7 @@
 
 @if(isAudio){
     <p-sidebar [(visible)]="isAudio" position="right" [style]="{width:'27.6%'}">
-        <app-audio [lessonId]="lessonId" [contentTypes]="contentTypes"></app-audio>
+        <app-audio [lessonId]="lessonId" [contentTypes]="contentTypes" [contentId]="contentId"></app-audio>
     </p-sidebar>
 }
 
@@ -199,7 +207,7 @@
 
 @if(isText){
     <p-sidebar [(visible)]="isText" position="right" [style]="{width:'27.6%'}">
-        <app-text [lessonId]="lessonId" [contentTypes]="contentTypes"></app-text>
+        <app-text [lessonId]="lessonId" [contentTypes]="contentTypes" [contentId]="contentId"></app-text>
     </p-sidebar>
 }
 

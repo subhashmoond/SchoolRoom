@@ -43,7 +43,8 @@ export class AddCoursesComponent {
   selectedFileObjectUrl: any;
   fileUpload: any;
   selectedFile: any;
-  isThumbnail : boolean = false
+  isThumbnail : boolean = false;
+  aiDescripationData : any = [];
 
   constructor(private _courseService: CoursesService, private _router: Router, private _fb: FormBuilder, private _messageService: MessageService, private translate: TranslateService, private _sharedService: SharedService) { }
 
@@ -55,7 +56,7 @@ export class AddCoursesComponent {
     this.coursesForm = this._fb.group({
       name: [''],
       description: [''],
-      ispaid: [''],
+      ispaid: [true],
       price: ['']
     })
   }
@@ -96,6 +97,24 @@ export class AddCoursesComponent {
   profileImageRemove() {
     this.selectedFileObjectUrl = null;
     this.fileUpload.clear();
+  }
+
+  aiSubmit(){
+    const body = {
+       "template" : "description",
+       "courseName" : this.coursesForm.get('name')?.value
+    }
+
+  this._sharedService.getAIResponse(body).subscribe((res:any) => {
+    const resData = res.data
+    this.aiDescripationData = JSON.parse(resData)
+    console.log(this.aiDescripationData, "Course AI response")
+
+    this.coursesForm.patchValue({
+      description : this.aiDescripationData.description
+    })
+    
+  })
   }
 
 
