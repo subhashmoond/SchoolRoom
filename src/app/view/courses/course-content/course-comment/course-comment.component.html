@@ -1,0 +1,103 @@
+<div class="card">
+
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-6">
+            <h4 class="subheading-color">Courses Comment</h4>
+        </div>
+
+        <div class="col-6 flex justify-content-end">
+            <p-button class="create-button border-round-md" (click)="openCreateCouponsSidebar()">Add Comment</p-button>
+        </div>
+
+    </div>
+
+
+    <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
+        selectionMode="single" class="client-data-table" [value]="priceTableDesign">
+
+        <ng-template pTemplate="header" class="p-4">
+            <tr class="w-full flex flex-wrap">
+                <th style="width:25%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Plan Type</th>
+                <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Price</th>
+                <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Action
+                </th>
+            </tr>
+
+        </ng-template>
+
+        <ng-template pTemplate="body" let-data>
+            <tr class="w-full flex flex-wrap">
+                <td style="width: 25%;word-break:break-all;" class="pl-4 capitalize">
+                    {{data.type}}
+                </td>
+                <td style="width: 25%;word-break:break-all;" class="pl-4">
+                    {{data.price}}
+                </td>
+                <td style="width: 25%;" class="pl-4">
+                    <span class="relative flex flex-wrap align-items-center"><img
+                            src="../../../../assets/images/icon/mdi_eye.svg"
+                            class="search-icon client-view-icon"></span>
+                </td>
+
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">No customers found.</td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+
+</div>
+
+@if(isCreateCoupons){
+    <p-sidebar [(visible)]="isCreateCoupons" position="right" [style]="{width:'27.6%'}">
+    <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Create Coupons </h4>
+
+        <form [formGroup]="createCouponsForm" (ngSubmit)="createCouponse()" class="w-full flex flex-wrap">
+
+            <div class="grid nested-grid mt-3">
+    
+                <div class="col-12">
+                    <div class="grid">
+
+                        <div class="col-12">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Discount
+                                <span>*</span></label>
+                            <input class="w-full capitalize" type="text" pInputText formControlName="discount" />
+                        </div>
+    
+                        
+    
+                        <div class="col-12">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Valid To </label>
+                            <p-calendar formControlName="todate" />
+                        </div>  
+
+                        <div class="col-12">
+                            <div class="flex align-items-center">
+                                <p-checkbox formControlName="suggestDuring" label="Suggest During" name="suggest"
+                                    [binary]="true" />
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+    
+    
+    
+            </div>
+    
+            <div
+                class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+                <button pButton pRipple label="{{'labels.buttons.Cancel' | translate}}"
+                    class="primary-border-button px-5 mr-3 text-sm"></button>
+                <button type="submit" pButton pRipple label="{{'labels.buttons.Add' | translate}}"
+                    class="primary-button px-5 text-sm"></button>
+            </div>
+        </form>
+        
+    </p-sidebar>
+}

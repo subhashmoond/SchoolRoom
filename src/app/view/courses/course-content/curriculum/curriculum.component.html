@@ -18,7 +18,10 @@
           <form [formGroup]="addForm">
             <div formArrayName="courses">
               @for(course of courses.controls; track course; let i = $index){
-              <div [formGroupName]="i" class="content-card mb-4">
+              <div [attr.draggable]="true" 
+              (dragstart)="onTaskDragStart($event)"
+              (dragover)="onTaskDragOver($event)"
+              (drap)="onTaskDrop($event)" [formGroupName]="i" class="content-card mb-4">
                 <div class="p-3">
                   <i class="pi pi-microsoft font-bold text-primary-color"></i>
                 </div>
@@ -49,7 +52,11 @@
           
                   <div formArrayName="lessons">
                     @for(lesson of lessons(i).controls; track lesson; let j = $index){
-                    <div [formGroupName]="j" class="grid grid-nogutter p-3">
+                    <div [attr.draggable]="true" 
+                    (dragstart)="onTaskDragStart($event)"
+                    (dragover)="onTaskDragOver($event)"
+                    (drap)="onTaskDrop($event)"
+                     [formGroupName]="j" class="grid grid-nogutter p-3">
                       <div class="col-6 flex">
                         <i class="pi pi-microsoft font-bold pr-4 pt-1 text-primary-color"></i>
                         <div>
@@ -68,7 +75,7 @@
                           class="secondary-button px-6 text-sm"></button>
                         }
                         @else{
-                        <button type="button" pButton label="Publish" class="outline-icon-button edit-button"></button>
+                        <button type="button" (click)="publishLesson(lesson)" pButton label="Publish" class="outline-icon-button edit-button"></button>
                         }
                       </div>
                     </div>

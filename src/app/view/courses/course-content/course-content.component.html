@@ -1,14 +1,3 @@
-<!-- <p-toolbar>
-    <div class="p-toolbar-group-start">
-        <i class="pi pi-arrow-left mr-2" style="font-size: 1rem"></i> Course Name
-    </div>
-    
-    <div class="p-toolbar-group-end">
-        <p-button label="Publish course" [outlined]="true" class="mr-4" />
-        <p-button label="Save course" icon="pi pi-check" />
-    </div>
-</p-toolbar> -->
-
 
 <div class="grid grid-nogutter nested-grid">
     <div class="col-2">
@@ -22,66 +11,80 @@
 
         <ul class="sidebar-menu">
             <li>
-                <a href="javascript:void(0)" routerLinkActive="active"
+                <a href="javascript:void(0)" (click)="courseTabs('curriculum')" routerLinkActive="active"
                     class="sidebar-header flex align-items-center px-3">
                     <span> Curriculum </span>
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="javascript:void(0)" routerLinkActive="active"
                     class="sidebar-header flex align-items-center px-3">
                     <span> Certificates </span>
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
-            </li>
+            </li> -->
             <li>
-                <a href="javascript:void(0)" routerLinkActive="active"
+                <a href="javascript:void(0)" (click)="courseTabs('information')" routerLinkActive="active"
                     class="sidebar-header flex align-items-center px-3">
                     <span> Information </span>
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li>
             <li>
-                <a href="javascript:void(0)" routerLinkActive="active"
+                <a href="javascript:void(0)" (click)="courseTabs('pricing')" routerLinkActive="active"
                     class="sidebar-header flex align-items-center px-3">
                     <span> Pricing </span>
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li>
             <li>
-                <a href="javascript:void(0)" routerLinkActive="active"
+                <a href="javascript:void(0)" (click)="courseTabs('coupons')" routerLinkActive="active"
                     class="sidebar-header flex align-items-center px-3">
                     <span> Coupons </span>
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li>
             <li>
-                <a href="javascript:void(0)" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                <a href="javascript:void(0)" (click)="courseTabs('comment')" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
                     <span> Comment </span>
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li>
             <li>
-                <a href="javascript:void(0)" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                <a href="javascript:void(0)" (click)="courseTabs('student')" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
                     <span> Students </span>
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li>
-            <li>
-                <a href="javascript:void(0)" routerLinkActive="active"
-                    class="sidebar-header flex align-items-center px-3">
-                    <span> Reports </span>
-                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
-                </a>
-            </li>
+           
         </ul>
 
     </div>
 
 
     <div class="col-10 bg-white content-body">
-        <app-curriculum></app-curriculum>
+        @switch (currentActiveTab) {
+            @case ("curriculum") {
+                <app-curriculum></app-curriculum>
+            }
+            @case ("information") {
+                <app-course-information></app-course-information>
+            }
+            @case ("pricing") {
+                <app-course-pricing></app-course-pricing>
+            }
+            @case ("coupons") {
+                <app-course-coupons></app-course-coupons> 
+            }
+            @case ("comment") {
+                <app-course-comment></app-course-comment>
+            }
+            @case ("student") {
+                <app-course-students></app-course-students>
+            }
+        }
+
     </div>
 
 

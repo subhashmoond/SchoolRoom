@@ -1,165 +1,120 @@
 <p-toast></p-toast>
+<!-- 
+<div class="card">
+    <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+</div> -->
 
-<!-- <app-gemini-ai></app-gemini-ai> -->
+<router-outlet></router-outlet>
 
-@if(!isThumbnail){
+<!-- Step 1: Course Details -->
+<div *ngIf="activeIndex === 0">
+    <div class="add-courses mt-4">
+        <div class="text-center">
+            <h2 class="m-0">Tell us about your course</h2>
+            <p>We'll use this information to customize your course. You can change it any time.</p>
+        </div>
 
-<div class="add-courses mt-4">
-
-    <div class="text-center">
-        <h2 class="m-0">Tell us about your course</h2>
-        <p>We'll use this information to customize your course. You can change it any time.</p>
-    </div>
-
-    <form [formGroup]="coursesForm" class="w-6 m-0-a">
-
-
-        <div class="grid nested-grid mt-3">
-
-            <div class="col-12">
-                <div class="w-full">
-                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Courses Name
-                        <span>*</span></label>
-                    <input class="w-full capitalize" pInputText formControlName="name" placeholder="Enter Course Name"
-                        required="true" />
-                </div>
-            </div>
-
-
-            <div class="col-12 ai-generater">
-                <div class="flex justify-content-end">
-                    <p>Let our AI tool work its magic to generate a compelling course description and other metadata in
-                        seconds!
-                    </p>
-                </div>
-
-                <div class="flex justify-content-end">
-                    <button type="submit" pButton pRipple (click)="aiSubmit()" label="Generate Using AI"
-                        class="secondary-button px-6 text-sm"></button>
-                </div>
-
-            </div>
-
-
-            <div class="col-12 mt-4">
-                <div class="w-full">
-                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Description
-                    </label>
-                    <textarea rows="5" style="width: 100%;" pInputTextarea formControlName="description"> </textarea>
-                </div>
-            </div>
-
-            <div class="col-12 flex">
-                <p-checkbox formControlName="ispaid" [binary]="true" /> <label class="ml-2" for="ny"> This is a paid
-                    course </label>
-            </div>
-
-
-            @if(this.coursesForm.get('ispaid')?.value === true){
-
-            <div class="col-12 mt-4">
-
-                <div class="grid">
-                    <div class="col-6">
-                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Price</label>
-                        <input class="w-full" pInputText placeholder="Enter price" formControlName="price" />
+        <form [formGroup]="coursesForm" class="w-6 m-0-a">
+            <div class="grid nested-grid mt-3">
+                <div class="col-12">
+                    <div class="w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Course Name
+                            <span>*</span></label>
+                        <input class="w-full capitalize" pInputText formControlName="name"
+                            placeholder="Enter Course Name" required="true" />
                     </div>
                 </div>
 
+                <div class="col-12 ai-generater">
+                    <div class="flex justify-content-end">
+                        <p>Let our AI tool work its magic to generate a compelling course description and other metadata
+                            in seconds!</p>
+                    </div>
+                    <div class="flex justify-content-end">
+                        <button type="button" pButton pRipple (click)="aiSubmit()" label="Generate Using AI"
+                            class="secondary-button px-6 text-sm"></button>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-4">
+                    <div class="w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Description</label>
+                        <textarea rows="5" style="width: 100%;" pInputTextarea formControlName="description"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-12 flex">
+                    <p-checkbox formControlName="ispaid" [binary]="true"></p-checkbox>
+                    <label class="ml-2">This is a paid course</label>
+                </div>
+
+                <div class="col-12 mt-4" *ngIf="coursesForm.get('ispaid')?.value">
+                    <div class="grid">
+                        <div class="col-6">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Price</label>
+                            <input class="w-full" pInputText placeholder="Enter price" formControlName="price" />
+                        </div>
+                    </div>
+                </div>
             </div>
-            }
-
-
-
-        </div>
-
-
-
-
-    </form>
-
-
+        </form>
+    </div>
 </div>
 
+<!-- Step 2: Thumbnail -->
+<div *ngIf="activeIndex === 1">
+    <div class="add-courses mt-4">
+        <div class="text-center">
+            <h2 class="m-0">Outline your course</h2>
+            <p>Choose a method below to create your course curriculum.</p>
+        </div>
+        <!-- Thumbnail upload logic here -->
+        <form [formGroup]="aiContentForm" class="w-6 m-0-a">
+            <div class="option">
+                <p-checkbox id="generate-ai" [binary]="true" formControlName="isGenerate" name="outline-method" />
+                <label for="generate-ai">
+                    <div class="option-content">
+                        <h3>Generate with AI</h3>
+                        <p>Describe your course below and we’ll generate an outline for you.</p>
+                    </div>
+                </label>
+            </div>
 
+            <textarea formControlName="descibeCourse" placeholder="Describe your course"></textarea>
+
+            <div class="option">
+                <p-checkbox type="radio" id="start-scratch" [binary]="true" formControlName="isScratch"  name="outline-method" />
+                <label for="start-scratch">
+                    <div class="option-content">
+                        <h3>Start from scratch</h3>
+                        <p>I will create my own outline.</p>
+                    </div>
+                </label>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Step 3: Confirmation -->
+<div *ngIf="activeIndex === 2">
+    <div class="add-courses mt-4">
+        <div class="text-center">
+            <h2 class="m-0">Review and Submit</h2>
+            <p>Review the details of your course before submitting.</p>
+        </div>
+        <!-- Confirmation details here -->
+    </div>
+</div>
+
+<!-- Navigation Buttons -->
 <div class="w-98 absolute bottom-0 grid m-0-a">
     <div class="col-6">
-        <h3 class="m-0 font-semibold">Cancel</h3>
+        <button type="button" pButton pRipple (click)="back()" label="Back" class="secondary-button px-6 text-sm"
+            [disabled]="activeIndex === 0"></button>
     </div>
     <div class="col-6 flex justify-content-end">
-        <button type="submit" pButton pRipple (click)="submit()" label="Next"
+        <button type="button" pButton pRipple (click)="submit()"
+            label="{{ activeIndex === items.length - 1 ? 'Submit' : 'Next' }}"
             class="secondary-button px-6 text-sm"></button>
     </div>
 </div>
-}
-@else {
-
-
-<div class="add-courses mt-4">
-
-    <div class="text-center">
-        <h2 class="m-0">Tell us about your course</h2>
-        <p>We'll use this information to customize your course. You can change it any time.</p>
-    </div>
-
-    <div class="grid">
-        <div class="col-6">
-            <div class="w-full mb-4 p-5">
-                <div
-                    class="border-dashed border-round-lg border-2 flex flex-wrap align-items-center justify-content-center user-image relative h-9rem">
-                    <img width="100" height="100"
-                        [src]="selectedFileObjectUrl ? selectedFileObjectUrl : '../../../../assets/images/icon/upload-image.svg'"
-                        alt="Image Preview" [ngClass]="selectedFileObjectUrl ? 'w-full h-full' : 'w-4rem h-4rem'" />
-                    @if(selectedFile){
-                    <i class="pi pi-times profile-remove-icon" (click)="profileImageRemove()"
-                        style="font-size: 1rem"></i>
-                    }
-
-                </div>
-                <span class="flex flex-wrap align-items-center justify-content-center mt-2">
-                    @if(!selectedFileObjectUrl){
-                    <img class="h-1rem w-1rem" src="../../../../assets/images/icon/upload-icon.svg">
-                    }
-                    <p-fileUpload #fileUpload mode="basic" class="bg-none text-base text-700 border-0 z-2"
-                        chooseLabel="Add course cover" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
-                        accept="image/*" (onSelect)="onFileSelect($event)" cancelStyleClass="null"></p-fileUpload>
-
-                </span>
-            </div>
-        </div>
-
-        <div class="col-6">
-
-            <div class="w-full mb-4 p-5">
-                <div
-                    class="border-dashed border-round-lg border-2 flex flex-wrap align-items-center justify-content-center user-image relative h-9rem">
-                    <img width="100" height="100"
-                        [src]="selectedFileObjectUrl ? selectedFileObjectUrl : '../../../../assets/images/icon/upload-image.svg'"
-                        alt="Image Preview" [ngClass]="selectedFileObjectUrl ? 'w-full h-full' : 'w-4rem h-4rem'" />
-                    @if(selectedFile){
-                    <i class="pi pi-times profile-remove-icon" (click)="profileImageRemove()"
-                        style="font-size: 1rem"></i>
-                    }
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<div class="w-98 absolute bottom-0 grid m-0-a">
-    <div class="col-6">
-        <h3 class="m-0 font-semibold">Cancel</h3>
-    </div>
-    <div class="col-6 flex justify-content-end">
-        <button type="submit" pButton pRipple (click)="submit()" label="Next"
-            class="secondary-button px-6 text-sm"></button>
-    </div>
-</div>
-
-}

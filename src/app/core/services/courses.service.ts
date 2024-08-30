@@ -42,6 +42,11 @@ export class CoursesService {
     return this._dataService.post(url, body)
   }
 
+  publishLesson(courseId : any, payload:any){
+    const url = `${environment.basePath}course/${courseId}/lecture/publish`;
+    return this._dataService.post(url, payload);
+  }
+
 
   getChapterContentList(coursesId : any, lessonId : any){
     const url = `${environment.basePath}course/${coursesId}/lectures/${lessonId}/contents/`;
@@ -170,5 +175,11 @@ export class CoursesService {
     return this._dataService.get(url);
   }
 
+
+  // Course Price 
+  getCoursePriceList(courseId : any){
+    const url = `${environment.basePath}course/${courseId}/plans`;
+    return this._dataService.get(url);
+  }
 
 }

@@ -18,6 +18,7 @@ export class CurriculumComponent {
   isSavedCourses: boolean[] = [];
   isEditLesson: boolean[][] = [];
   courseId: any;
+  dragData : any;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private _router: Router, private _courseService: CoursesService) {
     this.route.paramMap.subscribe(params => {
@@ -136,5 +137,41 @@ export class CurriculumComponent {
       console.error('Error saving lesson', error);
     });
   }
+
+  publishLesson(data: any) {
+    const lessionId = data.value.id
+    const payload = {
+      "id": lessionId,
+      "is_published": true
+    }
+
+    this._courseService.publishLesson(this.courseId, payload).subscribe(res => {
+      console.log(res)
+    })
+  }
+
   
+
+onTaskDragStart(event : any){
+this.dragData = event.target.innerText
+}
+
+onTaskDragOver(event : any){
+event.preventDefault();
+}
+
+onTaskDrop(event : any){
+event.preventDefault();
+const targetTask = event.target;
+const textOfTragetTask = targetTask.innerText;
+const textOfSourceTask = this.dragData.innterText;
+
+targetTask.innerText = textOfSourceTask
+this.dragData.innerText = textOfTragetTask
+
+
+// const targetTask  = event.target
+// targetTask.innerText = this.dragData
+}
+
 }
