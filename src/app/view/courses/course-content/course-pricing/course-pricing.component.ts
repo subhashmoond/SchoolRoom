@@ -15,11 +15,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'app-course-pricing',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, InputSwitchModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule],
+  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, RadioButtonModule, InputSwitchModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule],
   templateUrl: './course-pricing.component.html',
   styleUrl: './course-pricing.component.css'
 })
@@ -44,9 +45,21 @@ export class CoursePricingComponent {
       price : ['', Validators.required],
       discount : [''],
       instalment : false,
-      duration : false
-
+      duration : false,
+      instalmentMonths : [],
+      instalmentMonthsValue : [],
+      instalmentWeekly : [],
+      instalmentWeeklyValue : [],
+      durationDate : [],
+      durationDateValue : [],
+      durationDays : [],
+      durationDaysValue : [],
+      instalmentType : null
     })
+  }
+
+  get instalmentType() {
+    return this.createPlanForm.get('instalmentType')?.value;
   }
 
   getPriceList(){
@@ -61,7 +74,7 @@ export class CoursePricingComponent {
   }
 
   submitPlan(){
-
+    console.log(this.createPlanForm.value, "form data log ")
   }
 
 }
