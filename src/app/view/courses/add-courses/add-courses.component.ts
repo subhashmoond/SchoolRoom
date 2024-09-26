@@ -93,20 +93,20 @@ export class AddCoursesComponent {
     if (this.activeIndex === 0) {
       this.next();
 
-      // const body = {
-      //   "name": this.coursesForm.get('name')?.value,
-      //   "price": this.coursesForm.get('price')?.value,
-      //   "describe": this.coursesForm.get('description')?.value,
-      //   "language": 2,
-      //   "is_paid": this.coursesForm.get('ispaid')?.value
-      // }
-      // this._courseService.addCourses(body).subscribe((res:any) => {
-      //   if(res.status == "Success"){
-      //     const courseId = res.course.id
-      //     // this._router.navigate(['/course/content', courseId]);
-      //     this.next();
-      //   }
-      // })
+      const body = {
+        "name": this.coursesForm.get('name')?.value,
+        "price": this.coursesForm.get('price')?.value,
+        "describe": this.coursesForm.get('description')?.value,
+        "language": 2,
+        "isPaid": this.coursesForm.get('ispaid')?.value
+      }
+      this._courseService.addCourses(body).subscribe((res:any) => {
+        if(res.status == "Success"){
+          const courseId = res.course.id
+          // this._router.navigate(['/course/content', courseId]);
+          this.next();
+        }
+      })
     }
 
     if (this.activeIndex === 1) {

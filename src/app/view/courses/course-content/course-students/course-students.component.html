@@ -6,7 +6,7 @@
         </div>
 
         <div class="col-6 flex justify-content-end">
-            <p-button class="create-button border-round-md" (click)="openCreateCouponsSidebar()">Add Student</p-button>
+            <p-button class="create-button border-round-md" (click)="openSidebar()">Add Student</p-button>
         </div>
 
     </div>
@@ -52,11 +52,11 @@
 
 </div>
 
-@if(isCreateCoupons){
-    <p-sidebar [(visible)]="isCreateCoupons" position="right" [style]="{width:'27.6%'}">
+@if(isAddStudent){
+    <p-sidebar [(visible)]="isAddStudent" position="right" [style]="{width:'27.6%'}">
     <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Create Coupons </h4>
 
-        <form [formGroup]="createCouponsForm" (ngSubmit)="createCouponse()" class="w-full flex flex-wrap">
+        <form [formGroup]="createCouponsForm" (ngSubmit)="createStudent()" class="w-full flex flex-wrap">
 
             <div class="grid nested-grid mt-3">
     
@@ -64,9 +64,12 @@
                     <div class="grid">
 
                         <div class="col-12">
-                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Discount
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Select Student
                                 <span>*</span></label>
-                            <input class="w-full capitalize" type="text" pInputText formControlName="discount" />
+                            <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
+                            [required]="true" formControlName="selectstudent" [options]="allStudentList"
+                            optionValue="id" optionLabel="name"
+                            placeholder="Select Student"></p-dropdown>
                         </div>
     
                         
@@ -77,10 +80,8 @@
                         </div>  
 
                         <div class="col-12">
-                            <div class="flex align-items-center">
-                                <p-checkbox formControlName="suggestDuring" label="Suggest During" name="suggest"
-                                    [binary]="true" />
-                            </div>
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Amount</label>
+                            <input class="w-full capitalize" type="text" pInputText formControlName="amount" />
                         </div>
     
                     </div>
@@ -92,9 +93,9 @@
     
             <div
                 class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
-                <button pButton pRipple label="{{'labels.buttons.Cancel' | translate}}"
+                <button pButton pRipple label="Cancel"
                     class="primary-border-button px-5 mr-3 text-sm"></button>
-                <button type="submit" pButton pRipple label="{{'labels.buttons.Add' | translate}}"
+                <button type="submit" pButton pRipple label="Add"
                     class="primary-button px-5 text-sm"></button>
             </div>
         </form>

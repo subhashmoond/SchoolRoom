@@ -14,6 +14,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { CouponsService } from '../../../../core/services/coupons.service';
+import { CoursesService } from '../../../../core/services/courses.service';
 
 @Component({
   selector: 'app-course-comment',
@@ -27,16 +28,19 @@ export class CourseCommentComponent {
   priceTableDesign : any;
   isCreateCoupons : boolean = false;
   createCouponsForm! : FormGroup;
-  coursesId : any;
+  courseId : any;
+  reviewList : any [] = []
 
-  constructor(private _fb : FormBuilder, private _couponsService : CouponsService, private route : ActivatedRoute){
-
-    this.route.queryParams.subscribe(params => {
-      this.coursesId = params['courseId'];
+  constructor(private _fb : FormBuilder, private _courseService : CoursesService, private route : ActivatedRoute){
+    this.route.paramMap.subscribe(params => {
+      this.courseId = params.get('id')!;
     });
   }
   
   ngOnInit(){
+
+    this.getReviewsList();
+
     this.priceTableDesign = [
       {type : 'One time paymet', price : 20000}
     ]
@@ -48,23 +52,11 @@ export class CourseCommentComponent {
     })
   }
 
-  openCreateCouponsSidebar(){
-    this.isCreateCoupons = true
-  }
-
-  createCouponse(){
-
-    const payload = {
-      "course":[this.coursesId],
-      "suggest_during_checkout":this.createCouponsForm.get('suggestDuring')?.value,
-      "valid_to": this.createCouponsForm.get('todate')?.value,
-      "discount": this.createCouponsForm.get('discount')?.value
-  }
-
-    this._couponsService.createCoupons(payload).subscribe(res => {
-      console.log(res, "app response details")
+  getReviewsList(){
+    this._courseService.getCourseReviewList(this.courseId).subscribe((res:any) => {
+      this.reviewList = res.reviews
     })
-
   }
+   
 
 }

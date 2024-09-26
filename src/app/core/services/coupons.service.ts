@@ -11,8 +11,13 @@ export class CouponsService {
   constructor(private http: HttpClient, private _dataService: DataMethodService) { }
 
   createCoupons(payload : any){
-    const url = `${environment.basePath}create/coupone/`;
+    const url = `${environment.basePath}management/create/coupone/`;
     return this._dataService.post(url, payload)
+  }
+
+  getCouponsList(){
+    const url = `${environment.basePath}management/coupone/list/`;
+    return this._dataService.get(url)
   }
 
 }

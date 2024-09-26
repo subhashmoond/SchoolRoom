@@ -24,27 +24,32 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './course-coupons.component.css'
 })
 export class CourseCouponsComponent {
-  priceTableDesign : any;
   isCreateCoupons : boolean = false;
   createCouponsForm! : FormGroup;
-  coursesId : any;
+  courseId : any;
+  couponsList : any;
 
   constructor(private _fb : FormBuilder, private _couponsService : CouponsService, private route : ActivatedRoute){
 
-    this.route.queryParams.subscribe(params => {
-      this.coursesId = params['courseId'];
+    this.route.paramMap.subscribe(params => {
+      this.courseId = params.get('id')!;
     });
   }
   
   ngOnInit(){
-    this.priceTableDesign = [
-      {type : 'One time paymet', price : 20000}
-    ]
+
+    this.getCouponsList();
 
     this.createCouponsForm = this._fb.group({
       suggestDuring : [],
       discount : [],
       todate : []
+    })
+  }
+
+  getCouponsList(){
+    this._couponsService.getCouponsList().subscribe(res => {
+      this.couponsList = res.data
     })
   }
 
@@ -55,7 +60,7 @@ export class CourseCouponsComponent {
   createCouponse(){
 
     const payload = {
-      "course":[this.coursesId],
+      "course":[this.courseId],
       "suggest_during_checkout":this.createCouponsForm.get('suggestDuring')?.value,
       "valid_to": this.createCouponsForm.get('todate')?.value,
       "discount": this.createCouponsForm.get('discount')?.value
@@ -63,6 +68,8 @@ export class CourseCouponsComponent {
 
     this._couponsService.createCoupons(payload).subscribe(res => {
       console.log(res, "app response details")
+      this.getCouponsList();
+      this.isCreateCoupons = false
     })
 
   }

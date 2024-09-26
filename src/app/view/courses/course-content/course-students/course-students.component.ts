@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -14,6 +14,8 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { CouponsService } from '../../../../core/services/coupons.service';
+import { CoursesService } from '../../../../core/services/courses.service';
+import { UserService } from '../../../../core/services/user.service';
 
 @Component({
   selector: 'app-course-students',
@@ -24,46 +26,65 @@ import { CouponsService } from '../../../../core/services/coupons.service';
 })
 export class CourseStudentsComponent {
 
-  priceTableDesign : any;
-  isCreateCoupons : boolean = false;
-  createCouponsForm! : FormGroup;
-  coursesId : any;
+  priceTableDesign: any;
+  isAddStudent: boolean = false;
+  createCouponsForm!: FormGroup;
+  courseId: any;
+  studentList: any[] = [];
+  allStudentList : any[] = [];
 
-  constructor(private _fb : FormBuilder, private _couponsService : CouponsService, private route : ActivatedRoute){
+  constructor(private _fb: FormBuilder, private _courseService: CoursesService, private route: ActivatedRoute, private _userService : UserService) {
 
-    this.route.queryParams.subscribe(params => {
-      this.coursesId = params['courseId'];
+    this.route.paramMap.subscribe(params => {
+      this.courseId = params.get('id')!;
     });
   }
-  
-  ngOnInit(){
+
+  ngOnInit() {
     this.priceTableDesign = [
-      {type : 'One time paymet', price : 20000}
+      { type: 'One time paymet', price: 20000 }
     ]
+    this.getStudentList()
 
     this.createCouponsForm = this._fb.group({
-      suggestDuring : [],
-      discount : [],
-      todate : []
+      selectstudent: ['', Validators.required],
+      todate: [],
+      amount: ['', Validators.required]
     })
   }
 
-  openCreateCouponsSidebar(){
-    this.isCreateCoupons = true
+  getStudentList() {
+    this._courseService.getStudentList().subscribe(res => {
+      this.studentList = res.response
+    })
   }
 
-  createCouponse(){
+  openSidebar() {
+    this.isAddStudent = true;
+    this.getAllStudentList();
+  }
+
+  getAllStudentList(){
+    this._userService.getStudentData().subscribe(res => {
+      this.allStudentList = res.studentList
+    })
+  }
+
+  createStudent(){
 
     const payload = {
-      "course":[this.coursesId],
-      "suggest_during_checkout":this.createCouponsForm.get('suggestDuring')?.value,
-      "valid_to": this.createCouponsForm.get('todate')?.value,
-      "discount": this.createCouponsForm.get('discount')?.value
-  }
+      "course_id": this.courseId,
+      "students": this.createCouponsForm.get('selectstudent')?.value,
+      "endDate": this.createCouponsForm.get('todate')?.value,
+      "amout": this.createCouponsForm.get('amount')?.value
+    }
 
-    this._couponsService.createCoupons(payload).subscribe(res => {
-      console.log(res, "app response details")
+    this._courseService.addStudentCourse(payload).subscribe(res => {
+      this.getStudentList();
+      this.isAddStudent = false
     })
 
   }
+
+
 }

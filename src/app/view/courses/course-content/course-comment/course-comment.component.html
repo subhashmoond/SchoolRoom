@@ -1,44 +1,38 @@
 <div class="card">
 
     <div class="grid client-dashborad-header mb-4 align-items-center">
-        <div class="col-6">
+        <div class="col-12">
             <h4 class="subheading-color">Courses Comment</h4>
         </div>
-
-        <div class="col-6 flex justify-content-end">
+        <!-- <div class="col-6 flex justify-content-end">
             <p-button class="create-button border-round-md" (click)="openCreateCouponsSidebar()">Add Comment</p-button>
-        </div>
-
+        </div> -->
     </div>
 
 
     <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
-        selectionMode="single" class="client-data-table" [value]="priceTableDesign">
+        selectionMode="single" class="client-data-table" [value]="reviewList">
 
         <ng-template pTemplate="header" class="p-4">
             <tr class="w-full flex flex-wrap">
-                <th style="width:25%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Plan Type</th>
-                <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Price</th>
-                <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Action
+                <th style="width:25%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">NAME</th>
+                <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">RATING</th>
+                <th style="width:50%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">REVIEW TEXT
                 </th>
             </tr>
-
         </ng-template>
 
         <ng-template pTemplate="body" let-data>
             <tr class="w-full flex flex-wrap">
                 <td style="width: 25%;word-break:break-all;" class="pl-4 capitalize">
-                    {{data.type}}
+                    {{data.userName}}
                 </td>
                 <td style="width: 25%;word-break:break-all;" class="pl-4">
-                    {{data.price}}
+                    {{data.rating}}
                 </td>
-                <td style="width: 25%;" class="pl-4">
-                    <span class="relative flex flex-wrap align-items-center"><img
-                            src="../../../../assets/images/icon/mdi_eye.svg"
-                            class="search-icon client-view-icon"></span>
+                <td style="width: 50%;" class="pl-4">
+                    {{data.review_text}}
                 </td>
-
             </tr>
         </ng-template>
 
@@ -56,7 +50,7 @@
     <p-sidebar [(visible)]="isCreateCoupons" position="right" [style]="{width:'27.6%'}">
     <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Create Coupons </h4>
 
-        <form [formGroup]="createCouponsForm" (ngSubmit)="createCouponse()" class="w-full flex flex-wrap">
+        <form [formGroup]="createCouponsForm" class="w-full flex flex-wrap">
 
             <div class="grid nested-grid mt-3">
     
