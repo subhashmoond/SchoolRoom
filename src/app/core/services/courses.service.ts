@@ -16,6 +16,11 @@ export class CoursesService {
     return this._dataService.post(url, body);
   }
 
+  addCoursesAIResponse(payload : any){
+    const url = `${environment.basePath}course/subject_chapter/add/`;
+    return this._dataService.post(url, payload)
+  }
+
   getCoursesList() {
     const url = `${environment.basePath}course/getList/`;
     return this._dataService.get(url)

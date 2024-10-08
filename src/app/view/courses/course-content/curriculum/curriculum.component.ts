@@ -5,11 +5,12 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { CoursesService } from '../../../../core/services/courses.service';
+import { MenuModule } from 'primeng/menu';
 
 @Component({
   selector: 'app-curriculum',
   standalone: true,
-  imports: [CardModule, ButtonModule, ReactiveFormsModule, InputTextModule],
+  imports: [CardModule, ButtonModule, MenuModule, ReactiveFormsModule, InputTextModule],
   templateUrl: './curriculum.component.html',
   styleUrl: './curriculum.component.css'
 })
@@ -19,6 +20,7 @@ export class CurriculumComponent {
   isEditLesson: boolean[][] = [];
   courseId: any;
   dragData : any;
+  actionMenu : any
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private _router: Router, private _courseService: CoursesService) {
     this.route.paramMap.subscribe(params => {
@@ -33,6 +35,25 @@ export class CurriculumComponent {
 
     this.getCoursesList();
     this.getSubjectAndChapter();
+
+    this.actionMenu = [
+      {
+          items: [
+              {
+                  label: 'Edit',
+                  icon: 'pi pi-pencil'
+              },
+              {
+                  label: 'Delete',
+                  icon: 'pi pi-trash'
+              }
+          ]
+      }
+  ];
+  }
+
+  selectedMenu(event : any){
+    console.log(event, "this is call after select dot menu")
   }
 
   getCoursesList() {

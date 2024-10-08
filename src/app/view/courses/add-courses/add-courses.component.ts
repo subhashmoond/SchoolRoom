@@ -48,6 +48,8 @@ export class AddCoursesComponent {
   aiDescripationData: any = [];
   items: any;
   activeIndex: number = 0;
+  maxFileSizeLimit = 10 * 1024 * 1024;
+  courseId: any
 
   constructor(private _courseService: CoursesService, private _router: Router, private _fb: FormBuilder, private _messageService: MessageService, private translate: TranslateService, private _sharedService: SharedService) { }
 
@@ -100,9 +102,9 @@ export class AddCoursesComponent {
         "language": 2,
         "isPaid": this.coursesForm.get('ispaid')?.value
       }
-      this._courseService.addCourses(body).subscribe((res:any) => {
-        if(res.status == "Success"){
-          const courseId = res.course.id
+      this._courseService.addCourses(body).subscribe((res: any) => {
+        if (res.status == "Success") {
+          this.courseId = res.course.id
           // this._router.navigate(['/course/content', courseId]);
           this.next();
         }
@@ -113,18 +115,62 @@ export class AddCoursesComponent {
       const body = {
         "template": "content",
         "courseName": this.coursesForm.get('name')?.value,
-        "userPrompt" : this.aiContentForm.get('descibeCourse')?.value
+        "userPrompt": this.aiContentForm.get('descibeCourse')?.value
       }
 
       this._sharedService.getAIResponse(body).subscribe((res: any) => {
         const resData = res.data
         this.aiDescripationData = JSON.parse(resData)
+        this.addSubjectAndLessonInCourse(this.aiDescripationData.Coursecontent)
         console.log(this.aiDescripationData, "Course AI response")
 
       })
     }
 
 
+  }
+
+  addSubjectAndLessonInCourse(data: any) {
+    //     const payload = {
+    //       "course": this.courseId,
+    //       "section_lesson": []
+    //   }
+
+    //   data.forEach((item:any) => {
+    //     var newSection = {
+    //         section: `${item.subject} - ${item.chapter}`,
+    //         lessone: item.target_words
+    //     };
+    //     payload.section_lesson.push(newSection);
+    // });
+
+    type SectionLesson = {
+      section: string;
+      lessone: string[];
+    };
+
+    type Payload = {
+      course: number;
+      section_lesson: SectionLesson[];
+    };
+
+    const payload: Payload = {
+      course: 1,
+      section_lesson: []
+    };
+
+    // Merge data (assuming 'data' is similar to 'subjects')
+    data.forEach((item: any) => {
+      const newSection: SectionLesson = {
+        section: `${item.subject} - ${item.chapter}`,
+        lessone: item.target_words
+      };
+      payload.section_lesson.push(newSection);
+    });
+
+    this._courseService.addCoursesAIResponse(payload).subscribe(res => {
+
+    })
   }
 
 

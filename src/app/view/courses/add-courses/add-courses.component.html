@@ -7,13 +7,14 @@
 <router-outlet></router-outlet>
 
 <!-- Step 1: Course Details -->
-<div *ngIf="activeIndex === 0">
+@if(activeIndex === 0){
+
     <div class="add-courses mt-4">
         <div class="text-center">
             <h2 class="m-0">Tell us about your course</h2>
             <p>We'll use this information to customize your course. You can change it any time.</p>
         </div>
-
+   
         <form [formGroup]="coursesForm" class="w-6 m-0-a">
             <div class="grid nested-grid mt-3">
                 <div class="col-12">
@@ -24,7 +25,7 @@
                             placeholder="Enter Course Name" required="true" />
                     </div>
                 </div>
-
+   
                 <div class="col-12 ai-generater">
                     <div class="flex justify-content-end">
                         <p>Let our AI tool work its magic to generate a compelling course description and other metadata
@@ -35,19 +36,19 @@
                             class="secondary-button px-6 text-sm"></button>
                     </div>
                 </div>
-
+   
                 <div class="col-12 mt-4">
                     <div class="w-full">
                         <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Description</label>
                         <textarea rows="5" style="width: 100%;" pInputTextarea formControlName="description"></textarea>
                     </div>
                 </div>
-
+   
                 <div class="col-12 flex">
                     <p-checkbox formControlName="ispaid" [binary]="true"></p-checkbox>
                     <label class="ml-2">This is a paid course</label>
                 </div>
-
+   
                 <div class="col-12 mt-4" *ngIf="coursesForm.get('ispaid')?.value">
                     <div class="grid">
                         <div class="col-6">
@@ -59,16 +60,47 @@
             </div>
         </form>
     </div>
-</div>
+ }
 
-<!-- Step 2: Thumbnail -->
-<div *ngIf="activeIndex === 1">
+
+
+<!-- Step 2: Thumbnail Upload  -->
+<!-- @if(activeIndex === ){
+
+    <div class="ls-2 pr-3">
+        <div
+            class="border-dashed border-round-lg border-2 flex flex-wrap align-items-center justify-content-center user-image relative">
+
+            <img width="100" height="100"
+            [src]="selectedFileObjectUrl ? selectedFileObjectUrl : '../../../../assets/images/icon/upload-image.svg'"
+            alt="Image Preview" [ngClass]="selectedFileObjectUrl ? 'w-full h-full' : 'w-4rem h-4rem'" />
+        @if(selectedFileObjectUrl){
+        <i class="pi pi-times profile-remove-icon" (click)="profileImageRemove()"
+            style="font-size: 1rem"></i>
+        }
+
+        </div>
+        <span class="flex flex-wrap align-items-center justify-content-center mt-2 mb-1">
+            @if(!selectedFileObjectUrl){
+            <img class="h-1rem w-1rem" src="../../../../assets/images/icon/upload-icon.svg">
+            }
+            <p-fileUpload #fileUpload [showUploadButton]="true" mode="basic" class="bg-none text-base text-700 border-0 z-2 required-upload profile-message-remove"
+                chooseLabel="Upload Image*" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
+                accept="image/*" [maxFileSize]="maxFileSizeLimit" (onSelect)="onFileSelect($event)"></p-fileUpload>
+        </span>
+       
+    </div>
+} -->
+
+
+<!-- Step 3: AI Content Create -->
+@if(activeIndex === 1){
     <div class="add-courses mt-4">
         <div class="text-center">
             <h2 class="m-0">Outline your course</h2>
             <p>Choose a method below to create your course curriculum.</p>
         </div>
-        <!-- Thumbnail upload logic here -->
+        <!-- AI Content logic here -->
         <form [formGroup]="aiContentForm" class="w-6 m-0-a">
             <div class="option">
                 <p-checkbox id="generate-ai" [binary]="true" formControlName="isGenerate" name="outline-method" />
@@ -79,9 +111,9 @@
                     </div>
                 </label>
             </div>
-
+    
             <textarea formControlName="descibeCourse" placeholder="Describe your course"></textarea>
-
+    
             <div class="option">
                 <p-checkbox type="radio" id="start-scratch" [binary]="true" formControlName="isScratch"  name="outline-method" />
                 <label for="start-scratch">
@@ -93,18 +125,18 @@
             </div>
         </form>
     </div>
-</div>
+}
 
 <!-- Step 3: Confirmation -->
-<div *ngIf="activeIndex === 2">
-    <div class="add-courses mt-4">
-        <div class="text-center">
-            <h2 class="m-0">Review and Submit</h2>
-            <p>Review the details of your course before submitting.</p>
-        </div>
-        <!-- Confirmation details here -->
-    </div>
-</div>
+ @if(activeIndex === 2){
+     <div class="add-courses mt-4">
+         <div class="text-center">
+             <h2 class="m-0">Review and Submit</h2>
+             <p>Review the details of your course before submitting.</p>
+         </div>
+         <!-- Confirmation details here -->
+     </div>
+ }
 
 <!-- Navigation Buttons -->
 <div class="w-98 absolute bottom-0 grid m-0-a">

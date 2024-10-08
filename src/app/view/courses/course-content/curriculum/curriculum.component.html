@@ -1,115 +1,131 @@
 <div class="cards">
 
-    <div class="grid client-dashborad-header mb-4 align-items-center">
-        <div class="col-6">
-            <h4 class="subheading-color">Curriculum</h4>
-        </div>
-        <div class="col-6 flex justify-content-end	">
-            <button type="submit" pButton pRipple label="Preview" class="secondary-button px-6 text-sm"></button>
-        </div>
-
+  <div class="grid client-dashborad-header mb-4 align-items-center">
+    <div class="col-6">
+      <h4 class="subheading-color">Curriculum</h4>
+    </div>
+    <div class="col-6 flex justify-content-end	">
+      <button type="submit" pButton pRipple label="Preview" class="secondary-button px-6 text-sm"></button>
     </div>
 
+  </div>
 
-    <div class="grid">
 
-        <div class="col-12">
+  <div class="grid">
 
-          <form [formGroup]="addForm">
-            <div formArrayName="courses">
-              @for(course of courses.controls; track course; let i = $index){
-              <div [attr.draggable]="true" 
-              (dragstart)="onTaskDragStart($event)"
-              (dragover)="onTaskDragOver($event)"
-              (drap)="onTaskDrop($event)" [formGroupName]="i" class="content-card mb-4">
-                <div class="p-3">
-                  <i class="pi pi-microsoft font-bold text-primary-color"></i>
+    <div class="col-12">
+
+      <form [formGroup]="addForm">
+        <div formArrayName="courses">
+          @for(course of courses.controls; track course; let i = $index){
+          <div [attr.draggable]="true" (dragstart)="onTaskDragStart($event)" (dragover)="onTaskDragOver($event)"
+            (drap)="onTaskDrop($event)" [formGroupName]="i" class="content-card mb-4">
+            <div class="p-3">
+              <i class="pi pi-microsoft font-bold text-primary-color"></i>
+            </div>
+            <div class="border-left">
+              <div class="grid grid-nogutter client-dashborad-header align-items-center border-bottom-light p-3 card">
+                <div class="col-6 flex">
+                  <i class="pi pi-microsoft font-bold pr-4 pt-1 text-primary-color"></i>
+                  <div>
+                    @if(isSavedCourses[i]){
+                    <input class="w-full" pInputText formControlName="items" />
+                    }
+                    @else{
+                    <span>{{ course.get('items')?.value }}</span>
+                    <!-- <span (click)="enableEditCourse(i)">{{ course.get('items')?.value }}</span> -->
+                    }
+                  </div>
                 </div>
-                <div class="border-left">
-                  <div class="grid grid-nogutter client-dashborad-header align-items-center border-bottom-light p-3 card">
-                    <div class="col-6 flex">
-                      <i class="pi pi-microsoft font-bold pr-4 pt-1 text-primary-color"></i>
-                      <div>
-                        @if(isSavedCourses[i]){
-                        <input class="w-full" pInputText formControlName="items" />
-                        }
-                        @else{
-                        <span>{{ course.get('items')?.value }}</span>
-                        <!-- <span (click)="enableEditCourse(i)">{{ course.get('items')?.value }}</span> -->
-                        }
-                      </div>
-                    </div>
-                    <div class="col-6 flex justify-content-end">
-                      @if(isSavedCourses[i]){
-                      <button type="button" pButton pRipple label="Save" (click)="saveCourse(i)"
-                        class="secondary-button px-6 text-sm"></button>
+                <div class="col-6 flex justify-content-end">
+                  @if(isSavedCourses[i]){
+                  <button type="button" pButton pRipple label="Save" (click)="saveCourse(i)"
+                    class="secondary-button px-6 text-sm"></button>
+                  }
+                  @else{
+                  <p-button class="mr-2 border-round-md button-shadow">Publish All</p-button>
+
+                  <div class="card flex justify-content-center">
+                    <p-menu #menu [model]="actionMenu" [popup]="true" (click)="selectedMenu($event)" />
+                    <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
+                  </div>
+
+                  }
+                </div>
+              </div>
+
+              <div formArrayName="lessons">
+                @for(lesson of lessons(i).controls; track lesson; let j = $index){
+                <div [attr.draggable]="true" (dragstart)="onTaskDragStart($event)" (dragover)="onTaskDragOver($event)"
+                  (drap)="onTaskDrop($event)" [formGroupName]="j" class="grid grid-nogutter p-3">
+                  <div class="col-6 flex">
+                    <i class="pi pi-microsoft font-bold pr-4 pt-1 text-primary-color"></i>
+                    <div>
+                      @if(isEditLesson[i][j]){
+                      <input class="w-full" pInputText formControlName="items" />
                       }
                       @else{
-                      <p-button class="mr-2 border-round-md button-shadow">Publish All</p-button>
+                      <!-- <span (click)="enableEditLesson(i, j)">{{ lesson.get('items')?.value }}</span> -->
+                      <span (click)="lessonDetail(lesson.get('id')?.value)">{{ lesson.get('items')?.value }}</span>
                       }
                     </div>
                   </div>
-          
-                  <div formArrayName="lessons">
-                    @for(lesson of lessons(i).controls; track lesson; let j = $index){
-                    <div [attr.draggable]="true" 
-                    (dragstart)="onTaskDragStart($event)"
-                    (dragover)="onTaskDragOver($event)"
-                    (drap)="onTaskDrop($event)"
-                     [formGroupName]="j" class="grid grid-nogutter p-3">
-                      <div class="col-6 flex">
-                        <i class="pi pi-microsoft font-bold pr-4 pt-1 text-primary-color"></i>
-                        <div>
-                          @if(isEditLesson[i][j]){
-                          <input class="w-full" pInputText formControlName="items" />
-                          }
-                          @else{
-                          <!-- <span (click)="enableEditLesson(i, j)">{{ lesson.get('items')?.value }}</span> -->
-                          <span (click)="lessonDetail(lesson.get('id')?.value)">{{ lesson.get('items')?.value }}</span>
-                          }
-                        </div>
-                      </div>
-                      <div class="col-6 flex justify-content-end">
-                        @if(isEditLesson[i][j]){
-                        <button type="button" pButton pRipple label="Save" (click)="saveLesson(i, j, course.get('id')?.value)"
-                          class="secondary-button px-6 text-sm"></button>
-                        }
-                        @else{
-                        <button type="button" (click)="publishLesson(lesson)" pButton label="Publish" class="outline-icon-button edit-button"></button>
-                        }
-                      </div>
-                    </div>
+                  <div class="col-6 flex justify-content-end">
+                    @if(isEditLesson[i][j]){
+                    <button type="button" pButton pRipple label="Save"
+                      (click)="saveLesson(i, j, course.get('id')?.value)"
+                      class="secondary-button px-6 text-sm"></button>
                     }
-                    <!-- Subject Card Footer (Action) -->
-                    <div class="grid grid-nogutter client-dashborad-header align-items-center border-bottom-light p-3 border-top-light">
-                      <div class="col-6">
-                        <p-button icon="pi pi-plus" (click)="addLesson(i)" label="New Lesson" [text]="true"
-                          severity="secondary"></p-button>
+                    @else{
+                    @if(lesson.get('isPublished')?.value){
+                    <button type="button" (click)="publishLesson(lesson)" pButton label="Unpublish"
+                      class="outline-icon-button edit-button"></button>
+                    }
+                    @else{
+                    <button type="button" (click)="publishLesson(lesson)" pButton label="Publish"
+                      class="outline-icon-button edit-button"></button>
+
+                      <div class="card flex justify-content-center ml-2">
+                        <p-menu #menu [model]="actionMenu" [popup]="true" (click)="selectedMenu($event)" />
+                        <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
                       </div>
-                    </div>
+                    }
+                    }
+                  </div>
+                </div>
+                }
+                <!-- Subject Card Footer (Action) -->
+                <div
+                  class="grid grid-nogutter client-dashborad-header align-items-center border-bottom-light p-3 border-top-light">
+                  <div class="col-6">
+
+                    <p-button icon="pi pi-plus" (click)="addLesson(i)" label="New Lesson" [text]="true"
+                      severity="secondary"></p-button>
                   </div>
                 </div>
               </div>
-              }
             </div>
-          </form>
-          
-
-
-
+          </div>
+          }
         </div>
+      </form>
 
-        <div class="col-12">
-            <span
-                class="border-dashed w-full h-5rem m-2 surface-overlay font-bold flex align-items-center justify-content-start pl-4"
-                (click)="addCourse()">
-                <i class="pi pi-plus mr-2 font-bold"></i>
-                Create New Subject
-            </span>
-        </div>
+
 
 
     </div>
+
+    <div class="col-12">
+      <span
+        class="border-dashed w-full h-5rem m-2 surface-overlay font-bold flex align-items-center justify-content-start pl-4"
+        (click)="addCourse()">
+        <i class="pi pi-plus mr-2 font-bold"></i>
+        Create New Subject
+      </span>
+    </div>
+
+
+  </div>
 
 
 
