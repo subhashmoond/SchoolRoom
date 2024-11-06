@@ -101,6 +101,10 @@ export class CurriculumComponent {
     this._router.navigate(['/course/lesson', lessonId], { queryParams: { courseId: this.courseId } });
   }
 
+  preview(){
+    this._router.navigate(['/course/preview', this.courseId])
+  }
+
   addCourse(): void {
     this.courses.push(this.fb.group({
       items: ['', Validators.required],
