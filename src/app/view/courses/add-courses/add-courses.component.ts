@@ -26,13 +26,14 @@ import { SharedService } from '../../../shared/services/shared.service';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { GeminiAiComponent } from '../../../shared/components/gemini-ai/gemini-ai.component';
 import { StepsModule } from 'primeng/steps';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-add-courses',
   standalone: true,
   imports: [ReactiveFormsModule, StepsModule, InputGroupModule, InputGroupAddonModule, DropdownModule, CardModule, CalendarModule, KeyFilterModule,
     ButtonModule, InputTextModule, FileUploadModule, ToastModule, InputNumberModule, CheckboxModule, MessagesModule, AccordionModule,
-    TranslateModule, BlockUIModule, CommonModule, InputSwitchModule, GeminiAiComponent],
+    TranslateModule, BlockUIModule, ProgressSpinnerModule, CommonModule, InputSwitchModule, GeminiAiComponent],
   providers: [MessageService],
   templateUrl: './add-courses.component.html',
   styleUrl: './add-courses.component.css'
@@ -50,6 +51,14 @@ export class AddCoursesComponent {
   activeIndex: number = 0;
   maxFileSizeLimit = 10 * 1024 * 1024;
   courseId: any
+  selectedOption: boolean = false
+
+  // loader boolean Var
+  descriptionAIResp : boolean = false;
+  stepOne : boolean = false;
+  stepTwo : boolean = false;
+  stepTree : boolean = false;
+  stepFor : boolean = false;
 
   constructor(private _courseService: CoursesService, private _router: Router, private _fb: FormBuilder, private _messageService: MessageService, private translate: TranslateService, private _sharedService: SharedService) { }
 
@@ -90,10 +99,14 @@ export class AddCoursesComponent {
     }
   }
 
+  selectOption() {
+    this.selectedOption != this.selectedOption
+  }
+
   submit() {
 
     if (this.activeIndex === 0) {
-      this.next();
+      this.stepOne = true
 
       const body = {
         "name": this.coursesForm.get('name')?.value,
@@ -105,44 +118,60 @@ export class AddCoursesComponent {
       this._courseService.addCourses(body).subscribe((res: any) => {
         if (res.status == "Success") {
           this.courseId = res.course.id
+          this.stepOne = false
           // this._router.navigate(['/course/content', courseId]);
           this.next();
         }
       })
     }
 
-    if (this.activeIndex === 1) {
-      const body = {
-        "template": "content",
-        "courseName": this.coursesForm.get('name')?.value,
-        "userPrompt": this.aiContentForm.get('descibeCourse')?.value
+    if(this.activeIndex === 1){
+      this.stepTwo = true
+
+      const formData = new FormData();
+      formData.append('thumbnail', this.selectedFileObjectUrl);
+      formData.append('course_id', this.courseId);
+
+      this._courseService.addThumbnail(formData).subscribe(res => {
+        console.log(res, "thamblanupdate")
+        this.stepTwo = false
+        this.next();
+      })
+
+
+    }
+
+    if (this.activeIndex === 2) {
+
+      const selectOptionValue = this.aiContentForm.get('isGenerate')?.value
+
+      if(selectOptionValue == true){
+        this.stepTree = true
+        const body = {
+          "template": "content",
+          "courseName": this.coursesForm.get('name')?.value,
+          "userPrompt": this.aiContentForm.get('descibeCourse')?.value
+        }
+  
+        this._sharedService.getAIResponse(body).subscribe((res: any) => {
+          this.stepTree = false
+          const resData = res.data
+          this.aiDescripationData = JSON.parse(resData)
+          console.log(this.aiDescripationData, "Course AI response")
+          this.addSubjectAndLessonInCourse(this.aiDescripationData)
+        })
+      }else{
+        this._router.navigate(['/course/content', this.courseId]);
       }
 
-      this._sharedService.getAIResponse(body).subscribe((res: any) => {
-        const resData = res.data
-        this.aiDescripationData = JSON.parse(resData)
-        this.addSubjectAndLessonInCourse(this.aiDescripationData.Coursecontent)
-        console.log(this.aiDescripationData, "Course AI response")
-
-      })
     }
 
 
   }
 
   addSubjectAndLessonInCourse(data: any) {
-    //     const payload = {
-    //       "course": this.courseId,
-    //       "section_lesson": []
-    //   }
 
-    //   data.forEach((item:any) => {
-    //     var newSection = {
-    //         section: `${item.subject} - ${item.chapter}`,
-    //         lessone: item.target_words
-    //     };
-    //     payload.section_lesson.push(newSection);
-    // });
+    debugger
 
     type SectionLesson = {
       section: string;
@@ -155,21 +184,25 @@ export class AddCoursesComponent {
     };
 
     const payload: Payload = {
-      course: 1,
+      course: this.courseId,
       section_lesson: []
     };
 
+    const mainKey = Object.keys(data)[0];
+
     // Merge data (assuming 'data' is similar to 'subjects')
-    data.forEach((item: any) => {
+    data[mainKey].forEach((item: any) => {
+      const chapterKey = item.chapter_name ? 'chapter_name' : 'chapter';
+
       const newSection: SectionLesson = {
-        section: `${item.subject} - ${item.chapter}`,
+        section: item[chapterKey],
         lessone: item.target_words
       };
       payload.section_lesson.push(newSection);
     });
 
     this._courseService.addCoursesAIResponse(payload).subscribe(res => {
-
+          this._router.navigate(['/course/content', this.courseId]);
     })
   }
 
@@ -194,16 +227,16 @@ export class AddCoursesComponent {
   }
 
   aiSubmit() {
+    this.descriptionAIResp = true
     const body = {
       "template": "description",
       "courseName": this.coursesForm.get('name')?.value
     }
 
     this._sharedService.getAIResponse(body).subscribe((res: any) => {
+      this.descriptionAIResp = false
       const resData = res.data
       this.aiDescripationData = JSON.parse(resData)
-      console.log(this.aiDescripationData, "Course AI response")
-
       this.coursesForm.patchValue({
         description: this.aiDescripationData.description
       })

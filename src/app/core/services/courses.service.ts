@@ -16,6 +16,16 @@ export class CoursesService {
     return this._dataService.post(url, body);
   }
 
+  deleteCourse(payload : any){
+    const url = `${environment.basePath}course/delete`;
+    return this._dataService.post(url, payload)
+  }
+
+  addThumbnail(body : any){
+    const url = `${environment.basePath}course/thumbnail/add/`;
+    return this._dataService.post(url, body);
+  }
+
   addCoursesAIResponse(payload : any){
     const url = `${environment.basePath}course/subject_chapter/add/`;
     return this._dataService.post(url, payload)

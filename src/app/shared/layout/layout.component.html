@@ -1,4 +1,4 @@
-<div class="body float-left">
+<div class="body">
     <app-header></app-header>
     <div class="grid grid-nogutter mt-1">
         <div class="p-0" [ngClass]="togglesidebar ? 'ls-2' : 'ls-1 open-sidebar'">
@@ -8,7 +8,7 @@
                 <div class="content z-auto" [ngClass]="togglesidebar ? 'p-5' : 'p-0'">
                     <router-outlet></router-outlet>
             </div>
-            <app-footer></app-footer>
+            <!-- <app-footer></app-footer> -->
         </div>
     </div>
 
