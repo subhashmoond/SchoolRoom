@@ -21,18 +21,18 @@
           <div [attr.draggable]="true" (dragstart)="onTaskDragStart($event)" (dragover)="onTaskDragOver($event)"
             (drap)="onTaskDrop($event)" [formGroupName]="i" class="content-card mb-4">
             <div class="p-3">
-              <i class="pi pi-microsoft font-bold text-primary-color"></i>
+              <img src="../../../../../assets/images/chapter-icon.svg">
             </div>
             <div class="border-left">
               <div class="grid grid-nogutter client-dashborad-header align-items-center border-bottom-light p-3 card">
                 <div class="col-6 flex">
-                  <i class="pi pi-microsoft font-bold pr-4 pt-1 text-primary-color"></i>
+                  <!-- <i class="pi pi-ellipsis-v pr-4 pt-1 text-primary-color"></i> -->
                   <div>
                     @if(isSavedCourses[i]){
                     <input class="w-full" pInputText formControlName="items" />
                     }
                     @else{
-                    <span>{{ course.get('items')?.value }}</span>
+                    <h4 class="capitalize">{{ course.get('items')?.value }}</h4>
                     <!-- <span (click)="enableEditCourse(i)">{{ course.get('items')?.value }}</span> -->
                     }
                   </div>
@@ -57,16 +57,20 @@
               <div formArrayName="lessons">
                 @for(lesson of lessons(i).controls; track lesson; let j = $index){
                 <div [attr.draggable]="true" (dragstart)="onTaskDragStart($event)" (dragover)="onTaskDragOver($event)"
-                  (drap)="onTaskDrop($event)" [formGroupName]="j" class="grid grid-nogutter p-3">
+                  (drap)="onTaskDrop($event)" [formGroupName]="j" class="grid grid-nogutter p-3 border-bottom-light">
                   <div class="col-6 flex">
-                    <i class="pi pi-microsoft font-bold pr-4 pt-1 text-primary-color"></i>
+                    <!-- <i class="pi pi-microsoft pr-4 pt-1 text-primary-color"></i> -->
+                    <div class="p-1 pr-3">
+                      <img src="../../../../../assets/images/chapter-icon.svg">
+                    </div>
+                    
                     <div>
                       @if(isEditLesson[i][j]){
                       <input class="w-full" pInputText formControlName="items" />
                       }
                       @else{
                       <!-- <span (click)="enableEditLesson(i, j)">{{ lesson.get('items')?.value }}</span> -->
-                      <span (click)="lessonDetail(lesson.get('id')?.value)">{{ lesson.get('items')?.value }}</span>
+                      <h5 class="underline" (click)="lessonDetail(lesson.get('id')?.value)">{{ lesson.get('items')?.value }}</h5>
                       }
                     </div>
                   </div>
@@ -77,7 +81,7 @@
                       class="secondary-button px-6 text-sm"></button>
                     }
                     @else{
-                    @if(lesson.get('isPublished')?.value){
+                    @if(lesson.get('isPublished')?.value === true){
                     <button type="button" (click)="publishLesson(lesson)" pButton label="Unpublish"
                       class="outline-icon-button edit-button"></button>
                     }

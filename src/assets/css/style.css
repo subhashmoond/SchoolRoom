@@ -2754,7 +2754,7 @@ small.p-error {
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: .1fr 10fr;
-    gap: 1rem;
+    /* gap: 1rem; */
     background-color: #fbfbfe;
     border: 1px solid #edeef6;
 }

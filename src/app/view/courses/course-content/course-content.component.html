@@ -1,12 +1,9 @@
-
 <div class="grid grid-nogutter nested-grid">
     <div class="col-2">
 
-        <div class="w-full relative overflow-hidden	">
-            <span class="h-1rem">
-                <img src="../../../../assets/images/course-tham.png">
-                <h2 class="absolute">UI/UX Design</h2>
-            </span>
+        <div class="w-full relative overflow-hidden	h-10rem">
+            <img src="../../../../assets/images/course-tham.png">
+            <h5 class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full absolute bottom-0 p-3 text-white-alpha-90 ">UI/UX Design</h5>
         </div>
 
         <ul class="sidebar-menu">
@@ -46,18 +43,20 @@
                 </a>
             </li>
             <li>
-                <a href="javascript:void(0)" (click)="courseTabs('comment')" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                <a href="javascript:void(0)" (click)="courseTabs('comment')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
                     <span> Comment </span>
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li>
             <li>
-                <a href="javascript:void(0)" (click)="courseTabs('student')" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                <a href="javascript:void(0)" (click)="courseTabs('student')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
                     <span> Students </span>
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li>
-           
+
         </ul>
 
     </div>
@@ -65,24 +64,24 @@
 
     <div class="col-10 bg-white content-body">
         @switch (currentActiveTab) {
-            @case ("curriculum") {
-                <app-curriculum></app-curriculum>
-            }
-            @case ("information") {
-                <app-course-information></app-course-information>
-            }
-            @case ("pricing") {
-                <app-course-pricing></app-course-pricing>
-            }
-            @case ("coupons") {
-                <app-course-coupons></app-course-coupons> 
-            }
-            @case ("comment") {
-                <app-course-comment></app-course-comment>
-            }
-            @case ("student") {
-                <app-course-students></app-course-students>
-            }
+        @case ("curriculum") {
+        <app-curriculum></app-curriculum>
+        }
+        @case ("information") {
+        <app-course-information></app-course-information>
+        }
+        @case ("pricing") {
+        <app-course-pricing></app-course-pricing>
+        }
+        @case ("coupons") {
+        <app-course-coupons></app-course-coupons>
+        }
+        @case ("comment") {
+        <app-course-comment></app-course-comment>
+        }
+        @case ("student") {
+        <app-course-students></app-course-students>
+        }
         }
 
     </div>
