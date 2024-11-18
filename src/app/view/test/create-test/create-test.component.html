@@ -9,53 +9,78 @@
 <!-- Step 1: Course Details -->
 
 <div class="add-courses mt-4">
-    <div class="text-center">
-        <h2 class="m-0">Create Test Series</h2>
-        <p>Start creating a new test series.</p>
-    </div>
+  <div class="text-center">
+    <h2 class="m-0">Create Test Series</h2>
+    <p>Start creating a new test series.</p>
+  </div>
 
-    <form [formGroup]="addTestForm" class="w-6 m-0-a">
-        <div class="grid nested-grid mt-3">
-            <div class="col-12">
-                <div class="w-full">
-                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Test Name
-                        <span>*</span></label>
-                    <input class="w-full capitalize" pInputText formControlName="name" placeholder="Enter Course Name"
-                        required="true" />
-                </div>
-            </div>
+  <form [formGroup]="addTestForm" class="w-6 m-0-a">
+    <div class="grid nested-grid mt-3">
+      <div class="col-12">
+        <div class="w-full">
+          <label
+            class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"
+            >Test Name <span>*</span></label
+          >
+          <input
+            class="w-full capitalize"
+            pInputText
+            formControlName="name"
+            placeholder="Enter Course Name"
+            required="true"
+          />
+        </div>
+      </div>
 
-            
+      <div class="col-12 mt-4">
+        <div class="w-full">
+          <label
+            class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"
+            >Select Course
+          </label>
+          <p-dropdown
+            formControlName="lesson"
+            [options]="courseList"
+            optionLabel="title"
+            optionValue="id"
+            placeholder="Select a Course"
+          />
+        </div>
+      </div>
 
-            <div class="col-12 mt-4">
-                <div class="w-full">
-                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Select Course
-                    </label>
-                    <p-dropdown formControlName="lesson" [options]="courseList" optionLabel="title" optionValue="id"
-                placeholder="Select a Course" />
-                </div>
-            </div>
+      <div class="col-12 mt-4">
+        <div class="w-full">
+          <label
+            class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"
+            >Total Time (Mint's)
+          </label>
+          <input
+            class="w-full capitalize"
+            pInputText
+            formControlName="totalTime"
+            placeholder="Enter Total Time"
+            required="true"
+          />
+        </div>
+      </div>
 
-            <div class="col-12 mt-4">
-                <div class="w-full">
-                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Total Time (Mint's)
-                    </label>
-                    <input class="w-full capitalize" pInputText formControlName="totalTime"
-                        placeholder="Enter Total Time" required="true" />
-                </div>
-            </div>
+      <div class="col-6">
+        <label
+          class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"
+          >Start Time</label
+        >
+        <p-calendar formControlName="startTime" [readonlyInput]="true" />
+      </div>
 
-            <div class="col-6">
-                <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Start Time</label>
-                <p-calendar formControlName="startTime" [readonlyInput]="true" />
-            </div>
+      <div class="col-6">
+        <label
+          class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"
+          >End Time</label
+        >
+        <p-calendar formControlName="endTime" [readonlyInput]="true" />
+      </div>
 
-            <div class="col-6">
-                <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">End Time</label>
-                <p-calendar formControlName="endTime" [readonlyInput]="true" />
-            </div>
-
-            <!-- <div class="col-12 flex">
+      <!-- <div class="col-12 flex">
                 <p-checkbox formControlName="ispaid" [binary]="true"></p-checkbox>
                 <label class="ml-2">This is a paid course</label>
             </div>
@@ -68,23 +93,21 @@
                     </div>
                 </div>
             </div> -->
-
-
-        </div>
-    </form>
+    </div>
+  </form>
 </div>
-
-
-
-
-
 
 <!-- Navigation Buttons -->
 <div class="w-98 absolute bottom-0 grid m-0-a">
-    <div class="col-6">
-    </div>
-    <div class="col-6 flex justify-content-end">
-        <button type="button" pButton pRipple (click)="submit()" label="Submit"
-            class="secondary-button px-6 text-sm"></button>
-    </div>
+  <div class="col-6"></div>
+  <div class="col-6 flex justify-content-end">
+    <button
+      type="button"
+      pButton
+      pRipple
+      (click)="submit()"
+      label="Submit"
+      class="secondary-button px-6 text-sm"
+    ></button>
+  </div>
 </div>
