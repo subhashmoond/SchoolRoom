@@ -6,11 +6,17 @@ import { CardModule } from 'primeng/card';
 import { ToolbarModule } from 'primeng/toolbar';
 import Gemini from 'gemini-ai';
 import { CurriculumComponent } from './curriculum/curriculum.component';
+import { CourseInformationComponent } from './course-information/course-information.component';
+import { CoursePricingComponent } from "./course-pricing/course-pricing.component";
+import { CourseCouponsComponent } from "./course-coupons/course-coupons.component";
+import { CourseCommentComponent } from "./course-comment/course-comment.component";
+import { CourseStudentsComponent } from "./course-students/course-students.component";
 
 @Component({
   selector: 'app-course-content',
   standalone: true,
-  imports: [FileUploadModule, CommonModule, ToolbarModule, CurriculumComponent],
+  imports: [FileUploadModule, CommonModule, ToolbarModule, CurriculumComponent, CourseInformationComponent, CoursePricingComponent, CoursePricingComponent,
+    CourseCouponsComponent, CourseCommentComponent, CourseStudentsComponent],
   templateUrl: './course-content.component.html',
   styleUrl: './course-content.component.css'
 })
@@ -21,10 +27,12 @@ export class CourseContentComponent {
 
   selectedFile: File | null = null;
   selectedFileObjectUrl: string | null = null;
+  currentActiveTab : any;
 
   constructor(private _sharedService : SharedService){}
 
   async ngOnInit(){
+    this.currentActiveTab =  "curriculum"
 
     this._sharedService.settoggleButtonValue(false);
 
@@ -55,7 +63,12 @@ export class CourseContentComponent {
   }
 
   
+  courseTabs(type : any){
+    this.currentActiveTab = type;
 
+
+    console.log(this.currentActiveTab, "curent tab name ")
+  }
 
 
 

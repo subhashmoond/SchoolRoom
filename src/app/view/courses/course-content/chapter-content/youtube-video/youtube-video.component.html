@@ -1,0 +1,112 @@
+<p-toast></p-toast>
+
+<div class="w-full">
+    <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Add Youtube Video </h4>
+
+    <!-- <h4 class="m-0 font-semibold line-height-sm">{{"labels.heading.Add Signature" | translate}}</h4> -->
+    
+    @if(!editForm){
+        <form [formGroup]="addContent" (ngSubmit)="submitForm()" class="w-full flex flex-wrap">
+    
+            <div class="grid nested-grid mt-3">
+    
+                <div class="col-12">
+                    <div class="w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Title
+                            <span>*</span></label>
+                        <input class="w-full capitalize" pInputText formControlName="title" placeholder="Enter title"
+                            required="true" />
+                    </div>
+                </div>
+    
+                <div class="col-12">
+                    <div class="w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Path
+                            <span>*</span></label>
+                        <input class="w-full capitalize" pInputText formControlName="path" placeholder="Enter link"
+                            required="true" />
+                    </div>
+                </div>
+    
+            </div>
+    
+            <div
+                class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+                <button pButton pRipple label="{{'labels.buttons.Cancel' | translate}}"
+                    class="primary-border-button px-5 mr-3 text-sm"></button>
+                <button type="submit" pButton pRipple label="{{'labels.buttons.Add' | translate}}"
+                    class="primary-button px-5 text-sm"></button>
+            </div>
+        </form>
+    }@else {
+        <form [formGroup]="settingContent" (ngSubmit)="settingSubmit()" class="w-full flex flex-wrap">
+
+            <div class="grid nested-grid mt-3">
+    
+                <div class="col-12">
+                    <div class="grid">
+                        <div class="col-12">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Title
+                                <span>*</span></label>
+                            <input class="w-full capitalize" type="text" pInputText formControlName="title" />
+                        </div>
+    
+                        <div class="col-12">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Tags
+                            </label>
+                            <p-chips formControlName="tags" />
+                        </div>
+    
+                        <div class="col-12">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Duration
+                                <span>*</span></label>
+                            <input class="w-full capitalize" type="text" pInputText formControlName="duration" />
+                        </div>
+    
+    
+                        <div class="col-6">
+                            <div class="flex align-items-center">
+                                <p-checkbox formControlName="watermark" label="Watermark" name="Watermark"
+                                    [binary]="true" />
+                            </div>
+                        </div>
+    
+                        <div class="col-6">
+    
+                            <div class="flex align-items-center">
+                                <p-checkbox formControlName="available" label="Always Available" name="available"
+                                    [binary]="true" />
+                            </div>
+    
+                        </div>
+    
+                        @if(settingContent.get('available')?.value == false){
+                        <div class="col-6">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> From Date </label>
+                            <p-calendar formControlName="formdate" />
+                        </div>
+    
+                        <div class="col-6">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> To Date </label>
+                            <p-calendar formControlName="todate" />
+                        </div>
+                        }
+    
+                    </div>
+                </div>
+    
+    
+    
+            </div>
+    
+            <div
+                class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+                <button pButton pRipple label="{{'labels.buttons.Cancel' | translate}}"
+                    class="primary-border-button px-5 mr-3 text-sm"></button>
+                <button type="submit" pButton pRipple label="{{'labels.buttons.Add' | translate}}"
+                    class="primary-button px-5 text-sm"></button>
+            </div>
+        </form>
+    }
+
+</div>

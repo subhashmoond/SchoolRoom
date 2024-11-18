@@ -1,83 +1,135 @@
-<div class="card">
+<div class="cards">
 
-    <div class="grid client-dashborad-header mb-4 align-items-center">
-        <div class="col-6">
-            <h4 class="subheading-color">Curriculum</h4>
-        </div>
-        <div class="col-6 flex justify-content-end	">
-            <button type="submit" pButton pRipple label="Preview" class="secondary-button px-6 text-sm"></button>
-        </div>
-
+  <div class="grid client-dashborad-header mb-4 align-items-center">
+    <div class="col-6">
+      <h4 class="subheading-color">Curriculum</h4>
+    </div>
+    <div class="col-6 flex justify-content-end	">
+      <button type="submit" (click)="preview()" pButton pRipple label="Preview" class="secondary-button px-6 text-sm"></button>
     </div>
 
+  </div>
 
-    <div class="grid">
 
-        <div class="col-12">
+  <div class="grid">
 
-            <div class="content-card">
-                <div class="p-3">
-                    <i class="pi pi-microsoft font-bold"></i>
-                </div>
+    <div class="col-12">
 
-                <div class="p-3 border-left">
-
-                    <div class="grid grid-nogutter client-dashborad-header mb-4 align-items-center">
-                        <div class="col-6">
-                            <h4 class="subheading-color">CBSE - 12th Hindi Subject</h4>
-                        </div>
-                        <div class="col-6 flex justify-content-end	">
-                            <p-button class="mr-2 border-round-md button-shadow">Publish All</p-button>
-                        </div>
-
-                        <div class="col-12">
-                                <p-pickList 
-                                    [source]="sourceProducts" 
-                                    [dragdrop]="true" 
-                                    [responsive]="true"
-                                    [showSourceControls]="false"
-                                    [sourceStyle]="{ height: '30rem' }" 
-                                    breakpoint="1400px">
-                                        <ng-template let-product pTemplate="item">
-                                            <div class="flex flex-wrap p-2 align-items-center gap-3">
-                                                <img 
-                                                    class="w-4rem shadow-2 flex-shrink-0 border-round" 
-                                                    src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}"
-                                                    alt="{item.name}" />
-                                                <div class="flex-1 flex flex-column gap-2">
-                                                    <span class="font-bold">
-                                                        {{ product.name }}
-                                                    </span>
-                                                    <div class="flex align-items-center gap-2">
-                                                        <i class="pi pi-tag text-sm"></i>
-                                                        <span>
-                                                            {{ product.category }}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <span class="font-bold text-900">
-                                                    {{ '$' + product.price }}
-                                                </span>
-                                            </div>
-                                        </ng-template>
-                                </p-pickList>
-                        </div>
-
-                    </div>
-
-                </div>
+      <form [formGroup]="addForm">
+        <div formArrayName="courses">
+          @for(course of courses.controls; track course; let i = $index){
+          <div [attr.draggable]="true" (dragstart)="onTaskDragStart($event)" (dragover)="onTaskDragOver($event)"
+            (drap)="onTaskDrop($event)" [formGroupName]="i" class="content-card mb-4">
+            <div class="p-3">
+              <img src="../../../../../assets/images/chapter-icon.svg">
             </div>
+            <div class="border-left">
+              <div class="grid grid-nogutter client-dashborad-header align-items-center border-bottom-light p-3 card">
+                <div class="col-6 flex">
+                  <!-- <i class="pi pi-ellipsis-v pr-4 pt-1 text-primary-color"></i> -->
+                  <div>
+                    @if(isSavedCourses[i]){
+                    <input class="w-full" pInputText formControlName="items" />
+                    }
+                    @else{
+                    <h4 class="capitalize">{{ course.get('items')?.value }}</h4>
+                    <!-- <span (click)="enableEditCourse(i)">{{ course.get('items')?.value }}</span> -->
+                    }
+                  </div>
+                </div>
+                <div class="col-6 flex justify-content-end">
+                  @if(isSavedCourses[i]){
+                  <button type="button" pButton pRipple label="Save" (click)="saveCourse(i)"
+                    class="secondary-button px-6 text-sm"></button>
+                  }
+                  @else{
+                  <p-button class="mr-2 border-round-md button-shadow">Publish All</p-button>
 
-        </div>
+                  <div class="card flex justify-content-center">
+                    <p-menu #menu [model]="actionMenu" [popup]="true" (click)="selectedMenu($event)" />
+                    <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
+                  </div>
 
-        <div class="col-12">
-            <span
-                class="border-dashed w-full h-5rem m-2 surface-overlay font-bold flex align-items-center justify-content-start pl-4">
-                <i class="pi pi-plus mr-2 font-bold"></i>
-                Create New Subject
-            </span>
+                  }
+                </div>
+              </div>
+
+              <div formArrayName="lessons">
+                @for(lesson of lessons(i).controls; track lesson; let j = $index){
+                <div [attr.draggable]="true" (dragstart)="onTaskDragStart($event)" (dragover)="onTaskDragOver($event)"
+                  (drap)="onTaskDrop($event)" [formGroupName]="j" class="grid grid-nogutter p-3 border-bottom-light">
+                  <div class="col-6 flex">
+                    <!-- <i class="pi pi-microsoft pr-4 pt-1 text-primary-color"></i> -->
+                    <div class="p-1 pr-3">
+                      <img src="../../../../../assets/images/chapter-icon.svg">
+                    </div>
+                    
+                    <div>
+                      @if(isEditLesson[i][j]){
+                      <input class="w-full" pInputText formControlName="items" />
+                      }
+                      @else{
+                      <!-- <span (click)="enableEditLesson(i, j)">{{ lesson.get('items')?.value }}</span> -->
+                      <h5 class="underline" (click)="lessonDetail(lesson.get('id')?.value)">{{ lesson.get('items')?.value }}</h5>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-6 flex justify-content-end">
+                    @if(isEditLesson[i][j]){
+                    <button type="button" pButton pRipple label="Save"
+                      (click)="saveLesson(i, j, course.get('id')?.value)"
+                      class="secondary-button px-6 text-sm"></button>
+                    }
+                    @else{
+                    @if(lesson.get('isPublished')?.value === true){
+                    <button type="button" (click)="publishLesson(lesson)" pButton label="Unpublish"
+                      class="outline-icon-button edit-button"></button>
+                    }
+                    @else{
+                    <button type="button" (click)="publishLesson(lesson)" pButton label="Publish"
+                      class="outline-icon-button edit-button"></button>
+
+                      <div class="card flex justify-content-center ml-2">
+                        <p-menu #menu [model]="actionMenu" [popup]="true" (click)="selectedMenu($event)" />
+                        <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
+                      </div>
+                    }
+                    }
+                  </div>
+                </div>
+                }
+                <!-- Subject Card Footer (Action) -->
+                <div
+                  class="grid grid-nogutter client-dashborad-header align-items-center border-bottom-light p-3 border-top-light">
+                  <div class="col-6">
+
+                    <p-button icon="pi pi-plus" (click)="addLesson(i)" label="New Lesson" [text]="true"
+                      severity="secondary"></p-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          }
         </div>
+      </form>
+
+
+
+
     </div>
+
+    <div class="col-12">
+      <span
+        class="border-dashed w-full h-5rem m-2 surface-overlay font-bold flex align-items-center justify-content-start pl-4"
+        (click)="addCourse()">
+        <i class="pi pi-plus mr-2 font-bold"></i>
+        Create New Subject
+      </span>
+    </div>
+
+
+  </div>
 
 
 

@@ -23,5 +23,10 @@ export class SharedService {
     return this._dataService.get(url);
   }
 
+  getAIResponse(payload:any){
+    const url = `${environment.basePath}course/getAiResponse/`;
+    return this._dataService.post(url, payload)
+  }
+
 
 }

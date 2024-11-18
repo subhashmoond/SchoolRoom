@@ -1,0 +1,201 @@
+<div class="cards">
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-12">
+            <h4 class="subheading-color">Course Information</h4>
+        </div>
+
+    </div>
+</div>
+
+
+
+   
+<form [formGroup]="courseInformation">
+    <div class="grid nested-grid mt-3">
+        <div class="col-12">
+            <div class="w-full">
+                <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Title
+                </label>
+                <input class="w-full capitalize" pInputText formControlName="title" placeholder="Enter Course Name"
+                    required="true" />
+            </div>
+        </div>
+
+        <!-- <div class="col-12 ai-generater">
+            <div class="flex justify-content-end">
+                <p>Let our AI tool work its magic to generate a compelling course description and other metadata
+                    in seconds!</p>
+            </div>
+            <div class="flex justify-content-end">
+                <button type="button" pButton pRipple label="Generate Using AI"
+                    class="secondary-button px-6 text-sm"></button>
+            </div>
+        </div> -->
+
+        <div class="col-12 mt-4">
+            <div class="w-full">
+                <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Description</label>
+                <textarea rows="5" style="width: 100%;" pInputTextarea formControlName="description"></textarea>
+            </div>
+        </div>
+
+
+        <div class="col-12">
+            <div class="w-full">
+                <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Course Tagline
+                </label>
+                <input class="w-full capitalize" pInputText formControlName="tagline" placeholder="Enter Course Tagline"
+                    required="true" />
+            </div>
+        </div>
+
+        <div class="col-12 heading-button mt-8">
+            <div>
+                <h4 class="subheading-color">Key Highlights</h4>
+            </div>
+            <div>
+                <button pButton pRipple (click)="addHighlights()" label="Add"
+                    class="primary-border-button px-5 mr-3 text-sm"></button>
+
+                <button type="button" (click)="aiHighlights()" pButton pRipple label="Regenerate"
+                    class="secondary-button px-6 text-sm"></button>
+            </div>
+
+        </div>
+
+        <div class="col-12">
+            <div formArrayName="highlights">
+                @for(item of highlights.controls; track item; let i = $index){
+                <input class="w-full capitalize mb-3" pInputText [formControlName]="i" placeholder="Enter highlights"
+                    required="true" />
+                <!-- <button type="button" (click)="removeItem(i)">Remove</button> -->
+                }
+            </div>
+        </div>
+
+        <div class="col-12 heading-button mt-8">
+            <div>
+                <h4 class="subheading-color">What you will learn</h4>
+            </div>
+            <div>
+
+                <button pButton pRipple (click)="addWhatlearn()" label="Add"
+                    class="primary-border-button px-5 mr-3 text-sm"></button>
+
+                <button type="button" pButton pRipple label="Regenerate" class="secondary-button px-6 text-sm"></button>
+            </div>
+
+        </div>
+
+        <div class="col-12">
+
+            <p-table [value]="whatlearn.value" [rows]="10" [showLoader]="true" [responsive]="true"
+                [scrollable]="true" scrollHeight="37.938rem" selectionMode="single" class="client-data-table">
+                <!-- Table Header -->
+                <ng-template pTemplate="header" class="p-4">
+                    <tr class="w-full flex flex-wrap">
+                        <th style="width:25%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">ICON
+                        </th>
+                        <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">TITLE
+                        </th>
+                        <th style="width:50%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                            DESCRIPTION</th>
+                    </tr>
+                </ng-template>
+
+                <!-- Table Body -->
+                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                    <tr class="w-full flex flex-wrap" [formGroupName]="rowIndex">
+                        <!-- ICON Field (static for now, can be dynamic if needed) -->
+                        <td style="width: 25%;word-break:break-all;" class="pl-4">
+                            <i class="pi pi-megaphone"></i>
+                        </td>
+
+                        <!-- TITLE Field (bound to FormArray) -->
+                        <td style="width: 25%;word-break:break-all;" class="pl-4">
+                            <input class="w-full capitalize mb-3" pInputText placeholder="Enter title"
+                                formControlName="title" required />
+                        </td>
+
+                        <!-- DESCRIPTION Field (bound to FormArray) -->
+                        <td style="width: 50%;" class="pl-4">
+                            <input class="w-full capitalize mb-3" pInputText placeholder="Enter description"
+                                formControlName="description" required />
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <!-- Empty Message -->
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="3">No data found.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+
+        </div>
+
+        <div class="col-12 heading-button mt-8">
+            <div>
+                <h4 class="subheading-color">Frequently Asked Questions</h4>
+            </div>
+            <div>
+
+                <button pButton pRipple (click)="addFaq()" label="Add"
+                    class="primary-border-button px-5 mr-3 text-sm"></button>
+
+                <button type="button" pButton pRipple label="Regenerate" class="secondary-button px-6 text-sm"></button>
+            </div>
+
+        </div>
+
+        <div class="col-12">
+
+            <p-table [value]="faq.controls" [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true"
+                scrollHeight="37.938rem" selectionMode="single" class="client-data-table">
+                <!-- Table Header -->
+                <ng-template pTemplate="header" class="p-4">
+                    <tr class="w-full flex flex-wrap">
+                        <th style="width:30%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">QUESTION
+                        </th>
+                        <th style="width:70%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">ANSWER
+                        </th>
+                    </tr>
+                </ng-template>
+
+                <!-- Table Body -->
+                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                    <tr class="w-full flex flex-wrap" [formGroupName]="rowIndex">
+
+                        <td style="width: 30%;word-break:break-all;" class="pl-4">
+                            <input class="w-full capitalize mb-3" pInputText placeholder="Enter question"
+                                formControlName="question" required />
+                        </td>
+
+                        <td style="width: 70%;" class="pl-4">
+                            <input class="w-full capitalize mb-3" pInputText placeholder="Enter answer"
+                                formControlName="answer" required />
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <!-- Empty Message -->
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="3">No data found.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+
+        </div>
+
+        <div class="col-12">
+            <button type="button" pButton pRipple (click)="saveDetails()" label="Save"
+                class="secondary-button px-6 text-sm"></button>
+        </div>
+
+
+    </div>
+</form>

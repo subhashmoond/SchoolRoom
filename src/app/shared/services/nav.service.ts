@@ -14,12 +14,33 @@ export class NavService {
     {
       path: 'user', title: "User", icon: 'assets/images/icon/Clients.svg', type: 'sub', active: false,
       children: [
-        { path: 'user/student', title: 'Students', icon: 'assets/images/icon/Clients.svg', type: 'link' },
-        { path: 'user/team', title: 'Team', icon: 'assets/images/icon/Groups.svg', type: 'link' },
+        { path: 'user/student', title: 'Students', type: 'link' },
+        { path: 'user/team', title: 'Team', type: 'link' },
       ]
     },
 
-    { path: 'course', title: 'Courses', icon: 'assets/images/icon/dashboard.svg', type: 'link', active: true },
+
+    { title: "Products", icon: 'assets/images/icon/Clients.svg', type: 'sub', active: false,
+      children: [
+        { path: 'course', title: 'Courses', type: 'link' },
+        { path: 'test', title: 'Test Series', type: 'link' },
+        { path: 'test', title: 'Question Pool', type: 'link' },
+        { path: 'test', title: 'Live Class', type: 'link' },
+        { path: 'test', title: 'Assignment', type: 'link' },
+      ]
+    },
+
+    {
+      path: 'sales', title: "Sales", icon: 'assets/images/icon/Clients.svg', type: 'sub', active: false,
+      children: [
+        { path: 'user/student', title: 'Coupouns', type: 'link' },
+        { path: 'user/team', title: 'Referral Code', type: 'link' },
+      ]
+    },
+
+    { path: 'community', title: 'Community', icon: 'assets/images/icon/dashboard.svg', type: 'link', active: true },
+    { path: 'setting', title: 'Setting', icon: 'assets/images/icon/dashboard.svg', type: 'link', active: true },
+
 
   ];
 

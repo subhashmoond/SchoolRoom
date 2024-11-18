@@ -1,22 +1,25 @@
-<div class="grid grid-nogutter bg-white fixed w-full z-5 top-header py-2 pl-4 pr-6 align-items-center" [class.open-sidebar]="!togglesidebar">
+<div class="grid grid-nogutter bg-white fixed w-full z-5 top-header py-2 pl-4 pr-6 align-items-center"
+    [class.open-sidebar]="!togglesidebar">
     <div [ngClass]="togglesidebar ? 'col-4 relative' : 'col-1 w-5rem relative'">
         <div class="logo-wrapper">
             <a class="block">
                 @if (togglesidebar) {
-                    <img src="../../../../assets/images/header-logo.svg">
-                    
-            }@else {
-                <img src="../../../../assets/images/favicon-p.png">
-            }
+
+                <h1>AI Class</h1>
+
+                }@else {
+                <h1>AI</h1>
+                }
             </a>
         </div>
-        <div class="menu-bar w-2rem"><button class="bg-white border-none cursor-pointer p-0 sidebar-open-icon" (click)="openMenu()">
-            @if(togglesidebar){
-                <img src="../../../../assets/images/icon/Vector-close.svg">           
-        }@else{
-            <img src="../../../../assets/images/icon/Vector.svg">
-        }
-        </button></div>
+        <div class="menu-bar w-2rem"><button class="bg-white border-none cursor-pointer p-0 sidebar-open-icon"
+                (click)="openMenu()">
+                @if(togglesidebar){
+                <img src="../../../../assets/images/icon/Vector-close.svg">
+                }@else{
+                <img src="../../../../assets/images/icon/Vector.svg">
+                }
+            </button></div>
     </div>
     <div class="col-4" [ngClass]="togglesidebar ? 'col-4' : 'col-7 mx-auto'">
         <div class="card flex justify-content-end">

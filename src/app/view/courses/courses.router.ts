@@ -2,11 +2,15 @@ import { Routes } from '@angular/router';
 import { CoursesComponent } from './courses.component';
 import { AddCoursesComponent } from './add-courses/add-courses.component';
 import { CourseContentComponent } from './course-content/course-content.component';
+import { ChapterContentComponent } from './course-content/chapter-content/chapter-content.component';
+import { PreviewCoursesComponent } from './preview-courses/preview-courses.component';
 
 export const routes: Routes = [
     // { path: '', redirectTo: 'batche', pathMatch: 'full' },
     { path: '', component: CoursesComponent },
     {path : 'add', component : AddCoursesComponent},
-    {path : 'content', component : CourseContentComponent}
+    {path : 'content/:id', component : CourseContentComponent},
+    {path : 'lesson/:id', component : ChapterContentComponent},
+    {path : 'preview/:id', component : PreviewCoursesComponent}
 ];
 
