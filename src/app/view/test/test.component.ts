@@ -11,11 +11,12 @@ import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { CreateTestComponent } from './create-test/create-test.component';
 import { TagModule } from 'primeng/tag';
+import { TestCourseAddComponent } from './test-course-add/test-course-add.component';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, CreateTestComponent, TagModule],
+  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, CreateTestComponent, TagModule, TestCourseAddComponent],
   templateUrl: './test.component.html',
   styleUrl: './test.component.css'
 })
