@@ -26,6 +26,11 @@ export class CoursesService {
     return this._dataService.post(url, body);
   }
 
+  addExamCategoryInCourse(body : any, courseId : any){
+    const url = `${environment.basePath}course/${courseId}/select-exam-category`;
+    return this._dataService.post(url, body)
+  }
+
   addCoursesAIResponse(payload : any){
     const url = `${environment.basePath}course/subject_chapter/add/`;
     return this._dataService.post(url, payload)

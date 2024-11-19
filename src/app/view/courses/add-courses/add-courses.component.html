@@ -143,14 +143,70 @@
 
 
 <!-- Step 3: Exam Categoray -->
-<!-- @if(activeIndex === 2){
+@if(activeIndex === 2){
 <div class="add-courses mt-4">
     <div class="text-center mb-5">
         <h2 class="m-0 pb-2"> Select Exam Category </h2>
         <p class="m-0">Select Your Perfect Course Exam Category</p>
     </div>
 
-    <form [formGroup]="" class="w-6 m-0-a">
+    <form [formGroup]="examCategoryForm" class="w-6 m-0-a">
+
+
+        <div class="grid nested-grid mt-3 h-full">
+            @if(!subCategoryShow){
+
+            @for(data of examList; track data){
+            <div class="col-6">
+                <div class="w-full p-3 primary-bg-body border-round-lg">
+                    <p-checkbox class="primary-color capitalize"
+                        formControlName="category" [label]="data.name" name="category" [value]="data.id" />
+                </div>
+            </div>
+            }
+            }@else {
+
+                @for(data of subCategoryExamList; track data){
+                    <div class="col-6">
+                        <div class="w-full p-3 primary-bg-body border-round-lg">
+                            <p-checkbox class="primary-color capitalize" formControlName="subcategory" [label]="data.name" name="subcategory" [value]="data.id" />
+                        </div>
+                    </div>
+                }
+
+            }
+
+        </div>
+
+        <div class="grid">
+            <div class="col-6 flex justify-content-start ">
+                @if(subCategoryShow){
+                    <button type="button" pButton pRipple (click)="backCategory()" label="Back"
+                        class="primary-border-button px-5 mr-3 text-sm border-round-2xl"></button>
+                }
+            </div>
+            <div class="col-6 flex justify-content-end">
+                @if(!subCategoryShow){
+                    <button type="button" pButton pRipple (click)="nextSubCategory()"
+                        label="Next" class="secondary-button px-6 border-round-2xl"></button>
+                }
+            </div>
+        </div>
+
+
+    </form>
+</div>
+}
+
+<!-- Step 4: AI Content Create -->
+@if(activeIndex === 3){
+<div class="add-courses mt-4">
+    <div class="text-center mb-5">
+        <h2 class="m-0 pb-2">Outline your course</h2>
+        <p class="m-0">Choose a method below to create your course curriculum.</p>
+    </div>
+    <!-- AI Content logic here -->
+    <form [formGroup]="aiContentForm" class="w-6 m-0-a">
         <div class="option">
             <p-checkbox id="generate-ai" [binary]="true" formControlName="isGenerate" name="outline-method" />
             <label for="generate-ai">
@@ -175,42 +231,7 @@
         </div>
     </form>
 </div>
-} -->
-
-<!-- Step 4: AI Content Create -->
-@if(activeIndex === 2){
-    <div class="add-courses mt-4">
-        <div class="text-center mb-5">
-            <h2 class="m-0 pb-2">Outline your course</h2>
-            <p class="m-0">Choose a method below to create your course curriculum.</p>
-        </div>
-        <!-- AI Content logic here -->
-        <form [formGroup]="aiContentForm" class="w-6 m-0-a">
-            <div class="option">
-                <p-checkbox id="generate-ai" [binary]="true" formControlName="isGenerate" name="outline-method" />
-                <label for="generate-ai">
-                    <div class="option-content">
-                        <h3>Generate with AI</h3>
-                        <p>Describe your course below and we’ll generate an outline for you.</p>
-                    </div>
-                </label>
-            </div>
-    
-            <textarea formControlName="descibeCourse" placeholder="Describe your course"></textarea>
-    
-            <div class="option">
-                <p-checkbox type="radio" id="start-scratch" [binary]="true" formControlName="isScratch"
-                    name="outline-method" />
-                <label for="start-scratch">
-                    <div class="option-content">
-                        <h3>Start from scratch</h3>
-                        <p>I will create my own outline.</p>
-                    </div>
-                </label>
-            </div>
-        </form>
-    </div>
-    }
+}
 
 
 

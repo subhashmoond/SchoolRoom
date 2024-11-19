@@ -28,5 +28,15 @@ export class SharedService {
     return this._dataService.post(url, payload)
   }
 
+  getExamCategory(){
+    const url = `${environment.basePath}membership/exam-categorys/`;
+    return this._dataService.get(url)
+  }
+
+  getExamSubCategory(payload : any){
+    const url = `${environment.basePath}membership/exam-subcategorys/`;
+    return this._dataService.post(url, payload)
+  }
+
 
 }

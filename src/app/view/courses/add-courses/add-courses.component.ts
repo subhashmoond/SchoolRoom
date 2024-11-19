@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CoursesComponent } from '../courses.component';
-import { CoursesService } from '../../../core/services/courses.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
@@ -22,18 +21,18 @@ import { BlockUIModule } from 'primeng/blockui';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { SharedService } from '../../../shared/services/shared.service';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { GeminiAiComponent } from '../../../shared/components/gemini-ai/gemini-ai.component';
 import { StepsModule } from 'primeng/steps';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { CoursesService } from '../../../core/services/courses.service';
+import { SharedService } from '../../../shared/services/shared.service';
 
 @Component({
   selector: 'app-add-courses',
   standalone: true,
   imports: [ReactiveFormsModule, StepsModule, InputGroupModule, InputGroupAddonModule, DropdownModule, CardModule, CalendarModule, KeyFilterModule,
     ButtonModule, InputTextModule, FileUploadModule, ToastModule, InputNumberModule, CheckboxModule, MessagesModule, AccordionModule,
-    TranslateModule, BlockUIModule, ProgressSpinnerModule, CommonModule, InputSwitchModule, GeminiAiComponent],
+    TranslateModule, BlockUIModule, ProgressSpinnerModule, CommonModule, InputSwitchModule],
   providers: [MessageService],
   templateUrl: './add-courses.component.html',
   styleUrl: './add-courses.component.css'
@@ -42,6 +41,7 @@ export class AddCoursesComponent {
 
   coursesForm!: FormGroup;
   aiContentForm!: FormGroup;
+  examCategoryForm!: FormGroup;
   selectedFileObjectUrl: any;
   fileUpload: any;
   selectedFile: any;
@@ -52,13 +52,16 @@ export class AddCoursesComponent {
   maxFileSizeLimit = 10 * 1024 * 1024;
   courseId: any
   selectedOption: boolean = false
+  examList: any;
+  subCategoryExamList : any;
+  subCategoryShow: boolean = false;
 
   // loader boolean Var
-  descriptionAIResp : boolean = false;
-  stepOne : boolean = false;
-  stepTwo : boolean = false;
-  stepTree : boolean = false;
-  stepFor : boolean = false;
+  descriptionAIResp: boolean = false;
+  stepOne: boolean = false;
+  stepTwo: boolean = false;
+  stepTree: boolean = false;
+  stepFor: boolean = false;
 
   constructor(private _courseService: CoursesService, private _router: Router, private _fb: FormBuilder, private _messageService: MessageService, private translate: TranslateService, private _sharedService: SharedService) { }
 
@@ -67,8 +70,11 @@ export class AddCoursesComponent {
     this.items = [
       { label: 'Course Details' },
       { label: 'Thumbnail' },
-      { label: 'Confirmation' }
+      { label: 'Exam Category' },
+      { label: 'AI OutLine' }
     ];
+
+    this.getExamCategory();
 
   }
 
@@ -85,6 +91,12 @@ export class AddCoursesComponent {
       isGenerate: true,
       descibeCourse: []
     })
+
+    this.examCategoryForm = this._fb.group({
+      category: '',
+      subcategory : ''
+    })
+
   }
 
   next() {
@@ -113,7 +125,8 @@ export class AddCoursesComponent {
         "price": this.coursesForm.get('price')?.value,
         "describe": this.coursesForm.get('description')?.value,
         "language": 2,
-        "isPaid": this.coursesForm.get('ispaid')?.value
+        "isPaid": this.coursesForm.get('ispaid')?.value,
+        "coursetype": 3
       }
       this._courseService.addCourses(body).subscribe((res: any) => {
         if (res.status == "Success") {
@@ -125,7 +138,7 @@ export class AddCoursesComponent {
       })
     }
 
-    if(this.activeIndex === 1){
+    if (this.activeIndex === 1) {
       this.stepTwo = true
 
       const formData = new FormData();
@@ -137,30 +150,47 @@ export class AddCoursesComponent {
         this.stepTwo = false
         this.next();
       })
+    }
+
+    if(this.activeIndex === 2){
+      this.stepTree = true;
+      
+      const category = this.examCategoryForm.get('category')?.value;
+      const subcategory = this.examCategoryForm.get('subcategory')?.value;
+
+      const payload = {
+        "category_id": category[0],
+        "subcategory_id": subcategory[0]
+      }
+
+      this._courseService.addExamCategoryInCourse(payload, this.courseId).subscribe(res => {
+        this.stepTree = false
+      })
+      this.next();
 
 
     }
 
-    if (this.activeIndex === 2) {
+    if (this.activeIndex === 3) {
 
       const selectOptionValue = this.aiContentForm.get('isGenerate')?.value
 
-      if(selectOptionValue == true){
-        this.stepTree = true
+      if (selectOptionValue == true) {
+        this.stepFor = true
         const body = {
           "template": "content",
           "courseName": this.coursesForm.get('name')?.value,
           "userPrompt": this.aiContentForm.get('descibeCourse')?.value
         }
-  
+
         this._sharedService.getAIResponse(body).subscribe((res: any) => {
-          this.stepTree = false
+          this.stepFor = false
           const resData = res.data
           this.aiDescripationData = JSON.parse(resData)
           console.log(this.aiDescripationData, "Course AI response")
           this.addSubjectAndLessonInCourse(this.aiDescripationData)
         })
-      }else{
+      } else {
         this._router.navigate(['/course/content', this.courseId]);
       }
 
@@ -169,10 +199,44 @@ export class AddCoursesComponent {
 
   }
 
+  getExamCategory() {
+    this._sharedService.getExamCategory().subscribe(res => {
+      if (res.status === true) {
+        this.examList = res.data
+      }
+    })
+  }
+
+
+  backCategory(){
+    this.subCategoryShow = false;
+
+    this.examCategoryForm.setValue({
+      subcategory : ''
+    })
+
+  }
+
+  nextSubCategory(){
+    this.subCategoryShow = true;
+
+    const categoryId = this.examCategoryForm.get('category')?.value;
+
+    const payload = {
+      "category_id": categoryId[0]
+    }
+
+    this._sharedService.getExamSubCategory(payload).subscribe((res:any) => {
+      if(res.status === true){
+        this.subCategoryExamList = res.data
+      }
+    })
+
+
+  }
+
+
   addSubjectAndLessonInCourse(data: any) {
-
-    debugger
-
     type SectionLesson = {
       section: string;
       lessone: string[];
@@ -202,7 +266,7 @@ export class AddCoursesComponent {
     });
 
     this._courseService.addCoursesAIResponse(payload).subscribe(res => {
-          this._router.navigate(['/course/content', this.courseId]);
+      this._router.navigate(['/course/content', this.courseId]);
     })
   }
 
