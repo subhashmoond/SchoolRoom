@@ -9,67 +9,63 @@
 <!-- Step 1: Course Details -->
 
 <div class="add-courses mt-5">
-    <div class="text-center">
-      <h2 class="m-0">Create Test Series</h2>
-      <p>Start creating a new test series.</p>
-    </div>
-  
-    <form [formGroup]="addTestForm" class="w-6 m-0-a">
-      <!-- Title Input -->
-      <div class="grid nested-grid mt-3">
-        <div class="col-12">
-          <div class="w-full relative">
-            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">
-              Title <span>*</span>
-            </label>
-            <input 
-              class="w-full capitalize" 
-              pInputText 
-              formControlName="name" 
-              placeholder="Enter Test Series Title" 
-              maxlength="60" 
-              (input)="updateCharacterCount()"
-              required 
-            />
-            <span class="absolute top-0 right-0 text-sm text-gray-500">
-              {{ charCount }}/60
-            </span>
-          </div>
-        </div>
-        <div class="col-12 mt-3">
-          <div class="w-full">
-            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Price</label>
-            <input 
-              class="w-full" 
-              pInputText 
-              formControlName="price" 
-              type="number"
-              placeholder="₹ Price"
-            />
-          </div>
-        </div>
-        <div class="col-12 mt-3">
-          <p-checkbox 
-            formControlName="isFree" 
-            binary="true" 
-            label="Make it a free test series">
-          </p-checkbox>
-        </div>
-      </div>
-  
-      <!-- Buttons -->
-      <div class="grid justify-content-center mt-3">
-        <div class="col-12 flex ">
-          <button pButton type="submit" label="Create" class="p-button-success"></button>
-          <button pButton type="button" label="Cancel" class="p-button-success mx-3"></button>
-        </div>
-      </div>
-      
-    </form>
+  <div class="text-center">
+    <h2 class="m-0">Create Test Series</h2>
+    <p>Start creating a new test series.</p>
   </div>
-  
 
+  <form [formGroup]="addTestForm" class="w-6 m-0-a">
+    <!-- Title Input -->
+    <div class="grid nested-grid mt-3">
+      <div class="col-12">
+        <div class="w-full relative">
+          <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">
+            Title <span>*</span>
+          </label>
+          <input 
+            class="w-full capitalize" 
+            pInputText 
+            formControlName="name" 
+            placeholder="Enter Test Series Title" 
+            maxlength="60" 
+            (input)="updateCharacterCount()"
+            required 
+          />
+          <span class="absolute top-0 right-0 text-sm text-gray-500">
+            {{ charCount }}/60
+          </span>
+        </div>
+      </div>
+      <div class="col-12 mt-3">
+        <div class="w-full">
+          <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Price</label>
+          <input 
+            class="w-full" 
+            pInputText 
+            formControlName="price" 
+            type="number"
+            placeholder="₹ Price"
+          />
+        </div>
+      </div>
+      <div class="col-12 mt-3">
+        <p-checkbox 
+          formControlName="isFree" 
+          binary="true" 
+          label="Make it a free test series">
+        </p-checkbox>
+      </div>
+    </div>
 
+    <!-- Buttons -->
+  </form>
+  <div class="flex">
+    <div class="p-fixed p-grid p-justify-end" style="bottom: 50px; right: 50px; margin-top: 250px; position: fixed;">
+      <p-button type="button" label="Cancel" class="create-button mx-2"></p-button>
+      <p-button type="button" label="Submit" class="create-button"></p-button>
+    </div>
+  </div>
+</div>
 
 
 

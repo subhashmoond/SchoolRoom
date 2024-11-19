@@ -12,6 +12,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { CreateTestComponent } from './create-test/create-test.component';
 import { TagModule } from 'primeng/tag';
 import { TestCourseAddComponent } from './test-course-add/test-course-add.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-test',
@@ -25,7 +26,7 @@ export class TestComponent {
   addFormSideBar : boolean = false;
   tableView : boolean = false
 
-  constructor(){
+  constructor(private _router: Router){
 
   }
 
@@ -46,5 +47,10 @@ export class TestComponent {
       this.tableView = true
     }
 
+  }
+
+
+  navigateDetailsPage(){
+    this._router.navigate(['/test/testdetail']);
   }
 }

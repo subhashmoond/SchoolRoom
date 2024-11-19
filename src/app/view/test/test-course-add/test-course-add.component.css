@@ -24,47 +24,8 @@
     
   }
   
-  .add-courses {
-    margin-top: 20px;
+  .cancel-class{
+    background-color: red;
   }
   
-  .text-black {
-    color: black;
-  }
-  
-  .relative {
-    position: relative;
-  }
-  
-  .absolute {
-    position: absolute;
-  }
-  
-  .top-0 {
-    top: 0;
-  }
-  
-  .right-0 {
-    right: 0;
-  }
-  
-  .text-gray-500 {
-    color: #6b7280;
-  }
-  
-  .ml-2 {
-    margin-left: 0.5rem;
-  }
-  
-  .text-gray-600 {
-    color: #4b5563;
-  }
-  
-  .font-medium {
-    font-weight: 500;
-  }
-  
-  .font-bold {
-    font-weight: 700;
-  }
   
