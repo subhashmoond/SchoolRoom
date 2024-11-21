@@ -222,6 +222,7 @@
         },
         "heading": {
             "LogIn" : "Log In",
+            "Sign Up" : "Sign Up",
             "Create Client" : "Create Client",
             "Basic Details" : "Basic Details",
             "Contact Details" : "Contact Details",

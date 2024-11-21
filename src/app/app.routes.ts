@@ -8,7 +8,7 @@ import { LoginMainStudentComponent } from './view/student/login/login-main/login
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginMainComponent},
-    {path : 'studentlogin', component : LoginMainStudentComponent},
+    {path : 'student', component : LoginMainStudentComponent},
     {
         path: '', component: LayoutComponent, children: [
             {
@@ -22,7 +22,8 @@ export const routes: Routes = [
             },
             {
                 path: 'test', loadChildren: () => import('./view/test/test.router').then((m) => m.routes),
-            }
+            },
+            {path: 'studentapp', loadChildren : () => import('./view/student/student-router').then((m) => m.routes)}
         ],
         canActivate: [authGuard]
     }

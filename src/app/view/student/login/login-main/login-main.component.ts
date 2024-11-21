@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'primeng/carousel';
 import { BingMapsService } from '../../../../shared/services/bing-maps.service';
 import { LoginFormComponent } from '../../../login/login-form/login-form.component';
+import { LoginFormsComponent } from '../login-form/login-form.component';
+import { SignupFormComponent } from '../signup-form/signup-form.component';
 
 
 export interface CarouselOptions {
@@ -20,7 +22,7 @@ export interface CarouselOptions {
 @Component({
   selector: 'app-login-main',
   standalone: true,
-  imports: [TranslateModule, CardModule, LoginFormComponent, CarouselModule, CommonModule],
+  imports: [TranslateModule, CardModule, LoginFormsComponent, CarouselModule, CommonModule, SignupFormComponent],
   templateUrl: './login-main.component.html',
   styleUrl: './login-main.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -31,12 +33,13 @@ export class LoginMainStudentComponent {
   longitude: number | null = null;
   errorMessage: string | null = null;
   locationName!: string;
+  signUpComponent : boolean = false
 
   responsiveOptions: any[] | undefined;
 
   images = [
     { 'img': "../../../../../assets/images/slider1.jpg" },
-    { 'img': "../../../../../assets/images/slider2.jpg" },
+    { 'img': "../../../../../assets/images/slider1.jpg" },
   ]
 
 
@@ -79,6 +82,8 @@ export class LoginMainStudentComponent {
   }
 
 
-
+  signUp(){
+    this.signUpComponent = !this.signUpComponent;
+  }
 
 }

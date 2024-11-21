@@ -32,12 +32,24 @@ export class SidebarComponent {
 
   constructor(private _nav: NavService,public _sharedService:SharedService, private renderer : Renderer2, private router : Router) {
     this.renderer.setStyle(document.body, 'overflow', 'unset');
+    this.userData = localStorage.getItem('userData')
+    this.userName = JSON.parse(this.userData)
+
+
   }
 
   ngOnInit() {
-    this.menuItems = this._nav.MENUITEMS
+    console.log(this.userName, "local storage data get in component")
+
+    if(this.userName.user_type === "Teachers"){
+      this.menuItems = this._nav.MENUITEMS
+    }else{
+      this.menuItems = this._nav.STUDENTMENU
+    }
+
+
     this.profileMenuItems = this._nav.PROFILEMENUITEMS
-    this.userData = localStorage.getItem('userData')
+    // this.userData = localStorage.getItem('userData')
     this.userName = JSON.parse(this.userData)
     this._sharedService.toggleButtonValue$.subscribe(value => {
       this.togglesidebar = value;

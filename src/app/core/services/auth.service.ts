@@ -35,5 +35,26 @@ export class AuthService {
     return deviceId;
   }
 
+  // Student App API 
+
+  signUpStudent(payload : any){
+    const url = `${environment.basePath}learner/register/`;
+    return this._dataService.post(url, payload)
+  }
+
+  studentLogIn(payload : any){
+    const url = `${environment.basePath}learner/login/`;
+    return this._dataService.post(url, payload);
+  }
+
+  otpVerify(payload : any){
+    const url = `${environment.basePath}learner/otp_verify/`;
+    return this._dataService.post(url, payload);
+  }
+
+  reSendOtp(payload : any){
+    const url = `${environment.basePath}learner/resend-otp/`;
+    return this._dataService.post(url, payload);
+  }
 
 }

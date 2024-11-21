@@ -4,28 +4,31 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
-import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { UrlHandlerService } from '../../../shared/services/url-handler.service';
 import Gemini from 'gemini-ai';
+import { AuthService } from '../../../../core/services/auth.service';
+import { UrlHandlerService } from '../../../../shared/services/url-handler.service';
 
 
 @Component({
-  selector: 'app-login-form',
+  selector: 'app-login-forms',
   standalone: true,
-  imports: [InputTextModule, ButtonModule, PanelModule, FormsModule, ReactiveFormsModule, CardModule, ToastModule, TranslateModule],
+  imports: [InputTextModule, ButtonModule, InputTextModule, PanelModule, FormsModule, ReactiveFormsModule, CardModule, ToastModule, TranslateModule, InputTextModule],
   providers: [MessageService],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
 })
-export class LoginFormComponent {
+export class LoginFormsComponent {
   loginForm!: FormGroup;
+  otpFrom!: FormGroup;
   title = 'Log in'
   submitMsg!: string;
   showPassword: boolean = false;
+  otpVerify: boolean = false;
+  loginRes: any;
 
 
 
@@ -52,11 +55,18 @@ export class LoginFormComponent {
 
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
+      instituteCode: ['', [Validators.required]],
       password: ['', Validators.required]
     })
+
+    this.otpFrom = this.fb.group({
+      otp: ['', Validators.required]
+    })
+
+
   }
 
-  async giminiAPI(){
+  async giminiAPI() {
     const gemini = new Gemini('AIzaSyAlaH60kwBTOjUYQcJcXeqfwbMEZ_zzPYA');
     console.log(await gemini.ask("Hi!"), "gemini response");
   }
@@ -71,28 +81,66 @@ export class LoginFormComponent {
 
       const formData = new FormData();
       formData.append('username', this.loginForm.get('username')?.value);
+      formData.append('institute_code', this.loginForm.get('instituteCode')?.value);
       formData.append('password', this.loginForm.get('password')?.value);
 
-      this._authService.userLogin(formData).subscribe((res: any) => {
-        localStorage.setItem('userData', JSON.stringify(res));
-        localStorage.setItem('isLoggedIn', JSON.stringify(true));
-        this.router.navigate(['/dashborad']);
-        const storedUrl = this._urlHandlerService.getStoreUrl();
-        // if (storedUrl) {
-        //   this._urlHandlerService.clearStoreUrl();
-        //   this.router.navigateByUrl(storedUrl);
-        // } else {
-        // }
-        this._messageService.add({ severity: 'success', summary: 'Success', detail: 'User Login Successful' });
+      this._authService.studentLogIn(formData).subscribe((res: any) => {
+
+        if (res.status === true) {
+          this.otpVerify = true;
+          this.loginRes = res
+          this._messageService.add({ severity: 'success', detail: res.message });
+        } else {
+          this._messageService.add({ severity: 'error', detail: res.message });
+        }
       }, error => {
+        console.log()
         // const errormsg = error.error.userMessageGlobalisationCode
         // this._messageService.add({ severity: 'error', summary: ' Error', detail: this.translate.instant(errormsg) });
       })
     }
   }
 
+  otpVarify() {
 
+    const formData = new FormData();
+    formData.append('username', this.loginRes.username);
+    formData.append('otp', this.otpFrom.get('otp')?.value);
 
+    this._authService.otpVerify(formData).subscribe((res : any) => {
+      if(res.status ===true){
+        this._messageService.add({ severity: 'success', detail: res.message });
+
+        const data = {
+          "status": res.status,
+          "key": res.token,
+          "name": res.name,
+          "username": res.username,
+          "institute": res.institute,
+      }
+
+        localStorage.setItem('userData', JSON.stringify(data));
+        localStorage.setItem('isLoggedIn', JSON.stringify(true));
+        this.router.navigate(['/studentapp/dashborad']);
+        const storedUrl = this._urlHandlerService.getStoreUrl();
+      }else{
+        this._messageService.add({ severity: 'error', detail: res.message });
+      }
+
+    })
+
+  }
+
+  otpResend() {
+    const payload = {
+      "username": this.loginRes.username
+    }
+
+    this._authService.reSendOtp(payload).subscribe(res => {
+
+    })
+
+  }
 
 
 

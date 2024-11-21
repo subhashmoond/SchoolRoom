@@ -14,11 +14,11 @@ export class JWTtokenInterceptor implements HttpInterceptor {
 
     this.authenticationKey = userData?.key;
 
-    const isLoginAPI = request.url.includes('api/educator/login/');
+    const isLoginAPI = request.url.includes('api/educator/login/') || request.url.includes('api/learner/register/') || request.url.includes('api/learner/login/') || request.url.includes('api/learner/otp_verify/') || request.url.includes('api/learner/resend-otp/');
     
     // Clone the request and set the authorization header if the user is logged in and it is not the login API.
     let modifiedRequest = request;
-    if (!isLoginAPI) {
+    if (!isLoginAPI ) {
       modifiedRequest = request.clone({
         setHeaders: {
           'Authorization': `token ${this.authenticationKey}`,

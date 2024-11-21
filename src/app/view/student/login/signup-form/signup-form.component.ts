@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import Gemini from 'gemini-ai';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
-import { AuthService } from '../../../core/services/auth.service';
-import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { UrlHandlerService } from '../../../shared/services/url-handler.service';
-import Gemini from 'gemini-ai';
-
+import { AuthService } from '../../../../core/services/auth.service';
+import { UrlHandlerService } from '../../../../shared/services/url-handler.service';
 
 @Component({
-  selector: 'app-login-form',
+  selector: 'app-signup-form',
   standalone: true,
   imports: [InputTextModule, ButtonModule, PanelModule, FormsModule, ReactiveFormsModule, CardModule, ToastModule, TranslateModule],
   providers: [MessageService],
-  templateUrl: './login-form.component.html',
-  styleUrl: './login-form.component.css'
+  templateUrl: './signup-form.component.html',
+  styleUrl: './signup-form.component.css'
 })
-export class LoginFormComponent {
-  loginForm!: FormGroup;
+export class SignupFormComponent {
+
+  signUpFrom!: FormGroup;
   title = 'Log in'
   submitMsg!: string;
   showPassword: boolean = false;
@@ -50,13 +50,13 @@ export class LoginFormComponent {
 
     console.log(loginStatus, "Login Status ")
 
-    this.loginForm = this.fb.group({
+    this.signUpFrom = this.fb.group({
+      name : ['', [Validators.required]],
       username: ['', [Validators.required]],
+      instituteCode : ['', [Validators.required]],
       password: ['', Validators.required]
     })
   }
-
-  
 
   async giminiAPI(){
     const gemini = new Gemini('AIzaSyAlaH60kwBTOjUYQcJcXeqfwbMEZ_zzPYA');
@@ -67,25 +67,19 @@ export class LoginFormComponent {
     this.showPassword = !this.showPassword
   }
 
-  loginUser() {
+  signUpUser() {
 
-    if (this.loginForm.valid) {
+    if (this.signUpFrom.valid) {
 
       const formData = new FormData();
-      formData.append('username', this.loginForm.get('username')?.value);
-      formData.append('password', this.loginForm.get('password')?.value);
+      formData.append('name', this.signUpFrom.get('name')?.value);
+      formData.append('username', this.signUpFrom.get('username')?.value);
+      formData.append('instituteCode', this.signUpFrom.get('instituteCode')?.value);
+      formData.append('password', this.signUpFrom.get('password')?.value);
 
-      this._authService.userLogin(formData).subscribe((res: any) => {
-        localStorage.setItem('userData', JSON.stringify(res));
-        localStorage.setItem('isLoggedIn', JSON.stringify(true));
-        this.router.navigate(['/dashborad']);
-        const storedUrl = this._urlHandlerService.getStoreUrl();
-        // if (storedUrl) {
-        //   this._urlHandlerService.clearStoreUrl();
-        //   this.router.navigateByUrl(storedUrl);
-        // } else {
-        // }
-        this._messageService.add({ severity: 'success', summary: 'Success', detail: 'User Login Successful' });
+      this._authService.signUpStudent(formData).subscribe((res: any) => {
+        console.log(res)
+        this._messageService.add({ severity: 'success', summary: 'Success', detail: 'User Sign Up Successful' });
       }, error => {
         // const errormsg = error.error.userMessageGlobalisationCode
         // this._messageService.add({ severity: 'error', summary: ' Error', detail: this.translate.instant(errormsg) });
@@ -97,8 +91,4 @@ export class LoginFormComponent {
 
 
 
-
-
 }
-
-

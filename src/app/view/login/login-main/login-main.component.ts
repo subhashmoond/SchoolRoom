@@ -35,11 +35,8 @@ export class LoginMainComponent {
   responsiveOptions: any[] | undefined;
 
   images = [
-    { 'img': "https://cdn.pilotpod.in/largefiles/forest.png" },
-    { 'img': "https://cdn.pilotpod.in/largefiles/forest 1.png" },
-    { 'img': "https://cdn.pilotpod.in/largefiles/forest 2.png" },
-    { 'img': "https://cdn.pilotpod.in/largefiles/forest 3.png" },
-    { 'img': "https://cdn.pilotpod.in/largefiles/forest 4.png" }
+    { 'img': "../../../../../assets/images/slider1.jpg" },
+    { 'img': "../../../../../assets/images/slider1.jpg" },
   ]
 
 

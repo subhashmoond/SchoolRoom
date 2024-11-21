@@ -21,7 +21,26 @@
     </div>
     <div class="col-4 px-6 p-0 overflow-hidden relative">
         <div class="pt-4 login-form">
-            <app-login-form></app-login-form>
+            @if (!signUpComponent) {
+                <app-login-forms></app-login-forms>
+            }
+            @else {
+                <app-signup-form></app-signup-form>
+            }
+        </div>
+
+        <div class="flex justify-content-center w-full pt-6 flex-column">
+            <div class="flex align-items-center justify-content-center">
+                or
+            </div> 
+            <a class="flex align-items-center mt-3 justify-content-center" (click)="signUp()">
+                @if(!signUpComponent){
+                    Signup
+                }
+                @else {
+                    LogIn
+                }
+            </a>
         </div>
 
      

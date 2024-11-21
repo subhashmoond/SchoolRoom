@@ -24,9 +24,9 @@ export class NavService {
       children: [
         { path: 'course', title: 'Courses', type: 'link' },
         { path: 'test', title: 'Test Series', type: 'link' },
-        { path: 'test', title: 'Question Pool', type: 'link' },
-        { path: 'test', title: 'Live Class', type: 'link' },
-        { path: 'test', title: 'Assignment', type: 'link' },
+        { path: '', title: 'Question Pool', type: 'link' },
+        { path: '', title: 'Live Class', type: 'link' },
+        { path: '', title: 'Assignment', type: 'link' },
       ]
     },
 
@@ -44,6 +44,16 @@ export class NavService {
 
   ];
 
+
+  STUDENTMENU: Menus[] = [
+    { path: 'studentapp/dashborad', title: 'Dashborad', icon: 'assets/images/icon/dashboard.svg', type: 'link', active: true },
+    { path: 'studentapp/course', title: 'Course', icon: 'assets/images/icon/dashboard.svg', type: 'link', active: false },
+    { path: 'studentapp/mycourse', title: 'My Course', icon: 'assets/images/icon/dashboard.svg', type: 'link', active: false },
+
+    { path: 'studentapp/community', title: 'Community', icon: 'assets/images/icon/dashboard.svg', type: 'link', active: false },
+    { path: 'studentapp/setting', title: 'Setting', icon: 'assets/images/icon/dashboard.svg', type: 'link', active: false },
+
+  ];
 
 
 // PROFILEMENUITEMS
