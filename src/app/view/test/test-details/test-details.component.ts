@@ -12,14 +12,17 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AddSectionComponent } from './add-section/add-section.component';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { EditorModule } from 'primeng/editor';
+import { FormsModule } from '@angular/forms';
+
+
 
 
 
 @Component({
   selector: 'app-test-details',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, TagModule, AccordionModule, AddSectionComponent],
+  imports: [TableModule, InputTextModule, EditorModule, FormsModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, TagModule, AccordionModule, AddSectionComponent],
   templateUrl: './test-details.component.html',
   styleUrl: './test-details.component.css'
 })
@@ -46,5 +49,10 @@ export class TestDetailsComponent {
 
 
   // drag and drop ul/ li
+
+  instructions: string = '';
+
   
 }
+
+
