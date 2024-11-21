@@ -12,6 +12,7 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AddSectionComponent } from './add-section/add-section.component';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 
 
@@ -37,6 +38,13 @@ export class TestDetailsComponent {
     this.addSectionValue = true
   }
 
+  addQuestionSidebarVisible: boolean = false;
+
+  openAddQuestionSidebar() {
+    this.addQuestionSidebarVisible = true;
+  }
 
 
+  // drag and drop ul/ li
+  
 }
