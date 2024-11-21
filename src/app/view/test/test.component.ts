@@ -9,23 +9,22 @@ import { SidebarModule } from 'primeng/sidebar';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
-import { CreateTestComponent } from './create-test/create-test.component';
 import { TagModule } from 'primeng/tag';
-import { TestCourseAddComponent } from './test-course-add/test-course-add.component';
+import { Router } from '@angular/router';
+import { CreateMainTestComponent } from './main-test/create-main-test/create-main-test.component';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, CreateTestComponent, TagModule, TestCourseAddComponent],
+  imports: [TableModule, InputTextModule, CreateMainTestComponent, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, TagModule],
   templateUrl: './test.component.html',
   styleUrl: './test.component.css'
 })
 export class TestComponent {
-
   addFormSideBar : boolean = false;
   tableView : boolean = false
 
-  constructor(){
+  constructor(private _router: Router){
 
   }
 
@@ -46,5 +45,10 @@ export class TestComponent {
       this.tableView = true
     }
 
+  }
+
+
+  navigateDetailsPage(){
+    this._router.navigate(['/test/test-plan']);
   }
 }
