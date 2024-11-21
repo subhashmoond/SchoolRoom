@@ -3,10 +3,12 @@ import { LoginMainComponent } from './view/login/login-main/login-main.component
 import { DashbordComponent } from './view/dashbord/dashbord.component';
 import { authGuard } from './core/auth/auth.guard';
 import { LayoutComponent } from './shared/layout/layout.component';
+import { LoginMainStudentComponent } from './view/student/login/login-main/login-main.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginMainComponent},
+    {path : 'studentlogin', component : LoginMainStudentComponent},
     {
         path: '', component: LayoutComponent, children: [
             {
