@@ -1,29 +1,17 @@
 <div class="grid client-dashborad-header mb-4 align-items-center">
   <div class="col-12">
-    <!-- <p-tag severity="success" value="Published"/> -->
-    <p-tag severity="danger" value="Unpublished" />
+    <p-tag severity="danger" value="Unpublished"></p-tag>
   </div>
   <div class="col-6">
-    <h4 class="subheading-color">Test name</h4>
+    <h4 class="subheading-color">Full Stack Web Development</h4>
   </div>
   <div class="col-6 flex justify-content-end">
-   
-        <img
-        src="../../../../assets/images/icon/filter.svg"
-        alt="Illustration"
-        class="mb-3  my-4"
-        style="width: 20px; height: 20px;"
-       
-      />
-
-    
-    <!-- <p-button class="mr-2 border-round-md button-shadow">   <img
-        src="../../../../assets/images/icon/no-data.svg"
-        alt="Illustration"
-        class="mb-3  my-4"
-        style="width: 15px; height: 15px;"
-       
-      /> Reorder</p-button> -->
+    <p-button class="mr-2 border-round-md button-shadow">
+      <img src="../../../../../assets/images/icon/filter.svg" />
+    </p-button>
+    <!-- <p-button class="mr-2 border-round-md button-shadow"
+      ><img src="../../../../../assets/images/icon/download.svg"
+    /></p-button> -->
   </div>
 </div>
 
@@ -37,12 +25,11 @@
       placeholder="Search test..."
       class="p-inputtext-lg w-30 mr-3"
     />
-    <p-button class="create-button border-round-md"
-        
-    label="Search"
-    icon="pi pi-search"
-          ></p-button
-        >
+    <p-button
+      class="create-button border-round-md"
+      label="Search"
+      icon="pi pi-search"
+    ></p-button>
   </div>
 
   <!-- Info Icons Section -->
@@ -99,9 +86,8 @@
         <img
           src="../../../../assets/images/icon/no-data.svg"
           alt="Illustration"
-          class="mb-3  my-4"
-          style="width: 150px; height: 150px;"
-         
+          class="mb-3 my-4"
+          style="width: 150px; height: 150px"
         />
 
         <h6 class="text-secondary">Add Set</h6>
@@ -109,13 +95,12 @@
           Start adding sets to build your test series
         </p>
 
-        <p-button class="create-button border-round-md"
-         (onClick)="addSection()"
-         icon="pi pi-plus"
-         label="Add Set"
-          ></p-button
-        >
-       
+        <p-button
+          class="create-button border-round-md"
+          (onClick)="addSection()"
+          icon="pi pi-plus"
+          label="Add Set"
+        ></p-button>
       </div>
     </div>
 
