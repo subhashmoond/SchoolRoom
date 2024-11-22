@@ -1,147 +1,147 @@
 <div class="grid client-dashborad-header mb-4 align-items-center p-shadow-2">
-  <div class="col-6 grid align-items-center">
-    <p-button
-      class="mr-2 border-round-md button-shadow p-button-sm create-button"
-      icon="pi pi-angle-left"
-      label="Back"
-      (click)="goBack()"
-    ></p-button>
-    <h4 class="subheading-color p-text-xs">Web Development • Set 1</h4>
-  </div>
-
-  <div class="col-6 flex justify-content-end">
-    <p-button
-      class="mr-2 border-round-md button-shadow p-button-sm create-button"
-      icon="pi pi-refresh"
-      label="Reload"
-    ></p-button>
-    <p-button
-      class="border-round-md button-shadow p-button-sm create-button"
-      icon="pi pi-ellipsis-v"
-      label=""
-      (click)="toggleOptions()"
-    ></p-button>
-  </div>
-</div>
-
-<!-- <hr class=" p-mb-5" style="border-color: rgba(0, 0, 0, 0.1);"> -->
-
-<!-- Tag Section -->
-<div class="grid client-dashborad-header mb-4 align-items-center">
-  <div class="col-12">
-    <p-tag severity="warning" value="Paid" class="p-text-xs"></p-tag>
-    <p-tag
-      severity="warning"
-      value="Section Quiz"
-      class="p-text-xs mx-1"
-    ></p-tag>
-  </div>
-</div>
-
-<!-- Toggle buttons for setting and Delete -->
-<div *ngIf="showMoreOptions" class="flex justify-content-end mt-2">
-  <p-button
-    class="mr-2 border-round-md button-shadow p-button-sm"
-    label="Setting"
-  ></p-button>
-  <p-button
-    class="border-round-md button-shadow p-button-sm"
-    label="Delete"
-  ></p-button>
-</div>
-
-<!-- Test 2 Section -->
-<div class="test-section">
-  <div class="test-header text-sm">
-    <h4>Test 2</h4>
-  </div>
-</div>
-
-<div class="grid p-shadow-2 p-mb-3 p-p-4 border-round-md my-3" style="height: 600px;" >
-    <!-- Left Section -->
-    <div class="col-7 p-3 border-round-md p-pr-3 bg-white" >
-      
-      <!-- Top Part (Questions) -->
-      <div class="grid gap-6 p-align-center text-centerjustify-between p-mb-4" >
-        <!-- Number of Questions -->
-        <div class="col-2.5">
-          <p class="p-text-xs text-center text-sm "><strong>Number of Questions:</strong></p>
-          <p class="p-text-xs text-center ">2</p>
-        </div>
-        
-        <!-- Duration -->
-        <div class="col-2.5">
-          <p class="p-text-xs text-center text-sm "><strong>Duration:</strong></p>
-          <p class="p-text-xs text-center ">-</p>
-        </div>
-        
-        <!-- Total Marks -->
-        <div class="col-2.5">
-          <p class="p-text-xs text-center text-sm "><strong>Total Marks:</strong></p>
-          <p class="p-text-xs text-center ">2</p>
-        </div>
-        
-        <!-- Maximum Attempts -->
-        <div class="col-2.5">
-          <p class="p-text-xs text-center text-sm "><strong>Maximum Attempts:</strong></p>
-          <p class="p-text-xs text-center ">-</p>
-        </div>
-        
-        <!-- Expiry Date -->
-        <div class="col-2.5 ">
-            
-          <p class="p-text-xs text-center text-sm "><strong>Expiry Date:</strong></p>
-          <p class="p-text-xs text-center ">-</p>
-        </div>
-      </div>
-
-      <!-- <hr> -->
-  
-      <!-- Bottom Part (Build Section Quiz) -->
-      <div class="quiz-builder-section text-center p-mt-5 p-3" >
-        <img
-            src="../../../../assets/images/icon/no-data.svg"
-            alt="Illustration"
-            class="mb-3 my-4"
-            style="width: 150px; height: 150px"
-          />
-        <h4 class="p-text-md">Build Section Quiz</h4>
-        <p class="p-text-secondary">
-          Add question, edit, and manage your section quiz!
-        </p>
-        <p-button label="Continue" class="p-button-success create-button" (click)="onContinue()"></p-button>
-      </div>
-  
+    <div class="col-6 grid align-items-center">
+      <p-button
+        class="mr-2 border-round-md button-shadow p-button-sm create-button"
+        icon="pi pi-angle-left"
+        label="Back"
+        (click)="goBack()"
+      ></p-button>
+      <h4 class="subheading-color p-text-xs">Web Development • Set 1</h4>
     </div>
   
-    <!-- Right Section (Attachments) -->
-    <div class="col-4 p-3 border-round-md p-pl-3 bg-white ml-2" style="position: relative;">
-        <div class="attachments-section text-center">
-          <h4 class="p-text-md">Attachments</h4>
-          <p class="p-text-secondary">
-            Add attachments like docs, PDFs, or links.
-          </p>
-          <!-- Attachment Icon -->
-          <i
-            class="pi pi-paperclip mt-6"
-            style="font-size: 150px; color: #473289; margin: 100px 0; opacity: 0.5;"
-          ></i>
-          <!-- Buttons positioned in the bottom-right corner -->
-          <div style="position: absolute; bottom: 20px; right: 20px;">
-            <p-button
-              label="Add Link"
-              icon="pi pi-link"
-              class="mr-2 p-button-sm create-button"
-            ></p-button>
-            <p-button
-              label="Browse"
-              icon="pi pi-upload"
-              class="p-button-sm create-button"
-            ></p-button>
-          </div>
-        </div>
-      </div>
-      
-  
+    <div class="col-6 flex justify-content-end">
+      <p-button
+        class="mr-2 border-round-md button-shadow p-button-sm create-button"
+        icon="pi pi-refresh"
+        label="Reload"
+      ></p-button>
+      <p-button
+        class="border-round-md button-shadow p-button-sm create-button"
+        icon="pi pi-ellipsis-v"
+        label=""
+        (click)="toggleOptions()"
+      ></p-button>
+    </div>
   </div>
   
+  <!-- <hr class=" p-mb-5" style="border-color: rgba(0, 0, 0, 0.1);"> -->
+  
+  <!-- Tag Section -->
+  <div class="grid client-dashborad-header mb-4 align-items-center">
+    <div class="col-12">
+      <p-tag severity="warning" value="Paid" class="p-text-xs"></p-tag>
+      <p-tag
+        severity="warning"
+        value="Section Quiz"
+        class="p-text-xs mx-1"
+      ></p-tag>
+    </div>
+  </div>
+  
+  <!-- Toggle buttons for setting and Delete -->
+  <div *ngIf="showMoreOptions" class="flex justify-content-end mt-2">
+    <p-button
+      class="mr-2 border-round-md button-shadow p-button-sm"
+      label="Setting"
+    ></p-button>
+    <p-button
+      class="border-round-md button-shadow p-button-sm"
+      label="Delete"
+    ></p-button>
+  </div>
+  
+  <!-- Test 2 Section -->
+  <div class="test-section">
+    <div class="test-header text-sm">
+      <h4>Test 2</h4>
+    </div>
+  </div>
+  
+  <div class="grid p-shadow-2 p-mb-3 p-p-4 border-round-md my-3" style="height: 600px;" >
+      <!-- Left Section -->
+      <div class="col-7 border-round-md "  >
+        
+        <!-- Top Part (Questions) -->
+        <div class="grid border-round-md gap-7 p-4 p-align-center bg-white text-centerjustify-between p-mb-4" style=" height: 150px;" >
+          <!-- Number of Questions -->
+          <div class="col-2.5">
+            <p class="p-text-xs text-center text-sm "><strong>Number of Questions:</strong></p>
+            <p class="p-text-xs text-center ">2</p>
+          </div>
+          
+          <!-- Duration -->
+          <div class="col-2.5">
+            <p class="p-text-xs text-center text-sm "><strong>Duration:</strong></p>
+            <p class="p-text-xs text-center ">-</p>
+          </div>
+          
+          <!-- Total Marks -->
+          <div class="col-2.5">
+            <p class="p-text-xs text-center text-sm "><strong>Total Marks:</strong></p>
+            <p class="p-text-xs text-center ">2</p>
+          </div>
+          
+          <!-- Maximum Attempts -->
+          <div class="col-2.5">
+            <p class="p-text-xs text-center text-sm "><strong>Maximum Attempts:</strong></p>
+            <p class="p-text-xs text-center ">-</p>
+          </div>
+          
+          <!-- Expiry Date -->
+          <div class="col-2.5 ">
+              
+            <p class="p-text-xs text-center text-sm "><strong>Expiry Date:</strong></p>
+            <p class="p-text-xs text-center ">-</p>
+          </div>
+        </div>
+  
+        <!-- <hr> -->
+    
+        <!-- Bottom Part (Build Section Quiz) -->
+        <div class=" text-center p-mt-5 border-round-md bg-white mt-2 " style=" height: 450px;" >
+          <img
+              src="../../../../assets/images/icon/no-data.svg"
+              alt="Illustration"
+              class="mb-3 my-4"
+              style="width: 150px; height: 150px"
+            />
+          <h4 class="p-text-md">Build Section Quiz</h4>
+          <p class="p-text-secondary">
+            Add question, edit, and manage your section quiz!
+          </p>
+          <p-button label="Continue" class="p-button-success create-button" (click)="onContinue()"></p-button>
+        </div>
+    
+      </div>
+    
+      <!-- Right Section (Attachments) -->
+      <div class="col-4 p-3 border-round-md p-pl-3 bg-white ml-2" style="position: relative;">
+          <div class="attachments-section text-center">
+            <h4 class="p-text-md">Attachments</h4>
+            <p class="p-text-secondary">
+              Add attachments like docs, PDFs, or links.
+            </p>
+            <!-- Attachment Icon -->
+            <i
+              class="pi pi-paperclip mt-6"
+              style="font-size: 150px; color: #473289; margin: 100px 0; opacity: 0.5;"
+            ></i>
+            <!-- Buttons positioned in the bottom-right corner -->
+            <div style="position: absolute; bottom: 20px; right: 20px;">
+              <p-button
+                label="Add Link"
+                icon="pi pi-link"
+                class="mr-2 p-button-sm create-button"
+              ></p-button>
+              <p-button
+                label="Browse"
+                icon="pi pi-upload"
+                class="p-button-sm create-button"
+              ></p-button>
+            </div>
+          </div>
+        </div>
+        
+    
+    </div>
+    
