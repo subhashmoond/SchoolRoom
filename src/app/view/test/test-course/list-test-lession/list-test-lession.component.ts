@@ -3,6 +3,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { QuestionTypeComponent } from "../../question/question-type/question-type.component";
 import { SidebarModule } from 'primeng/sidebar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-test-lession',
@@ -15,10 +16,14 @@ export class ListTestLessionComponent {
 
   addQuestionSidebarVisible : boolean = false
 
-constructor(){}
+constructor(private _router: Router){}
 
   openAddQuestionSidebar() {
     this.addQuestionSidebarVisible = true;
+  }
+
+  navigateDetailsPage(){
+    this._router.navigate(['/test/test-details']);
   }
 
 }
