@@ -14,6 +14,9 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { AddSectionComponent } from './add-section/add-section.component';
 import { EditorModule } from 'primeng/editor';
 import { FormsModule } from '@angular/forms';
+import { CheckboxModule } from 'primeng/checkbox';
+
+
 
 
 
@@ -22,7 +25,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-test-details',
   standalone: true,
-  imports: [TableModule, InputTextModule, EditorModule, FormsModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, TagModule, AccordionModule, AddSectionComponent],
+  imports: [TableModule, InputTextModule, CheckboxModule, EditorModule, FormsModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, TagModule, AccordionModule, AddSectionComponent],
   templateUrl: './test-details.component.html',
   styleUrl: './test-details.component.css'
 })
@@ -51,6 +54,7 @@ export class TestDetailsComponent {
   // drag and drop ul/ li
 
   instructions: string = '';
+  question: string = '';
 
   
 }
