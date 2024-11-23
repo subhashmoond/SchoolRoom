@@ -24,9 +24,7 @@ export class TestComponent {
   addFormSideBar : boolean = false;
   tableView : boolean = false
 
-  constructor(private _router: Router){
-
-  }
+  constructor(private _router: Router){ }
 
   ngOnInit(){
     
