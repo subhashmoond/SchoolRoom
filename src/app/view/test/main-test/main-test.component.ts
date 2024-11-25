@@ -23,6 +23,10 @@ export class MainTestComponent {
   toggleOptions() {
     this.showMoreOptions = !this.showMoreOptions;  // Toggle the visibility of buttons
   }
+
+  onRefresh(){
+    location.reload();
+  }
   
   onContinue() {
     console.log('Continue clicked for Test 2');
