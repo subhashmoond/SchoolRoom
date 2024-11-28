@@ -1,1 +1,58 @@
-<p>create-test-course works!</p>
+<!-- Step 1: Course Details -->
+<p-toast />
+<div class="add-courses mt-5">
+  <div class="text-center mb-5">
+    <h3 class="m-0 pb-2">Create Test Series</h3>
+    <p class="m-0">Start Creating a New Test Series.</p>
+  </div>
+
+  <form [formGroup]="coursesForm" class="w-6 m-0-a">
+    <div class="grid nested-grid mt-3">
+      <div class="col-12">
+        <div class="w-full">
+          <label class="w-full mb-1  font-medium line-height-exsm inline-block">Course Name
+            <span>*</span></label>
+          <input class="w-full capitalize" pInputText formControlName="name" placeholder="Enter Course Name"
+            required="true" />
+        </div>
+        @if(coursesForm.get('name')?.errors?.['required'] &&
+        coursesForm.get('name')?.touched){
+        <small id="username-help" class="p-error">Name is Required</small>
+        }
+      </div>
+
+      <div class="col-12 mt-4">
+        <div class="w-full">
+          <label class="w-full mb-1  font-medium line-height-exsm inline-block">Description</label>
+          <textarea rows="5" style="width: 100%;" pInputTextarea formControlName="description"></textarea>
+        </div>
+      </div>
+
+      <div class="col-12 flex">
+        <p-checkbox formControlName="ispaid" [binary]="true"></p-checkbox>
+        <label class="ml-2">This is a paid course</label>
+      </div>
+
+      <div class="col-12 mt-4" *ngIf="coursesForm.get('ispaid')?.value">
+        <div class="grid">
+          <div class="col-6">
+            <label class="w-full mb-1  font-medium line-height-exsm inline-block">Price</label>
+            <input class="w-full" pKeyFilter="num" pInputText placeholder="Enter price" formControlName="price" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+<!-- Navigation Buttons -->
+<div class="w-98 border-top-1 border-color-main bg-white absolute bottom-0 grid m-0-a">
+  <div class="col-6">
+    <!-- <button type="button" pButton pRipple (click)="back()" label="Back"
+          class="primary-border-button px-5 mr-3 text-sm" [disabled]="activeIndex === 0"></button> -->
+  </div>
+  <div class="col-6 flex justify-content-end">
+    <button type="button" [disabled]="coursesForm.invalid" pButton pRipple (click)="submit()" label="Submit" class="secondary-button px-6 "></button>
+  </div>
+</div>

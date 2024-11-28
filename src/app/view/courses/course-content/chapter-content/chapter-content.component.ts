@@ -17,12 +17,14 @@ import { YoutubeVideoComponent } from './youtube-video/youtube-video.component';
 import { TextComponent } from './text/text.component';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
+import { SkeletonModule } from 'primeng/skeleton';
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'app-chapter-content',
   standalone: true,
   imports: [AccordionModule, ButtonModule, SplitButtonModule, DialogModule, PanelModule, AvatarModule, UploadContentComponent, SidebarModule,
-    ImageComponent, UploadVideoComponent, AudioComponent, ReSourceComponent, YoutubeVideoComponent, TextComponent, MenuModule, ToastModule, SidebarModule],
+    ImageComponent, UploadVideoComponent, AudioComponent, ReSourceComponent, RippleModule, SkeletonModule, YoutubeVideoComponent, TextComponent, MenuModule, ToastModule, SidebarModule],
   templateUrl: './chapter-content.component.html',
   styleUrl: './chapter-content.component.css'
 })
@@ -40,6 +42,7 @@ export class ChapterContentComponent {
   isYoutubevideo: boolean = false;
   isAudio: boolean = false;
   contentId: any;
+  isLoader : boolean = true;
 
   chapterDataList: any[] = [];
 
@@ -65,7 +68,9 @@ export class ChapterContentComponent {
   }
 
   getChapterContent() {
+    this.isLoader = true
     this._coursesService.getChapterContentList(this.coursesId, this.lessonId).subscribe(res => {
+      this.isLoader = false
       this.chapterDataList = res.data
     })
   }
@@ -158,7 +163,17 @@ export class ChapterContentComponent {
         this.isResource = true
         break;
     }
+  }
 
+  closeSideBar(event : any){
+    this.getChapterContent();
+    this.isText = false;
+    this.isResource = false;
+    this.isYoutubevideo = false;
+    this.isAudio = false;
+    this.isImage = false;
+    this.uploadContents = false;
+    this.isVideo = false;
   }
 
   deleteContent(id: any) {

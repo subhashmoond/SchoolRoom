@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
@@ -25,6 +25,7 @@ export class UploadContentComponent {
   @Input() contentTypes: any;
   @Input() lessonId: any;
   @Input() contentId: any;
+  @Output() closeSideBar = new EventEmitter<any>();
 
   addContent!: FormGroup;
   settingContent!: FormGroup;
@@ -100,6 +101,7 @@ export class UploadContentComponent {
 
     this._coursesService.addPDFFile(body).subscribe(res => {
       console.log(res, "Content Datas")
+      this.closeSideBar.emit(false)
     }, error => {
       this._messageService.add({ severity: 'error', detail: 'Error ' });
     })
@@ -126,6 +128,8 @@ export class UploadContentComponent {
 
     this._coursesService.editPDFFie(this.contentId, payload).subscribe(res => {
       console.log(res, "PDF Setting ")
+      this.closeSideBar.emit(false)
+
     })
 
   }

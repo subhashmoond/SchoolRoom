@@ -6,11 +6,12 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { CoursesService } from '../../../../core/services/courses.service';
 import { MenuModule } from 'primeng/menu';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-curriculum',
   standalone: true,
-  imports: [CardModule, ButtonModule, MenuModule, ReactiveFormsModule, InputTextModule],
+  imports: [CardModule, ButtonModule, MenuModule, ReactiveFormsModule, InputTextModule, SkeletonModule ],
   templateUrl: './curriculum.component.html',
   styleUrl: './curriculum.component.css'
 })
@@ -20,7 +21,8 @@ export class CurriculumComponent {
   isEditLesson: boolean[][] = [];
   courseId: any;
   dragData : any;
-  actionMenu : any
+  actionMenu : any;
+  isLoader : boolean = true;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private _router: Router, private _courseService: CoursesService) {
     this.route.paramMap.subscribe(params => {
@@ -64,6 +66,7 @@ export class CurriculumComponent {
 
   getSubjectAndChapter() {
     this._courseService.getCourseChapterAndSubject(this.courseId).subscribe(res => {
+      this.isLoader = false
       this.setCourses(res);
     });
   }
@@ -140,6 +143,7 @@ export class CurriculumComponent {
 
     this._courseService.addSubject(this.courseId, subjectPayload).subscribe(res => {
       console.log('Course saved successfully', res);
+      this.getSubjectAndChapter()
     }, error => {
       console.error('Error saving course', error);
     });

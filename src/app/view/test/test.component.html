@@ -261,6 +261,5 @@
 }
 
 <p-sidebar [(visible)]="addFormSideBar" [fullScreen]="true">
-        <!-- <app-test-course-add></app-test-course-add> -->
-         <app-create-main-test></app-create-main-test>
+         <app-create-test-course (closeSideBar)="closeSideBar()"></app-create-test-course>
 </p-sidebar>

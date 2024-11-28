@@ -12,11 +12,12 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TagModule } from 'primeng/tag';
 import { Router } from '@angular/router';
 import { CreateMainTestComponent } from './main-test/create-main-test/create-main-test.component';
+import { CreateTestCourseComponent } from './test-course/create-test-course/create-test-course.component';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [TableModule, InputTextModule, CreateMainTestComponent, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, TagModule],
+  imports: [TableModule, InputTextModule, CreateTestCourseComponent, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, TagModule],
   templateUrl: './test.component.html',
   styleUrl: './test.component.css'
 })
@@ -31,6 +32,10 @@ export class TestComponent {
   }
 
   openSidebar(){
+    this.addFormSideBar = true
+  }
+
+  closeSideBar(){
     this.addFormSideBar = true
   }
 

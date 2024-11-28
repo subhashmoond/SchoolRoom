@@ -1,0 +1,47 @@
+<p-toast></p-toast>
+    <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Create Coupons </h4>
+
+        <form [formGroup]="createCouponsForm" (ngSubmit)="createCoupon()" class="w-full flex flex-wrap">
+
+            <div class="grid nested-grid mt-3">
+    
+                <div class="col-12">
+                    <div class="grid">
+
+                        <!-- <div class="col-12">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Select Student
+                                <span>*</span></label>
+                            <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
+                            [required]="true" formControlName="selectstudent" [options]="allStudentList"
+                            optionValue="id" optionLabel="name"
+                            placeholder="Select Student"></p-dropdown>
+                        </div> -->
+    
+                        <div class="col-12">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Discount</label>
+                            <input class="w-full capitalize" pKeyFilter="num" pInputText formControlName="discount" />
+                        </div>
+    
+                        <div class="col-12">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Valid To </label>
+                            <p-calendar formControlName="valid_to" />
+                        </div>  
+
+                        
+    
+                    </div>
+                </div>
+    
+    
+    
+            </div>
+    
+            <div
+                class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+                <button pButton pRipple label="Cancel" (click)="closeSideBar()"
+                    class="primary-border-button px-5 mr-3 text-sm"></button>
+                <button type="submit" pButton pRipple label="Add"
+                    class="primary-button px-5 text-sm"></button>
+            </div>
+        </form>
+        

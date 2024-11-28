@@ -3,12 +3,10 @@ import { LoginMainComponent } from './view/login/login-main/login-main.component
 import { DashbordComponent } from './view/dashbord/dashbord.component';
 import { authGuard } from './core/auth/auth.guard';
 import { LayoutComponent } from './shared/layout/layout.component';
-import { LoginMainStudentComponent } from './view/student/login/login-main/login-main.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginMainComponent},
-    {path : 'student', component : LoginMainStudentComponent},
     {
         path: '', component: LayoutComponent, children: [
             {
@@ -23,10 +21,13 @@ export const routes: Routes = [
             {
                 path: 'test', loadChildren: () => import('./view/test/test.router').then((m) => m.routes),
             },
-            {path: 'studentapp', loadChildren : () => import('./view/student/student-router').then((m) => m.routes)}
+            {
+                path : 'coupons', loadChildren : () => import('./view/coupons/coupons.router').then((m) => m.routes )
+            }
         ],
         canActivate: [authGuard]
     }
 
+    
 ];
 

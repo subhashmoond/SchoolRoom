@@ -5,12 +5,13 @@
       <h4 class="subheading-color">Curriculum</h4>
     </div>
     <div class="col-6 flex justify-content-end	">
-      <button type="submit" (click)="preview()" pButton pRipple label="Preview" class="secondary-button px-6 text-sm"></button>
+      <button type="submit" (click)="preview()" pButton pRipple label="Preview"
+        class="secondary-button px-6 text-sm"></button>
     </div>
 
   </div>
 
-
+  @if(!isLoader){
   <div class="grid">
 
     <div class="col-12">
@@ -63,14 +64,15 @@
                     <div class="p-1 pr-3">
                       <img src="../../../../../assets/images/chapter-icon.svg">
                     </div>
-                    
+
                     <div>
                       @if(isEditLesson[i][j]){
                       <input class="w-full" pInputText formControlName="items" />
                       }
                       @else{
                       <!-- <span (click)="enableEditLesson(i, j)">{{ lesson.get('items')?.value }}</span> -->
-                      <h5 class="underline" (click)="lessonDetail(lesson.get('id')?.value)">{{ lesson.get('items')?.value }}</h5>
+                      <h5 class="underline" (click)="lessonDetail(lesson.get('id')?.value)">{{
+                        lesson.get('items')?.value }}</h5>
                       }
                     </div>
                   </div>
@@ -89,10 +91,10 @@
                     <button type="button" (click)="publishLesson(lesson)" pButton label="Publish"
                       class="outline-icon-button edit-button"></button>
 
-                      <div class="card flex justify-content-center ml-2">
-                        <p-menu #menu [model]="actionMenu" [popup]="true" (click)="selectedMenu($event)" />
-                        <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
-                      </div>
+                    <div class="card flex justify-content-center ml-2">
+                      <p-menu #menu [model]="actionMenu" [popup]="true" (click)="selectedMenu($event)" />
+                      <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
+                    </div>
                     }
                     }
                   </div>
@@ -130,6 +132,42 @@
 
 
   </div>
+  }
+  @else {
+  <div class="grid">
+
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+
+  </div>
+
+  }
 
 
 

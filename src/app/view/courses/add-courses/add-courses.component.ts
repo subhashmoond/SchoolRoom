@@ -63,7 +63,7 @@ export class AddCoursesComponent {
   stepTree: boolean = false;
   stepFor: boolean = false;
 
-  constructor(private _courseService: CoursesService, private _router: Router, private _fb: FormBuilder, private _messageService: MessageService, private translate: TranslateService, private _sharedService: SharedService) { }
+  constructor(private _courseService: CoursesService, private _router: Router, private _fb: FormBuilder, private messageService: MessageService, private translate: TranslateService, private _sharedService: SharedService) { }
 
   ngOnInit() {
     this.formGroup();
@@ -134,6 +134,8 @@ export class AddCoursesComponent {
           this.stepOne = false
           // this._router.navigate(['/course/content', courseId]);
           this.next();
+        }else{
+          this.messageService.add({ severity: 'error', detail: res.message});
         }
       })
     }

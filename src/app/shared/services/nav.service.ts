@@ -33,7 +33,7 @@ export class NavService {
     {
       path: 'sales', title: "Sales", icon: 'assets/images/icon/Clients.svg', type: 'sub', active: false,
       children: [
-        { path: 'user/student', title: 'Coupouns', type: 'link' },
+        { path: 'coupons', title: 'Coupons', type: 'link' },
         { path: 'user/team', title: 'Referral Code', type: 'link' },
       ]
     },

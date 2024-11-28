@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
@@ -27,6 +27,7 @@ export class YoutubeVideoComponent {
   settingContent!: FormGroup;
   @Input() lessonId : any;
   @Input() contentId : any;
+  @Output() closeSideBar = new EventEmitter<any>();
 
   addContent!: FormGroup;
   submitbutton: boolean = false;
@@ -89,7 +90,8 @@ export class YoutubeVideoComponent {
     body.append('path', this.addContent.get('path')?.value);
 
     this._coursesService.addYoutubeVideoFile(body).subscribe(res => {
-      console.log(res, "Image Uplodaed Successfully")
+      console.log(res, "Image Uplodaed Successfully");
+      this.closeSideBar.emit(false)
     }, error => {
       this._messageService.add({ severity: 'error', detail: 'Error ' });
     })
@@ -110,7 +112,8 @@ export class YoutubeVideoComponent {
     }
 
     this._coursesService.editYoutubeVideoSetting(this.contentId, payload).subscribe(res => {
-      console.log(res, "PDF Setting ")
+      console.log(res, "PDF Setting ");
+      this.closeSideBar.emit(false)
     })
 
   }

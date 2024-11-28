@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
@@ -25,6 +25,7 @@ export class ImageComponent {
   @Input() contentTypes : any;
   @Input() lessonId : any;
   @Input() contentId : any;
+  @Output() closeSideBar = new EventEmitter<any>();
 
   addContent!: FormGroup;
   settingContent! : FormGroup;
@@ -99,6 +100,7 @@ export class ImageComponent {
 
     this._coursesService.addImageFile(body).subscribe(res => {
       console.log(res, "Image Uplodaed Successfully")
+      this.closeSideBar.emit(false)
     }, error => {
       this._messageService.add({ severity: 'error', detail: 'Error ' });
     })
@@ -119,6 +121,7 @@ export class ImageComponent {
 
     this._coursesService.editImageSetting(this.contentId, payload).subscribe(res => {
       console.log(res, "PDF Setting ")
+      this.closeSideBar.emit(false)
     })
 
   }
