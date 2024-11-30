@@ -14,11 +14,12 @@ import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { CouponsService } from '../../../../core/services/coupons.service';
 import { ActivatedRoute } from '@angular/router';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-course-coupons',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule],
+  imports: [TableModule, InputTextModule, ToolbarModule, TagModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule],
 
   templateUrl: './course-coupons.component.html',
   styleUrl: './course-coupons.component.css'
@@ -28,6 +29,7 @@ export class CourseCouponsComponent {
   createCouponsForm! : FormGroup;
   courseId : any;
   couponsList : any;
+  isLoader : boolean = true;
 
   constructor(private _fb : FormBuilder, private _couponsService : CouponsService, private route : ActivatedRoute){
 
@@ -48,8 +50,10 @@ export class CourseCouponsComponent {
   }
 
   getCouponsList(){
+    this.isLoader= true
     this._couponsService.getCouponsList().subscribe(res => {
       this.couponsList = res.data
+      this.isLoader = false
     })
   }
 

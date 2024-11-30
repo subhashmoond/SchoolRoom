@@ -1,1 +1,107 @@
-<p>preview-courses works!</p>
+<div class="grid grid-nogutter">
+    <div class="col-3 clent-id-bg">
+        <div class="p-4 border-bottom-light">
+            <i (click)="backToBulderPage()" class="pi pi-arrow-left" style="font-size: 1.5rem"></i>
+        </div>
+
+        <div class="p-2 course-preview h-screen overflow-scroll preview-h">
+            <p-accordion [multiple]="true" [activeIndex]="[0]">
+                <!-- Loop through sections -->
+                @for(section of subjectAndLessionData; track section; let sectionIndex = $index){
+
+
+                <p-accordionTab [header]="section.name" (onToggle)="toggleTab(sectionIndex)">
+                    <ul class="links">
+                        @for(link of section.lectures_lession; track link; let linkIndex = $index){
+
+                        <li [class.active]="linkIndex === activeLinkIndex && sectionIndex === activeSectionIndex"
+                            (click)="setActiveLink(sectionIndex, linkIndex, link)">
+                            <i [class.pi]="true" [class.pi-file]="!link.comingSoon"></i>
+                            {{ link.name }}
+                        </li>
+
+                        }
+                    </ul>
+                </p-accordionTab>
+
+                }
+            </p-accordion>
+        </div>
+    </div>
+
+    <div class="col-9">
+        <div class="grid p-3 border-bottom-light">
+            <div class="col-6">
+                <h5> Course Name - Test Course </h5>
+            </div>
+            <div class="col-6 flex justify-content-end preview-btn">
+
+                <p-button class="border-round-3xl mr-4 primary-color" icon="pi pi-angle-left" label="Previous"
+                    (click)="goToPrevious()" [disabled]="activeSectionIndex === 0 && activeLinkIndex === 0"
+                    [link]="true" />
+
+                <button pButton pRipple label="Next" icon="pi pi-angle-right" iconPos="right"
+                    class="primary-button px-5 text-sm border-round-3xl" (click)="goToNext()" [disabled]="
+              activeSectionIndex === sections.length - 1 &&
+              activeLinkIndex === sections[activeSectionIndex].links.length - 1
+            ">
+                </button>
+            </div>
+        </div>
+
+        <div class="w-full pl-8 pr-8 mt-5 preview-h">
+
+            @for(data of chapterDataList; track data){
+                @switch (data.type) {
+                    @case ("article") {
+                        <div class="w-full mb-4">
+
+                            <p class="m-0">
+                                {{data.text}}
+                            </p>
+                        </div>
+                    }
+                    @case ("video") {
+                        <div class="w-full mb-4">
+                            <video width="600" controls>
+                                <source src="../../../../../assets/images/mp4.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    }
+                    @case ("notes") {
+                        <div class="w-full mb-4">
+                            <p>PDF</p>
+                            <img src="../../../../../assets/images/client-profile.png">
+                        </div>
+                    }
+                    @case ("audio") {
+                        <div class="w-full mb-4">
+                            <p>Audio Content File Type</p>
+                        </div>
+                    }
+                    @case ("image") {
+                        <div class="w-full mb-4">
+                            <img src="../../../../../assets/images/client-profile.png">
+                        </div>
+                    }
+                    @case ("youtube_video") {
+                        <div class="w-full mb-4">
+                            <video width="600" controls>
+                                <source [src]="data.url" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    }
+                    @case ("resource") {
+                        <div class="w-full mb-4">
+                            <img src="../../../../../assets/images/client-profile.png">
+                        </div>
+                    }
+                    }
+            }
+
+        </div>
+
+    </div>
+</div>

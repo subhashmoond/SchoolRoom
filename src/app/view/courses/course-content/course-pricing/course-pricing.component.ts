@@ -38,6 +38,7 @@ export class CoursePricingComponent {
   planDetailByIds: any;
   updatePlanId: any;
   courseId : any;
+  isLoader : boolean = true
 
   constructor(private _courseService: CoursesService, private route : ActivatedRoute, private _fb: FormBuilder, private _messageService: MessageService) {
     this.route.paramMap.subscribe(params => {
@@ -77,8 +78,10 @@ export class CoursePricingComponent {
   }
 
   getPriceList() {
+    this.isLoader = true
     this._courseService.getCoursePriceList(this.courseId).subscribe((res : any) => {
       this.priceList = res;
+      this.isLoader = false
       if(res.status == false){
         this._messageService.add({severity:'warn', summary: res.msg});
       }

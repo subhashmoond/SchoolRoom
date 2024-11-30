@@ -41,9 +41,9 @@ export class CourseStudentsComponent {
   }
 
   ngOnInit() {
-    this.priceTableDesign = [
-      { type: 'One time paymet', price: 20000 }
-    ]
+    // this.priceTableDesign = [
+    //   { type: 'One time paymet', price: 20000 }
+    // ]
     this.getStudentList()
 
     this.createCouponsForm = this._fb.group({

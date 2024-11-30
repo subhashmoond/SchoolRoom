@@ -11,44 +11,48 @@
 
     </div>
 
+    <div class="curiculam-h" >
 
-    <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
-        selectionMode="single" class="client-data-table" [value]="priceTableDesign">
-
-        <ng-template pTemplate="header" class="p-4">
-            <tr class="w-full flex flex-wrap">
-                <th style="width:25%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Plan Type</th>
-                <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Price</th>
-                <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Action
-                </th>
-            </tr>
-
-        </ng-template>
-
-        <ng-template pTemplate="body" let-data>
-            <tr class="w-full flex flex-wrap">
-                <td style="width: 25%;word-break:break-all;" class="pl-4 capitalize">
-                    {{data.type}}
-                </td>
-                <td style="width: 25%;word-break:break-all;" class="pl-4">
-                    {{data.price}}
-                </td>
-                <td style="width: 25%;" class="pl-4">
-                    <span class="relative flex flex-wrap align-items-center"><img
-                            src="../../../../assets/images/icon/mdi_eye.svg"
-                            class="search-icon client-view-icon"></span>
-                </td>
-
-            </tr>
-        </ng-template>
-
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="5">No customers found.</td>
-            </tr>
-        </ng-template>
-
-    </p-table>
+        <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
+            selectionMode="single" class="client-data-table" [value]="priceTableDesign">
+    
+            <ng-template pTemplate="header" class="p-4">
+                <tr class="w-full flex flex-wrap">
+                    <th style="width:25%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Name</th>
+                    <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Email</th>
+                    <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Action
+                    </th>
+                </tr>
+    
+            </ng-template>
+    
+            <ng-template pTemplate="body" let-data>
+                <tr class="w-full flex flex-wrap">
+                    <td style="width: 25%;word-break:break-all;" class="pl-4 capitalize">
+                        {{data.type}}
+                    </td>
+                    <td style="width: 25%;word-break:break-all;" class="pl-4">
+                        {{data.price}}
+                    </td>
+                    <td style="width: 25%;" class="pl-4">
+                        <span class="relative flex flex-wrap align-items-center"><img
+                                src="../../../../assets/images/icon/mdi_eye.svg"
+                                class="search-icon client-view-icon"></span>
+                    </td>
+    
+                </tr>
+            </ng-template>
+    
+            <ng-template pTemplate="emptymessage">
+                <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+                    <img src="../../../../../assets/images/icon/no-data.svg">
+                    <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Students</p>
+                    <p class="text-primary-purple text-base font-normal mt-2">There is no Students to show you right now.</p>
+                </div>
+            </ng-template>
+    
+        </p-table>
+    </div>
 
 </div>
 

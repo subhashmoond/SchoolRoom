@@ -12,17 +12,18 @@
   </div>
 
   @if(!isLoader){
-  <div class="grid">
+  <div class="grid curiculam-h">
 
     <div class="col-12">
 
       <form [formGroup]="addForm">
         <div formArrayName="courses">
           @for(course of courses.controls; track course; let i = $index){
-          <div [attr.draggable]="true" (dragstart)="onTaskDragStart($event)" (dragover)="onTaskDragOver($event)"
-            (drap)="onTaskDrop($event)" [formGroupName]="i" class="content-card mb-4">
+          <div [attr.draggable]="true" (dragstart)="onTaskDragStart($event, i, 'course')"
+            (dragover)="onTaskDragOver($event)" (drop)="onTaskDrop($event)" [formGroupName]="i"
+            class="content-card mb-4">
             <div class="p-3">
-              <img src="../../../../../assets/images/chapter-icon.svg">
+              <img class="icon-img-11" src="../../../../../assets/images/chapter-icon.svg">
             </div>
             <div class="border-left">
               <div class="grid grid-nogutter client-dashborad-header align-items-center border-bottom-light p-3 card">
@@ -33,22 +34,47 @@
                     <input class="w-full" pInputText formControlName="items" />
                     }
                     @else{
-                    <h4 class="capitalize">{{ course.get('items')?.value }}</h4>
+                    <h5 class="capitalize">{{ course.get('items')?.value }}</h5>
                     <!-- <span (click)="enableEditCourse(i)">{{ course.get('items')?.value }}</span> -->
                     }
                   </div>
                 </div>
                 <div class="col-6 flex justify-content-end">
                   @if(isSavedCourses[i]){
-                  <button type="button" pButton pRipple label="Save" (click)="saveCourse(i)"
+                  <button type="button" pButton label="Save" (click)="saveCourse(i)"
                     class="secondary-button px-6 text-sm"></button>
                   }
                   @else{
-                  <p-button class="mr-2 border-round-md button-shadow">Publish All</p-button>
+                  <p-button class="mr-2 curriculum-btn border-round-md button-shadow">Publish All</p-button>
 
                   <div class="card flex justify-content-center">
-                    <p-menu #menu [model]="actionMenu" [popup]="true" (click)="selectedMenu($event)" />
-                    <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
+
+                    <div class="action-menu">
+                      <button class="three-dot-button" (click)="toggleDropdown(i)">
+                        ⋮
+                      </button>
+
+                      @if(openDropdownId === i){
+                      <div class="dropdown-menu">
+
+                        @if(!isSavedCourses[i]){
+                        <button type="button" (click)="enableEditCourse(i)" pButton class="curriculum-btn"> <i
+                            class="pi pi-eye"></i> Edit</button>
+                        }
+
+                        <button type="button" (click)="deleteCourse(i)" pButton class="danger-button"><i
+                            class="pi pi-trash"></i> Delete</button>
+
+
+                      </div>
+                      }
+                    </div>
+
+
+
+
+                    <!-- <p-menu #menu [model]="actionMenu" [popup]="true" (click)="selectedMenu($event)" />
+                    <p-button class="curriculum-btn" (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" /> -->
                   </div>
 
                   }
@@ -57,12 +83,13 @@
 
               <div formArrayName="lessons">
                 @for(lesson of lessons(i).controls; track lesson; let j = $index){
-                <div [attr.draggable]="true" (dragstart)="onTaskDragStart($event)" (dragover)="onTaskDragOver($event)"
-                  (drap)="onTaskDrop($event)" [formGroupName]="j" class="grid grid-nogutter p-3 border-bottom-light">
+                <div [attr.draggable]="true" (dragstart)="onTaskDragStart($event, j, 'lesson', i)"
+                  (dragover)="onTaskDragOver($event)" (drop)="onTaskDrop($event)" [formGroupName]="j"
+                  class="grid grid-nogutter p-3 border-bottom-light">
                   <div class="col-6 flex">
                     <!-- <i class="pi pi-microsoft pr-4 pt-1 text-primary-color"></i> -->
                     <div class="p-1 pr-3">
-                      <img src="../../../../../assets/images/chapter-icon.svg">
+                      <img class="icon-img-11" src="../../../../../assets/images/chapter-icon.svg">
                     </div>
 
                     <div>
@@ -71,29 +98,57 @@
                       }
                       @else{
                       <!-- <span (click)="enableEditLesson(i, j)">{{ lesson.get('items')?.value }}</span> -->
-                      <h5 class="underline" (click)="lessonDetail(lesson.get('id')?.value)">{{
-                        lesson.get('items')?.value }}</h5>
+                      <h6 class="underline" (click)="lessonDetail(lesson.get('id')?.value)">{{
+                        lesson.get('items')?.value }}</h6>
                       }
                     </div>
                   </div>
                   <div class="col-6 flex justify-content-end">
                     @if(isEditLesson[i][j]){
-                    <button type="button" pButton pRipple label="Save"
+                    <button type="button" pRipple label="Save" pButton
                       (click)="saveLesson(i, j, course.get('id')?.value)"
-                      class="secondary-button px-6 text-sm"></button>
+                      class="secondary-button curriculum-btn px-6 text-sm"></button>
                     }
                     @else{
                     @if(lesson.get('isPublished')?.value === true){
-                    <button type="button" (click)="publishLesson(lesson)" pButton label="Unpublish"
-                      class="outline-icon-button edit-button"></button>
+                    <button type="button" (click)="publishLesson(lesson)" label="Unpublish"
+                      class="outline-icon-button edit-button curriculum-btn"></button>
                     }
                     @else{
                     <button type="button" (click)="publishLesson(lesson)" pButton label="Publish"
-                      class="outline-icon-button edit-button"></button>
+                      class="outline-icon-button edit-button curriculum-btn mr-2"></button>
 
-                    <div class="card flex justify-content-center ml-2">
-                      <p-menu #menu [model]="actionMenu" [popup]="true" (click)="selectedMenu($event)" />
-                      <p-button (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
+                    <div class="card flex justify-content-center">
+
+
+                      <div class="action-menu">
+                        <button class="three-dot-button" (click)="toggleDropdownLesson(j)">
+                          ⋮
+                        </button>
+
+                        @if(openDropdownIdLession === j){
+                        <div class="dropdown-menu">
+
+                          @if(!isEditLesson[i][j]){
+                          <button type="button" (click)="enableEditLesson(i, j)" pButton class="curriculum-btn"> <i
+                              class="pi pi-eye"></i> Edit</button>
+                          }
+
+                          <button type="button" (click)="deleteLesson(i, j, course.get('id')?.value)" pButton
+                            class="danger-button"><i class="pi pi-trash"></i> Delete</button>
+
+
+                        </div>
+                        }
+                      </div>
+
+                      <!-- @if(!isEditLesson[i][j]){
+                      <button type="button" (click)="enableEditLesson(i, j)" pButton label="Edit"
+                        class="curriculum-btn"></button>
+                      }
+
+                      <button type="button" (click)="deleteLesson(i, j, course.get('id')?.value)" pButton label="Delete"
+                        class="danger-button"></button> -->
                     </div>
                     }
                     }

@@ -161,8 +161,21 @@ a {
     color: #FF3D32;
 }
 
+/* button css  */
+.btn-img{
+    width: 20px;
+}
+
 /* color css  */
 .primary-color {
+    color: #473289 !important;
+}
+
+.icon-primary-color{
+    color: #473289;
+}
+
+.preview-btn .p-button.p-button-text{
     color: #473289 !important;
 }
 
@@ -189,6 +202,8 @@ a {
 .light-primary-text {
     color: #8A7EB5;
 }
+
+.wight
 
 .light-purple-bg {
     background: #7A6CAB;
@@ -2861,4 +2876,67 @@ body p-checkbox {
 .course-card {
     flex: 0 1 calc(25% - 1rem);
     box-sizing: border-box;
+}
+
+.course-preview .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link{
+    background: none !important;
+    border: none !important;
+    color: #333 !important;
+    font-size: 1rem !important;
+    /* padding: 0.5rem; */
+}
+.course-preview .p-accordion .p-accordion-header .p-accordion-header-link{
+    color: #333 !important;
+    font-size: 1rem !important;
+}
+
+.course-preview .p-accordion .p-accordion-header .p-accordion-header-link{
+    background: none !important;
+    border: none !important;
+    /* padding: 0.5rem; */
+}
+
+.course-preview .p-accordion .p-accordion-content {
+    padding:0px !important;
+    border: none !important;
+    background: none !important;
+    padding-left: 34px !important;
+    
+}
+
+.preview-h{
+    height: calc(100vh - 122px) !important;
+    overflow: scroll !important;
+}
+.icon-img-11{
+    width: 11px;
+}
+
+.curiculam-h{
+    height: calc(100vh - 200px) !important;
+    overflow: scroll ! IMPORTANT;
+}
+
+.course-s-b li.active{
+    background: #fff;
+    color: #473289;
+    border-radius: 5px;
+    font-weight: bold !important;
+}
+
+.course-s-b li.active a{
+    color: #473289;
+    font-weight: bold !important;
+}
+
+.course-s-b li:hover{
+    background: #fff !important;
+    color: #473289 !important;
+    border-radius: 5px;
+}
+.curriculum-btn {
+    height: 30px !important;
+}
+.curriculum-btn .p-button{
+    padding : 0.5rem 1.25rem
 }

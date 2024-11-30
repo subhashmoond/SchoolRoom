@@ -6,8 +6,8 @@
             <h5 class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full absolute bottom-0 p-3 text-white-alpha-90 ">UI/UX Design</h5>
         </div>
 
-        <ul class="sidebar-menu">
-            <li>
+        <ul class="sidebar-menu course-s-b">
+            <li [ngClass]="{'active': currentActiveTab === 'curriculum'}">
                 <a href="javascript:void(0)" (click)="courseTabs('curriculum')" routerLinkActive="active"
                     class="sidebar-header flex align-items-center px-3">
                     <span> Curriculum </span>
@@ -21,35 +21,38 @@
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li> -->
-            <li>
+            <li [ngClass]="{'active': currentActiveTab === 'information'}">
                 <a href="javascript:void(0)" (click)="courseTabs('information')" routerLinkActive="active"
                     class="sidebar-header flex align-items-center px-3">
                     <span> Information </span>
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li>
-            <li>
+
+            
+
+            <li [ngClass]="{'active': currentActiveTab === 'pricing'}">
                 <a href="javascript:void(0)" (click)="courseTabs('pricing')" routerLinkActive="active"
                     class="sidebar-header flex align-items-center px-3">
                     <span> Pricing </span>
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li>
-            <li>
+            <li [ngClass]="{'active': currentActiveTab === 'coupons'}">
                 <a href="javascript:void(0)" (click)="courseTabs('coupons')" routerLinkActive="active"
                     class="sidebar-header flex align-items-center px-3">
                     <span> Coupons </span>
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li>
-            <li>
+            <li [ngClass]="{'active': currentActiveTab === 'comment'}">
                 <a href="javascript:void(0)" (click)="courseTabs('comment')" routerLinkActive="active"
                     class="sidebar-header flex align-items-center px-3">
                     <span> Comment </span>
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li>
-            <li>
+            <li [ngClass]="{'active': currentActiveTab === 'student'}">
                 <a href="javascript:void(0)" (click)="courseTabs('student')" routerLinkActive="active"
                     class="sidebar-header flex align-items-center px-3">
                     <span> Students </span>

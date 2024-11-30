@@ -1,0 +1,28 @@
+/* PrimeNG Sidebar Custom Styles */
+.links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .links li {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    cursor: pointer;
+  }
+  
+  .links li.active {
+    font-weight: bold;
+    color: #473289;
+  }
+  
+  .links li i {
+    margin-right: 8px;
+  }
+  
+  .links li small {
+    color: #888;
+    margin-left: 5px;
+  }
+  

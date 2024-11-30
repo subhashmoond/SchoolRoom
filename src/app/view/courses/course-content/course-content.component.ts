@@ -27,12 +27,12 @@ export class CourseContentComponent {
 
   selectedFile: File | null = null;
   selectedFileObjectUrl: string | null = null;
-  currentActiveTab : any;
+  currentActiveTab : string = 'curriculum';
 
   constructor(private _sharedService : SharedService){}
 
   async ngOnInit(){
-    this.currentActiveTab =  "curriculum"
+    // this.currentActiveTab =  "curriculum"
 
     this._sharedService.settoggleButtonValue(false);
 
