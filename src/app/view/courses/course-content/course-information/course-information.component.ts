@@ -17,12 +17,14 @@ import { CoursesService } from '../../../../core/services/courses.service';
 import { ActivatedRoute } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { SharedService } from '../../../../shared/services/shared.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-course-information',
   standalone: true,
   imports: [ReactiveFormsModule, StepsModule, TableModule, InputGroupModule, InputGroupAddonModule, DropdownModule, CardModule, CalendarModule, KeyFilterModule,
     ButtonModule, InputTextModule, FileUploadModule, ToastModule, InputNumberModule, CheckboxModule,],
+    providers : [MessageService],
   templateUrl: './course-information.component.html',
   styleUrl: './course-information.component.css'
 })
@@ -32,7 +34,7 @@ export class CourseInformationComponent {
   aiDescripationData: any;
   courseDetails: any;
 
-  constructor(private _fb: FormBuilder, private _coursesService: CoursesService, private route: ActivatedRoute, private _sharedService: SharedService) {
+  constructor(private _fb: FormBuilder, private _messageService : MessageService, private _coursesService: CoursesService, private route: ActivatedRoute, private _sharedService: SharedService) {
     this.route.paramMap.subscribe(params => {
       this.courseId = params.get('id')!;
     });
@@ -193,8 +195,11 @@ export class CourseInformationComponent {
     }
 
     this._coursesService.editCourseById(this.courseId, payload).subscribe(res => {
-      alert('course Updated Sucessfuly');
+      this._messageService.add({ severity: 'success', detail: 'Information Saved Successfull.' });
       this.getCourseDetails()
+    }, error => {
+      this._messageService.add({ severity: 'error', detail: error });
+
     })
 
   }

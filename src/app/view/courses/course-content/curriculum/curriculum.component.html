@@ -1,3 +1,5 @@
+<p-toast />
+
 <div class="cards">
 
   <div class="grid client-dashborad-header mb-4 align-items-center">
@@ -45,6 +47,8 @@
                     class="secondary-button px-6 text-sm"></button>
                   }
                   @else{
+                    
+                   
                   <p-button class="mr-2 curriculum-btn border-round-md button-shadow">Publish All</p-button>
 
                   <div class="card flex justify-content-center">
@@ -110,17 +114,20 @@
                       class="secondary-button curriculum-btn px-6 text-sm"></button>
                     }
                     @else{
-                    @if(lesson.get('isPublished')?.value === true){
+
+                    @if(lesson.get('isPublished')?.value){
                     <button type="button" (click)="publishLesson(lesson)" label="Unpublish"
                       class="outline-icon-button edit-button curriculum-btn"></button>
+
                     }
                     @else{
+
                     <button type="button" (click)="publishLesson(lesson)" pButton label="Publish"
                       class="outline-icon-button edit-button curriculum-btn mr-2"></button>
 
+                    }
+
                     <div class="card flex justify-content-center">
-
-
                       <div class="action-menu">
                         <button class="three-dot-button" (click)="toggleDropdownLesson(j)">
                           ⋮
@@ -150,7 +157,7 @@
                       <button type="button" (click)="deleteLesson(i, j, course.get('id')?.value)" pButton label="Delete"
                         class="danger-button"></button> -->
                     </div>
-                    }
+
                     }
                   </div>
                 </div>

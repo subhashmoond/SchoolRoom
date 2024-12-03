@@ -23,7 +23,7 @@
     @else {
 
     @for(data of chapterDataList; track data){
-    <div class="content-card">
+    <div class="content-card mb-4">
         <div class="p-3">
             <i class="pi pi-microsoft font-bold text-primary-color"></i>
         </div>
@@ -31,13 +31,13 @@
 
             <div class="card">
                 <p-panel [toggleable]="true">
-                    <ng-template pTemplate="header">
+                    <!-- <ng-template pTemplate="header">
                         <div class="flex align-items-center gap-2">
                             <span class="font-bold">
                                 Chapter Name
                             </span>
                         </div>
-                    </ng-template>
+                    </ng-template> -->
 
                     <ng-template pTemplate="icons">
 
@@ -97,7 +97,10 @@
                     @switch (data.type) {
                     @case ("article") {
                     <p class="m-0">
-                        {{data.text}}
+                        <!-- {{data.text}} -->
+                        <p-editor [(ngModel)]="data.text" [readonly]="true" [style]="{ height: '320px' }"
+                            [class.hide-toolbar]="hideHeader"></p-editor>
+
                     </p>
                     }
                     @case ("video") {
@@ -107,8 +110,8 @@
                     </video>
                     }
                     @case ("notes") {
-                    <p>PDF</p>
-                    <img src="../../../../../assets/images/client-profile.png">
+                    <pdf-viewer [src]="pdfSrc" [render-text]="true" [original-size]="false"
+                        style="width: 100%; height: 600px"></pdf-viewer>
                     }
                     @case ("audio") {
                     <p>Audio Content File Type</p>
@@ -168,27 +171,32 @@
     <p-sidebar [(visible)]="addContentPopup" position="right" [style]="{width:'27.6%'}">
         <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Add Content </h4>
         <div class="content-type">
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center" (click)="uploadContent('', 'text', 'add')">
+            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+                (click)="uploadContent('', 'text', 'add')">
                 <i class="pi pi-align-left font-bold flex mb-2 justify-content-center"></i>
                 <h6>Text</h6>
             </div>
 
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center" (click)="uploadContent('', 'Video', 'add')">
+            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+                (click)="uploadContent('', 'Video', 'add')">
                 <i class="pi pi-play font-bold flex mb-2 justify-content-center"></i>
                 <h6>Video</h6>
             </div>
 
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center" (click)="uploadContent('', 'notes', 'add')">
+            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+                (click)="uploadContent('', 'notes', 'add')">
                 <i class="pi pi-file font-bold flex mb-2 justify-content-center"></i>
                 <h6>PDF</h6>
             </div>
 
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center" (click)="uploadContent('', 'image', 'add')">
+            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+                (click)="uploadContent('', 'image', 'add')">
                 <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
                 <h6>Image</h6>
             </div>
 
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center" (click)="uploadContent('', 'audio', 'add')">
+            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+                (click)="uploadContent('', 'audio', 'add')">
                 <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
                 <h6>Audio</h6>
             </div>
@@ -201,7 +209,8 @@
             </div>
 
 
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center" (click)="uploadContent('', 'resource', 'add')">
+            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+                (click)="uploadContent('', 'resource', 'add')">
                 <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
                 <h6>Resource</h6>
             </div>
@@ -218,7 +227,8 @@
 
     @if(isImage){
     <p-sidebar [(visible)]="isImage" position="right" [style]="{width:'27.6%'}">
-        <app-image (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes" [contentId]="contentId"></app-image>
+        <app-image (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes"
+            [contentId]="contentId"></app-image>
     </p-sidebar>
     }
 
@@ -231,13 +241,15 @@
 
     @if(isAudio){
     <p-sidebar [(visible)]="isAudio" position="right" [style]="{width:'27.6%'}">
-        <app-audio (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes" [contentId]="contentId"></app-audio>
+        <app-audio (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes"
+            [contentId]="contentId"></app-audio>
     </p-sidebar>
     }
 
     @if(isResource){
     <p-sidebar [(visible)]="isResource" position="right" [style]="{width:'27.6%'}">
-        <app-re-source (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes" [contentId]="contentId"></app-re-source>
+        <app-re-source (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes"
+            [contentId]="contentId"></app-re-source>
     </p-sidebar>
     }
 
@@ -250,6 +262,7 @@
 
     @if(isText){
     <p-sidebar [(visible)]="isText" position="right" [style]="{width:'27.6%'}">
-        <app-text (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes" [contentId]="contentId"></app-text>
+        <app-text (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes"
+            [contentId]="contentId"></app-text>
     </p-sidebar>
     }

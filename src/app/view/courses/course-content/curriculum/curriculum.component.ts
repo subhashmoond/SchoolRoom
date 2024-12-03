@@ -7,11 +7,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CoursesService } from '../../../../core/services/courses.service';
 import { MenuModule } from 'primeng/menu';
 import { SkeletonModule } from 'primeng/skeleton';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-curriculum',
   standalone: true,
-  imports: [CardModule, ButtonModule, MenuModule, ReactiveFormsModule, InputTextModule, SkeletonModule ],
+  imports: [CardModule, ButtonModule, MenuModule, ReactiveFormsModule, InputTextModule, SkeletonModule, ToastModule ],
+  providers : [MessageService],
   templateUrl: './curriculum.component.html',
   styleUrl: './curriculum.component.css'
 })
@@ -21,12 +24,11 @@ export class CurriculumComponent {
   isEditLesson: boolean[][] = [];
   courseId: any;
   dragData : any;
-  actionMenu : any;
   isLoader : boolean = true;
   openDropdownId: number | null = null;
   openDropdownIdLession: number | null = null;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private _router: Router, private _courseService: CoursesService) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private _messageService: MessageService, private _router: Router, private _courseService: CoursesService) {
     this.route.paramMap.subscribe(params => {
       this.courseId = params.get('id')!;
     });
@@ -40,27 +42,7 @@ export class CurriculumComponent {
     this.getCoursesList();
     this.getSubjectAndChapter();
 
-    this.actionMenu = [
-      {
-          items: [
-              {
-                  label: 'Edit',
-                  icon: 'pi pi-pencil'
-              },
-              {
-                  label: 'Delete',
-                  icon: 'pi pi-trash'
-              }
-          ]
-      }
-  ];
   }
-
-  selectedMenu(event : any, data ? : any){
-    console.log(event, "this is call after select dot menu", data)
-  }
-
-
 
 
   getCoursesList() {
@@ -88,7 +70,8 @@ export class CurriculumComponent {
           this.isEditLesson[index][lessonIndex] = false;  // Initialize each lesson's edit state
           return this.fb.group({
             id: [lesson.id],
-            items: [lesson.name, Validators.required]
+            items: [lesson.name, Validators.required],
+            isPublished: [lesson.isPublished]
           });
         }))
       });
@@ -160,37 +143,63 @@ export class CurriculumComponent {
     const lessonId = this.lessons(courseIndex).at(lessonIndex).get('id')?.value;
 
     console.log(lessonId, "and", subjectId)
+
+    const payload = {
+      "chapter_id":lessonId
+  }
   
-    // this._courseService.deleteChapter(subjectId, lessonId).subscribe(() => {
-    //   console.log('Lesson deleted successfully');
-    //   this.getSubjectAndChapter(); // Refresh the data
-    // }, error => {
-    //   console.error('Error deleting lesson', error);
-    // });
+    this._courseService.deleteChapter(this.courseId, payload).subscribe((res) => {
+      console.log(res, 'Lesson deleted successfully');
+      this.getSubjectAndChapter(); // Refresh the data
+    }, error => {
+      console.error('Error deleting lesson', error);
+    });
   }
   
 
   saveCourse(index: number): void {
+
     this.isSavedCourses[index] = false;
     const course = this.courses.at(index);
 
-    // This Payload For Edit Course
-    // const updatedCourse = {
-    //   id: course.get('id')?.value,
-    //   name: course.get('items')?.value,
-    // };
+    console.log(this.isEditLesson, "is Edit Lesson mehtod")
 
-    const subjectPayload = {
-      name: course.get('items')?.value,
-      course_id: this.courseId
-    };
+    const editSubjectId = course.get('id')?.value;
 
-    this._courseService.addSubject(this.courseId, subjectPayload).subscribe(res => {
-      console.log('Course saved successfully', res);
-      this.getSubjectAndChapter()
-    }, error => {
-      console.error('Error saving course', error);
-    });
+    if(editSubjectId){
+
+      const editCoursePayload = {
+        subject_id: course.get('id')?.value,
+        name: course.get('items')?.value,
+      };
+
+      this._courseService.editSubject(editSubjectId, editCoursePayload).subscribe(res => {
+      this._messageService.add({ severity: 'success', detail: 'Subject Edited.' });
+        this.getSubjectAndChapter()
+      })
+
+
+    }else{
+
+      const subjectPayload = {
+        name: course.get('items')?.value,
+        course_id: this.courseId
+      };
+  
+      this._courseService.addSubject(this.courseId, subjectPayload).subscribe(res => {
+        console.log('Course saved successfully', res);
+        this.getSubjectAndChapter()
+      this._messageService.add({ severity: 'success', detail: 'Subject Saved Successfull ' });
+
+      }, error => {
+        console.error('Error saving course', error);
+      this._messageService.add({ severity: 'error', detail: 'Error ' });
+
+      });
+
+    }
+
+  
   }
 
   saveLesson(courseIndex: number, lessonIndex: number, subjectId: any): void {
@@ -199,22 +208,37 @@ export class CurriculumComponent {
     lessonsControl.at(lessonIndex).markAsDirty();
     lessonsControl.at(lessonIndex).updateValueAndValidity();
  
-    // Payload For Edit Lesson 
-    // const updatedLesson = {
-    //   id: lessonsControl.at(lessonIndex).get('id')?.value,
-    //   name: lessonsControl.at(lessonIndex).get('items')?.value,
-    // };
+    const lessonId = lessonsControl.at(lessonIndex).get('id')?.value;
 
-    const body = {
-      "subject_id": subjectId,
-      "name": lessonsControl.value[lessonIndex].items  // Update to use the correct lesson index
+    if(lessonId){
+
+      const updatedLessonPayload = {
+        chapter_id: lessonsControl.at(lessonIndex).get('id')?.value,
+        name: lessonsControl.at(lessonIndex).get('items')?.value,
+      };
+
+      this._courseService.editChapter(lessonId, updatedLessonPayload).subscribe(res => {
+      this._messageService.add({ severity: 'success', detail: 'Edit Lesson Saved Successfull ' });
+      this.getSubjectAndChapter();
+      })
+
+    }else{
+
+      const body = {
+        "subject_id": subjectId,
+        "name": lessonsControl.value[lessonIndex].items  // Update to use the correct lesson index
+      }
+  
+      this._courseService.addChapter(body, this.courseId).subscribe(res => {
+        this.getSubjectAndChapter();
+      this._messageService.add({ severity: 'success', detail: 'Lesson Saved Successfull' });
+      }, error => {
+        console.error('Error saving lesson', error);
+      this._messageService.add({ severity: 'error', detail: error });
+
+      });
     }
 
-    this._courseService.addChapter(body, this.courseId).subscribe(res => {
-      this.getSubjectAndChapter();
-    }, error => {
-      console.error('Error saving lesson', error);
-    });
   }
 
   publishLesson(data: any) {
@@ -230,24 +254,6 @@ export class CurriculumComponent {
   }
 
   
-
-// onTaskDragStart(event : any){
-// this.dragData = event.target.innerText
-// }
-
-// onTaskDragOver(event : any){
-// event.preventDefault();
-// }
-
-// onTaskDrop(event : any){
-// event.preventDefault();
-// const targetTask = event.target;
-// const textOfTragetTask = targetTask.innerText;
-// const textOfSourceTask = this.dragData.innterText;
-
-// targetTask.innerText = textOfSourceTask
-// this.dragData.innerText = textOfTragetTask
-// }
 
 toggleDropdown(itemId: any) {
   this.openDropdownId = this.openDropdownId === itemId ? null : itemId;

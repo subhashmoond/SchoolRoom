@@ -8,16 +8,16 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { CoursesService } from '../../../../../core/services/courses.service';
-import { EditorModule } from 'primeng/editor';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChipsModule } from 'primeng/chips';
 import { InputGroupModule } from 'primeng/inputgroup';
+import { EditorModule } from 'primeng/editor';
 
 @Component({
   selector: 'app-text',
   standalone: true,
-  imports: [ButtonModule, TranslateModule, CalendarModule, ChipsModule, CheckboxModule, ReactiveFormsModule, InputGroupModule, InputTextModule, FileUploadModule,ConfirmDialogModule, ToastModule, InputTextModule, EditorModule, FormsModule ],
+  imports: [ButtonModule, TranslateModule, CalendarModule, EditorModule, ChipsModule, CheckboxModule, ReactiveFormsModule, InputGroupModule, InputTextModule, FileUploadModule,ConfirmDialogModule, ToastModule, InputTextModule, EditorModule, FormsModule ],
   providers:[MessageService, ConfirmationService],
   templateUrl: './text.component.html',
   styleUrl: './text.component.css'

@@ -57,9 +57,20 @@ export class CoursesService {
     return this._dataService.post(url, body)
   }
 
+  editSubject(subjectId : number, payload : any){
+    const url = `${environment.basePath}course/${subjectId}/section/edit`;
+    return this._dataService.post(url, payload)
+  }
+
   addChapter(body: any, courseId: any) {
     const url = `${environment.basePath}course/${courseId}/lectures/create/`;
     return this._dataService.post(url, body)
+  }
+
+  editChapter(lesionId : number, payload: any){
+    const url = `${environment.basePath}course/${lesionId}/lectures/edit`;
+    return this._dataService.post(url, payload)
+
   }
 
   publishLesson(courseId: any, payload: any) {
@@ -67,6 +78,10 @@ export class CoursesService {
     return this._dataService.post(url, payload);
   }
 
+  deleteChapter(id:number, payload : any){
+    const url = `${environment.basePath}course/${id}/lectures/remove`;
+    return this._dataService.post(url, payload);
+  }
 
   getChapterContentList(coursesId: any, lessonId: any) {
     const url = `${environment.basePath}course/${coursesId}/lectures/${lessonId}/contents/`;

@@ -19,12 +19,15 @@ import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { SkeletonModule } from 'primeng/skeleton';
 import { RippleModule } from 'primeng/ripple';
+import { EditorModule } from 'primeng/editor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @Component({
   selector: 'app-chapter-content',
   standalone: true,
-  imports: [AccordionModule, ButtonModule, SplitButtonModule, DialogModule, PanelModule, AvatarModule, UploadContentComponent, SidebarModule,
-    ImageComponent, UploadVideoComponent, AudioComponent, ReSourceComponent, RippleModule, SkeletonModule, YoutubeVideoComponent, TextComponent, MenuModule, ToastModule, SidebarModule],
+  imports: [AccordionModule, ButtonModule, FormsModule, SplitButtonModule, EditorModule, DialogModule, PanelModule, AvatarModule, UploadContentComponent, SidebarModule,
+    ImageComponent, UploadVideoComponent, AudioComponent, PdfViewerModule, ReSourceComponent, RippleModule, SkeletonModule, YoutubeVideoComponent, TextComponent, MenuModule, ToastModule, SidebarModule],
   templateUrl: './chapter-content.component.html',
   styleUrl: './chapter-content.component.css'
 })
@@ -45,8 +48,11 @@ export class ChapterContentComponent {
   isLoader : boolean = true;
 
   chapterDataList: any[] = [];
+  hideHeader: boolean = true;
 
   items: { label?: string; icon?: string; separator?: boolean }[] = [];
+
+  pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
 
   constructor(private _coursesService: CoursesService, private route: ActivatedRoute) {
     this.route.paramMap.subscribe(params => {

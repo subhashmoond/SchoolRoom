@@ -922,6 +922,7 @@ textarea {
 
 .body {
     background: #F3F4F9;
+    /* background: #fff; */
     height: 100%;
 }
 
@@ -1076,8 +1077,8 @@ img.qr-code {
 .menu-bar {
     position: fixed;
     z-index: 2;
-    left: 11.1%;
-    top: 1.75rem;
+    left: 15%;
+    top: 1rem;
 }
 
 .open-sidebar .menu-bar {
@@ -2786,6 +2787,10 @@ small.p-error {
     border-bottom: 1px solid #edeef6;
 }
 
+.border-right-light{
+    border-right: 1px solid #edeef6;
+}
+
 .border-top-light {
     border-top: 1px solid #edeef6;
 }
@@ -2940,3 +2945,11 @@ body p-checkbox {
 .curriculum-btn .p-button{
     padding : 0.5rem 1.25rem
 }
+
+.p-editor-content p {
+    font-size: 14px !important;
+    line-height: 23px !important;
+}
+.hide-toolbar .ql-toolbar {
+    display: none;
+  }

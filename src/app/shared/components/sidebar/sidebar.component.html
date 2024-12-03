@@ -1,5 +1,5 @@
 @if(togglesidebar){
-<div class="side-bar h-sidebar pl-3 pr-3 fixed ls-2 mt-6 z-5">
+<div class="side-bar h-sidebar pl-3 pr-3 fixed ls-2 mt-6 z-4 border-right-light">
 
     <div class="sidebar w-full">
 
@@ -47,10 +47,7 @@
 
     <div class="grid sidebar-footer flex justify-content-center relative mt-auto mb-0">
 
-        <div class="col-12 flex justify-content-center">
-            <p-button label="Command Center" [raised]="true"> <img
-                    src="../../../../assets/images/icon/command-center.svg"> </p-button>
-        </div>
+        
         <div class="col-12 flex justify-content-center mt-2 relative">
             <h6 (mouseenter)="onProfileMouseEnter()" class="capitalize">
                 @if(profileToggle){
@@ -68,11 +65,7 @@
             </h6>
         </div>
 
-        <div class="col-12 flex justify-content-center text-center my-4">
-            <p class="m-0 copyright-column">
-                Release Version: 8/2/2022| ClassMate Copyright © 2024
-            </p>
-        </div>
+       
 
     </div>
 

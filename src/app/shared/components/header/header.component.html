@@ -1,4 +1,4 @@
-<div class="grid grid-nogutter bg-white fixed w-full z-5 top-header py-2 pl-4 pr-6 align-items-center"
+<div class="grid grid-nogutter bg-white fixed w-full z-5 top-header py-3 border-bottom-light pl-4 pr-6 align-items-center"
     [class.open-sidebar]="!togglesidebar">
     <div [ngClass]="togglesidebar ? 'col-4 relative' : 'col-1 w-5rem relative'">
         <div class="logo-wrapper">
@@ -22,17 +22,33 @@
             </button></div>
     </div>
     <div class="col-4" [ngClass]="togglesidebar ? 'col-4' : 'col-7 mx-auto'">
-        <div class="card flex justify-content-end">
-            <!-- <p-autoComplete field="name" aria-placeholder="Search..."></p-autoComplete> -->
+        <!-- <div class="card flex justify-content-end">
             <img src="../../../../assets/images/icon/search-box.svg" class="relative search-icon">
             <input pInputText type="text" class="p-inputtext-sm pl-5 primary-color search-filter"
                 placeholder="Search" />
-        </div>
+        </div> -->
     </div>
     <div class="col-4 ml-auto mr-0">
         <div class="top-header-right flex justify-content-end align-content-center h-full">
             <img src="../../../../assets/images/icon/bell.svg" class="mr-4">
-            <img src="../../../../assets/images/icon/app-launcer.svg">
+
+            <!-- <div class="flex justify-content-center mt-2 relative">
+                 
+                    <p-avatar (mouseenter)="onProfileMouseEnter()" label="{{userName.username | uppercase | slice:0:1}}" shape="circle"
+                        class="mr-1"></p-avatar>
+
+                        @if(profileToggle){
+                            <div class="absolute profile-menu" (mouseleave)="onProfileMouseLeave()">
+                                <p-menu [model]="profileMenuItems">
+                                    <ng-template pTemplate="item" let-item>
+                                        <a (click)="profileAction(item)"><i class="{{item.icon}}"></i> {{item.label}}</a>
+                                    </ng-template>
+                                </p-menu>
+                            </div>
+                            }
+                
+            </div> -->
+
         </div>
     </div>
 </div>

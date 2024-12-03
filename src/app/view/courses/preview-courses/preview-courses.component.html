@@ -56,9 +56,9 @@
                     @case ("article") {
                         <div class="w-full mb-4">
 
-                            <p class="m-0">
-                                {{data.text}}
-                            </p>
+                            <p-editor [(ngModel)]="data.text" [readonly]="true" [style]="{ height: '320px' }"
+                            [class.hide-toolbar]="hideHeader"></p-editor>
+
                         </div>
                     }
                     @case ("video") {
@@ -71,8 +71,8 @@
                     }
                     @case ("notes") {
                         <div class="w-full mb-4">
-                            <p>PDF</p>
-                            <img src="../../../../../assets/images/client-profile.png">
+                            <pdf-viewer [src]="pdfSrc" [render-text]="true" [original-size]="false"
+                            style="width: 100%; height: 600px"></pdf-viewer>
                         </div>
                     }
                     @case ("audio") {

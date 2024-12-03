@@ -3,11 +3,14 @@ import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { CoursesService } from '../../../core/services/courses.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { EditorModule } from 'primeng/editor';
 
 @Component({
   selector: 'app-preview-courses',
   standalone: true,
-  imports: [AccordionModule, ButtonModule  ],
+  imports: [AccordionModule, ButtonModule,FormsModule, EditorModule, PdfViewerModule ],
   templateUrl: './preview-courses.component.html',
   styleUrl: './preview-courses.component.css'
 })
@@ -42,7 +45,11 @@ export class PreviewCoursesComponent {
   courseId : any;
   subjectAndLessionData : any;
   chapterDataList : any;
-  lessonId : any
+  lessonId : any;
+  hideHeader: boolean = true;
+  pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
+
+
 
 
   constructor(private _coursesService : CoursesService, private route : ActivatedRoute, private _router : Router){
