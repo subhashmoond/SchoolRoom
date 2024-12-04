@@ -1,1 +1,99 @@
-<p>webpage works!</p>
+<div class="grid grid-nogutter nested-grid">
+    <div class="col-2">
+
+        <h6 class="p-4 border-bottom-light">Web Site</h6>
+
+        <ul class="sidebar-menu course-s-b p-0 ml-2 mr-2">
+            <li [ngClass]="{'active': currentActiveTab === 'theme'}">
+                <a href="javascript:void(0)" (click)="courseTabs('theme')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span> Theme </span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li [ngClass]="{'active': currentActiveTab === 'domain'}">
+                <a href="javascript:void(0)" (click)="courseTabs('domain')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span> Domain </span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+
+            <li [ngClass]="{'active': currentActiveTab === 'contact'}">
+                <a href="javascript:void(0)" (click)="courseTabs('contact')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span> Contact Details </span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+
+            <li [ngClass]="{'active': currentActiveTab === 'social'}">
+                <a href="javascript:void(0)" (click)="courseTabs('social')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span>Social Media</span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+
+            <li [ngClass]="{'active': currentActiveTab === 'about'}">
+                <a href="javascript:void(0)" (click)="courseTabs('about')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span>About Page</span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+
+            <li [ngClass]="{'active': currentActiveTab === 'privacypolicy'}">
+                <a href="javascript:void(0)" (click)="courseTabs('privacypolicy')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span>Privacy Policy</span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+
+            <li [ngClass]="{'active': currentActiveTab === 'faq'}">
+                <a href="javascript:void(0)" (click)="courseTabs('faq')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span>FAQ</span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+
+
+
+        </ul>
+    </div>
+
+
+    <div class="col-10 bg-white content-body website-h">
+        @switch (currentActiveTab) {
+        @case ("theme") {
+        <app-theme></app-theme>
+        }
+        @case ("domain") {
+        <app-domain></app-domain>
+        }
+        @case ("contact") {
+        <app-contact-details></app-contact-details>
+        }
+        @case ("social") {
+        <app-social-media></app-social-media>
+        }
+        @case ("about") {
+        <app-about-page></app-about-page>
+        }
+
+        @case ("privacypolicy") {
+        <app-privacy-policy></app-privacy-policy>
+        }
+        @case ("faq") {
+        <app-faq></app-faq>
+        }
+
+        }
+
+    </div>
+
+
+
+</div>

@@ -10,11 +10,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginMainComponent},
     {path : 'course/preview/:id', component : PreviewCoursesComponent},
 
-    {
-        path: 'templatepreview',
-        loadChildren: () => import('./view/webpage/webpage.router').then((m) => m.routes),
-        canActivate: [authGuard],
-    },
+    
 
     {
         path: '', component: LayoutComponent, children: [
@@ -32,6 +28,9 @@ export const routes: Routes = [
             },
             {
                 path : 'coupons', loadChildren : () => import('./view/coupons/coupons.router').then((m) => m.routes )
+            },
+            {
+                path: 'templatepreview', loadChildren: () => import('./view/webpage/webpage.router').then((m) => m.routes)
             },
             {
                 path : 'templatepreview', loadChildren : () => import('./view/webpage/webpage.router').then((m) => m.routes )

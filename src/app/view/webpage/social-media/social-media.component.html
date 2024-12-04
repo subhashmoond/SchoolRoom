@@ -1,0 +1,86 @@
+<p-toast />
+
+<div class="cards">
+
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-12">
+            <h4 class="subheading-color">Social Media </h4>
+            <p>Add your social media links</p>
+        </div>
+    </div>
+
+    <div class="grid">
+
+        @if(!isLoader){
+            <form [formGroup]="socialMediaForm" (ngSubmit)="saveAboutDetails()">
+    
+                <div class="flex flex-wrap w-full mb-4">
+                    <div class="w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Enter your Instagram username </label>
+
+                        <input class="w-full block text-sm" pInputText formControlName="number"
+                            placeholder="username" />
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap w-full mb-4">
+                    <div class="w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Enter your Facebook profile or page link </label>
+
+                        <input class="w-full block text-sm" pInputText formControlName="number"
+                            placeholder="username" />
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap w-full mb-4">
+                    <div class="w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Enter your Youtube channal or video link </label>
+
+                        <input class="w-full block text-sm" pInputText formControlName="number"
+                            placeholder="username" />
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap w-full mb-4">
+                    <div class="w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Enter your Twitter handle </label>
+
+                        <input class="w-full block text-sm" pInputText formControlName="number"
+                            placeholder="username" />
+                    </div>
+                </div>
+    
+                <div
+                    class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+                    <button type="submit" pButton pRipple label="Save" class="primary-button px-5 text-sm"></button>
+                </div>
+    
+    
+            </form>
+        }@else {
+
+            <div class="flex flex-wrap w-full mb-4">
+                <div class="w-full">
+                    <p-skeleton width="100%" height="3rem" />
+                </div>
+
+                <div class="w-full mt-3">
+                    <p-skeleton width="100%" height="3rem" />
+                </div>
+
+                <div class="w-full mt-3">
+                    <p-skeleton width="100%" height="3rem" />
+                </div>
+
+                <div class="w-full mt-3">
+                    <p-skeleton width="100%" height="3rem" />
+                </div>
+
+            </div>
+        }
+
+        
+
+    </div>
+
+</div>
