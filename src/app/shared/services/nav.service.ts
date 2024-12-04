@@ -11,35 +11,40 @@ export class NavService {
 
   MENUITEMS: Menus[] = [
     { path: 'dashborad', title: 'Dashborad', icon: 'assets/images/icon/dashboard.svg', type: 'link', active: true },
-    {
-      path: 'user', title: "User", icon: 'assets/images/icon/Clients.svg', type: 'sub', active: false,
-      children: [
-        { path: 'user/student', title: 'Students', type: 'link' },
-        { path: 'user/team', title: 'Team', type: 'link' },
-      ]
-    },
 
-
-    { title: "Products", icon: 'assets/images/icon/Clients.svg', type: 'sub', active: false,
+    { title: "Products", icon: 'assets/images/product.png', type: 'sub', active: true,
       children: [
         { path: 'course', title: 'Courses', type: 'link' },
         { path: 'test', title: 'Test Series', type: 'link' },
-        { path: '', title: 'Question Pool', type: 'link' },
-        { path: '', title: 'Live Class', type: 'link' },
-        { path: '', title: 'Assignment', type: 'link' },
+        // { path: '', title: 'Question Pool', type: 'link' },
+        // { path: '', title: 'Live Class', type: 'link' },
+        // { path: '', title: 'Assignment', type: 'link' },
       ]
     },
 
+    { path: 'templatepreview', title: 'Webpage', icon: 'assets/images/web.png', type: 'link', active: true },
+
+
     {
-      path: 'sales', title: "Sales", icon: 'assets/images/icon/Clients.svg', type: 'sub', active: false,
+      path: 'sales', title: "Marketing", icon: 'assets/images/discount.png', type: 'sub', active: true,
       children: [
         { path: 'coupons', title: 'Coupons', type: 'link' },
         { path: 'user/team', title: 'Referral Code', type: 'link' },
       ]
     },
 
-    { path: 'community', title: 'Community', icon: 'assets/images/icon/dashboard.svg', type: 'link', active: true },
-    { path: 'setting', title: 'Setting', icon: 'assets/images/icon/dashboard.svg', type: 'link', active: true },
+    {
+      path: 'user', title: "User", icon: 'assets/images/icon/Clients.svg', type: 'sub', active: true,
+      children: [
+        { path: 'user/student', title: 'Students', type: 'link' },
+        { path: 'user/team', title: 'Team', type: 'link' },
+      ]
+    },
+
+    {path : 'integrations', title : 'Integrations', icon: 'assets/images/integration.png', type: 'link', active: true},
+
+    { path: 'community', title: 'Community', icon: 'assets/images/community.png', type: 'link', active: true },
+    { path: 'setting', title: 'Setting', icon: 'assets/images/settings.png', type: 'link', active: true },
 
 
   ];
