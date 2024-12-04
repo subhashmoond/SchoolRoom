@@ -1,0 +1,18 @@
+.getStarted {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 210px;
+    border-radius: 8px;
+    background: 
+        url('../../../assets/images/get_started.avif') no-repeat center center, 
+        linear-gradient(176deg, rgba(117, 85, 185, 1) 100%, rgba(71, 50, 137, 0.5382528011204482) 100%);
+    background-size: cover;
+}
+
+
+.getStarted h2, p{
+    color: #fff !important;
+}

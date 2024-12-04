@@ -10,7 +10,7 @@ export class NavService {
   constructor() { }
 
   MENUITEMS: Menus[] = [
-    { path: 'dashborad', title: 'Dashborad', icon: 'assets/images/icon/dashboard.svg', type: 'link', active: true },
+    { path: 'dashborad', title: 'Dashborad', icon: 'assets/images/home.png', type: 'link', active: true },
 
     { title: "Products", icon: 'assets/images/product.png', type: 'sub', active: true,
       children: [
