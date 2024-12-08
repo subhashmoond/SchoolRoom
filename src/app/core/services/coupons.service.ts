@@ -20,4 +20,17 @@ export class CouponsService {
     return this._dataService.get(url)
   }
 
+  editCoupons(id : number, payload : any){
+    const url = `${environment.basePath}management/coupone/${id}/update/`;
+    return this._dataService.post(url, payload);
+  }
+
+  deleteCoupons(payload : any){
+    const url = `${environment.basePath}management/coupone/delete/`;
+    return this._dataService.post(url, payload)
+  }
+
+
+
+
 }

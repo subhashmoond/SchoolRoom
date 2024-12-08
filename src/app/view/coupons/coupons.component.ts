@@ -12,11 +12,15 @@ import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { CouponsService } from '../../core/services/coupons.service';
 import { AddCouponComponent } from './add-coupon/add-coupon.component';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-coupons',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, AddCouponComponent],
+  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, 
+    RippleModule, SkeletonModule, AddCouponComponent, ToastModule ],
+  providers : [MessageService],
   templateUrl: './coupons.component.html',
   styleUrl: './coupons.component.css'
 })
@@ -26,10 +30,13 @@ export class CouponsComponent {
   totalRecorde = 100;
   limit = 15;
   addStudentSideBar: boolean = false;
+  openDropdownId: number | null = null;
+  editItemData : any;
+  isLoader : boolean = false;
 
   couponstList: any = [];
 
-  constructor(private renderer: Renderer2, private _router: Router, private _couponService : CouponsService) {
+  constructor(private renderer: Renderer2, private _router: Router, private _couponService : CouponsService, private _messageService : MessageService) {
   }
 
   ngOnInit() {
@@ -37,10 +44,38 @@ export class CouponsComponent {
   }
 
 
+  toggleDropdown(itemId: any) {
+    this.openDropdownId = this.openDropdownId === itemId ? null : itemId;
+  }
+
+  editCoupons(data: any){
+    this.addStudentSideBar = true;
+    this.editItemData = data
+  }
+
+  addProduct(){}
+
+  deleteCoupon(id : any){
+    const payload = {
+      "promo_code": id
+    }
+
+    this._couponService.deleteCoupons(payload).subscribe((res:any) => {
+      if(res.status === true){
+        this._messageService.add({ severity: 'success', detail: res.message });
+        this.getCouponData()
+      }else{
+        this._messageService.add({ severity: 'error', detail: res.message });
+      }
+    })
+
+  }
+
   getCouponData() {
+    this.isLoader = true;
     this._couponService.getCouponsList().subscribe(res => {
-      console.log(res, "coupons Data Lists")
-      this.couponstList = res.data
+      this.isLoader = false;
+      this.couponstList = res.data;
     })
   }
 

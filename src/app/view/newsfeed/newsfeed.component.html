@@ -4,11 +4,11 @@
 
     <div class="grid client-dashborad-header mb-4 align-items-center">
         <div class="col-6">
-            <h4 class="subheading-color">Coupons Records</h4>
+            <h4 class="subheading-color">NewsFeed Records</h4>
         </div>
         <div class="col-6 flex justify-content-end	">
 
-            <p-button class="create-button border-round-md" (click)="openSidebar()">Add Coupon</p-button>
+            <p-button class="create-button border-round-md" (click)="openSidebar()">Add New</p-button>
             <!-- appUserPermissions accessType='CREATE_CLIENT' -->
         </div>
 
@@ -17,18 +17,14 @@
     @if(!isLoader){
 
     <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
-        selectionMode="single" class="client-data-table" [value]="couponstList">
+        selectionMode="single" class="client-data-table" [value]="newsFeedtList">
 
         <ng-template pTemplate="header" class="p-4">
             <tr class="w-full flex flex-wrap">
-                <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Code</th>
-                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Discount</th>
-                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Used Count
-                </th>
-                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Valid To
-                </th>
-                <th style="width:10%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Status
-                </th>
+                <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Type</th>
+                <th style="width:30%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Title</th>
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Like Count</th>
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color"> Status </th>
                 <th style="width:10%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color"> Action</th>
             </tr>
 
@@ -37,23 +33,20 @@
         <ng-template pTemplate="body" let-data>
             <tr class="w-full flex flex-wrap">
                 <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
-                    {{data.code}}
+                    {{data.type}}
+                </td>
+                <td style="width: 30%;word-break:break-all;" class="pl-4">
+                    {{data.title}}
                 </td>
                 <td style="width: 20%;word-break:break-all;" class="pl-4">
-                    {{data.discount}}
-                </td>
-                <td style="width: 20%;word-break:break-all;" class="pl-4">
-                    {{data.used_count}}
-                </td>
-                <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
-                    {{data.valid_date }}
+                    {{data.likeCount}}
                 </td>
 
-                <td style="width: 10%;" class="pl-4">
-                    @if(data.actvie === true){
-                    Actvie
+                <td style="width: 20%;" class="pl-4">
+                    @if(data.published === true){
+                        <p-tag severity="success" value="Published"/>
                     }@else {
-                    Deactive
+                    <p-tag severity="secondary" value="Unpublished"/>
                     }
                 </td>
 
@@ -67,15 +60,24 @@
                         @if(openDropdownId === data.id){
                         <div class="dropdown-menu">
                             <button (click)="editCoupons(data)">
-                                <!-- <i class="pi pi-eye"></i>  -->
                                 Edit
                             </button>
+
+                            @if(data.published === true){
+                                <button (click)="publisheNews(data.id, 'Unpublished')">
+                                    Unpublished
+                                </button>
+                            }@else {
+                                <button (click)="publisheNews(data.id, 'Published')">
+                                    Published
+                                </button>
+                            }
 
                             <!-- <button (click)="addProduct()">
                                 Add Product
                             </button> -->
 
-                            <button (click)="deleteCoupon(data.id)">
+                            <button (click)="deletePost(data.id)">
                                 <!-- <i class="pi pi-trash"></i>  -->
                                 Delete
                             </button>
@@ -90,7 +92,7 @@
 
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="5">No customers found.</td>
+                <td colspan="5">No NewsFeed.</td>
             </tr>
         </ng-template>
 
@@ -225,7 +227,7 @@
 
 @if(addStudentSideBar){
 <p-sidebar [(visible)]="addStudentSideBar" position="right" styleClass="w-30rem">
-    <!-- <app-add-student (sideBars)="closeSideBar()"></app-add-student> -->
-    <app-add-coupon [editItemData]="editItemData" (closeSideBars)="closeSideBar()"></app-add-coupon>
+    <app-add-post (closeSideBars)="closeSideBar()"></app-add-post>
+    <!-- <app-add-coupon [editItemData]="editItemData" (closeSideBars)="closeSideBar()"></app-add-coupon> -->
 </p-sidebar>
 }

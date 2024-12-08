@@ -44,7 +44,8 @@ export class NavService {
     {path : 'integrations', title : 'Integrations', icon: 'assets/images/integration.png', type: 'link', active: true},
 
     { path: 'community', title: 'Community', icon: 'assets/images/community.png', type: 'link', active: true },
-    { path: 'setting', title: 'Setting', icon: 'assets/images/settings.png', type: 'link', active: true },
+    {path : 'newsfeed', title : 'Newsfeed', icon : 'assets/images/news.png', type: 'link', active : true},
+    { path: 'setting', title: 'Setting', icon: 'assets/images/settings.png', type: 'link', active: true }
 
 
   ];

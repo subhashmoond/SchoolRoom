@@ -1,0 +1,82 @@
+<p-toast></p-toast>
+@if(false){
+<h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Edit Coupons </h4>
+}@else {
+<h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Create News </h4>
+}
+
+<form [formGroup]="createNewsForm" (ngSubmit)="createNews()" class="w-full flex flex-wrap">
+
+    <div class="grid nested-grid mt-3">
+
+        <div class="col-12">
+            <div class="grid">
+
+                <div class="col-12">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Select Post Type
+                        <span>*</span></label>
+                    <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
+                        [required]="true" formControlName="posttype" [options]="postTypeList"
+                        optionValue="type_name" optionLabel="type_name" placeholder="Select Post Type"></p-dropdown>
+                </div>
+
+                <div class="col-12">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Title</label>
+                    <input class="w-full capitalize" pInputText formControlName="title" />
+                </div>
+
+                <div class="col-12">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Text</label>
+                    <input class="w-full capitalize" pInputText formControlName="text" />
+                </div>
+
+                <div class="col-12">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Url</label>
+                    <input class="w-full capitalize" pInputText formControlName="url" />
+                </div>
+
+                <div class="col-12">
+
+                    <div
+                        class="border-solid border-round-lg main-border-color border-2 p-4 flex flex-column flex-wrap align-items-center justify-content-center user-image relative">
+
+                        <img width="100" height="100"
+                            [src]="selectedFileObjectUrl ? selectedFileObjectUrl : '../../../../assets/images/icon/Image.svg'"
+                            alt="Image Preview" [ngClass]="selectedFileObjectUrl ? 'w-full h-full' : 'w-4rem h-4rem'" />
+                        @if(selectedFileObjectUrl){
+                        <i class="pi pi-times profile-remove-icon" (click)="profileImageRemove()"
+                            style="font-size: 1rem"></i>
+                        }
+
+                        <span class="flex flex-wrap align-items-center justify-content-center mt-2 mb-1">
+                            @if(!selectedFileObjectUrl){
+                            <img class="h-1rem w-1rem" src="../../../../assets/images/icon/upload-icon.svg">
+                            }
+                            <p-fileUpload #fileUpload [showUploadButton]="true" mode="basic"
+                                class="bg-none text-base text-700 border-0 z-2 required-upload profile-message-remove"
+                                chooseLabel="Upload Image*" name="demo[]"
+                                url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*"
+                                [maxFileSize]="maxFileSizeLimit" (onSelect)="onFileSelect($event)"></p-fileUpload>
+                        </span>
+
+                        
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+        <button pButton pRipple label="Cancel" (click)="closeSideBar()"
+            class="primary-border-button px-5 mr-3 text-sm"></button>
+        <button type="submit" pButton pRipple label="Add" class="primary-button px-5 text-sm"></button>
+    </div>
+</form>
