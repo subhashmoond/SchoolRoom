@@ -37,6 +37,9 @@ export const routes: Routes = [
             },
             {
                 path : 'newsfeed', loadChildren : () => import('./view/newsfeed/newsfeed.router').then((m) => m.routes )
+            },
+            {
+                path : 'community', loadChildren : () => import('./view/community/community.router').then((m) => m.routes )
             }
         ],
         canActivate: [authGuard]

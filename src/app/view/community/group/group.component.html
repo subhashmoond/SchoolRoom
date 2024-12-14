@@ -1,0 +1,31 @@
+<p-toast></p-toast>
+
+<div class="grid nested-grid border-bottom-light">
+  <div class="col-8">
+    <div class="text-left p-2 ml-4">
+      <!-- <p-avatar label="{{userName.username | uppercase | slice:0:1}}" shape="circle"
+                    class="mr-1"></p-avatar> -->
+      <p-avatar label="{{groupData.name | uppercase | slice:0:1}}" shape="circle" class="mr-1"></p-avatar> {{groupData.name}}
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="action-menu flex justify-content-end p-2">
+      <button class="three-dot-button mr-4" (click)="toggleDropdown()">
+        ⋮
+      </button>
+
+      @if(isToggle){
+      <div class="dropdown-menu">
+        <button (click)="memberSideBar()"> All Member </button>
+        <button> Edit Group </button>
+        <button (click)="deleteGroup(groupData.id)"> Delete Group </button>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+
+
+<p-sidebar [(visible)]="isMember" position="right" styleClass="w-30rem">
+  <app-member></app-member>
+</p-sidebar>

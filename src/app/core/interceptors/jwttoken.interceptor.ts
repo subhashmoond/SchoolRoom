@@ -12,7 +12,7 @@ export class JWTtokenInterceptor implements HttpInterceptor {
     const userData = JSON.parse(localStorage.getItem('userData')!);
     const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn')!);
 
-    this.authenticationKey = userData?.key;
+    this.authenticationKey = userData?.access_token;
 
     const isLoginAPI = request.url.includes('api/educator/login/') || request.url.includes('api/learner/register/') || request.url.includes('api/learner/login/') || request.url.includes('api/learner/otp_verify/') || request.url.includes('api/learner/resend-otp/');
     
@@ -21,7 +21,7 @@ export class JWTtokenInterceptor implements HttpInterceptor {
     if (!isLoginAPI ) {
       modifiedRequest = request.clone({
         setHeaders: {
-          'Authorization': `token ${this.authenticationKey}`,
+          'Authorization': `Bearer ${this.authenticationKey}`,
         }
       });
     }

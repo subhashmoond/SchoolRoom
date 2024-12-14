@@ -1,0 +1,44 @@
+<p-toast></p-toast>
+
+<form [formGroup]="addGroupFrom" class="w-full p-4 mt-4" (ngSubmit)="saveGroup()">
+    
+    <div class="flex flex-wrap w-full mb-4">
+        <div class="w-full mb-4">
+            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Name
+                <span class="input-required-color">*</span>
+            </label>
+
+            <input class="w-full" pInputText placeholder="Enter Name" formControlName="name" />
+
+            @if(addGroupFrom.get('name')?.errors?.['required'] && addGroupFrom.get('name')?.touched){
+            <small id="username-help" class="p-error">Name is required.</small>
+            }
+        </div>
+
+        <div class="w-full mb-4">
+            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Description
+                <span class="input-required-color">*</span>
+            </label>
+
+            <textarea class="w-full" rows="5" cols="30" placeholder="Enter you description" pTextarea formControlName="describe"></textarea>
+
+            @if(addGroupFrom.get('describe')?.errors?.['required'] && addGroupFrom.get('describe')?.touched){
+            <small id="username-help" class="p-error">Description is required.</small>
+            }
+        </div>
+
+        <div class="w-full">
+                <div class="w-full formgrid grid permissions">
+                    <label class="col-10 inline-block">Only admins can send messages</label>
+                    <p-inputSwitch formControlName="onlyAdminSend" class="col-2 flex justify-content-end" />
+                </div>
+        </div>
+    </div>
+
+    <div
+        class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+        <button type="submit" pButton pRipple label="Save" class="primary-button px-5 text-sm"></button>
+    </div>
+
+
+</form>

@@ -13,9 +13,11 @@
 html {
     font-size: calc(14px + (18 - 14)*((100vw - 1200px)/(1920 - 1200)));
 }
-html, body {
+
+html,
+body {
     height: 100%;
-  }
+}
 
 body {
     padding: 0;
@@ -162,7 +164,7 @@ a {
 }
 
 /* button css  */
-.btn-img{
+.btn-img {
     width: 20px;
 }
 
@@ -171,11 +173,11 @@ a {
     color: #473289 !important;
 }
 
-.icon-primary-color{
+.icon-primary-color {
     color: #473289;
 }
 
-.preview-btn .p-button.p-button-text{
+.preview-btn .p-button.p-button-text {
     color: #473289 !important;
 }
 
@@ -203,9 +205,7 @@ a {
     color: #8A7EB5;
 }
 
-.wight
-
-.light-purple-bg {
+.wight .light-purple-bg {
     background: #7A6CAB;
 }
 
@@ -1198,7 +1198,7 @@ img.qr-code {
 
 .content {
     position: relative;
-    top: 4.313rem;
+    top: 3.313rem;
     margin-bottom: 2rem;
 }
 
@@ -2249,7 +2249,9 @@ small.p-error {
 .small-sidebar .p-sidebar .p-sidebar-header {
     border-bottom: 1px solid #EDEEF6;
 }
-
+.p-dialog-draggable .p-dialog-header{
+    border-bottom: 1px solid #EDEEF6 !important;
+}
 .assign-fix-buttons {
     right: 0;
     bottom: 0;
@@ -2783,7 +2785,7 @@ small.p-error {
     border-bottom: 1px solid #edeef6;
 }
 
-.border-right-light{
+.border-right-light {
     border-right: 1px solid #edeef6;
 }
 
@@ -2879,77 +2881,108 @@ body p-checkbox {
     box-sizing: border-box;
 }
 
-.course-preview .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link{
+.course-preview .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
     background: none !important;
     border: none !important;
     color: #333 !important;
     font-size: 1rem !important;
     /* padding: 0.5rem; */
 }
-.course-preview .p-accordion .p-accordion-header .p-accordion-header-link{
+
+.course-preview .p-accordion .p-accordion-header .p-accordion-header-link {
     color: #333 !important;
     font-size: 1rem !important;
 }
 
-.course-preview .p-accordion .p-accordion-header .p-accordion-header-link{
+.course-preview .p-accordion .p-accordion-header .p-accordion-header-link {
     background: none !important;
     border: none !important;
     /* padding: 0.5rem; */
 }
 
 .course-preview .p-accordion .p-accordion-content {
-    padding:0px !important;
+    padding: 0px !important;
     border: none !important;
     background: none !important;
     padding-left: 34px !important;
-    
+
 }
 
-.preview-h{
+.preview-h {
     height: calc(100vh - 122px) !important;
     overflow: scroll !important;
 }
-.icon-img-11{
+
+.icon-img-11 {
     width: 11px;
 }
 
-.curiculam-h{
+.curiculam-h {
     height: calc(100vh - 200px) !important;
     overflow: scroll ! IMPORTANT;
 }
 
-.course-s-b li.active{
+.course-s-b li.active {
     background: #fff;
     color: #473289;
     border-radius: 5px;
     font-weight: bold !important;
 }
 
-.course-s-b li.active a{
+.course-s-b li.active a {
     color: #473289;
     font-weight: bold !important;
 }
 
-.course-s-b li:hover{
+.course-s-b li:hover {
     background: #fff !important;
     color: #473289 !important;
     border-radius: 5px;
 }
+
 .curriculum-btn {
     height: 30px !important;
 }
-.curriculum-btn .p-button{
-    padding : 0.5rem 1.25rem
+
+.curriculum-btn .p-button {
+    padding: 0.5rem 1.25rem
 }
 
 .p-editor-content p {
     font-size: 14px !important;
     line-height: 23px !important;
 }
+
 .hide-toolbar .ql-toolbar {
     display: none;
-  }
-.website-h{
+}
+
+.website-h {
     height: calc(100vh - 50px);
     overflow: scroll;
+}
+
+.community .p-accordion .p-accordion-header .p-accordion-header-link {
+    border: none !important;
+    padding: 10px !important;
+    background: none !important;
+}
+
+.community .p-accordion .p-accordion-content {
+    border: none !important;
+    background: none !important;
+}
+
+.community .p-accordion .p-accordion-content {
+    padding: 0px !important;
+}
+
+
+.community-custom-header {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    gap: 5px;
+    width: 100%;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
 }

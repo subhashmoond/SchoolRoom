@@ -41,7 +41,7 @@ export class SidebarComponent {
   ngOnInit() {
     console.log(this.userName, "local storage data get in component")
 
-    if(this.userName.user_type === "Teachers"){
+    if(this.userName.user_type === "Admin"){
       this.menuItems = this._nav.MENUITEMS
     }else{
       this.menuItems = this._nav.STUDENTMENU

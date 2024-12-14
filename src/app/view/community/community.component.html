@@ -1,0 +1,88 @@
+<p-toast></p-toast>
+
+<div class="grid grid-nogutter nested-grid community">
+    <div class="col-2">
+
+        <h6 class="px-4 pt-4">Community </h6>
+
+
+        <div class="border-bottom-light">
+            <ul class="sidebar-menu course-s-b p-0 ml-2 mr-2">
+
+                <li [ngClass]="{'active': currentActiveTab === 'add-community'}">
+                    <a href="javascript:void(0)" (click)="addCommunity('add-community')" routerLinkActive="active"
+                        class="sidebar-header flex align-items-center px-3">
+                        <span> <i class="mr-2 pi pi-plus"></i> Add Community </span>
+                    </a>
+                </li>
+
+                <li [ngClass]="{'active': currentActiveTab === 'setting'}">
+                    <a href="javascript:void(0)" (click)="communitySetting('setting')" routerLinkActive="active"
+                        class="sidebar-header flex align-items-center px-3">
+                        <span> <i class="mr-2 pi pi-cog"></i> Settings </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+        <h6 class="p-4">All Channels </h6>
+
+        <div class="p-2">
+            <p-accordion [multiple]="true" [activeIndex]="[0]">
+
+                @for(data of communitysList; track data){
+                    <p-accordionTab>
+
+                        <ng-template pTemplate="header">
+                            <div class="community-custom-header">
+                                <span class=" white-space-nowrap overflow-hidden text-overflow-ellipsis">{{ data.name }}</span>
+                                
+                                <i class="cursor-pointer pi pi-plus" (click)="addGroups(data)" pTooltip="Add New Group" tooltipPosition="right"></i>
+                            </div>
+                        </ng-template>
+
+                        <ul class="sidebar-menu course-s-b pl-3 m-0 ">
+    
+                            @for(group of data.groups; track group){
+                                <li class="p-2 cursor-pointer" (click)="groupDetail(group, 'group')">
+                                    {{group.name}}
+                                </li>
+                            }
+    
+                        </ul>
+                    </p-accordionTab>
+                }
+
+            </p-accordion>
+        </div>
+
+
+    </div>
+
+
+    <div class="col-10 bg-white website-h">
+        @switch (currentActiveTab) {
+            @case ("add-community") {
+                <div class="content-body">
+                    <app-add-community></app-add-community>
+                </div>
+            }
+            @case("group"){
+                <app-group [groupData]="groupData"></app-group>
+            }
+        
+        }
+        
+    </div>
+
+
+
+</div>
+
+
+@if(isAddGroup){
+    <p-dialog header="Add Group" [modal]="true" [(visible)]="isAddGroup" [style]="{ width: '50rem', height : '40rem'}">
+        <app-add-group [communityId]="communityId" (closePopup)="closePopup($event)"></app-add-group>
+    </p-dialog>
+}
