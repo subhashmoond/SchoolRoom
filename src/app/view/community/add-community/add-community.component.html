@@ -24,6 +24,7 @@
 
                         <input class="w-full" pInputText placeholder="Enter name" formControlName="text" />
 
+                        
                     </div>
                     @if(addCommunityFrom.get('text')?.errors?.['required'] && addCommunityFrom.get('text')?.touched){
                     <small id="username-help" class="p-error">Name is required.</small>
