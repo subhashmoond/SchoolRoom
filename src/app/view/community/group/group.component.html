@@ -5,7 +5,7 @@
     <div class="text-left p-2 ml-4">
       <!-- <p-avatar label="{{userName.username | uppercase | slice:0:1}}" shape="circle"
                     class="mr-1"></p-avatar> -->
-      <p-avatar label="{{groupData.name | uppercase | slice:0:1}}" shape="circle" class="mr-1"></p-avatar> {{groupData.name}}
+      <p-avatar label="{{groupDatas.name | uppercase | slice:0:1}}" shape="circle" class="mr-1"></p-avatar> {{groupDatas.name}}
     </div>
   </div>
   <div class="col-4">
@@ -17,8 +17,9 @@
       @if(isToggle){
       <div class="dropdown-menu">
         <button (click)="memberSideBar()"> All Member </button>
-        <button> Edit Group </button>
-        <button (click)="deleteGroup(groupData.id)"> Delete Group </button>
+        <button (click)="addMemberSideBar(groupDatas.id)"> Add Member </button>
+        <button (click)="editGroup(groupDatas)"> Edit Group </button>
+        <button (click)="deleteGroup(groupDatas.id)"> Delete Group </button>
       </div>
       }
     </div>
@@ -26,6 +27,20 @@
 </div>
 
 
-<p-sidebar [(visible)]="isMember" position="right" styleClass="w-30rem">
-  <app-member></app-member>
-</p-sidebar>
+@if(isMember){
+  <p-sidebar [(visible)]="isMember" position="right" styleClass="w-30rem">
+    <app-member [groupData]="groupDatas"></app-member>
+  </p-sidebar>
+}
+
+@if(isEditGroup){
+  <p-dialog header="Edit Group" [modal]="true" [(visible)]="isEditGroup" [style]="{ width: '50rem', height : '40rem'}">
+      <app-add-group (closePopup)="closePopup($event)" [communityId]="communityId" [editGroupData]="editGroupData"></app-add-group>
+  </p-dialog>
+}
+
+@if(isAddMember){
+  <p-dialog header="Add Member" [modal]="true" [(visible)]="isAddMember" [style]="{ width: '50rem', height : '40rem'}">
+    <app-add-member [groupData]="groupDatas" (closePopup)="closeMemberPopup($event)"></app-add-member>
+</p-dialog>
+}

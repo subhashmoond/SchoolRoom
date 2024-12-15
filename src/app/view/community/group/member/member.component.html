@@ -1,27 +1,24 @@
 
+<p-toast></p-toast>
+
 <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">All Members</h4>
 
 <div class="mt-4" >
     <ul class="list-none p-0 m-0 ">
-        <li class="flex items-center gap-2 px-2 py-3 cursor-pointer rounded-border">
-            <p-avatar label="S" shape="circle" class="mr-1"></p-avatar>
-            <div class="flex align-items-center justify-content-center">
-                kamal
-            </div>
-        </li>
+        @for(data of memberData; track data){
 
-        <li class="flex items-center gap-2 px-2 py-3 cursor-pointer rounded-border">
-            <p-avatar label="S" shape="circle" class="mr-1"></p-avatar>
-            <div class="flex align-items-center justify-content-center">
-                kamal
-            </div>
-        </li>
+            <li class="flex items-center gap-2 px-2 py-3 cursor-pointer border-bottom-light">
+                <p-avatar [label]="data.name?.slice(0, 1).toUpperCase()" shape="circle" class="mr-1"></p-avatar>
+                <div class="flex align-items-center flex-grow-1">
+                    {{data.name}}
+                </div>
+                <span class="flex align-items-center">
 
-        <li class="flex items-center gap-2 px-2 py-3 cursor-pointer rounded-border">
-            <p-avatar label="S" shape="circle" class="mr-1"></p-avatar>
-            <div class="flex align-items-center justify-content-center">
-                kamal
-            </div>
-        </li>
+                    <i class="pi pi-trash" (click)="deleteMember(data.user_id)" style="font-size: 1rem; color :red"></i>
+                </span>
+            </li>
+
+        }
+        
     </ul>
 </div>

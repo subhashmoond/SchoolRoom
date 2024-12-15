@@ -2986,3 +2986,13 @@ body p-checkbox {
     font-size: 1rem !important;
     font-weight: 400 !important;
 }
+
+.list-design{
+    border: 1px solid #edeef6;
+    background-color: #F3F4F9;
+}
+
+.list-design:hover{
+    border: 1px solid #edeef6;
+    background-color: #F3F4F9;
+}

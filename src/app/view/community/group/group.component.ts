@@ -7,26 +7,40 @@ import { MemberComponent } from './member/member.component';
 import { CommunityService } from '../../../core/services/community.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
+import { AddGroupComponent } from './add-group/add-group.component';
+import { AddMemberComponent } from "./add-member/add-member.component";
 
 @Component({
   selector: 'app-group',
   standalone: true,
-  imports: [CommonModule, AvatarModule, SidebarModule, MemberComponent, ToastModule],
+  imports: [CommonModule, AvatarModule, SidebarModule, MemberComponent, ToastModule, DialogModule, AddGroupComponent, AddMemberComponent],
   providers: [MessageService],
 
   templateUrl: './group.component.html',
   styleUrl: './group.component.css'
 })
 export class GroupComponent {
-  @Input() groupData: any
+  @Input() groupData: any;
+  @Input() communityId: any;
 
   isToggle: boolean = false;
-  isMember: boolean = false
+  isMember: boolean = false;
+  isEditGroup: boolean = false;
+  isAddMember: boolean = false;
+  editGroupData: any;
+  groupDatas : any
 
   constructor(private _communityService: CommunityService, private _messageService: MessageService) { }
 
   ngOnInit() {
+    this.getGroupData();
+  }
 
+  getGroupData(){
+    this._communityService.getGroupById(this.groupData.id).subscribe(res=> {
+      this.groupDatas = res
+    })
   }
 
   toggleDropdown() {
@@ -43,6 +57,26 @@ export class GroupComponent {
         this._messageService.add({ severity: 'success', detail: res.message });
       }
     })
+  }
+
+  editGroup(data: any) {
+    this.isEditGroup = true;
+    this.editGroupData = data
+  }
+
+  addMemberSideBar(id: number) {
+    this.isAddMember = true
+  }
+
+  closePopup(event: any) {
+    this.getGroupData();
+    this.isEditGroup = false;
+    this._messageService.add({ severity: 'success', detail: 'Group updated successfully.' });
+  }
+
+  closeMemberPopup(event : any){
+    this.isAddMember = false
+    this._messageService.add({ severity: 'success', detail: event });
   }
 
 }

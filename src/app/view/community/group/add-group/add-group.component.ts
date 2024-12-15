@@ -23,19 +23,42 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 export class AddGroupComponent {
   @Input() communityId: any;
   @Output() closePopup = new EventEmitter<any>()
+  @Input() editGroupData : any
 
   addGroupFrom!: FormGroup;
   onlyAdminSendChecked: boolean = false;
+  isEditGroup : boolean = false
 
   constructor(private _fb: FormBuilder, private _messageService: MessageService, private _communityService: CommunityService) {
   }
 
   ngOnInit() {
+
     this.addGroupFrom = this._fb.group({
       name: ['', Validators.required],
       describe: ['', Validators.required],
       onlyAdminSend: []
     })
+
+    if(this.editGroupData){
+      this.editForm();
+      this.isEditGroup = true
+    }
+
+  }
+
+  editForm(){
+
+    this._communityService.getGroupById(this.editGroupData.id).subscribe(res => {
+
+      this.addGroupFrom.patchValue({
+        name: res.name,
+        describe: res.describe,
+        onlyAdminSend: res.only_admin_send
+      })
+
+    })
+
   }
 
   saveGroup() {
@@ -46,11 +69,23 @@ export class AddGroupComponent {
       "onlyAdminSend": false
     }
 
-    this._communityService.addGroups(this.communityId, payload).subscribe((res:any) => {
-      if(res.status === true){
-        this.closePopup.emit(false)
-      }
-    })
+    if(!this.isEditGroup){
+
+      this._communityService.addGroups(this.communityId, payload).subscribe((res:any) => {
+        if(res.status === true){
+          this.closePopup.emit(false)
+        }
+      })
+
+    }else{
+      this._communityService.updateGropu(this.editGroupData.id, payload).subscribe((res : any) => {
+        if(res.status === true){
+          this.closePopup.emit(false)
+        }
+      })
+    }
+
+    
 
   }
 

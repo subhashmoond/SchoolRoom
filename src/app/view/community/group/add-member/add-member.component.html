@@ -1,0 +1,36 @@
+
+<!-- <p-toast></p-toast> -->
+
+<!-- <form [formGroup]="addFrom" class="w-full p-4 mt-4" (ngSubmit)="saveMember()"> -->
+    
+    <div class="flex flex-wrap w-full mb-4">
+        <div class="w-full mb-4">
+            <ul class="list-none p-0 m-0 ">
+                @for(data of studentList; track data){
+            
+                <li class="flex items-center gap-2 px-2 py-3 cursor-pointer border-bottom-light">
+                    <p-checkbox inputId="ingredient1" [name]="data.name" [value]="data.id" [(ngModel)]="seletedStudent" />
+                    <div class="flex align-items-center justify-content-center">
+                        {{data.name}}
+                    </div>
+                </li>
+            
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div
+        class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+        <button (click)="saveMember()" type="submit" pButton pRipple label="Save" class="primary-button px-5 text-sm"></button>
+    </div>
+
+
+<!-- </form> -->
+
+
+
+
+
+
+

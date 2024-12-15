@@ -25,6 +25,11 @@ export class CommunityService {
     return this._dataService.post(url, payload)
   }
 
+  updateCommunity(id : any, payload : any){
+    const url = `${environment.basePath}c/community/${id}/`;
+    return this._dataService.post(url, payload);
+  }
+
   addGroups(communityId : number, payload : any){
     const url = `${environment.basePath}c/${communityId}/create/group/`;
     return this._dataService.post(url, payload)
@@ -33,6 +38,31 @@ export class CommunityService {
   deleteGroup(id : number){
     const url = `${environment.basePath}c/group/${id}/`;
     return this._dataService.delete(url)
+  }
+
+  getGroupById(id:number){
+    const url = `${environment.basePath}c/group/${id}/`;
+    return this._dataService.get(url);
+  }
+
+  updateGropu(id : number, payload : any){
+    const url = `${environment.basePath}c/group/${id}/`;
+    return this._dataService.post(url, payload);
+  }
+
+  addMemberInGroup(groupId : number, payload: any){
+    const url = `${environment.basePath}c/group/${groupId}/add-member/`;
+    return this._dataService.post(url, payload);
+  }
+
+  getAllMembers(groupId : any){
+    const url = `${environment.basePath}c/group/${groupId}/members/`;
+    return this._dataService.get(url);
+  }
+
+  deleteMemberFromGroup(groupId : any, payload : any){
+    const url = `${environment.basePath}c/group/${groupId}/remove-member/`;
+    return this._dataService.post(url, payload)
   }
 
 }

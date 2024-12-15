@@ -45,7 +45,7 @@
                         <ul class="sidebar-menu course-s-b pl-3 m-0 ">
     
                             @for(group of data.groups; track group){
-                                <li class="p-2 cursor-pointer" (click)="groupDetail(group, 'group')">
+                                <li class="p-2 cursor-pointer" (click)="groupDetail(group, 'group', data.id)">
                                     {{group.name}}
                                 </li>
                             }
@@ -69,7 +69,12 @@
                 </div>
             }
             @case("group"){
-                <app-group [groupData]="groupData"></app-group>
+                <app-group [groupData]="groupData" [communityId]="communityId"></app-group>
+            }
+            @case("setting"){
+                <div class="content-body">
+                    <app-setting-community></app-setting-community>
+                </div>
             }
         
         }

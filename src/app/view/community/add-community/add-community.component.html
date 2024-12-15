@@ -2,14 +2,16 @@
 
 <div class="cards">
 
-    <div class="grid client-dashborad-header mb-4 align-items-center">
-        <div class="col-12">
-            <h4 class="subheading-color">Add Community</h4>
-            <p>Add your new community.</p>
+    @if(!isEdit){
+        <div class="grid client-dashborad-header mb-4 align-items-center">
+            <div class="col-12">
+                <h4 class="subheading-color">Add Community</h4>
+                <p>Add your new community.</p>
+            </div>
         </div>
-    </div>
+    }
 
-    <div class="grid">
+    <div class="grid mt-4" >
 
         @if(!isLoader){
             <form [formGroup]="addCommunityFrom" class="w-full" (ngSubmit)="saveCommunity()">
@@ -20,7 +22,7 @@
                             <span class="input-required-color">*</span>
                         </label>
 
-                        <input class="w-full" pInputText placeholder="Enter price" formControlName="text" />
+                        <input class="w-full" pInputText placeholder="Enter name" formControlName="text" />
 
                     </div>
                     @if(addCommunityFrom.get('text')?.errors?.['required'] && addCommunityFrom.get('text')?.touched){

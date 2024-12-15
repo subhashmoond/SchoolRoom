@@ -10,11 +10,12 @@ import { AddGroupComponent } from './group/add-group/add-group.component';
 import { DialogModule } from 'primeng/dialog';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { SettingCommunityComponent } from './setting-community/setting-community.component';
 
 @Component({
   selector: 'app-community',
   standalone: true,
-  imports: [CommonModule, AccordionModule, AddCommunityComponent, GroupComponent, TooltipModule, AddGroupComponent, DialogModule, ToastModule],
+  imports: [CommonModule, AccordionModule, AddCommunityComponent, GroupComponent, TooltipModule, AddGroupComponent, DialogModule, ToastModule, SettingCommunityComponent],
   providers: [MessageService],
   templateUrl: './community.component.html',
   styleUrl: './community.component.css'
@@ -57,9 +58,10 @@ export class CommunityComponent {
 
   }
 
-  groupDetail(groupData :any, type : any){
+  groupDetail(groupData :any, type : any, communityId : any){
     this.currentActiveTab = type;
-    this.groupData = groupData
+    this.groupData = groupData;
+    this.communityId = communityId
   }
 
   addGroups(data : any){
