@@ -16,7 +16,6 @@ import { CouponsService } from '../../../core/services/coupons.service';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import moment from 'moment';
 import { InputSwitchModule } from 'primeng/inputswitch';
 
 @Component({
@@ -57,13 +56,13 @@ export class AddCouponComponent {
 
   createCoupon() {
 
-    const selectedDate = new Date(this.createCouponsForm.get('valid_to')?.value);
-    const dateofBirth = moment(selectedDate).format('DD MMM YYYY');
+    // const selectedDate = new Date(this.createCouponsForm.get('valid_to')?.value);
+    // const dateofBirth = moment(selectedDate).format('DD MMM YYYY');
 
     const payload = {
       // "course": [10],
       "suggest_during_checkout": this.createCouponsForm.get('suggest')?.value,
-      "valid_to": dateofBirth,
+      // "valid_to": dateofBirth,
       "discount": this.createCouponsForm.get('discount')?.value
     }
 
