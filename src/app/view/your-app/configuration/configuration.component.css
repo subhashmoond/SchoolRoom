@@ -1,0 +1,41 @@
+.theme-selector {
+    border: 1px solid #edeef6;
+    border-radius: 8px;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .color-options {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 12px 0;
+  }
+  
+  .color-option {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .color-option:hover {
+    transform: scale(1.1);
+  }
+  
+  .color-option.selected .color-box {
+    border: 2px solid #111827;
+  }
+  
+  .color-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .pi-check {
+    font-size: 20px;
+  }
+  

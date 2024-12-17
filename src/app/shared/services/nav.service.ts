@@ -16,14 +16,14 @@ export class NavService {
       children: [
         { path: 'course', title: 'Courses', type: 'link' },
         { path: 'test', title: 'Test Series', type: 'link' },
-        // { path: '', title: 'Question Pool', type: 'link' },
+        { path: 'digital-product', title: 'Digi Product', type: 'link' },
         // { path: '', title: 'Live Class', type: 'link' },
         // { path: '', title: 'Assignment', type: 'link' },
       ]
     },
 
-    { path: 'templatepreview', title: 'Webpage', icon: 'assets/images/web.png', type: 'link', active: true },
-
+    { path: 'templatepreview', title: 'Website', icon: 'assets/images/web.png', type: 'link', active: true },
+    {path : 'app', title : 'Your App', icon : 'assets/images/app.png', type : 'link', active : true},
 
     {
       path: 'sales', title: "Marketing", icon: 'assets/images/discount.png', type: 'sub', active: true,

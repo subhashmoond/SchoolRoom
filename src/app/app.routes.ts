@@ -40,6 +40,12 @@ export const routes: Routes = [
             },
             {
                 path : 'community', loadChildren : () => import('./view/community/community.router').then((m) => m.routes )
+            },
+            {
+                path : 'digital-product', loadChildren : () => import('./view/digital-product/digitalproduct.router').then((m) => m.routes)
+            },
+            {
+                path : 'app', loadChildren : () => import('./view/your-app/you-app.router').then((m) => m.routes)
             }
         ],
         canActivate: [authGuard]

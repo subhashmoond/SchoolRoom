@@ -1,0 +1,176 @@
+<div class="grid nested-grid border-bottom-light px-5 py-3">
+    <div class="col-8 p-0">
+        <h5 class="subheading-color">Configure Your App</h5>
+        <p class="m-0 pt-2">Add basic details to set the theme of your app</p>
+    </div>
+    <div class="col-4 p-0 flex justify-content-end align-items-center">
+        <button type="submit" pButton pRipple label="Save Changes" class="secondary-button px-6 text-sm"></button>
+    </div>
+</div>
+
+<div class="grid nested-grid pl-5 py-2">
+    <div class="col-8">
+        <form [formGroup]="configurationForm">
+
+            <div class="grid">
+
+                <div class="col-6 mb-4 mt-5">
+                    <label class="w-full mb-1 text-lg mb-3 font-medium line-height-exsm inline-block">App Name</label>
+
+                    <div class="flex flex-wrap">
+                        <input class=" block text-sm" pInputText formControlName="appname"
+                            placeholder="Enter your app name" />
+                    </div>
+
+                </div>
+
+
+                <div class="col-10 mb-4">
+                    <label class="w-full mb-1 text-lg mb-3 font-medium line-height-exsm inline-block">Set a landing
+                        screen</label>
+
+                    <div class="flex items-center list-design p-3 mb-3">
+                        <p-checkbox value="Home" inputId="ny" />
+                        <!-- <p-radiobutton name="landing-screen" value="Home" formControlName="landingscreen" inputId="ingredient1" /> -->
+                        <label for="ingredient1" class="ml-2">Home</label>
+                    </div>
+
+                    <div class="flex items-center list-design p-3 mb-3">
+                        <p-checkbox value="NewsFeed" inputId="ny" />
+                        <!-- <p-radiobutton name="landing-screen" value="NewsFeed" formControlName="landingscreen" inputId="ingredient2" /> -->
+                        <label for="ingredient2" class="ml-2">NewsFeed</label>
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-12 mb-4">
+                    <label class="w-full mb-1 text-lg mb-3 font-medium line-height-exsm inline-block">Select Color
+                        Theme</label>
+
+                    <div class="theme-selector p-2">
+                        <div class="color-options">
+                            @for(theme of themes; track theme){
+
+                            <div class="color-option" [ngClass]="{'selected': selectedTheme.name === theme.name}"
+                                (click)="selectTheme(theme)">
+                                <div class="color-box" [ngStyle]="{'background-color': theme.color}">
+                                    @if(selectedTheme.name === theme.name){
+                                    <i class="pi pi-check text-white">
+                                    </i>
+                                    }
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <label class=" mt-2 w-full mb-1 text-sm font-medium line-height-exsm inline-block">Your app will
+                        have this colour theme.</label>
+
+                </div>
+
+
+                <div class="col-6 mb-4">
+                    <label class="w-full mb-1 text-lg mb-3 font-medium line-height-exsm inline-block">Upload logo</label>
+
+                    <div
+                        class="border-solid border-round-lg main-border-color border-2 p-4 flex flex-column flex-wrap align-items-center justify-content-center user-image relative">
+
+                        <img width="100" height="100"
+                            [src]="selectedFileObjectUrl ? selectedFileObjectUrl : '../../../../assets/images/icon/Image.svg'"
+                            alt="Image Preview" [ngClass]="selectedFileObjectUrl ? 'w-full h-full' : 'w-4rem h-4rem'" />
+                        @if(selectedFileObjectUrl){
+                        <i class="pi pi-times profile-remove-icon" (click)="profileImageRemove()"
+                            style="font-size: 1rem"></i>
+                        }
+
+                        <span class="flex flex-wrap align-items-center justify-content-center mt-2 mb-1">
+                            @if(!selectedFileObjectUrl){
+                            <img class="h-1rem w-1rem" src="../../../../assets/images/icon/upload-icon.svg">
+                            }
+                            <p-fileUpload #fileUpload [showUploadButton]="true" mode="basic"
+                                class="bg-none text-base text-700 border-0 z-2 required-upload profile-message-remove"
+                                chooseLabel="Upload Image*" name="demo[]"
+                                url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*"
+                                [maxFileSize]="maxFileSizeLimit" (onSelect)="onFileSelect($event)"></p-fileUpload>
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+
+                <!-- Splashscreen Dynamic Section -->
+                <div class="col-12 mb-4">
+                    <label class="w-full mb-1 text-lg mb-3 font-medium line-height-exsm inline-block">
+                        Splashscreen Image and Content
+                    </label>
+
+                    <!-- Loop through FormArray -->
+                     @for(splashscreen of splashscreens.controls; track $index){
+
+                         <div [formGroupName]="$index"
+                             class="borderall p-4 border-round-2xl mb-4">
+
+                             <div class="flex w-full">
+
+                                 <div class=" border-solid border-round-lg main-border-color border-2 p-4 w-6 flex flex-column align-items-center">
+                                     <!-- Image Preview -->
+                                     <div class="relative user-image">
+                                         <img width="100" height="100"
+                                             [src]="splashscreen.get('image')?.value || '../../../../assets/images/icon/Image.svg'"
+                                             alt="Image Preview" />
+                                         <i *ngIf="splashscreen.get('image')?.value" class="pi pi-times profile-remove-icon"
+                                             (click)="removeSplashscreen($index)" style="font-size: 1rem; cursor: pointer"></i>
+                                     </div>
+         
+                                     <!-- Upload File -->
+                                     <p-fileUpload [showUploadButton]="true" mode="basic" class="bg-none text-base text-700"
+                                         chooseLabel="Upload Image*" accept="image/*" [maxFileSize]="maxFileSizeLimit"
+                                         (onSelect)="onFileSelectWelcome($event, $index)"></p-fileUpload>
+                                 </div>
+
+                                 <div class="w-6 flex justify-content-end align-content-start">
+                                    <i (click)="removeSplashscreen($index)" class="pi pi-trash" style="font-size: 1.5rem; color: red;"></i>
+                                 </div>
+                             </div>
+
+     
+                             <!-- Heading Input -->
+                             <div class="flex flex-wrap mt-4">
+                                 <label class="w-full mb-1 text-sm font-medium">Heading</label>
+                                 <input class="block text-sm" pInputText formControlName="heading"
+                                     placeholder="Enter Heading" />
+                             </div>
+     
+                             <!-- Subheading Input -->
+                             <div class="flex flex-wrap mt-2">
+                                 <label class="w-full mb-1 text-sm font-medium">Sub Heading</label>
+                                 <input class="block text-sm" pInputText formControlName="subheading"
+                                     placeholder="Enter Sub Heading" />
+                             </div>
+                         </div>
+                     }
+
+                    <!-- Add New Splashscreen Button -->
+                    <button type="button" pButton label="+ Upload Splashscreen" class="secondary-button"
+                        (click)="addSplashscreen()"></button>
+                        
+                </div>
+
+
+
+
+            </div>
+
+
+
+        </form>
+    </div>
+    <div class="col-4 pt-4 flex justify-content-center" style="background-color: #7A6CAB;">
+        <img src="../../../../assets/images/Onboarding.png" style="width: 75%; height: 60%;">
+    </div>
+</div>

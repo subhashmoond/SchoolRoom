@@ -1,0 +1,48 @@
+<div class="grid grid-nogutter nested-grid">
+    <div class="col-2">
+
+        <h6 class="p-4 border-bottom-light">Your App</h6>
+
+        <ul class="sidebar-menu course-s-b p-0 ml-2 mr-2">
+            <li [ngClass]="{'active': currentActiveTab === 'Configuration'}">
+                <a href="javascript:void(0)" (click)="courseTabs('Configuration')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span>App Configuration </span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+
+
+            <li [ngClass]="{'active': currentActiveTab === 'Banner'}">
+                <a href="javascript:void(0)" (click)="courseTabs('Banner')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span> Banner </span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+
+            
+
+
+
+        </ul>
+    </div>
+
+
+    <div class="col-10 bg-white website-h">
+        @switch (currentActiveTab) {
+        @case ("Configuration") {
+        <app-configuration></app-configuration>
+        }
+        @case ("Banner") {
+        asd
+        }
+        
+
+        }
+
+    </div>
+
+
+
+</div>

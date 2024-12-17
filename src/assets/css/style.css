@@ -2777,6 +2777,10 @@ small.p-error {
     border: 1px solid #edeef6;
 }
 
+.borderall{
+    border: 1px solid #edeef6;
+}
+
 .border-left {
     border-left: 1px solid #edeef6;
 }
