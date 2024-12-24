@@ -21,8 +21,7 @@
       <form [formGroup]="addForm">
         <div formArrayName="courses">
           @for(course of courses.controls; track course; let i = $index){
-          <div [attr.draggable]="true" (dragstart)="onTaskDragStart($event, i, 'course')"
-            (dragover)="onTaskDragOver($event)" (drop)="onTaskDrop($event)" [formGroupName]="i"
+          <div [attr.draggable]="true" [formGroupName]="i"
             class="content-card mb-4">
             <div class="p-3">
               <img class="icon-img-11" src="../../../../../assets/images/chapter-icon.svg">
@@ -63,13 +62,11 @@
 
                         @if(!isSavedCourses[i]){
                         <button type="button" (click)="enableEditCourse(i)" pButton class="curriculum-btn"> <i
-                            class="pi pi-eye"></i> Edit</button>
+                            class="pi pi-pencil"></i> Edit</button>
                         }
 
-                        <button type="button" (click)="deleteCourse(i)" pButton class="danger-button"><i
-                            class="pi pi-trash"></i> Delete</button>
-
-
+                        <button type="button" (click)="deleteCourse(i)" pButton style="color: red;" class="danger-button"><i
+                            class="pi pi-trash" ></i> Delete</button>
                       </div>
                       }
                     </div>
@@ -85,10 +82,9 @@
                 </div>
               </div>
 
-              <div formArrayName="lessons">
+              <div formArrayName="lessons" cdkDropList (cdkDropListDropped)="dropLesson($event)">
                 @for(lesson of lessons(i).controls; track lesson; let j = $index){
-                <div [attr.draggable]="true" (dragstart)="onTaskDragStart($event, j, 'lesson', i)"
-                  (dragover)="onTaskDragOver($event)" (drop)="onTaskDrop($event)" [formGroupName]="j"
+                <div cdkDrag [formGroupName]="j"
                   class="grid grid-nogutter p-3 border-bottom-light">
                   <div class="col-6 flex">
                     <!-- <i class="pi pi-microsoft pr-4 pt-1 text-primary-color"></i> -->
@@ -116,8 +112,9 @@
                     @else{
 
                     @if(lesson.get('isPublished')?.value){
-                    <button type="button" (click)="publishLesson(lesson)" label="Unpublish"
-                      class="outline-icon-button edit-button curriculum-btn"></button>
+
+                    <button type="button" (click)="unpublishLesson(lesson)" pButton label="Unpublish"
+                      class="outline-icon-button edit-button curriculum-btn mr-2"></button>
 
                     }
                     @else{
@@ -138,10 +135,10 @@
 
                           @if(!isEditLesson[i][j]){
                           <button type="button" (click)="enableEditLesson(i, j)" pButton class="curriculum-btn"> <i
-                              class="pi pi-eye"></i> Edit</button>
+                              class="pi pi-pencil"></i> Edit</button>
                           }
 
-                          <button type="button" (click)="deleteLesson(i, j, course.get('id')?.value)" pButton
+                          <button type="button" style="color: red;" (click)="deleteLesson(i, j, course.get('id')?.value)" pButton
                             class="danger-button"><i class="pi pi-trash"></i> Delete</button>
 
 
@@ -234,3 +231,10 @@
 
 
 </div>
+
+
+<!-- <div cdkDropList (cdkDropListDropped)="drop($event)">
+  @for(item of items; track item){
+    <div class="item" cdkDrag>{{ item }}</div>
+  }
+</div> -->

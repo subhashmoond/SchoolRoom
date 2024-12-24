@@ -90,6 +90,18 @@ export class CoursesComponent {
 
   }
 
+  publishCourse(id : any){
+    const payload = {
+      "course_id": id,
+      "publish":true
+  }
+
+  this._coursesService.coursePublish(payload).subscribe(res => {
+
+  })
+
+
+  }
 
   toggleDropdown(itemId: any) {
     this.openDropdownId = this.openDropdownId === itemId ? null : itemId;

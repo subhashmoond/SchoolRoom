@@ -11,9 +11,20 @@ export class CoursesService {
 
   constructor(private http: HttpClient, private _dataService: DataMethodService) { }
 
+  getCourseType(){
+    const url = `${environment.basePath}course/types/list/`;
+    return this._dataService.get(url);
+  }
+
+
   addCourses(body: any) {
     const url = `${environment.basePath}course/create/`;
     return this._dataService.post(url, body);
+  }
+
+  coursePublish(payload : any){
+    const url = `${environment.basePath}course/publish/`;
+    return this._dataService.post(url, payload)
   }
 
   deleteCourse(payload : any){

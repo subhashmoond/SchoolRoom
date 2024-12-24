@@ -9,11 +9,12 @@ import { MenuModule } from 'primeng/menu';
 import { SkeletonModule } from 'primeng/skeleton';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-curriculum',
   standalone: true,
-  imports: [CardModule, ButtonModule, MenuModule, ReactiveFormsModule, InputTextModule, SkeletonModule, ToastModule ],
+  imports: [CardModule, ButtonModule, MenuModule, ReactiveFormsModule, InputTextModule, SkeletonModule, ToastModule, DragDropModule ],
   providers : [MessageService],
   templateUrl: './curriculum.component.html',
   styleUrl: './curriculum.component.css'
@@ -149,7 +150,7 @@ export class CurriculumComponent {
   }
   
     this._courseService.deleteChapter(this.courseId, payload).subscribe((res) => {
-      console.log(res, 'Lesson deleted successfully');
+      console.log(res, 'Lesson deleted Successfully!');
       this.getSubjectAndChapter(); // Refresh the data
     }, error => {
       console.error('Error deleting lesson', error);
@@ -189,7 +190,7 @@ export class CurriculumComponent {
       this._courseService.addSubject(this.courseId, subjectPayload).subscribe(res => {
         console.log('Course saved successfully', res);
         this.getSubjectAndChapter()
-      this._messageService.add({ severity: 'success', detail: 'Subject Saved Successfull ' });
+      this._messageService.add({ severity: 'success', detail: 'Subject Saved Successfully! ' });
 
       }, error => {
         console.error('Error saving course', error);
@@ -218,7 +219,7 @@ export class CurriculumComponent {
       };
 
       this._courseService.editChapter(lessonId, updatedLessonPayload).subscribe(res => {
-      this._messageService.add({ severity: 'success', detail: 'Edit Lesson Saved Successfull ' });
+      this._messageService.add({ severity: 'success', detail: 'Edit Lesson Saved Successfully! ' });
       this.getSubjectAndChapter();
       })
 
@@ -231,7 +232,7 @@ export class CurriculumComponent {
   
       this._courseService.addChapter(body, this.courseId).subscribe(res => {
         this.getSubjectAndChapter();
-      this._messageService.add({ severity: 'success', detail: 'Lesson Saved Successfull' });
+      this._messageService.add({ severity: 'success', detail: 'Lesson Saved Successfully!' });
       }, error => {
         console.error('Error saving lesson', error);
       this._messageService.add({ severity: 'error', detail: error });
@@ -248,9 +249,28 @@ export class CurriculumComponent {
       "is_published": true
     }
 
-    this._courseService.publishLesson(this.courseId, payload).subscribe(res => {
-      console.log(res)
+    this._courseService.publishLesson(this.courseId, payload).subscribe((res : any) => {
+      if(res.status === true){
+        this.getSubjectAndChapter();
+      this._messageService.add({ severity: 'success', detail: 'Lesson Published Successfully!' });
+      }
     })
+  }
+  unpublishLesson(data : any){
+
+    const lessionId = data.value.id
+    const payload = {
+      "id": lessionId,
+      "is_published": false
+    }
+
+    this._courseService.publishLesson(this.courseId, payload).subscribe((res : any) => {
+      if(res.status === true){
+        this.getSubjectAndChapter();
+      this._messageService.add({ severity: 'success', detail: 'Lesson Published Successfully!' });
+      }
+    })
+
   }
 
   
@@ -265,54 +285,29 @@ toggleDropdownLesson(itemId : any){
 
 
 // Drag and Drop Method 
-onTaskDragStart(event: DragEvent, index: number, type: 'course' | 'lesson', parentIndex?: number): void {
-  // Store dragged item's data
-  const dragData = { index, type, parentIndex };
-  event.dataTransfer?.setData('text', JSON.stringify(dragData));
-}
+dropLesson(event: CdkDragDrop<any[]>) {
+  const currentCourseIndex : any = event.container.data; 
+  const courses = this.addForm.get('courses') as FormArray; 
 
-onTaskDragOver(event: DragEvent): void {
-  event.preventDefault(); // Allows dropping
-}
+  if (courses) { 
+    const currentCourse = courses.at(currentCourseIndex); 
+    const lessons : any = currentCourse.get('lessons') as FormArray; 
 
-onTaskDrop(event: DragEvent): void {
-  event.preventDefault();
+    console.log(lessons, "lession after drag and drop value")
 
-  // Retrieve the dragged item's data
-  const dragData = JSON.parse(event.dataTransfer?.getData('text') || '{}');
-  const dropIndex = this.calculateDropIndex(event);
-
-  if (dragData.type === 'course') {
-    this.reorderCourses(dragData.index, dropIndex);
-  } else if (dragData.type === 'lesson' && dragData.parentIndex !== undefined) {
-    this.reorderLessons(dragData.parentIndex, dragData.index, dropIndex);
+    if (lessons) { 
+      moveItemInArray(lessons.controls, 
+                      event.previousIndex, event.currentIndex); 
+    } else {
+      console.error('lessons form group not found for this course'); 
+    }
+  } else {
+    console.error('courses form group not found'); 
   }
+
+
+  
 }
 
-// Helper to calculate drop index from event
-calculateDropIndex(event: DragEvent): number {
-  // Example implementation: Calculate based on the target element
-  const target = event.target as HTMLElement;
-  return Number(target.getAttribute('data-index')) || 0;
-}
-
-reorderCourses(dragIndex: number, dropIndex: number): void {
-  if (dragIndex !== dropIndex) {
-    const courses = this.addForm.get('courses') as FormArray;
-    const draggedCourse = courses.at(dragIndex);
-    courses.removeAt(dragIndex);
-    courses.insert(dropIndex, draggedCourse);
-  }
-}
-
-reorderLessons(courseIndex: number, dragIndex: number, dropIndex: number): void {
-  if (dragIndex !== dropIndex) {
-    const lessons = (this.courses.at(courseIndex).get('lessons') as FormArray);
-    const draggedLesson = lessons.at(dragIndex);
-    lessons.removeAt(dragIndex);
-    lessons.insert(dropIndex, draggedLesson);
-  }
-}
-
-
+  
 }

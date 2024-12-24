@@ -33,6 +33,7 @@ export class CourseInformationComponent {
   courseId: any;
   aiDescripationData: any;
   courseDetails: any;
+  courseTypeId : any;
 
   constructor(private _fb: FormBuilder, private _messageService : MessageService, private _coursesService: CoursesService, private route: ActivatedRoute, private _sharedService: SharedService) {
     this.route.paramMap.subscribe(params => {
@@ -42,6 +43,7 @@ export class CourseInformationComponent {
 
   ngOnInit() {
     this.getCourseDetails();
+    this.getCourseType();
     this.courseInformation = this._fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -49,6 +51,68 @@ export class CourseInformationComponent {
       highlights: this._fb.array([]),
       whatlearn: this._fb.array([]),
       faq: this._fb.array([])
+    })
+  }
+
+  dataSetOnFromArray() {
+
+
+    // Populate simple form controls
+    this.courseInformation.patchValue({
+      title: this.courseDetails.name || '', // Course name
+      description: this.courseDetails.details || '', // Course details
+      tagline: this.courseDetails.tagline || '' // Course tagline
+    });
+  
+    // Clear existing FormArray controls before repopulating
+    this.highlights.clear();
+    this.whatlearn.clear();
+    this.faq.clear();
+  
+    // Populate Highlights FormArray
+    if (this.courseDetails.keyHighlights && Array.isArray(this.courseDetails.keyHighlights)) {
+      this.courseDetails.keyHighlights.forEach((highlight: string) => {
+        this.highlights.push(this._fb.control(highlight, Validators.required));
+      });
+    }
+  
+    // Populate WhatLearn (Features) FormArray
+    if (this.courseDetails.features && Array.isArray(this.courseDetails.features)) {
+      this.courseDetails.features.forEach((feature: any) => {
+        this.whatlearn.push(
+          this._fb.group({
+            icon: [feature.icon || 'pi pi-megaphone', Validators.required],
+            title: [feature.title || '', Validators.required],
+            description: [feature.description || '', Validators.required]
+          })
+        );
+      });
+    }
+  
+    // Populate FAQ FormArray
+    if (this.courseDetails.faq && Array.isArray(this.courseDetails.faq)) {
+      this.courseDetails.faq.forEach((faqItem: any) => {
+        this.faq.push(
+          this._fb.group({
+            question: [faqItem.question || '', Validators.required],
+            answer: [faqItem.answer || '', Validators.required]
+          })
+        );
+      });
+    }
+  
+    console.log('Form populated:', this.courseInformation.value);
+  }
+  
+
+  getCourseType(){
+    this._coursesService.getCourseType().subscribe(res => {
+      res.data.forEach((item :any) => {
+        if(item === "Live"){
+          this.courseTypeId = item.id
+        }
+      })
+      console.log(res, "course response ")
     })
   }
 
@@ -109,50 +173,7 @@ export class CourseInformationComponent {
     })
   }
 
-  dataSetOnFromArray() {
-
-    this.courseInformation.patchValue({
-      title: this.courseDetails.course.name,
-      description: this.courseDetails.course.details,
-      tagline: this.courseDetails.course.tagline,
-    })
-
-
-    // Populate Highlights FormArray
-    this.courseDetails.course.keyHighlights.forEach((highlight: any) => {
-      this.highlights.push(this._fb.control(highlight, Validators.required));
-    });
-
-    // Populate WhatLearn FormArray (features)
-    if (this.courseDetails.course.features && Array.isArray(this.courseDetails.course.features)) {
-      debugger
-      this.courseDetails.course.features.forEach((feature: any) => {
-        this.whatlearn.push(this._fb.group({
-          icon: [feature.icon, Validators.required],
-          title: [feature.title, Validators.required],
-          description: [feature.description, Validators.required]
-        }));
-      });
-    }
-
-    // Populate FAQ FormArray
-    if (this.courseDetails.course.faq && Array.isArray(this.courseDetails.course.faq)) {
-      this.courseDetails.course.faq.forEach((faqItem: any) => {
-        debugger
-        this.faq.push(this._fb.group({
-          question: [faqItem.question, Validators.required],
-          answer: [faqItem.answer, Validators.required]
-        }));
-      });
-    }
-
-
-    console.log(this.highlights.value, 'Highlights FormArray Data');
-  console.log(this.whatlearn.value, 'WhatLearn FormArray Data');
-  console.log(this.faq.value, 'FAQ FormArray Data');
-
-
-  }
+  
 
 
   // AI Response 
@@ -176,18 +197,20 @@ export class CourseInformationComponent {
 
   saveDetails() {
 
+    debugger
+
     console.log(this.courseInformation.value, "course information data")
 
-    const faqData = this.faq.controls.map((group) => group.value);
-    const featuresData = this.whatlearn.controls.map((group) => group.value);
+    const faqData = this.faq.controls.map((control) => control.value); // Extract values
+    const featuresData = this.whatlearn.controls.map((control) => control.value);
 
     console.log(faqData, "faq data ")
 
     const payload = {
       "name": this.courseInformation.get('title')?.value,
-      "course_type": 2,
+      "course_type": this.courseTypeId,
       "describe": this.courseInformation.get('description')?.value,
-      "teacher_list": [2],
+      "teacher_list": [],
       "highlights": this.courseInformation.get('highlights')?.value,
       "short_describe": this.courseInformation.get('tagline')?.value,
       "faq": faqData,

@@ -54,6 +54,7 @@ export class AddCoursesComponent {
   selectedOption: boolean = false
   examList: any;
   subCategoryExamList : any;
+  courseType : any
   subCategoryShow: boolean = false;
 
   // loader boolean Var
@@ -75,6 +76,16 @@ export class AddCoursesComponent {
     ];
 
     this.getExamCategory();
+
+    this._courseService.getCourseType().subscribe((res : any) => {
+
+      res.data.forEach((item : any) => {
+        if(item.types === 'Live'){
+          this.courseType = item.id
+        }
+      })
+
+    })
 
   }
 
@@ -126,7 +137,7 @@ export class AddCoursesComponent {
         "describe": this.coursesForm.get('description')?.value,
         "language": 2,
         "isPaid": this.coursesForm.get('ispaid')?.value,
-        "coursetype": 3
+        "coursetype": this.courseType
       }
       this._courseService.addCourses(body).subscribe((res: any) => {
         if (res.status == "Success") {

@@ -1,6 +1,6 @@
 
 export const environment = {
     production: false,
-    basePath: 'https://techlive-i10i.onrender.com/api/'
+    basePath: 'http://4.240.59.89/api/'
   };
   
