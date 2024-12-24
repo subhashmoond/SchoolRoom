@@ -9,12 +9,11 @@ import { MenuModule } from 'primeng/menu';
 import { SkeletonModule } from 'primeng/skeleton';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-curriculum',
   standalone: true,
-  imports: [CardModule, ButtonModule, MenuModule, ReactiveFormsModule, InputTextModule, SkeletonModule, ToastModule, DragDropModule ],
+  imports: [CardModule, ButtonModule, MenuModule, ReactiveFormsModule, InputTextModule, SkeletonModule, ToastModule ],
   providers : [MessageService],
   templateUrl: './curriculum.component.html',
   styleUrl: './curriculum.component.css'
@@ -285,29 +284,7 @@ toggleDropdownLesson(itemId : any){
 
 
 // Drag and Drop Method 
-dropLesson(event: CdkDragDrop<any[]>) {
-  const currentCourseIndex : any = event.container.data; 
-  const courses = this.addForm.get('courses') as FormArray; 
 
-  if (courses) { 
-    const currentCourse = courses.at(currentCourseIndex); 
-    const lessons : any = currentCourse.get('lessons') as FormArray; 
-
-    console.log(lessons, "lession after drag and drop value")
-
-    if (lessons) { 
-      moveItemInArray(lessons.controls, 
-                      event.previousIndex, event.currentIndex); 
-    } else {
-      console.error('lessons form group not found for this course'); 
-    }
-  } else {
-    console.error('courses form group not found'); 
-  }
-
-
-  
-}
 
   
 }

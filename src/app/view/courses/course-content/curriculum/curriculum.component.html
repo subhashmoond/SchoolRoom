@@ -82,9 +82,9 @@
                 </div>
               </div>
 
-              <div formArrayName="lessons" cdkDropList (cdkDropListDropped)="dropLesson($event)">
+              <div formArrayName="lessons">
                 @for(lesson of lessons(i).controls; track lesson; let j = $index){
-                <div cdkDrag [formGroupName]="j"
+                <div [formGroupName]="j"
                   class="grid grid-nogutter p-3 border-bottom-light">
                   <div class="col-6 flex">
                     <!-- <i class="pi pi-microsoft pr-4 pt-1 text-primary-color"></i> -->
