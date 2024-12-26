@@ -17,7 +17,7 @@ export class NavService {
         { path: 'course', title: 'Courses', type: 'link' },
         { path: 'test', title: 'Test Series', type: 'link' },
         { path: 'digital-product', title: 'Digi Product', type: 'link' },
-        // { path: '', title: 'Live Class', type: 'link' },
+        { path: 'exam-category', title: 'Exam Cate.', type: 'link' },
         // { path: '', title: 'Assignment', type: 'link' },
       ]
     },
@@ -38,6 +38,7 @@ export class NavService {
       children: [
         { path: 'user/student', title: 'Students', type: 'link' },
         { path: 'user/team', title: 'Team', type: 'link' },
+        { path : 'user/role', title: 'Roles', type : 'link' }
       ]
     },
 

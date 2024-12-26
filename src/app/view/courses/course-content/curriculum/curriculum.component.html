@@ -138,6 +138,9 @@
                               class="pi pi-pencil"></i> Edit</button>
                           }
 
+                          <button type="button" (click)="setPreview(i, j, course.get('id')?.value)" pButton
+                            class="curriculum-btn"> Set Preview </button>
+
                           <button type="button" style="color: red;" (click)="deleteLesson(i, j, course.get('id')?.value)" pButton
                             class="danger-button"><i class="pi pi-trash"></i> Delete</button>
 

@@ -1,212 +1,77 @@
-@if(!isLoader){
-<div class="grid grid-nogutter border-round-top-xl bg-white">
-    <div class="col-custom-2 p-4 pt-3 secondary-shadow">
-        <!-- <div class="w-full mb-2">
-                <a class="text-sm font-medium no-underline inline-flex flex-wrap align-items-center" routerLink="/client"><i class="pi pi-angle-left mr-2 mt-1 text-primary-purple"></i>clients</a>
-            </div> -->
-        <div class="relative">
-            <p-tag class="status-tag profile-active-tag absolute ml-2 mt-2" value="Paid"></p-tag>
-            <img width="100%" style="height: 200px; object-fit: fill;" src="../../../../../assets/images/client-image.png" alt="Student Profile Image">
-        </div>
-        <div class="mt-3">
-            <h2 class="text-3xl font-semibold heading-color m-0 line-height-lg capitalize">Kamal Kumar</h2>
-            <div class="flex flex-wrap align-items-center justify-content-start mt-1">
-                <span
-                    class="pr-2 text-primary-color font-normal text-sm line-height-sm capitalize">Male</span>
-                <span
-                    class="px-2 border-left-1 secondary-border-color text-primary-color font-normal text-sm line-height-sm"> 15/06/1997 </span>
-                <span class="px-2  border-left-1 secondary-border-color text-primary-color font-normal text-sm line-height-sm">54
-                    Years
-                    Old</span>
-            </div>
-        </div>
-        <div class="mt-2 clent-id-bg border-round-xl p-3">
-            <!-- <ul class="p-0 list-none m-0">
-                <li class="text-primary-color font-normal text-base mb-1 line-height-md">Email:<span class="font-medium text-lg pl-1 line-height-md">Subhash.com</span></li>
-                <li class="text-primary-color font-normal text-base mb-1 line-height-md">Mobile Number : <span class="font-medium text-lg pl-1 line-height-md">7073167210</span></li>
-               
-            </ul> -->
+<div class="grid">
+    <div class="col-7 flex">
 
-            <ul class="p-0 list-none m-0 contact-section">
-                <li class="pb-2"><a href="javascript:void(0)"
-                        class="inline-block no-underline text-sm font-normal text-primary-color pl-4 relative line-height-sm">
-                        <i
-                            class="absolute text-primary-purple left-0 fa fa-envelope"
-                            aria-hidden="true"></i> subhashmoond.gmail.com </a>
-                </li>
-                <li class="pb-2">
-                    <a href="javascript:void(0)"
-                        class="inline-block no-underline text-sm font-normal text-primary-color pl-4 relative line-height-sm"><i
-                            class="absolute text-primary-purple left-0 fa fa-solid fa-phone" aria-hidden="true"></i>+91 7073167210</a>
-                </li>
-               
-            </ul>
-
-
-        </div>
-        
-       
-        <div class="mt-3 edit-button-row">
-
-            <button pButton label="Block Discussion" (click)="blockStudent()"
-                class="w-full outline-icon-button edit-button mb-3"></button>
-
-            <button pButton label="Deactivate" (click)="blockStudent()" 
-                class="w-full outline-icon-button edit-button"></button>
-
+        <p-avatar label="P" styleClass="mr-1" size="xlarge" shape="circle" />
+        <div class="grid ml-2">
+            <span>
+                <h3 class="inline mr-4">Subhash Moond</h3>
+                <p-tag severity="success" value="Active" />
+            </span>
+            <span> subhashgmail.com . +91 7073167210 . Joined On Dec, 15, 2024 </span>
         </div>
     </div>
 
-
-    <!-- <p-toast></p-toast> -->
-    <p-confirmDialog styleClass="confirmation-pop-up-dialog"></p-confirmDialog>
-
-
-
-    <div class="col-custom-10">
-
-        <div class="loan-tab-section">
-            <div class="tabs-card">
-                <p-tabView>
-                    <p-tabPanel header="Information">
-                        df
-                    </p-tabPanel>
-
-                    <p-tabPanel header="Courses">
-
-                        <p-table [rows]="10" [showLoader]="true" [responsive]="true" selectionMode="single" class="client-data-table">
-                            <ng-template pTemplate="header" class="p-4">
-                                <tr class="border-round-lg">
-                                    <th class="p-3 border-none primary-color text-sm font-medium">COURSE TITLE </th>
-                                    <th class="p-3 border-none primary-color text-sm font-medium">ASSIGNED THROUGH </th>
-                                    <th class="p-3 border-none primary-color text-sm font-medium">STATUS </th>
-                                    <th class="p-3 border-none primary-color text-sm font-medium">EXPIRY </th>
-                                    <th class="p-3 border-none primary-color text-sm font-medium">ACTIONS </th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-client>
-                                <tr>
-                                    <td class="capitalize text-sm font-normal">
-                                        Head Office
-                                    </td>
-                                    <td class="text-sm font-normal">
-                                        01 May 2024
-                                    </td>
-                                    <td class="text-sm font-normal">
-                                        02 May 2024
-                                    </td>
-                                    <td class="capitalize text-sm font-normal">
-                                        Edve
-                                    </td>
-                                    <td class="capitalize text-sm font-normal">
-                                        Lorem ipsum dolor sit srh
-                                    </td>
-                                    <td>
-                                        <p-tag class="status-tag account-active-tag ml-1" value="ACCEPT"></p-tag>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="emptymessage">
-                                <tr>
-                                    <td colspan="6">No customers found.</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-
-                    </p-tabPanel>
-                    <p-tabPanel header="Webinars">
-                        sdf
-                    </p-tabPanel>
-                    <p-tabPanel header="Digital Products">
-                        sdf
-                    </p-tabPanel>
-                    <p-tabPanel header="Telegram Communities">
-                        sdf
-                    </p-tabPanel>
-
-                    <p-tabPanel header="Purchase History">
-                        sdf
-                    </p-tabPanel>
-
-                </p-tabView>
-            </div>
-        </div>
-
+    <div class="col-5 flex justify-content-end	">
+        <p-button class="mr-2 secondery-btn border-round-md"><i class="mr-1 pi pi-ban"></i> Block Disussion </p-button>
+        <p-button class="mr-2 secondery-btn border-round-md"> Deactive </p-button>
+        <p-button class="create-button border-round-md">+ Add Product</p-button>
     </div>
 </div>
 
-}
-@else {
+<div class="grid secondry-bg-color mt-4 p-4 border-round-md">
 
-<div class="grid grid-nogutter border-round-top-xl bg-white">
-    <div class="col-custom-2 p-4 pt-3 secondary-shadow">
-        <p-skeleton styleClass="h-23rem mb-3 border-round-2xl primary-bg-mediumgray"></p-skeleton>
-        <p-skeleton styleClass="h-2rem mb-2 border-round-md primary-bg-lightgray w-10"></p-skeleton>
-        <p-skeleton styleClass="h-1rem mb-2 border-round-sm primary-bg-lightgray w-8"></p-skeleton>
-        <p-skeleton styleClass="h-8rem mb-3 border-round-xl primary-bg-mediumgray"></p-skeleton>
-        <p-skeleton styleClass="h-1rem mb-2 border-round-sm primary-bg-lightgray w-9"></p-skeleton>
-        <p-skeleton styleClass="h-1rem mb-2 border-round-sm primary-bg-lightgray w-9"></p-skeleton>
-        <p-skeleton styleClass="h-1rem mb-2 border-round-sm primary-bg-lightgray w-9"></p-skeleton>
-        <p-skeleton styleClass="h-4rem mb-2 border-round-lg primary-bg-lightgray"></p-skeleton>
-        <p-skeleton styleClass="h-4rem mb-2 border-round-lg primary-bg-lightgray"></p-skeleton>
+    <div class="col-3">
+        <span>Login Device Reset Count</span>
+        <h4 class="mt-3">12</h4>
+    </div>
 
-        <p-skeleton styleClass="h-8rem mb-3 border-round-lg primary-bg-mediumgray"></p-skeleton>
-        <div class="grid mb-4">
-            <div class="col-6">
-                <p-skeleton styleClass="h-3rem border-round-md primary-bg-gray"></p-skeleton>
-            </div>
-            <div class="col-6">
-                <p-skeleton styleClass="h-3rem border-round-md primary-bg-gray"></p-skeleton>
-            </div>
-        </div>
+    <div class="col-3">
+        <span>Last Login Date </span>
+        <h4 class="mt-3"> Dec 25, 2024</h4>
     </div>
-    <div class="col-custom-10">
-        <div class="loader-grid-buttons border-left-1 primary-purple-border">
-            <ul class="w-10 p-0 list-none m-0 py-2 px-3 bg-white">
-                <li><p-skeleton styleClass="h-2rem border-round-sm primary-bg-lightgray"></p-skeleton></li>
-                <li><p-skeleton styleClass="h-2rem border-round-sm primary-bg-lightgray"></p-skeleton></li>
-                <li><p-skeleton styleClass="h-2rem border-round-sm primary-bg-lightgray"></p-skeleton></li>
-                <li><p-skeleton styleClass="h-2rem border-round-sm primary-bg-lightgray"></p-skeleton></li>
-                <li><p-skeleton styleClass="h-2rem border-round-sm primary-bg-lightgray"></p-skeleton></li>
-                <li><p-skeleton styleClass="h-2rem border-round-sm primary-bg-lightgray"></p-skeleton></li>
-                <li><p-skeleton styleClass="h-2rem border-round-sm primary-bg-lightgray"></p-skeleton></li>
-                <li><p-skeleton styleClass="h-2rem border-round-sm primary-bg-lightgray"></p-skeleton></li>
-                <li><p-skeleton styleClass="h-2rem border-round-sm primary-bg-lightgray"></p-skeleton></li>
-            </ul>
-            <p-skeleton styleClass="h-4rem border-round-sm primary-bg-mediumgray"></p-skeleton>
-        </div>
-        <div class="p-5">
-            <p-skeleton styleClass="h-2rem w-16rem border-round-sm primary-bg-mediumgray"></p-skeleton>
-            <div class="grid grid-nogutter mt-3 mb-3">
-                <div class="col-custom-10 pr-3">
-                    <p-skeleton styleClass="h-9rem border-round-xl primary-bg-lightgray"></p-skeleton>
-                </div>
-                <div class="col-custom-2">
-                    <p-skeleton styleClass="h-9rem border-round-xl primary-bg-lightgray"></p-skeleton>
-                </div>
-            </div>
-            <div class="grid grid-nogutter">
-                <div class="col-custom-10 pr-3">
-                    <p-skeleton styleClass="h-9rem border-round-xl primary-bg-lightgray"></p-skeleton>
-                </div>
-                <div class="col-custom-2">
-                    <p-skeleton styleClass="h-9rem border-round-xl primary-bg-lightgray"></p-skeleton>
-                </div>
-            </div>
-            <p-skeleton styleClass="mt-3 h-2rem w-16rem border-round-sm primary-bg-mediumgray"></p-skeleton>
-            <div class="grid grid-nogutter mt-3 mb-3">
-                <div class="col-4 pr-2">
-                    <p-skeleton styleClass="h-14rem border-round-xl primary-bg-lightgray"></p-skeleton>
-                </div>
-                <div class="col-4 pr-2 pl-2">
-                    <p-skeleton styleClass="h-14rem border-round-xl primary-bg-lightgray"></p-skeleton>
-                </div>
-                <div class="col-4 pl-2">
-                    <p-skeleton styleClass="h-14rem border-round-xl primary-bg-lightgray"></p-skeleton>
-                </div>
-            </div>
-        </div>
+
+
+    <div class="col-3">
+        <span> Referral Code Used while signup</span>
+        <h4 class="mt-3">10</h4>
     </div>
+
+    <div class="col-3">
+        <span>Total Referred Learners</span>
+        <h4 class="mt-3">0</h4>
+    </div>
+
 </div>
 
-}
+<div class="grid mt-5">
+    <div class="col-12">
+        <h5>Products Enrolled </h5>
+    </div>
+
+    <div class="col-12">
+        <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+            <img src="../../../../../assets/images/icon/no-loan-application.svg">
+            <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Products Enolled</p>
+            <p class="text-primary-purple text-base font-normal mt-2">There is no Products Enolled to show you right
+                now.</p>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="grid mt-5">
+    <div class="col-12">
+        <h5> Purchase History </h5>
+    </div>
+
+    <div class="col-12">
+        <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+            <img src="../../../../../assets/images/icon/no-loan-kyc.svg">
+            <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Purchase History</p>
+            <p class="text-primary-purple text-base font-normal mt-2">There is no Purchase History to show you right
+                now.</p>
+        </div>
+    </div>
+
+</div>

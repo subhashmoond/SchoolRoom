@@ -1,0 +1,20 @@
+<h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Create Exam Category </h4>
+
+
+<form [formGroup]="createExamCategoryForm" class="w-full flex flex-wrap">
+
+    <div class="grid w-full mt-3">
+
+        <div class="col-12">
+            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Name</label>
+            <input class="w-full capitalize" pInputText formControlName="name" placeholder="E.g SSC, GD " />
+        </div>
+    </div>
+
+    <div class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+        <button pButton pRipple label="Cancel" (click)="closeSideBar()"
+            class="primary-border-button px-5 mr-3 text-sm"></button>
+        <button type="submit" (click)="sameExamCategory()" pButton pRipple label="Submit"
+            class="primary-button px-5 text-sm"></button>
+    </div>
+</form>

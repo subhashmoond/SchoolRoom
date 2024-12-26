@@ -277,5 +277,9 @@ export class CoursesService {
   }
 
 
+  setLessionPreview(id : any, payload : any){
+    const url = `${environment.basePath}course/${id}/sample/create`;
+    return this._dataService.post(url, payload)
+  }
 
 }

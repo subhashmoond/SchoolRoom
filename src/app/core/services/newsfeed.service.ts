@@ -11,7 +11,7 @@ export class NewsfeedService {
   constructor(private http : HttpClient, private _dataService : DataMethodService) { }
 
   getNewsFeedList(){
-    const url = `${environment.basePath}management/1/posts`;
+    const url = `${environment.basePath}management/2/posts`;
     return this._dataService.get(url)
   }
 

@@ -100,8 +100,11 @@ export class CoursesComponent {
 
   })
 
-
   }
+
+ 
+
+
 
   toggleDropdown(itemId: any) {
     this.openDropdownId = this.openDropdownId === itemId ? null : itemId;

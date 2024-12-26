@@ -155,6 +155,25 @@ export class CurriculumComponent {
       console.error('Error deleting lesson', error);
     });
   }
+
+  setPreview(courseIndex: number, lessonIndex: number, subjectId: any){
+
+    const lessonId = this.lessons(courseIndex).at(lessonIndex).get('id')?.value;
+
+    console.log(lessonId, "and", subjectId)
+
+
+      const payload ={
+        "ids":[lessonId]
+      }
+  
+      this._courseService.setLessionPreview(this.courseId, payload).subscribe(res => {
+  
+      })
+  
+    
+
+  }
   
 
   saveCourse(index: number): void {

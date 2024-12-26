@@ -1,0 +1,82 @@
+<p-toast></p-toast>
+
+<div class="cards">
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-6">
+            <h4 class="subheading-color">Exam Category</h4>
+            <p>Create and Manage Exam Categories. </p>
+        </div>
+        <div class="col-6 flex justify-content-end	">
+            <button type="submit" (click)="addExamCategory()" pButton pRipple label="+ Add Exam Category" class="secondary-button px-6 text-sm"></button>
+        </div>
+
+    </div>
+</div>
+
+
+<p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
+        selectionMode="single" class="client-data-table" [value]="examCategoryList">
+
+        <ng-template pTemplate="header" class="p-4">
+            <tr class="w-full flex flex-wrap">
+                <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Category Name</th>
+                <th style="width:60%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Sub Categorys</th>
+                
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Action
+                </th>
+            </tr>
+
+        </ng-template>
+
+        <ng-template pTemplate="body" let-data>
+            <tr class="w-full flex flex-wrap">
+                <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
+                    {{data.category_name}}
+                </td>
+                <td style="width: 60%;word-break:break-all;" class="pl-4">
+                   @for(sub of data.subcategories; track sub){
+                       <p-tag class="mr-2 mb-2" severity="secondary" value="{{sub.name}}" />
+                   }
+                </td>
+
+                <td style="width: 20%;" class="pl-4" > 
+                    <i class="pi pi-plus cursor-pointer" pTooltip="Add New Subcategory" tooltipPosition="top" (click)="addSubCategory(data.category_id)" style="font-size: 1rem"></i>
+                    <i class="pi pi-eye ml-3 cursor-pointer" pTooltip="View Details" tooltipPosition="top" (click)="viewDetails(data)" style="font-size: 1rem"></i>
+                    <!-- <i class="pi pi-pencil ml-3 cursor-pointer" pTooltip="View Details" tooltipPosition="top" (click)="editCategory(data)" style="font-size: 1rem"></i> -->
+                    <i class="pi pi-trash ml-3 cursor-pointer" [style]="{color : 'red'}" pTooltip="Delete Category" tooltipPosition="top" (click)="deleteCategory(data.category_id)" style="font-size: 1rem"></i>
+                </td>
+
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">No customers found.</td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+    <p-paginator class="paginator-row paginator-dropdown" (onPageChange)="onPageChange($event)" [first]="offset"
+        [rows]="limit" [rowsPerPageOptions]="[15, 30, 50]" [totalRecords]=totalRecorde></p-paginator>
+
+
+
+
+
+@if(isSideBar){
+    <p-sidebar [(visible)]="isSideBar" position="right" styleClass="w-30rem">
+        <app-add-exam-category (closeSideBars)="closeSideBar($event)"></app-add-exam-category>
+    </p-sidebar>
+}
+
+@if(isSubcategory){
+    <p-sidebar [(visible)]="isSubcategory" position="right" styleClass="w-30rem">
+        <app-sub-category [examCategoryId]="examCategoryId" (closeSideBars)="subCategoryCloseSideBar($event)"></app-sub-category>
+    </p-sidebar>
+}
+
+@if(isViewDetails){
+    <p-sidebar [(visible)]="isViewDetails" position="right" styleClass="w-30rem">
+    <app-category-detail [subCategoryData]="subCategoryData" (closeSideBars)="closeDetailSideBar($event)"></app-category-detail>
+    </p-sidebar>
+}

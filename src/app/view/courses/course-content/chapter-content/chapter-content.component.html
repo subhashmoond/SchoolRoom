@@ -12,7 +12,8 @@
 
 @if (!isLoader) {
 
-@if (chapterDataList.length < 1) { <div
+@if (chapterDataList.length < 1) { 
+    <div
     class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
     <img src="../../../../../assets/images/icon/no-loan-application.svg">
     <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Contents</p>
@@ -49,7 +50,7 @@
                             </button> -->
 
                         @switch (data.type) {
-                        @case ("article") {
+                        @case ("Article") {
                         <a (click)="uploadContent(data, 'text', 'edit')"> Edit </a>
                         }
                         @case ("video") {
@@ -95,7 +96,7 @@
 
 
                     @switch (data.type) {
-                    @case ("article") {
+                    @case ("Article") {
                     <p class="m-0">
                         <!-- {{data.text}} -->
                         <p-editor [(ngModel)]="data.text" [readonly]="true" [style]="{ height: '320px' }"

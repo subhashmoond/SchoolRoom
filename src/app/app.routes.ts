@@ -45,6 +45,9 @@ export const routes: Routes = [
                 path : 'digital-product', loadChildren : () => import('./view/digital-product/digitalproduct.router').then((m) => m.routes)
             },
             {
+                path : 'exam-category', loadChildren : () => import('./view/exam-category/exam.router').then((m) => m.routes)
+            },
+            {
                 path : 'app', loadChildren : () => import('./view/your-app/you-app.router').then((m) => m.routes)
             }
         ],

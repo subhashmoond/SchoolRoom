@@ -11,12 +11,13 @@ import { DateFormatPipe } from '../../../../date-format.pipe';
 import { ConfirmationService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableModule } from 'primeng/table';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-view-student',
   standalone: true,
   imports: [ButtonModule, TagModule, TabViewModule, SidebarModule, TranslateModule, DatePipe, ConfirmDialogModule,
-    CommonModule, SkeletonModule, DateFormatPipe, TableModule],
+    CommonModule, SkeletonModule, DateFormatPipe, TableModule, AvatarModule ],
   providers: [DatePipe, ConfirmationService],
   templateUrl: './view-student.component.html',
   styleUrl: './view-student.component.css'

@@ -110,27 +110,30 @@
         }
         @else {
 
-        <div class="courses-list flex flex-wrap">
+        <div class="courses-list grid">
                 @for(data of coursesList; track data){
 
-                <div class="course-card bg-white border-round-md" (click)="courseBullder(data.id)">
-                        <img class="w-full border-round-md" src="../../../assets/images/course-tham.png">
+                <div class="col-3">
 
-                        <div class="c-content p-3">
-                                <h5 class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full ">
-                                        {{data.title}}</h5>
-                        </div>
-
-                        <div class="c-footer flex border-top-1 primary-purple-border p-3">
-                                <div class="flex-1 flex justify-content-start">
-                                        @if(data.publish === true){
-                                        <p-tag severity="success" value="Published" />
-                                        }@else {
-                                        <p-tag severity="secondary" value="Unpublished" />
-                                        }
+                        <div class="course-card secondry-color-border border-round-md" (click)="courseBullder(data.id)">
+                                <img class="w-full border-round-md" src="../../../assets/images/course-tham.png">
+        
+                                <div class="c-content p-3">
+                                        <h5 class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full ">
+                                                {{data.title}}</h5>
                                 </div>
-                                <div class="flex-1 flex justify-content-end">
-                                        {{data.number_students}} Students
+        
+                                <div class="c-footer flex border-top-1 primary-purple-border p-3">
+                                        <div class="flex-1 flex justify-content-start">
+                                                @if(data.publish === true){
+                                                <p-tag severity="success" value="Published" />
+                                                }@else {
+                                                <p-tag severity="secondary" value="Unpublished" />
+                                                }
+                                        </div>
+                                        <div class="flex-1 flex justify-content-end">
+                                                {{data.number_students}} Students
+                                        </div>
                                 </div>
                         </div>
                 </div>

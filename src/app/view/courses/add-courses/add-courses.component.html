@@ -12,7 +12,8 @@
 
     <div class="text-center mb-5">
         <h3 class="m-0 pb-2">Tell us about your course</h3>
-        <p class="m-0">We'll use this information to customize your course. You can change it any time.</p>
+        <p class="m-0 text-color-secondary line-height-3">We'll use this information to customize your course. You can change it any
+            time.</p>
     </div>
 
     <form [formGroup]="coursesForm" class="w-6 m-0-a">
@@ -86,7 +87,8 @@
 
     <div class="text-center mb-5">
         <h2 class="m-0 pb-2">Add a thumbnail image</h2>
-        <p class="m-0">The thumbnail is displayed at checkout and throughout the member experience. Upload one now or
+        <p class="m-0 text-color-secondary line-height-3">The thumbnail is displayed at checkout and throughout the member experience.
+            Upload one now or
             choose one later.</p>
     </div>
 
@@ -102,10 +104,7 @@
             }
 
             @if(!selectedFileObjectUrl){
-            <h5>Upload an image</h5>
-            <p class="m-1">Aspect ratio: 16:9</p>
-            <p class="m-1">Recommended size: 1024x576</p>
-            <p class="m-1">Use the upload area to double-check your image.</p>
+            <span class="text-xs text-color-secondary mt-3"> Recommended size: 1024x576 </span>
             }
 
             <span class="flex flex-wrap align-items-center justify-content-center mt-2 mb-1">
@@ -121,19 +120,22 @@
         </div>
 
 
+
     </div>
 
 
-    <div class="col-6">
-        <div (click)="selectOption()"
-            class="cursor-pointer border-solid main-border-color border-round-lg border-2 flex flex-column w-full h-full justify-content-center align-items-center "
-            [ngClass]="{'selected': selectedOption === true}">
-            <h2 class="m-0">I don't have one</h2>
-            <p>Skip this step for now, I will add it later</p>
+    @if(!selectedFileObjectUrl){
+
+        <div class="col-6">
+            <div (click)="selectOption()"
+                class="cursor-pointer border-solid main-border-color border-round-lg border-2 flex flex-column w-full h-full px-3 justify-content-center align-items-center "
+                [ngClass]="{'selected': selectedOption === true}">
+                <h5 class="m-0 text-color">I don't have one</h5>
+                <span class="text-xs text-color-secondary mt-2">Skip this step for now, I will add it later</span>
+            </div>
         </div>
-    </div>
 
-
+    }
 
 
 
@@ -146,7 +148,7 @@
 <div class="add-courses mt-4">
     <div class="text-center mb-5">
         <h2 class="m-0 pb-2"> Select Exam Category </h2>
-        <p class="m-0">Select Your Perfect Course Exam Category</p>
+        <p class="m-0 text-color-secondary line-height-3">Select Your Perfect Course Exam Category</p>
     </div>
 
     <form [formGroup]="examCategoryForm" class="w-6 m-0-a">
@@ -158,20 +160,21 @@
             @for(data of examList; track data){
             <div class="col-6">
                 <div class="w-full p-3 primary-bg-body border-round-lg">
-                    <p-checkbox class="primary-color capitalize"
-                        formControlName="category" [label]="data.name" name="category" [value]="data.id" />
+                    <p-checkbox class="primary-color capitalize" formControlName="category" [label]="data.name"
+                        name="category" [value]="data.id" />
                 </div>
             </div>
             }
             }@else {
 
-                @for(data of subCategoryExamList; track data){
-                    <div class="col-6">
-                        <div class="w-full p-3 primary-bg-body border-round-lg">
-                            <p-checkbox class="primary-color capitalize" formControlName="subcategory" [label]="data.name" name="subcategory" [value]="data.id" />
-                        </div>
-                    </div>
-                }
+            @for(data of subCategoryExamList; track data){
+            <div class="col-6">
+                <div class="w-full p-3 primary-bg-body border-round-lg">
+                    <p-checkbox class="primary-color capitalize" formControlName="subcategory" [label]="data.name"
+                        name="subcategory" [value]="data.id" />
+                </div>
+            </div>
+            }
 
             }
 
@@ -180,14 +183,14 @@
         <div class="grid">
             <div class="col-6 flex justify-content-start ">
                 @if(subCategoryShow){
-                    <button type="button" pButton pRipple (click)="backCategory()" label="Back"
-                        class="primary-border-button px-5 mr-3 text-sm border-round-2xl"></button>
+                <button type="button" pButton pRipple (click)="backCategory()" label="Back"
+                    class="primary-border-button px-5 mr-3 text-sm border-round-2xl"></button>
                 }
             </div>
             <div class="col-6 flex justify-content-end">
                 @if(!subCategoryShow){
-                    <button type="button" pButton pRipple (click)="nextSubCategory()"
-                        label="Next" class="secondary-button px-6 border-round-2xl"></button>
+                <button type="button" pButton pRipple (click)="nextSubCategory()" label="Next"
+                    class="secondary-button px-6 border-round-2xl"></button>
                 }
             </div>
         </div>
@@ -202,7 +205,7 @@
 <div class="add-courses mt-4">
     <div class="text-center mb-5">
         <h2 class="m-0 pb-2">Outline your course</h2>
-        <p class="m-0">Choose a method below to create your course curriculum.</p>
+        <p class="m-0 text-color-secondary line-height-3">Choose a method below to create your course curriculum.</p>
     </div>
     <!-- AI Content logic here -->
     <form [formGroup]="aiContentForm" class="w-6 m-0-a">

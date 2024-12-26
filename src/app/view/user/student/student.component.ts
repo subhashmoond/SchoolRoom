@@ -12,11 +12,12 @@ import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AddStudentComponent } from './add-student/add-student.component';
 import { UserService } from '../../../core/services/user.service';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-student',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, AddStudentComponent],
+  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, AddStudentComponent, AvatarModule ],
 
   templateUrl: './student.component.html',
   styleUrl: './student.component.css'
@@ -39,7 +40,7 @@ export class StudentComponent {
 
   getStudentData() {
     this._userService.getStudentData().subscribe(res => {
-      this.studentList = res.studentList
+      this.studentList = res.data
     })
   }
 
