@@ -1,3 +1,5 @@
+<p-toast></p-toast>
+
 <div class="cards">
     <div class="grid client-dashborad-header mb-4 align-items-center">
         <div class="col-6">
@@ -5,8 +7,77 @@
             <p>Create digital downloads like ebooks, workbooks, guides, and more. </p>
         </div>
         <div class="col-6 flex justify-content-end	">
-            <button type="submit" pButton pRipple label="Add Digital Product" class="secondary-button px-6 text-sm"></button>
+            <button type="submit" (click)="addDigitalProducts()" pButton pRipple label="+  Add Digital Product" class="secondary-button px-6 text-sm"></button>
         </div>
 
     </div>
 </div>
+
+
+
+<p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
+        selectionMode="single" class="client-data-table" [value]="digitalProductList">
+
+        <ng-template pTemplate="header" class="p-4">
+            <tr class="w-full flex flex-wrap">
+                <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Digital Product Name</th>
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Product Type</th>
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Plan Type</th>
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Status</th>
+                
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Action
+                </th>
+            </tr>
+
+        </ng-template>
+
+        <ng-template pTemplate="body" let-data>
+            <tr class="w-full flex flex-wrap">
+                <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
+                    {{data.title}}
+                </td>
+                <td style="width: 20%;word-break:break-all;" class="pl-4">
+                   {{data.productType}}
+                </td>
+
+                <td style="width: 20%;word-break:break-all;" class="pl-4">
+                   @if(data.isPaid === true){
+                    Paid
+                   }@else {
+                    Free
+                   }
+                 </td>
+
+                 <td style="width: 20%;word-break:break-all;" class="pl-4">
+                    @if(data.status === true){
+                     
+                     <p-tag severity="success" value="Published" />
+                    }@else {
+                     <p-tag severity="secondary" value="Unpublished" />
+                    }
+                  </td>
+
+                <td style="width: 20%;" class="pl-4" > 
+                    <!-- <i class="pi pi-plus cursor-pointer" pTooltip="Add New Subcategory" tooltipPosition="top" (click)="addSubCategory(data.category_id)" style="font-size: 1rem"></i> -->
+                    <i class="pi pi-eye ml-3 cursor-pointer" pTooltip="View Details" (click)="productDetailPage(data.id)" tooltipPosition="top" style="font-size: 1rem"></i>
+                    <i class="pi pi-trash ml-3 cursor-pointer" (click)="deleteProduct(data)" [style]="{color : 'red'}" pTooltip="Delete Category" tooltipPosition="top" style="font-size: 1rem"></i>
+                </td>
+
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">No customers found.</td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+    <!-- <p-paginator class="paginator-row paginator-dropdown" (onPageChange)="onPageChange($event)" [first]="offset"
+        [rows]="limit" [rowsPerPageOptions]="[15, 30, 50]" [totalRecords]=totalRecorde></p-paginator> -->
+
+    
+
+        <p-sidebar class="p-0 pt-1 pb-1" [(visible)]="addDigitalProduct" [fullScreen]="true">
+            <app-add-digital-product></app-add-digital-product>
+    </p-sidebar>

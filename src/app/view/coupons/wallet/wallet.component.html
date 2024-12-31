@@ -1,0 +1,64 @@
+<p-toast></p-toast>
+<div class="cards">
+
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-12">
+            <h4 class="subheading-color">Wallet</h4>
+            <p>Manage wallet settings to allow learners to make purchase using wallet credits</p>
+        </div>
+        <!-- <div class="col-6 flex justify-content-end	">
+            <button type="submit" pButton pRipple label="Preview" class="secondary-button px-6 text-sm"></button>
+        </div> -->
+
+    </div>
+</div>
+
+<div class="grid nested-grid mb-6">
+    <div class="col-12">
+        <form [formGroup]="walletSettingForm">
+
+            <div class="grid">
+
+                <div class="col-9">
+                    <div class="flex list-design p-3">
+                        <div>
+                            <h5 class="text-color">Wallet</h5>
+                            <p class="text-sm text-color-secondary">Enable wallet to allow learners to use earned wallet
+                                credits for making a purchase</p>
+                        </div>
+
+                        <div>
+                            <!-- <p-toggleswitch formControlName="wallatStatus"></p-toggleswitch> -->
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-9">
+                    <label
+                        class="w-full mb-1 mt-3 text-color font-semibold  font-medium line-height-exsm inline-block">1 Credit =</label>
+                    <input class="w-full capitalize" pInputText formControlName="creditvalue"
+                        placeholder="0" />
+                </div>
+
+                <div class="col-9">
+                    <label
+                        class="w-full mb-1 mt-3 text-color font-semibold  font-medium line-height-exsm inline-block">Currency Name</label>
+                    <input class="w-full capitalize" pInputText formControlName="currencyname"
+                        placeholder="0" />
+                </div>
+
+                
+
+            </div>
+
+        </form>
+
+
+
+    </div>
+</div>
+
+<div class="w-full assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+    <button type="submit" (click)="submit()" pButton pRipple label="Save" class="primary-button px-5 text-sm"></button>
+</div>

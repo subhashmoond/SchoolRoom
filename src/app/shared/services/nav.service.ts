@@ -28,8 +28,9 @@ export class NavService {
     {
       path: 'sales', title: "Marketing", icon: 'assets/images/discount.png', type: 'sub', active: true,
       children: [
-        { path: 'coupons', title: 'Coupons', type: 'link' },
-        { path: 'user/team', title: 'Referral Code', type: 'link' },
+        { path: 'marketing/coupons', title: 'Coupons', type: 'link' },
+        { path: 'marketing/referral', title: 'Referral Code', type: 'link' },
+        {path : 'marketing/wallet', title: 'Wallet', type : 'link'}
       ]
     },
 

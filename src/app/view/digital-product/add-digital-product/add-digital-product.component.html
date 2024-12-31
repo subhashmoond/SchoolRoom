@@ -1,0 +1,237 @@
+<p-toast></p-toast>
+
+<div class="mt-4 ml-2">
+    2/5
+</div>
+
+<!-- Step 1: Select Product Type -->
+@if(activeIndex === 0){
+
+<div class="add-courses mt-7">
+
+    <div class="text-center mb-5">
+        <h3 class="m-0 pb-2">What would you like to create?</h3>
+    </div>
+
+    <form [formGroup]="addDigitalProductForm">
+
+        <div class="grid w-8 m-0-a">
+
+            <div class="col-12 mb-5">
+                <div class="w-full">
+                    <label class="w-full mb-1  font-medium line-height-exsm inline-block">Digital product title
+                        <span>*</span></label>
+                    <input class="w-full capitalize" pInputText formControlName="title"
+                        placeholder="Enter Product Title" required="true" />
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="flex flex-wrap gap-4 ">
+                    @for(data of productType; track $index){
+
+                    <div class="digital-product border-round-md flex " [class.active]="activeIndexType === $index"
+                        (click)="setActive($index, data)">
+
+                        @switch (data.name) {
+                        @case ('Document') {
+                        <i class="pi pi-file" style="font-size: 2rem"></i>
+                        }
+                        @case ('Image(s)') {
+                        <i class="pi pi-image" style="font-size: 2rem"></i>
+                        }
+                        @case ('Link') {
+                        <i class="pi pi-link" style="font-size: 2rem"></i>
+                        }
+                        @case ('Video') {
+                        <i class="pi pi-video" style="font-size: 2rem"></i>
+                        }
+                        @case ('Text') {
+                        <i class="pi pi-book" style="font-size: 2rem"></i>
+                        }
+                        @case ('Physical goods') {
+                        <i class="pi pi-truck" style="font-size: 2rem"></i>
+                        }
+                        }
+
+                        <div class="ml-4">
+                            <h5 class="text-xl font-normal text-color mb-2">{{ data.name }}</h5>
+                            <span class="text-sm text-color-secondary">{{ data.description }}</span>
+                        </div>
+
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+
+
+
+
+
+
+
+</div>
+}
+
+<!-- Step 2: Content Upload  -->
+@if(activeIndex === 1){
+<form [formGroup]="addProductFile">
+    <div class="grid w-6 m-0-a mt-4">
+
+
+        <div class="text-center mb-5 col-12">
+            <h3 class="  m-0 pb-2">Add Document</h3>
+
+        </div>
+
+
+
+        <div class="col-12 mb-5">
+            <div class="w-full">
+                <label class="w-full mb-1  font-medium line-height-exsm inline-block">File Name
+                    <span>*</span></label>
+                <input class="w-full capitalize" pInputText formControlName="fileName" placeholder="Enter File Name"
+                    required="true" />
+            </div>
+        </div>
+
+        <div class="col-12">
+            <label class="w-full mb-1  font-medium line-height-exsm inline-block">Upload Document
+                <span>*</span></label>
+
+            <div
+                class="border-solid border-round-lg main-border-color border-2 p-4 flex flex-column flex-wrap align-items-center justify-content-center user-image relative">
+
+                <img width="100" height="100"
+                    [src]="selectedFileObjectUrl ? selectedFileObjectUrl : '../../../../assets/images/icon/Image.svg'"
+                    alt="Image Preview" [ngClass]="selectedFileObjectUrl ? 'w-full h-full' : 'w-4rem h-4rem'" />
+                @if(selectedFileObjectUrl){
+                <i class="pi pi-times profile-remove-icon" (click)="profileImageRemove()" style="font-size: 1rem"></i>
+                }
+
+                @if(!selectedFileObjectUrl){
+                <span class="text-xs text-color-secondary mt-3"> Max file size is 200 MB </span>
+                }
+
+                <span class="flex flex-wrap align-items-center justify-content-center mt-2 mb-1">
+                    @if(!selectedFileObjectUrl){
+                    <img class="h-1rem w-1rem" src="../../../../assets/images/icon/upload-icon.svg">
+                    }
+                    <p-fileUpload #fileUpload [showUploadButton]="true" mode="basic"
+                        class="bg-none text-base text-700 border-0 z-2 required-upload profile-message-remove"
+                        chooseLabel="Upload Image*" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
+                        accept="image/*" [maxFileSize]="maxFileSizeLimit"
+                        (onSelect)="onFileSelect($event)"></p-fileUpload>
+                </span>
+
+            </div>
+
+
+
+        </div>
+
+        
+        <div class="col-12 flex">
+                <p-checkbox formControlName="ispaid" [binary]="true"></p-checkbox>
+                <label class="ml-2">This is a paid course</label>
+         </div>
+
+        <div class="col-12 mt-4" *ngIf="addProductFile.get('ispaid')?.value">
+                <div class="grid">
+                    <div class="col-6">
+                        <label class="w-full mb-1  font-medium line-height-exsm inline-block">Price</label>
+                        <input class="w-full" pInputText placeholder="Enter price" formControlName="price" />
+                    </div>
+                </div>
+        </div>
+
+
+
+
+
+    </div>
+</form>
+}
+
+<!-- Step 3: Thambnal and Des. -->
+@if(activeIndex === 2){
+
+    <form [formGroup]="addDecThumb">
+        <div class="grid w-6 m-0-a mt-4">
+    
+    
+            <div class="text-center mb-5 col-12">
+                <h3 class="  m-0 pb-2">Add Description and Thumbnail</h3>
+            </div>
+    
+    
+    
+            <div class="col-12 mb-5">
+                <div class="w-full">
+                    <label class="w-full mb-1  font-medium line-height-exsm inline-block"> Description </label>
+                        <p-editor formControlName="description" [style]="{ height: '320px' }" ></p-editor>
+                </div>
+            </div>
+    
+            <div class="col-12">
+                <label class="w-full mb-1  font-medium line-height-exsm inline-block"> Thumbnail Upload </label>
+    
+                <div
+                    class="border-solid border-round-lg main-border-color border-2 p-4 flex flex-column flex-wrap align-items-center justify-content-center user-image relative">
+    
+                    <img width="100" height="100"
+                        [src]="selectedFileObjectUrlTH ? selectedFileObjectUrlTH : '../../../../assets/images/icon/Image.svg'"
+                        alt="Image Preview" [ngClass]="selectedFileObjectUrlTH ? 'w-full h-full' : 'w-4rem h-4rem'" />
+                    @if(selectedFileObjectUrlTH){
+                    <i class="pi pi-times profile-remove-icon" (click)="profileThamRemove()" style="font-size: 1rem"></i>
+                    }
+    
+                    @if(!selectedFileObjectUrlTH){
+                    <span class="text-xs text-color-secondary mt-3"> Max file size is 200 MB </span>
+                    }
+    
+                    <span class="flex flex-wrap align-items-center justify-content-center mt-2 mb-1">
+                        @if(!selectedFileObjectUrlTH){
+                        <img class="h-1rem w-1rem" src="../../../../assets/images/icon/upload-icon.svg">
+                        }
+                        <p-fileUpload #fileUpload [showUploadButton]="true" mode="basic"
+                            class="bg-none text-base text-700 border-0 z-2 required-upload profile-message-remove"
+                            chooseLabel="Upload Image*" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
+                            accept="image/*" [maxFileSize]="maxFileSizeLimitTH"
+                            (onSelect)="onThamFileSelect($event)"></p-fileUpload>
+                    </span>
+    
+                </div>
+    
+    
+    
+            </div>
+    
+    
+        </div>
+    </form>
+
+}
+
+
+
+
+
+
+
+<!-- Navigation Buttons -->
+<div class="w-98 border-top-light bg-white absolute bottom-0 grid m-0-a">
+    <div class="col-6">
+        <button type="button" pButton pRipple (click)="back()" label="Back"
+            class="primary-border-button px-5 mr-3 text-sm" [disabled]="activeIndex === 0"></button>
+    </div>
+    <div class="col-6 flex justify-content-end">
+        <button type="button" pButton pRipple (click)="submit()"
+            label="{{ activeIndex === items.length - 2 ? 'Submit' : 'Next' }}" class="secondary-button px-6 "></button>
+    </div>
+</div>

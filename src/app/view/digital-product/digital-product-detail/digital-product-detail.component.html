@@ -1,0 +1,127 @@
+<div class="cards">
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-12">
+            <h4 class="subheading-color">Digital Products</h4>
+            <p>Manage Your Digital Products.</p>
+        </div>
+    </div>
+</div>
+
+<form [formGroup]="updateDigitalProductForm" class="mb-7">
+
+    <div class="grid">
+        <div class="col-9">
+            <h5 class="text-color">Basics</h5>
+            <p class="text-sm text-color-secondary">Edit the details of your digital download. You must save changes you make here.</p>
+        </div>
+
+        <div class="col-9 mb-2">
+            <label
+            class="w-full mb-1 mt-3 text-color font-semibold  font-medium line-height-exsm inline-block">Name</label>
+        <input class="w-full capitalize" pInputText formControlName="name"
+            placeholder="Enter product name" />
+        </div>
+
+        <div class="col-9 mb-2">
+
+            <label class="w-full mb-1 mt-3 text-color font-semibold  font-medium line-height-exsm inline-block">Product Type</label>
+
+            <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
+                        [required]="true" formControlName="typeproduct" [options]="productType"
+                        optionValue="id" optionLabel="name" placeholder="Select Product Type"></p-dropdown>
+
+        </div>
+
+        <div class="col-9 mb-4">
+            <div class="w-full">
+                <label class="w-full mb-1  font-medium line-height-exsm inline-block"> Description </label>
+                    <p-editor formControlName="description" [style]="{ height: '320px' }" ></p-editor>
+            </div>
+        </div>
+
+        <div class="col-9">
+            <label class="w-full mb-1  font-medium line-height-exsm inline-block"> Thumbnail </label>
+
+            <div
+                class="border-solid border-round-lg main-border-color border-2 p-4 flex flex-column flex-wrap align-items-center justify-content-center user-image relative">
+
+                <img width="100" height="100"
+                    [src]="selectedFileObjectUrlTH ? selectedFileObjectUrlTH : '../../../../assets/images/icon/Image.svg'"
+                    alt="Image Preview" [ngClass]="selectedFileObjectUrlTH ? 'w-full h-full' : 'w-4rem h-4rem'" />
+                @if(selectedFileObjectUrlTH){
+                <i class="pi pi-times profile-remove-icon" (click)="profileThamRemove()" style="font-size: 1rem"></i>
+                }
+
+                @if(!selectedFileObjectUrlTH){
+                <span class="text-xs text-color-secondary mt-3"> Max file size is 200 MB </span>
+                }
+
+                <span class="flex flex-wrap align-items-center justify-content-center mt-2 mb-1">
+                    @if(!selectedFileObjectUrlTH){
+                    <img class="h-1rem w-1rem" src="../../../../assets/images/icon/upload-icon.svg">
+                    }
+                    <p-fileUpload #fileUpload [showUploadButton]="true" mode="basic"
+                        class="bg-none text-base text-700 border-0 z-2 required-upload profile-message-remove"
+                        chooseLabel="Upload Image*" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
+                        accept="image/*" [maxFileSize]="maxFileSizeLimitTH"
+                        (onSelect)="onThamFileSelect($event)"></p-fileUpload>
+                </span>
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="grid mt-4">
+        <div class="col-9">
+            <h5 class="text-color">Content</h5>
+            <p class="text-sm text-color-secondary">Edit the content offered in your downloadable.</p>
+        </div>
+
+        <div class="col-9">
+            <label class="w-full mb-1  font-medium line-height-exsm inline-block">Upload Document
+                <span>*</span></label>
+
+            <div
+                class="border-solid border-round-lg main-border-color border-2 p-4 flex flex-column flex-wrap align-items-center justify-content-center user-image relative">
+
+                <img width="100" height="100"
+                    [src]="selectedFileObjectUrl ? selectedFileObjectUrl : '../../../../assets/images/icon/Image.svg'"
+                    alt="Image Preview" [ngClass]="selectedFileObjectUrl ? 'w-full h-full' : 'w-4rem h-4rem'" />
+                @if(selectedFileObjectUrl){
+                <i class="pi pi-times profile-remove-icon" (click)="profileImageRemove()" style="font-size: 1rem"></i>
+                }
+
+                @if(!selectedFileObjectUrl){
+                <span class="text-xs text-color-secondary mt-3"> Max file size is 200 MB </span>
+                }
+
+                <span class="flex flex-wrap align-items-center justify-content-center mt-2 mb-1">
+                    @if(!selectedFileObjectUrl){
+                    <img class="h-1rem w-1rem" src="../../../../assets/images/icon/upload-icon.svg">
+                    }
+                    <p-fileUpload #fileUpload [showUploadButton]="true" mode="basic"
+                        class="bg-none text-base text-700 border-0 z-2 required-upload profile-message-remove"
+                        chooseLabel="Upload Image*" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
+                        accept="image/*" [maxFileSize]="maxFileSizeLimit"
+                        (onSelect)="onFileSelect($event)"></p-fileUpload>
+                </span>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</form>
+
+
+<div class="w-full assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+    <button type="submit" (click)="updateProduct()" pButton pRipple label="Save" class="primary-button px-5 text-sm"></button>
+</div>

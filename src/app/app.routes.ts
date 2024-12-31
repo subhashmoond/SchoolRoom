@@ -27,7 +27,7 @@ export const routes: Routes = [
                 path: 'test', loadChildren: () => import('./view/test/test.router').then((m) => m.routes),
             },
             {
-                path : 'coupons', loadChildren : () => import('./view/coupons/coupons.router').then((m) => m.routes )
+                path : 'marketing', loadChildren : () => import('./view/coupons/coupons.router').then((m) => m.routes )
             },
             {
                 path: 'templatepreview', loadChildren: () => import('./view/webpage/webpage.router').then((m) => m.routes)

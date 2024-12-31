@@ -3014,3 +3014,30 @@ body p-checkbox {
     border: 1px solid #edeef6;
     background-color: #F3F4F9;
 }
+
+
+.digital-product {
+    width: 30%;
+    padding: 20px;
+    /* text-align: center; */
+    border: 1px solid #edeef6;
+    /* border-radius: 8px; */
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .digital-product:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .digital-product.active {
+    background-color: #F3F4F9; /* Highlight color */
+    border-color: #473289;
+    transform: scale(1.05);
+    color: #473289;
+  }
+
+  .digital-product.active h5{
+    color: #473289 !important;
+  }
