@@ -13,6 +13,7 @@ import { TagModule } from 'primeng/tag';
 import { Router } from '@angular/router';
 import { CreateMainTestComponent } from './main-test/create-main-test/create-main-test.component';
 import { CreateTestCourseComponent } from './test-course/create-test-course/create-test-course.component';
+import { CoursesService } from '../../core/services/courses.service';
 
 @Component({
   selector: 'app-test',
@@ -23,12 +24,19 @@ import { CreateTestCourseComponent } from './test-course/create-test-course/crea
 })
 export class TestComponent {
   addFormSideBar : boolean = false;
-  tableView : boolean = false
+  tableView : boolean = false;
+  testListData : any
 
-  constructor(private _router: Router){ }
+  constructor(private _router: Router, private _courseService : CoursesService){ }
 
   ngOnInit(){
-    
+    this.getTestList()
+  }
+
+  getTestList(){
+    this._courseService.getCourseListTypeWais('Test Series').subscribe(res => {
+      this.testListData = res
+    })
   }
 
   openSidebar(){

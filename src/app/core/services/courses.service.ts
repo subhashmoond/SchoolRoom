@@ -16,6 +16,11 @@ export class CoursesService {
     return this._dataService.get(url);
   }
 
+  getCourseListTypeWais(courseType : any){
+    const url = `${environment.basePath}course/list/type-wise/?type=${courseType}`;
+    return this._dataService.get(url)
+  }
+
 
   addCourses(body: any) {
     const url = `${environment.basePath}course/create/`;

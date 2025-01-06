@@ -1,22 +1,23 @@
 <div class="grid nested-grid login-page">
     <div class="col-8 p-0 parent flex align-items-center justify-content-center overflow-hidden">
-        <p-carousel [value]="images" [numVisible]="1" [numScroll]="1" [circular]="true" [showIndicators]="false"
+        <!-- <p-carousel [value]="images" [numVisible]="1" [numScroll]="1" [circular]="true" [showIndicators]="false"
             [showNavigators]="false" [autoplayInterval]="9000" [responsiveOptions]="responsiveOptions" id="overlay">
             <ng-template let-product pTemplate="item">
                 <img src="{{ product.img }}" class="w-12 h-custome img-color" />
             </ng-template>
-        </p-carousel>
+        </p-carousel> -->
 
-        <div class="logo absolute left-0 top-0 pt-4">
+        <!-- <div class="logo absolute left-0 top-0 pt-4">
             <h2>AI Class</h2>
-            <!-- <img src="../../../../assets/images/login-header-logo.png" /> -->
         </div>
         <div class="timeanddate absolute">
             <h1>{{ currentDate | date:'h:mma' }}</h1>
             <span class="t-center">
                 <h3>{{locationName}} {{ currentDate | date:'d MMM, y' }}</h3>
             </span>
-        </div>
+        </div> -->
+
+        <img class="w-full h-full" src="../../../../assets/images/login-banner.png" >
 
     </div>
     <div class="col-4 px-6 p-0 overflow-hidden relative">
@@ -26,7 +27,7 @@
 
 
         <div class="absolute w-full px-6 bottom-0 left-0" style="width: 100%;">
-        <div class="login-footer grid">
+        <!-- <div class="login-footer grid">
             <div class="col-8">
                 <ul>
                     <li><a>Contact Us</a></li>
@@ -36,7 +37,7 @@
             <div class="col-4">
                 <img src="../../../../assets/images/login-footer-logo.png ">
             </div>
-        </div>
+        </div> -->
 
     </div>
 

@@ -23,9 +23,11 @@ export class CreateMainTestComponent {
 
   constructor(private fb: FormBuilder) {
     this.addTestForm = this.fb.group({
-      name: [''],
-      price: [''],
-      isFree: [false],
+      title: [''],
+      totaltime: [''],
+      maxmark: [''],
+      supportanotherlang : [false],
+      another_lang : ['']
     });
   }
 

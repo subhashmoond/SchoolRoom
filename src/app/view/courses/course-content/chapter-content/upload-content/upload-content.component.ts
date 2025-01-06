@@ -64,7 +64,7 @@ export class UploadContentComponent {
     this._coursesService.getPDFSettng(this.contentId).subscribe(res => {
       console.log(res, "content get API")
 
-      this.settingContent.setValue({
+      this.settingContent.patchValue({
         title: res.title,
         downloadable: res.downloadable,
         available: res.always_available,

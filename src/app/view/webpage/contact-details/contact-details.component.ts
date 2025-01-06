@@ -8,11 +8,14 @@ import { ToastModule } from 'primeng/toast';
 import { WebsiteService } from '../../../core/services/website.service';
 import { MessageService } from 'primeng/api';
 import { SkeletonModule } from 'primeng/skeleton';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-contact-details',
   standalone: true,
-  imports: [ButtonModule, ReactiveFormsModule, InputTextModule, ToastModule, KeyFilterModule, InputNumberModule, ToastModule, SkeletonModule ],
+  imports: [ButtonModule, CommonModule, ReactiveFormsModule, InputTextModule, ToastModule, KeyFilterModule, InputNumberModule, ToastModule, SkeletonModule, InputGroupModule, InputGroupAddonModule ],
   providers : [MessageService],
   templateUrl: './contact-details.component.html',
   styleUrl: './contact-details.component.css'

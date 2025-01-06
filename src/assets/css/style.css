@@ -647,6 +647,10 @@ body .button-text-danger .p-button-label {
     box-shadow: 0 2px 2px #9F7900;
 }
 
+.primary-purple-bg {
+    background: #EDEEF6 !important;
+}
+
 /* Border css  */
 .primary-color-border {
     border-color: #473289;
@@ -665,7 +669,7 @@ body .button-text-danger .p-button-label {
 }
 
 .primary-purple-border {
-    border-color: #EDEEF6;
+    border-color: #EDEEF6 !important;
 }
 
 .dark-purple-border {
@@ -3041,3 +3045,30 @@ body p-checkbox {
   .digital-product.active h5{
     color: #473289 !important;
   }
+
+  .accordion-inner-button {
+    background: none;
+    color: #333;
+    border-color: #333;
+    border-width: 2px;
+}
+
+.add-section-button{
+    background: #f3f4f6;
+    color: #333;
+    border-color: #e5e7eb;
+    border-width: 2px;
+}
+
+.table-p p{
+    margin: 0px;
+    padding: 0px;
+}
+
+.test-contents .p-accordion .p-accordion-content{
+    padding: 0px !important;
+}
+
+.test-contents{
+    padding : 0px 7rem 0px 7rem
+}

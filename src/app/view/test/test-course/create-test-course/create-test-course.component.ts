@@ -18,9 +18,10 @@ import { ToastModule } from 'primeng/toast';
   styleUrl: './create-test-course.component.css'
 })
 export class CreateTestCourseComponent {
+  @Output() closeSideBar = new EventEmitter<any>()
 
   coursesForm!: FormGroup;
-  @Output() closeSideBar = new EventEmitter<any>()
+  courseTypeId : any
 
   constructor(private _fb: FormBuilder, private _courseService : CoursesService, private messageService: MessageService) {
 
@@ -28,6 +29,7 @@ export class CreateTestCourseComponent {
 
   ngOnInit() {
 
+    this.getCurseTypeList()
 
     this.coursesForm = this._fb.group({
       name: [''],
@@ -36,6 +38,21 @@ export class CreateTestCourseComponent {
       price: ['']
     });
 
+  }
+
+  getCurseTypeList(){
+
+    this._courseService.getCourseType().subscribe(res => {
+      const data = res.data
+
+      data.forEach((item : any) => {
+        if(item.types === "Test Series"){
+          this.courseTypeId = item.id
+          console.log(this.courseTypeId, "course type")
+        }
+      })
+
+    })
 
   }
 
@@ -49,7 +66,7 @@ export class CreateTestCourseComponent {
       "describe": this.coursesForm.get('description')?.value,
       "language": 2,
       "isPaid": this.coursesForm.get('ispaid')?.value,
-      "coursetype": 2
+      "coursetype": this.courseTypeId,
     }
 
     this._courseService.addCourses(payload).subscribe((res : any) => {

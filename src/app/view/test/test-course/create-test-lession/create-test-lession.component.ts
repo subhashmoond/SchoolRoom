@@ -4,36 +4,54 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
 import { SidebarModule } from 'primeng/sidebar';
 import { ToastModule } from 'primeng/toast';
+import { TestService } from '../../../../core/services/test.service';
 
 @Component({
   selector: 'app-create-test-lession',
   standalone: true,
-  imports: [SidebarModule, ButtonModule, TranslateModule, ReactiveFormsModule, CalendarModule, InputTextModule, ToastModule],
-  providers : [MessageService],
+  imports: [SidebarModule, ButtonModule, TranslateModule, ReactiveFormsModule, CalendarModule, InputTextModule, ToastModule, CheckboxModule, KeyFilterModule],
+  providers: [MessageService],
   templateUrl: './create-test-lession.component.html',
   styleUrl: './create-test-lession.component.css'
 })
 export class CreateTestLessionComponent {
-  addSection! : FormGroup
-  
-  constructor(private _fb : FormBuilder){}
+  addSection!: FormGroup
 
-  ngOnInit(){
+  constructor(private _fb: FormBuilder, private _testService : TestService) { }
+
+  ngOnInit() {
 
     this.addSection = this._fb.group({
-      title : ['', Validators.required]
+      title: ['', Validators.required],
+      maxmark: [],
+      ispaid: [],
+      duration: []
     })
 
   }
 
-  submit(){
+  submit() {
+
+    const payload = {
+      "name": this.addSection.get('title')?.value,
+      "max_marks": this.addSection.get('maxmark')?.value,
+      "allowed_section_wise_time": this.addSection.get('ispaid')?.value,
+      "duration": this.addSection.get('duration')?.value
+    }
+
+    this._testService.addTestSection(23, payload).subscribe(res => {
+
+    })
+
   }
 
-  closeButton(){
+  closeButton() {
   }
 
-  
+
 }

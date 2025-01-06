@@ -13,7 +13,7 @@
                                 Test</p-button>
 
                         <div
-                                class="view-tab flex ml-3 flex-wrap border-round-md p-1 border-round-md button-shadow justify-content-center aign-items-center">
+                                class="primary-purple-bg view-tab flex ml-3 flex-wrap border-round-md p-1 border-round-md button-shadow justify-content-center aign-items-center">
                                 <button (click)="listViewChange('card')" [class.bg-white]="!tableView"
                                         class="p-element p-0 cursor-pointer border-none w-2rem flex flex-wrap align-items-center justify-content-center border-round-sm form-header-bg p-button p-component"><img
                                                 src="../../../../assets/images/icon/mage-dashboard.svg" alt=""
@@ -102,30 +102,34 @@
         }
         @else {
 
-        <div class="courses-list flex flex-wrap">
-
-                <div class="course-card secondry-color-border border-round-md" (click)="navigateDetailsPage()">
-                        <img class="w-full border-round-md" src="../../../assets/images/course-tham.png">
-
-                        <div class="c-content p-3">
-                                <h5 class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full ">Demo Test
-                                </h5>
-                        </div>
-
-                        <div class="c-footer flex border-top-1 primary-purple-border p-3">
-                                <div class="flex-1 flex justify-content-start">
-                                        @if(true){
-                                        <p-tag severity="success" value="Published" />
-                                        }@else {
-                                        <p-tag severity="secondary" value="Unpublished" />
-                                        }
-                                </div>
-                                <div class="flex-1 flex justify-content-end">
-                                        20 Students
+                <div class="grid">
+        
+                        <div class="col-3">
+        
+                                <div class="shadow-1 cursor-pointer course-card secondry-color-border border-round-md" (click)="navigateDetailsPage()">
+                                        <img class="w-full border-round-md" src="../../../assets/images/course-tham.png">
+                
+                                        <div class="c-content p-3">
+                                                <h5 class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full ">
+                                                        Front end test</h5>
+                                        </div>
+                
+                                        <div class="c-footer flex border-top-1 primary-purple-border p-3">
+                                                <div class="flex-1 flex justify-content-start">
+                                                        <!-- @if(data.publish === true){ -->
+                                                        <p-tag severity="success" value="Published" />
+                                                        <!-- }@else { -->
+                                                        <!-- <p-tag severity="secondary" value="Unpublished" /> -->
+                                                        <!-- } -->
+                                                </div>
+                                                <div class="flex-1 flex justify-content-end">
+                                                        20 Students
+                                                </div>
+                                        </div>
                                 </div>
                         </div>
                 </div>
-        </div>
+        
         }
 
 </div>

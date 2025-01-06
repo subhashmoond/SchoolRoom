@@ -1,93 +1,83 @@
 <div class="grid client-dashborad-header mb-4 align-items-center">
-  <div class="col-12">
-    <p-tag severity="danger" value="Unpublished"></p-tag>
-  </div>
+  
   <div class="col-6">
     <h4 class="subheading-color">Full Stack Web Development</h4>
   </div>
   <div class="col-6 flex justify-content-end">
-    <p-button class="mr-2 border-round-md button-shadow">
-      <img src="../../../../../assets/images/icon/filter.svg" />
-    </p-button>
-    <!-- <p-button class="mr-2 border-round-md button-shadow"
-        ><img src="../../../../../assets/images/icon/download.svg"
-      /></p-button> -->
+ 
+ 
+  <!-- Hidden Tests -->
+  <div class="flex flex-column align-items-center mx-2">
+    <i class="pi pi-eye-slash text-secondary" style="font-size: 1rem"></i>
+    <span class="mt-1 text-secondary font-medium">0 Hidden Tests</span>
+  </div>
+
+  <!-- Questions -->
+  <div class="flex flex-column align-items-center mx-2">
+    <i class="pi pi-question-circle" style="font-size: 1rem"></i>
+    <span class="mt-1 font-medium">0 Questions</span>
+  </div>
+
+  <!-- Marks -->
+  <div class="flex flex-column align-items-center mx-2">
+    <i class="pi pi-check-circle text-success" style="font-size: 1rem"></i>
+    <span class="mt-1 text-success font-medium">0 Marks</span>
+  </div>
+
+  <!-- Tests -->
+  <div class="flex flex-column align-items-center mx-2">
+    <i class="pi pi-file text-info" style="font-size: 1rem"></i>
+    <span class="mt-1 text-info font-medium">0 Tests</span>
+  </div>
+
   </div>
 </div>
 
-<!-- Second section Search -->
-<div class="grid mb-4 align-items-center">
-  <!-- Search Section -->
-  <div class="col-4 flex justify-content-start align-items-center">
-    <input type="text" pInputText placeholder="Search test..." class="p-inputtext-lg w-30 mr-3" />
-    <p-button class="create-button border-round-md" label="Search" icon="pi pi-search"></p-button>
-  </div>
-
-  <!-- Info Icons Section -->
-  <div class="col-8 flex justify-content-end align-items-center text-center">
-    <!-- Hidden Tests -->
-    <div class="flex flex-column align-items-center mx-2">
-      <i class="pi pi-eye-slash text-secondary" style="font-size: 1rem"></i>
-      <span class="mt-1 text-secondary font-medium">0 Hidden Tests</span>
-    </div>
-
-    <!-- Questions -->
-    <div class="flex flex-column align-items-center mx-2">
-      <i class="pi pi-question-circle" style="font-size: 1rem"></i>
-      <span class="mt-1 font-medium">0 Questions</span>
-    </div>
-
-    <!-- Marks -->
-    <div class="flex flex-column align-items-center mx-2">
-      <i class="pi pi-check-circle text-success" style="font-size: 1rem"></i>
-      <span class="mt-1 text-success font-medium">0 Marks</span>
-    </div>
-
-    <!-- Tests -->
-    <div class="flex flex-column align-items-center mx-2">
-      <i class="pi pi-file text-info" style="font-size: 1rem"></i>
-      <span class="mt-1 text-info font-medium">0 Tests</span>
-    </div>
-  </div>
-</div>
 
 
 <!-- Lession and Qustion -->
 <div class="grid mb-4 align-items-center">
   <div class="col-12">
-    @if(true){
+    @if(false){
 
     <app-list-test-lession></app-list-test-lession>
 
     } @else {
 
-    <div class="grid justify-content-center align-items-center pb-8 pt-8 p-card p-component ">
+    <div class="pt-8 p-component ">
       <div class="flex flex-column justify-content-center align-items-center">
         <img src="../../../../assets/images/icon/no-data.svg" alt="Illustration" class="mb-3 my-4"
           style="width: 150px; height: 150px" />
 
-        <h6 class="text-secondary">Add Set</h6>
+        <h5 class="text-secondary">Add Section & Test</h5>
         <p class="text-secondary">
-          Start adding sets to build your test series
+          Start adding section & test to build your test series.
         </p>
 
-        <p-button class="create-button border-round-md" (onClick)="addSection()" icon="pi pi-plus"
-          label="Add Set"></p-button>
-
-        <!-- <p-button
-            class="create-button border-round-md my-2"
-            (onClick)="openAddQuestionSidebar()"
-            icon="pi pi-plus"
-            label="Add Question"
-          ></p-button> -->
+        
       </div>
+      
+          <div class="mt-3 flex justify-content-center align-items-center">
+            <!-- <p-button class="create-button border-round-md mr-3" (onClick)="addSection()" icon="pi pi-plus"
+                label="Add Section"></p-button> -->
+      
+              <p-button
+                  class="create-button border-round-md my-2" (click)="addTest()"
+                  icon="pi pi-plus"
+                  label="Add Test"
+                ></p-button>
+          </div>
     </div>
 
     }
   </div>
 </div>
 
-<p-sidebar [(visible)]="addSectionValue" position="right" styleClass="w-30rem">
-  <!-- <app-add-section></app-add-section> -->
+<!-- <p-sidebar [(visible)]="addSectionValue" position="right" styleClass="w-30rem">
   <app-create-test-lession></app-create-test-lession>
+</p-sidebar> -->
+
+
+<p-sidebar [(visible)]="isAddTest" position="right" styleClass="w-30rem">
+  <app-create-main-test></app-create-main-test>
 </p-sidebar>

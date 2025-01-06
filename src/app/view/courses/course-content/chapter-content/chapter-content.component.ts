@@ -22,12 +22,17 @@ import { RippleModule } from 'primeng/ripple';
 import { EditorModule } from 'primeng/editor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { CreateTestComponent } from '../../../../shared/components/create-test/create-test.component';
+import { CreateTestSectionComponent } from '../../../../shared/components/create-test-section/create-test-section.component';
+import { TestContentComponent } from './test-content/test-content.component';
 
 @Component({
   selector: 'app-chapter-content',
   standalone: true,
   imports: [AccordionModule, ButtonModule, FormsModule, SplitButtonModule, EditorModule, DialogModule, PanelModule, AvatarModule, UploadContentComponent, SidebarModule,
-    ImageComponent, UploadVideoComponent, AudioComponent, PdfViewerModule, ReSourceComponent, RippleModule, SkeletonModule, YoutubeVideoComponent, TextComponent, MenuModule, ToastModule, SidebarModule],
+    ImageComponent, UploadVideoComponent, AudioComponent, PdfViewerModule, ReSourceComponent, RippleModule, SkeletonModule, YoutubeVideoComponent, TextComponent, MenuModule, 
+    ToastModule, SidebarModule, CreateTestComponent, CreateTestSectionComponent, TestContentComponent ],
   templateUrl: './chapter-content.component.html',
   styleUrl: './chapter-content.component.css'
 })
@@ -44,17 +49,21 @@ export class ChapterContentComponent {
   isResource: boolean = false;
   isYoutubevideo: boolean = false;
   isAudio: boolean = false;
+  isQuiz : boolean = false;
+  isSectionDetailPage : boolean = false;
+  isAddSection : boolean = false
   contentId: any;
   isLoader : boolean = true;
 
   chapterDataList: any[] = [];
   hideHeader: boolean = true;
+  testId : any
 
   items: { label?: string; icon?: string; separator?: boolean }[] = [];
 
   pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
 
-  constructor(private _coursesService: CoursesService, private route: ActivatedRoute) {
+  constructor(private _coursesService: CoursesService, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.route.paramMap.subscribe(params => {
       this.lessonId = params.get('id')!;
     });
@@ -68,9 +77,23 @@ export class ChapterContentComponent {
 
   ngOnInit() {
 
-
     this.getChapterContent()
+  }
 
+  getSafeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  getYouTubeEmbedUrl(url: string): SafeResourceUrl {
+    const videoId = this.extractYouTubeId(url);
+    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
+  }
+
+  private extractYouTubeId(url: string): string | null {
+    const regExp = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^&\s]+)/;
+    const match = url.match(regExp);
+    return match ? match[1] : null;
   }
 
   getChapterContent() {
@@ -87,9 +110,9 @@ export class ChapterContentComponent {
   }
 
   uploadContent(data?: any, contentType?: any, action?: any) {
-    
+   
     if (data) {
-      this.contentId = data.id;
+      this.contentId = data._id;
     } else {
       this.contentId = null;
     }
@@ -125,6 +148,10 @@ export class ChapterContentComponent {
 
       case 'resource':
         this.isResource = true
+        break;
+      
+      case 'Quiz':
+        this.isQuiz = true
         break;
     }
     this.addContentPopup = false
@@ -180,6 +207,7 @@ export class ChapterContentComponent {
     this.isImage = false;
     this.uploadContents = false;
     this.isVideo = false;
+    this.isQuiz = false;
   }
 
   deleteContent(id: any) {
@@ -188,5 +216,19 @@ export class ChapterContentComponent {
     })
   }
 
+  deleteTest(id : any){
+    
+  }
+
+
+  sectionDetailPage(data : any){
+    this.isSectionDetailPage = true;
+    this.testId = data._id
+  }
+
+  createSection(data : any){
+    this.isAddSection = true;
+    this.testId = data._id
+  }
 
 }
