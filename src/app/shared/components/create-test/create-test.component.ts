@@ -6,11 +6,12 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { TestService } from '../../../core/services/test.service';
 import { MessageService } from 'primeng/api';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-create-test',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule, CheckboxModule],
+  imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule, CheckboxModule, CalendarModule],
   providers: [MessageService],
   templateUrl: './create-test.component.html',
   styleUrl: './create-test.component.css'
@@ -43,10 +44,18 @@ export class CreateTestComponent {
 
   submit() {
 
+    const totalTime = this.addTestForm.get('totaltime')?.value;
+
+    let timeParts = totalTime.split(":");  // Split into hours and minutes
+    let hours = parseInt(timeParts[0]);  // Convert the hours part to number
+    let minutes = parseInt(timeParts[1]);  // Convert the minutes part to number
+
+    let totalMinutes = hours * 60 + minutes;
+
     const payload = {
       "lesson_id": this.lessonId,
       "title": this.addTestForm.get('title')?.value,
-      "totalTime": this.addTestForm.get('totaltime')?.value,
+      "totalTime": totalMinutes,
       "totalMarks": this.addTestForm.get('maxmark')?.value,
       "support_another_lang": this.addTestForm.get('supportanotherlang')?.value,
       "another_lang": this.addTestForm.get('another_lang')?.value,

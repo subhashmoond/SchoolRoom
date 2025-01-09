@@ -41,36 +41,50 @@
             </div>
         </div>
 
-        <div class="w-full p-4 primary-secondary-bg border-round-md">
-            <h6> Options </h6>
-        </div>
-
-
-        <div class="flex flex-wrap w-full mb-4">
-            <div class="w-full">
-
-                <div formArrayName="options">
-                    @for(option of options.controls; track $index){
-
-                    <div [formGroupName]="$index" class="option-row">
-                        <input type="checkbox" formControlName="isCorrect" />
-                        <div>
-                            <label for="correctOption{{ $index }}">Option {{ $index + 1 }}</label>
-                        </div>
-
-                        <div class="ml-2 mr-2">
-                            <p-editor class="editor" formControlName="text" [style]="{ height: '100px' }" placeholder="e.g Option {{ $index + 1 }}" />
-                        </div>
-
-                        <button type="button" (click)="removeOption($index)" class="remove-button"><i class="pi pi-minus"></i></button>
-                    </div>
-                    }
+        @if (addQuestionForm.get('selecttitle')?.value ===  "5e21c4de68e441af9ba9fe447838d3d0" || addQuestionForm.get('selecttitle')?.value ===  "be73610bb75047a4b56dcb062b7a5a7a") {
+            <div class="flex flex-wrap w-full mb-4">
+                <div class="w-full">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Answer </label>
+                    <input class="w-full block text-sm" pInputText formControlName="answer" placeholder="Enter answer" 
+                        required="true" />
                 </div>
-
-                <button type="button" class="add-more-button" (click)="addOption()"><i class="pi pi-plus"></i></button>
-
             </div>
-        </div>
+        }
+        @else {
+
+            <div class="w-full p-4 primary-secondary-bg border-round-md">
+                <h6> Options </h6>
+            </div>
+    
+    
+            <div class="flex flex-wrap w-full mb-4">
+                <div class="w-full">
+    
+                    <div formArrayName="options">
+                        @for(option of options.controls; track $index){
+    
+                        <div [formGroupName]="$index" class="option-row">
+                            <input type="checkbox" formControlName="isCorrect" />
+                            <div>
+                                <label for="correctOption{{ $index }}">Option {{ $index + 1 }}</label>
+                            </div>
+    
+                            <div class="ml-2 mr-2">
+                                <p-editor class="editor" formControlName="text" [style]="{ height: '100px' }" placeholder="e.g Option {{ $index + 1 }}" />
+                            </div>
+    
+                            <button type="button" (click)="removeOption($index)" class="remove-button"><i class="pi pi-minus"></i></button>
+                        </div>
+                        }
+                    </div>
+    
+                    <button type="button" class="add-more-button" (click)="addOption()"><i class="pi pi-plus"></i></button>
+    
+                </div>
+            </div>
+
+        }
+
 
 
         <div class="flex flex-wrap w-full mb-4">

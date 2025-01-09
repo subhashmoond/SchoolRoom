@@ -44,7 +44,8 @@ export class CreateQuestionsComponent {
       chapter: [],
       text: [],
       options: this._fb.array([]),
-      explanation: []
+      explanation: [],
+      answer : []
     })
 
     this.addOption();
@@ -116,21 +117,32 @@ export class CreateQuestionsComponent {
 
     const formValue = this.addQuestionForm.value; // Get form values
 
-    const payload = {
+    let payload : any = {
       section_id: this.sectionIdForQuestion,
       question_type: formValue.selecttitle,
       text: formValue.text,
       subject: formValue.subject,
       chapter: formValue.chapter,
-      options: formValue.options.map((option: any, index: number) => ({
+      
+    };
+
+    if(formValue.selecttitle === "da3c7e928ea749dfa675a6c8dccb62ab" || formValue.selecttitle === "7d192728b70a45d4917bfcf135054fb3"){
+
+      payload.options = formValue.options.map((option: any, index: number) => ({
         id: index + 1,
         content: option.text,
       })),
-      correct_option: formValue.options
+      payload.correct_option = formValue.options
         .map((option: any, index: number) => (option.isCorrect ? index + 1 : null))
         .filter((id: number | null) => id !== null),
-      lang_text: formValue.explanation,
-    };
+
+        payload.lang_text = formValue.explanation
+
+    }
+
+    if(formValue.selecttitle === "5e21c4de68e441af9ba9fe447838d3d0" || formValue.selecttitle === "be73610bb75047a4b56dcb062b7a5a7a"){
+      payload.ans = formValue.answer
+    }
 
 
     this._testService.addQuestions(payload).subscribe((res: any) => {

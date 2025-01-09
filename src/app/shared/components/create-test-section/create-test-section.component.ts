@@ -41,11 +41,20 @@ export class CreateTestSectionComponent {
 
 
   submit() {
+
+    const time = this.addSection.get('duration')?.value;
+
+    let timeParts = time.split(":");  // Split into hours and minutes
+    let hours = parseInt(timeParts[0]);  // Convert the hours part to number
+    let minutes = parseInt(timeParts[1]);  // Convert the minutes part to number
+
+    let totalMinutes = hours * 60 + minutes;
+
     const payload = {
       "name": this.addSection.get('title')?.value,
       "max_marks": this.addSection.get('maxmark')?.value,
       "allowed_section_wise_time": this.addSection.get('sectionwise')?.value,
-      "duration": this.addSection.get('duration')?.value
+      "duration": totalMinutes
     }
 
     this._testService.addTestSection(this.testDetailId, payload).subscribe((res: any) => {

@@ -19,7 +19,11 @@
           <div class="w-full">
             <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Total Time
             </label>
-            <input class="w-full block text-sm" pKeyFilter="num" pInputText formControlName="totaltime" placeholder="0"
+
+            <!-- <p-datepicker inputId="calendar-timeonly"  [timeOnly]="true"></p-datepicker> -->
+
+
+            <input class="w-full block text-sm" type="time" pKeyFilter="num" pInputText formControlName="totaltime" placeholder="0"
               required="true" />
           </div>
         </div>
