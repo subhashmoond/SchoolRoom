@@ -25,6 +25,9 @@ export class CreateQuestionsComponent {
   @Input() questionId: any;
   @Output() closepopup = new EventEmitter<any>();
 
+  @Input() moduleName : any;
+
+
   addQuestionForm!: FormGroup;
   questionTypes: any
 
@@ -145,15 +148,31 @@ export class CreateQuestionsComponent {
     }
 
 
-    this._testService.addQuestions(payload).subscribe((res: any) => {
+    if(this.moduleName === 'testseries'){
 
-      if (res.stauts === true) {
-        this.closepopup.emit(res.message)
-      } else {
-        this._messageService.add({ severity: 'error', detail: 'Error ' });
-      }
+      this._testService.createQestionTestSerice(payload).subscribe((res: any) => {
 
-    })
+        if (res.stauts === true) {
+          this.closepopup.emit(res.message)
+        } else {
+          this._messageService.add({ severity: 'error', detail: 'Error ' });
+        }
+  
+      })
+
+    }else{
+
+      this._testService.addQuestions(payload).subscribe((res: any) => {
+
+        if (res.stauts === true) {
+          this.closepopup.emit(res.message)
+        } else {
+          this._messageService.add({ severity: 'error', detail: 'Error ' });
+        }
+  
+      })
+
+    }
 
   }
 

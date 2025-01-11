@@ -1,83 +1,93 @@
-<div class="grid client-dashborad-header mb-4 align-items-center">
-  
-  <div class="col-6">
-    <h4 class="subheading-color">Full Stack Web Development</h4>
-  </div>
-  <div class="col-6 flex justify-content-end">
- 
- 
-  <!-- Hidden Tests -->
-  <div class="flex flex-column align-items-center mx-2">
-    <i class="pi pi-eye-slash text-secondary" style="font-size: 1rem"></i>
-    <span class="mt-1 text-secondary font-medium">0 Hidden Tests</span>
-  </div>
+<div class="grid grid-nogutter nested-grid">
+  <div class="col-2 secondry-bg-color">
 
-  <!-- Questions -->
-  <div class="flex flex-column align-items-center mx-2">
-    <i class="pi pi-question-circle" style="font-size: 1rem"></i>
-    <span class="mt-1 font-medium">0 Questions</span>
-  </div>
-
-  <!-- Marks -->
-  <div class="flex flex-column align-items-center mx-2">
-    <i class="pi pi-check-circle text-success" style="font-size: 1rem"></i>
-    <span class="mt-1 text-success font-medium">0 Marks</span>
-  </div>
-
-  <!-- Tests -->
-  <div class="flex flex-column align-items-center mx-2">
-    <i class="pi pi-file text-info" style="font-size: 1rem"></i>
-    <span class="mt-1 text-info font-medium">0 Tests</span>
-  </div>
-
-  </div>
-</div>
-
-
-
-<!-- Lession and Qustion -->
-<div class="grid mb-4 align-items-center">
-  <div class="col-12">
-    @if(false){
-
-    <app-list-test-lession></app-list-test-lession>
-
-    } @else {
-
-    <div class="pt-8 p-component ">
-      <div class="flex flex-column justify-content-center align-items-center">
-        <img src="../../../../assets/images/icon/no-data.svg" alt="Illustration" class="mb-3 my-4"
-          style="width: 150px; height: 150px" />
-
-        <h5 class="text-secondary">Add Section & Test</h5>
-        <p class="text-secondary">
-          Start adding section & test to build your test series.
-        </p>
-
-        
+      <div class="w-full relative overflow-hidden	h-10rem">
+          <img src="../../../../assets/images/course-tham.png">
+          <h5 class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full absolute bottom-0 p-3 text-white-alpha-90 ">UI/UX Design</h5>
       </div>
-      
-          <div class="mt-3 flex justify-content-center align-items-center">
-            <!-- <p-button class="create-button border-round-md mr-3" (onClick)="addSection()" icon="pi pi-plus"
-                label="Add Section"></p-button> -->
-      
-              <p-button
-                  class="create-button border-round-md my-2" (click)="addTest()"
-                  icon="pi pi-plus"
-                  label="Add Test"
-                ></p-button>
-          </div>
-    </div>
 
-    }
+      <ul class="sidebar-menu course-s-b">
+          <li [ngClass]="{'active': currentActiveTab === 'curriculum'}">
+              <a href="javascript:void(0)" (click)="courseTabs('curriculum')" routerLinkActive="active"
+                  class="sidebar-header flex align-items-center px-3">
+                  <span> Curriculum </span>
+                  <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+              </a>
+          </li>
+          <!-- <li>
+              <a href="javascript:void(0)" routerLinkActive="active"
+                  class="sidebar-header flex align-items-center px-3">
+                  <span> Certificates </span>
+                  <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+              </a>
+          </li> -->
+          <li [ngClass]="{'active': currentActiveTab === 'information'}">
+              <a href="javascript:void(0)" (click)="courseTabs('information')" routerLinkActive="active"
+                  class="sidebar-header flex align-items-center px-3">
+                  <span> Information </span>
+                  <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+              </a>
+          </li>
+
+          
+
+          <li [ngClass]="{'active': currentActiveTab === 'pricing'}">
+              <a href="javascript:void(0)" (click)="courseTabs('pricing')" routerLinkActive="active"
+                  class="sidebar-header flex align-items-center px-3">
+                  <span> Pricing </span>
+                  <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+              </a>
+          </li>
+          <li [ngClass]="{'active': currentActiveTab === 'coupons'}">
+              <a href="javascript:void(0)" (click)="courseTabs('coupons')" routerLinkActive="active"
+                  class="sidebar-header flex align-items-center px-3">
+                  <span> Coupons </span>
+                  <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+              </a>
+          </li>
+          <li [ngClass]="{'active': currentActiveTab === 'comment'}">
+              <a href="javascript:void(0)" (click)="courseTabs('comment')" routerLinkActive="active"
+                  class="sidebar-header flex align-items-center px-3">
+                  <span> Comment </span>
+                  <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+              </a>
+          </li>
+          <li [ngClass]="{'active': currentActiveTab === 'student'}">
+              <a href="javascript:void(0)" (click)="courseTabs('student')" routerLinkActive="active"
+                  class="sidebar-header flex align-items-center px-3">
+                  <span> Students </span>
+                  <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+              </a>
+          </li>
+
+      </ul>
   </div>
+
+
+  <div class="col-10 bg-white content-body">
+      @switch (currentActiveTab) {
+      @case ("curriculum") {
+      <app-test-curriculum></app-test-curriculum>
+      }
+      <!-- @case ("information") {
+      <app-course-information></app-course-information>
+      }
+      @case ("pricing") {
+      <app-course-pricing></app-course-pricing>
+      }
+      @case ("coupons") {
+      <app-course-coupons></app-course-coupons>
+      }
+      @case ("comment") {
+      <app-course-comment></app-course-comment>
+      }
+      @case ("student") {
+      <app-course-students></app-course-students>
+      } -->
+      }
+
+  </div>
+
+
+
 </div>
-
-<!-- <p-sidebar [(visible)]="addSectionValue" position="right" styleClass="w-30rem">
-  <app-create-test-lession></app-create-test-lession>
-</p-sidebar> -->
-
-
-<p-sidebar [(visible)]="isAddTest" position="right" styleClass="w-30rem">
-  <app-create-main-test></app-create-main-test>
-</p-sidebar>

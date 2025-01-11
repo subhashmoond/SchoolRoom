@@ -22,7 +22,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
   selector: 'app-add-coupon',
   standalone: true,
   imports: [TableModule, ToastModule, InputTextModule, ToolbarModule, KeyFilterModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, 
-    CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule, CheckboxModule, InputSwitchModule],
+    CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule, CheckboxModule, 
+  ],
   providers : [MessageService],
   templateUrl: './add-coupon.component.html',
   styleUrl: './add-coupon.component.css'

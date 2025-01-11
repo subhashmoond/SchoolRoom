@@ -50,5 +50,99 @@ export class TestService {
     return this._dataService.post(url, payload);
   }
 
+  deleteTestSeries(id : any){
+    const url = `${environment.basePath}content/test/${id}`;
+    return this._dataService.delete(url);
+  }
+
+  addSuperSet(id : any, payload : any){
+    const url = `${environment.basePath}ts/${id}/set-create/`;
+    return this._dataService.post(url, payload);
+  }
+
+  getSuperSetAndSubSetData(id : any){
+    const url = `${environment.basePath}ts/${id}/super-sub/list`;
+    return this._dataService.get(url);
+  }
+
+  addSubSet(id : any, payload : any){
+    const url = `${environment.basePath}ts/${id}/subset-create/`;
+    return this._dataService.post(url, payload)
+  }
+
+  editSubSet(testId : any, id : any, payload : any){
+    const url = `${environment.basePath}ts/${testId}/sub-set/${id}/details`;
+    return this._dataService.post(url, payload)
+  }
+
+  editSuperSet(testId : any, id : any, payload : any){
+    const url = `${environment.basePath}ts/${testId}/set/${id}/details`;
+    return this._dataService.post(url, payload);
+  }
+
+  deleteSubSet(testId : any, subsetId : any){
+    const url = `${environment.basePath}ts/${testId}/sub-set/${subsetId}/details`;
+    return this._dataService.delete(url)
+  }
+
+  deleteSuperSet(testId : any, superSet : any){
+    const url = `${environment.basePath}ts/${testId}/set/${superSet}/details`;
+    return this._dataService.delete(url)
+  }
+
+  createTest(payload : any){
+    const url = `${environment.basePath}ts/test/create/`;
+    return this._dataService.post(url, payload);
+  }
+
+  getTestList(subsetId : any){
+    const url = `${environment.basePath}ts/sub-set/${subsetId}/test-list/`;
+    return this._dataService.get(url);
+  }
+
+  createSection(id : any, payload : any){
+    const url = `${environment.basePath}ts/${id}/section/create`;
+    return this._dataService.post(url, payload);
+  }
+
+  createQestionTestSerice(payload : any){
+    const url = `${environment.basePath}ts/question/create/`;
+    return this._dataService.post(url, payload)
+  }
+
+  deleteTestSeriesSection(sectionId : any){
+    const url = `${environment.basePath}ts/section/${sectionId}/`;
+    return this._dataService.delete(url)
+  }
+
+  editTestSeriesSection(sectionId : any, payload : any){
+    const url = `${environment.basePath}ts/section/${sectionId}/`
+    return this._dataService.post(url, payload)
+  }
+
+  getQuestionList(sectionId : any, testId : any){
+    const url = `${environment.basePath}ts/test/${testId}/section/${sectionId}/`;
+    return this._dataService.get(url);
+  }
+
+  deleteQuestionTestSeries(payload : any){
+    const url = `${environment.basePath}ts/question-delete/`;
+    return this._dataService.post(url, payload)
+  }
+
+  testDetailTestSeries(testId : any){
+    const url = `${environment.basePath}ts/test/${testId}/`;
+    return this._dataService.get(url);
+  }
+
+  testSettingTestSeries(testId: any, payload : any){
+    const url = `${environment.basePath}ts/test/${testId}/`;
+    return this._dataService.post(url, payload);
+  }
+
+  deleteTestTestSeries(testId : any){
+    const url = `${environment.basePath}ts/test/${testId}/`;
+    return this._dataService.delete(url);
+  }
 
 }

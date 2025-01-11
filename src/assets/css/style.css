@@ -3072,3 +3072,14 @@ body p-checkbox {
 .test-contents{
     padding : 0px 7rem 0px 7rem
 }
+
+.questions-design {
+    background-color: #fbfbfe;
+    border: 1px solid #edeef6;
+    padding: 19px;
+    border-radius: 5px;
+    color : #4b5563;
+}
+.questions-design ul{
+    list-style: none;
+}

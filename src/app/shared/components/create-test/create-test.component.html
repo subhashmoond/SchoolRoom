@@ -1,73 +1,70 @@
 <div class="w-full">
-    
-    <h4 class="m-0 pt-4 font-semibold line-height-sm">Add Quiz</h4>
-    <form [formGroup]="addTestForm">
-      <!-- Title Input -->
-      <div class="grid mt-3">
-        <div class="col-12">
-          <div class="w-full">
-            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">
-              Title <span>*</span>
-            </label>
-            <input class="w-full capitalize" pInputText formControlName="title" placeholder="Enter title"
-               required />
-          </div>
-        </div>
-  
-  
-        <div class="col-12">
-          <div class="w-full">
-            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Total Time
-            </label>
 
-            <!-- <p-datepicker inputId="calendar-timeonly"  [timeOnly]="true"></p-datepicker> -->
-
-
-            <input class="w-full block text-sm" type="time" pKeyFilter="num" pInputText formControlName="totaltime" placeholder="0"
-              required="true" />
-          </div>
+  <h4 class="m-0 pt-4 font-semibold line-height-sm">Add Quiz</h4>
+  <form [formGroup]="addTestForm">
+    <!-- Title Input -->
+    <div class="grid mt-3">
+      <div class="col-12">
+        <div class="w-full">
+          <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">
+            Title <span>*</span>
+          </label>
+          <input class="w-full capitalize" pInputText formControlName="title" placeholder="Enter title" required />
         </div>
-  
-        <div class="col-12">
-          <div class="w-full">
-            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Max Marks
-            </label>
-            <input class="w-full block text-sm" pKeyFilter="num" pInputText formControlName="maxmark" placeholder="0"
-              required="true" />
-          </div>
-        </div>
-  
-  
-        <div class="col-12">
-          <div class="w-full">
-            <p-checkbox formControlName="supportanotherlang" [binary]="true"></p-checkbox>
-            <label class="ml-2">Another Language Support</label>
-          </div>
-        </div>
-  
-        @if(addTestForm.get('supportanotherlang')?.value === true){
-        <div class="col-12">
-          <div class="w-full">
-            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Custom Language
-            </label>
-            <input class="w-full block text-sm" pInputText formControlName="another_lang" placeholder="Enter name"
-              required="true" />
-          </div>
-        </div>
-        }
-  
       </div>
-  
-      <!-- Buttons -->
 
-      <div
-                class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
-                <button pButton pRipple label="Cancel"
-                    class="primary-border-button px-5 mr-3 text-sm"></button>
-                <button type="submit" pButton pRipple label="Submit" (click)="submit()"
-                    class="primary-button px-5 text-sm"></button>
-            </div>
 
-    </form>
-    
-  </div>
+      <div class="col-12">
+        <div class="w-full">
+          <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Total Time
+          </label>
+
+          <!-- <p-datepicker inputId="calendar-timeonly"  [timeOnly]="true"></p-datepicker> -->
+
+
+          <input class="w-full block text-sm" type="time" pKeyFilter="num" pInputText formControlName="totaltime"
+            placeholder="0" required="true" />
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="w-full">
+          <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Max Marks
+          </label>
+          <input class="w-full block text-sm" pKeyFilter="num" pInputText formControlName="maxmark" placeholder="0"
+            required="true" />
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <div class="w-full">
+          <p-checkbox formControlName="supportanotherlang" [binary]="true"></p-checkbox>
+          <label class="ml-2">Another Language Support</label>
+        </div>
+      </div>
+
+      @if(addTestForm.get('supportanotherlang')?.value === true){
+      <div class="col-12">
+        <div class="w-full">
+          <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Custom Language
+          </label>
+          <input class="w-full block text-sm" pInputText formControlName="another_lang" placeholder="Enter name"
+            required="true" />
+        </div>
+      </div>
+      }
+
+    </div>
+
+    <!-- Buttons -->
+
+    <div class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+      <button pButton pRipple label="Cancel" class="primary-border-button px-5 mr-3 text-sm"></button>
+      <button type="submit" pButton pRipple label="Submit" (click)="submit()"
+        class="primary-button px-5 text-sm"></button>
+    </div>
+
+  </form>
+
+</div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { AccordionModule } from 'primeng/accordion';
@@ -13,35 +13,77 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToolbarModule } from 'primeng/toolbar';
-import { ListTestLessionComponent } from './list-test-lession/list-test-lession.component';
-import { CreateTestLessionComponent } from './create-test-lession/create-test-lession.component';
 import { CreateMainTestComponent } from '../main-test/create-main-test/create-main-test.component';
+import { ActivatedRoute } from '@angular/router';
+import { CoursesService } from '../../../core/services/courses.service';
+import { CommonModule } from '@angular/common';
+import { FileUploadModule } from 'primeng/fileupload';
+import { SharedService } from '../../../shared/services/shared.service';
+import { TestCurriculumComponent } from './test-curriculum/test-curriculum.component';
 
 @Component({
   selector: 'app-test-course',
   standalone: true,
-  imports: [TableModule, InputTextModule, EditorModule, FormsModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, 
-    SkeletonModule, TagModule, AccordionModule, ListTestLessionComponent, CreateTestLessionComponent, CreateMainTestComponent],
+  imports: [FileUploadModule, CommonModule, ToolbarModule, TestCurriculumComponent],
   templateUrl: './test-course.component.html',
   styleUrl: './test-course.component.css'
 })
 export class TestCourseComponent {
 
-  // addSectionValue : boolean = false;
-  isAddTest : boolean = false;
+  @ViewChild('fileUpload', { static: false }) fileUpload: any;
 
-  constructor(){}
 
-  ngOnInit(){
+  selectedFile: File | null = null;
+  selectedFileObjectUrl: string | null = null;
+  currentActiveTab : string = 'curriculum';
+
+  constructor(private _sharedService : SharedService){}
+
+  async ngOnInit(){
+    // this.currentActiveTab =  "curriculum"
+
+    this._sharedService.settoggleButtonValue(false);
+
+    this._sharedService.getGeminiAPI().subscribe(res => {
+      console.log(res, "course content datas")
+    });
+
+
   }
 
-  addTest(){
-    this.isAddTest = true
+
+  onFileSelect(event: any) {
+    if (event.files.length > 0) {
+      this.selectedFile = event.files[0];
+      if (this.selectedFile) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.selectedFileObjectUrl = e.target?.result as string;
+        };
+        reader.readAsDataURL(this.selectedFile);
+      }
+    }
   }
 
-  // drag and drop ul/ li
+  profileImageRemove() {
+    this.selectedFileObjectUrl = null;
+    this.fileUpload.clear();
+  }
 
-  instructions: string = '';
+  
+  courseTabs(type : any){
+    this.currentActiveTab = type;
+
+
+    console.log(this.currentActiveTab, "curent tab name ")
+  }
+
+
+
+  ngOnDestroy(){
+    this._sharedService.settoggleButtonValue(true);
+  }
+
 
 
 }

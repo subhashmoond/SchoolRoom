@@ -54,7 +54,7 @@ export class CoursesComponent {
   }
 
   getCourses() {
-    this._coursesService.getCoursesList().subscribe(res => {
+    this._coursesService.getCourseListTypeWais('Live').subscribe(res => {
       this.coursesList = res.courses
       this.mainLoader = false
     })

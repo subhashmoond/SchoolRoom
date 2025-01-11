@@ -1,0 +1,227 @@
+<p-toast />
+
+<div class="cards">
+
+  <div class="grid client-dashborad-header mb-4 align-items-center">
+    <div class="col-6">
+      <h4 class="subheading-color">Test Curriculum</h4>
+    </div>
+    <div class="col-6 flex justify-content-end	">
+      <button type="submit" (click)="preview()" pButton pRipple label="Preview"
+        class="secondary-button px-6 text-sm"></button>
+    </div>
+
+  </div>
+
+  @if(!isLoader){
+  <div class="grid curiculam-h">
+
+    <div class="col-12">
+
+      <form [formGroup]="addForm">
+        <div formArrayName="courses">
+          @for(course of courses.controls; track course; let i = $index){
+          <div [attr.draggable]="true" [formGroupName]="i"
+            class="content-card mb-4">
+            <div class="p-3">
+              <img class="icon-img-11" src="../../../../../assets/images/chapter-icon.svg">
+            </div>
+            <div class="border-left">
+              <div class="grid grid-nogutter client-dashborad-header align-items-center border-bottom-light p-3 card">
+                <div class="col-6 flex">
+                  <div>
+                    @if(isSavedCourses[i]){
+                    <input class="w-full" pInputText formControlName="items" />
+                    }
+                    @else{
+                    <h5 class="capitalize">{{ course.get('items')?.value }}</h5>
+                    }
+                  </div>
+                </div>
+                <div class="col-6 flex justify-content-end">
+                  @if(isSavedCourses[i]){
+                  <button type="button" pButton label="Save" (click)="saveCourse(i)"
+                    class="secondary-button px-6 text-sm"></button>
+                  }
+                  @else{
+                    
+                   
+                  <!-- <p-button class="mr-2 curriculum-btn border-round-md button-shadow">Publish All</p-button> -->
+
+                  <div class="card flex justify-content-center">
+
+                    <div class="action-menu">
+                      <button class="three-dot-button" (click)="toggleDropdown(i)">
+                        ⋮
+                      </button>
+
+                      @if(openDropdownId === i){
+                      <div class="dropdown-menu">
+
+                        @if(!isSavedCourses[i]){
+                        <button type="button" (click)="enableEditCourse(i)" pButton class="bg-white curriculum-btn"> <i
+                            class="pi pi-pencil"></i> Edit</button>
+                        }
+
+                        <button type="button" (click)="deleteCourse(i)" pButton style="color: red;" class="bg-white danger-button"><i
+                            class="pi pi-trash" ></i> Delete</button>
+                      </div>
+                      }
+                    </div>
+
+
+
+
+                    <!-- <p-menu #menu [model]="actionMenu" [popup]="true" (click)="selectedMenu($event)" />
+                    <p-button class="curriculum-btn" (onClick)="menu.toggle($event)" icon="pi pi-ellipsis-v" /> -->
+                  </div>
+
+                  }
+                </div>
+              </div>
+
+              <div formArrayName="lessons">
+                @for(lesson of lessons(i).controls; track lesson; let j = $index){
+                <div [formGroupName]="j"
+                  class="grid grid-nogutter p-3 border-bottom-light">
+                  <div class="col-6 flex">
+                    <div class="p-1 pr-3">
+                      <img class="icon-img-11" src="../../../../../assets/images/chapter-icon.svg">
+                    </div>
+
+                    <div>
+                      @if(isEditLesson[i][j]){
+                      <input class="w-full" pInputText formControlName="items" />
+                      }
+                      @else{
+                      <h6 class="underline" (click)="lessonDetail(lesson.get('id')?.value)">{{
+                        lesson.get('items')?.value }}</h6>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-6 flex justify-content-end">
+                    @if(isEditLesson[i][j]){
+                    <button type="button" pRipple label="Save" pButton
+                      (click)="saveLesson(i, j, course.get('id')?.value)"
+                      class="secondary-button curriculum-btn px-6 text-sm"></button>
+                    }
+                    @else{
+
+                    <!-- @if(lesson.get('isPublished')?.value){
+
+                    <button type="button" (click)="unpublishLesson(lesson)" pButton label="Unpublish"
+                      class="outline-icon-button edit-button curriculum-btn mr-2"></button>
+
+                    }
+                    @else{
+
+                    <button type="button" (click)="publishLesson(lesson)" pButton label="Publish"
+                      class="outline-icon-button edit-button curriculum-btn mr-2"></button>
+
+                    } -->
+
+                    <div class="card flex justify-content-center">
+                      <div class="action-menu">
+                        <button class="three-dot-button" (click)="toggleDropdownLesson(j)">
+                          ⋮
+                        </button>
+
+                        @if(openDropdownIdLession === j){
+                        <div class="dropdown-menu">
+
+                          @if(!isEditLesson[i][j]){
+                          <button type="button" (click)="enableEditLesson(i, j)" pButton class="bg-white curriculum-btn"> <i
+                              class="pi pi-pencil"></i> Edit</button>
+                          }
+
+                          <button type="button" style="color: red;" (click)="deleteLesson(i, j, course.get('id')?.value)" pButton
+                            class="bg-white danger-button"><i class="pi pi-trash"></i> Delete</button>
+
+
+                        </div>
+                        }
+                      </div>
+
+                     
+                    </div>
+
+                    }
+                  </div>
+                </div>
+                }
+                <!-- Subject Card Footer (Action) -->
+                <div
+                  class="grid grid-nogutter client-dashborad-header align-items-center border-bottom-light p-3 border-top-light">
+                  <div class="col-6">
+
+                    <p-button icon="pi pi-plus" (click)="addLesson(i)" label="New Sub Set" [text]="true"
+                      severity="secondary"></p-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </form>
+
+    </div>
+
+    <div class="col-12">
+      <span
+        class="cursor-pointer border-dashed w-full h-5rem m-2 surface-overlay font-bold flex align-items-center justify-content-start pl-4"
+        (click)="addCourse()">
+        <i class="pi pi-plus mr-2 font-bold"></i>
+        Create New Set
+      </span>
+    </div>
+
+
+  </div>
+  }
+  @else {
+  <div class="grid">
+
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+    <div class="col-12">
+      <p-skeleton height="3rem" styleClass="mb-2" />
+    </div>
+
+  </div>
+
+  }
+
+
+
+</div>
+
+
+<!-- <div cdkDropList (cdkDropListDropped)="drop($event)">
+  @for(item of items; track item){
+    <div class="item" cdkDrag>{{ item }}</div>
+  }
+</div> -->

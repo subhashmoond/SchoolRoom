@@ -33,7 +33,7 @@ export class CoursesService {
   }
 
   deleteCourse(payload : any){
-    const url = `${environment.basePath}course/delete`;
+    const url = `${environment.basePath}course/delete/`;
     return this._dataService.post(url, payload)
   }
 

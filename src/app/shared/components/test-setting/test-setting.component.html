@@ -1,0 +1,129 @@
+<div class="w-full">
+
+    <h4 class="m-0 pt-4 font-semibold line-height-sm"> Test Setting </h4>
+    <form [formGroup]="testSettingForm">
+        <!-- Title Input -->
+        <div class="grid mt-3">
+            <div class="col-12">
+                <div class="w-full">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">
+                        Title 
+                    </label>
+                    <input class="w-full capitalize" pInputText formControlName="title" placeholder="Enter title"
+                        required />
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="w-full">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">
+                        Total Time 
+                    </label>
+                    <input class="w-full capitalize" pInputText formControlName="totalTime" placeholder="e.g 30 mints"
+                        required />
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="w-full">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">
+                        Total Marks 
+                    </label>
+                    <input class="w-full capitalize" pInputText formControlName="totalmarks" placeholder="e.g 60 mints"
+                        required />
+                </div>
+            </div>
+
+
+            <div class="col-12">
+                <div class="w-full">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Test No Re-Attempt
+                    </label>
+
+                    <input class="w-full capitalize" pInputText formControlName="reattempt" placeholder="e.g 4"
+                        required />
+
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="w-full">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Passing marks
+                    </label>
+
+                    <input class="w-full capitalize" pInputText formControlName="passsingmark" placeholder="e.g 50"
+                        required />
+
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="w-full">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Min Submit Time</label>
+
+                    <input class="w-full capitalize" pInputText formControlName="minsubmittime" placeholder="e.g 50 Mint"
+                        required />
+
+                </div>
+            </div>
+
+            <div class="col-12 mt-2">
+                <div class="w-full formgrid grid permissions">
+                    <label class="col-10 inline-block">Publish</label>
+                    <p-inputSwitch formControlName="publish" class="col-2" />
+                </div>
+            </div>
+
+            <div class="col-12 mt-2">
+                <div class="w-full formgrid grid permissions">
+                    <label class="col-10 inline-block">Rank Show</label>
+                    <p-inputSwitch formControlName="rankshow" class="col-2" />
+                </div>
+            </div>
+
+
+            <div class="col-12 mt-2">
+                <div class="w-full formgrid grid permissions">
+                    <label class="col-10 inline-block">LeaderBoard </label>
+                    <p-inputSwitch formControlName="leaderborad" class="col-2" />
+                </div>
+            </div>
+
+
+            <div class="col-12 mt-2">
+                <div class="w-full formgrid grid permissions">
+                    <label class="col-10 inline-block">Section Wise Time</label>
+                    <p-inputSwitch formControlName="sectionwisetime" class="col-2" />
+                </div>
+            </div>
+
+
+            <div class="col-12 mt-2">
+                <div class="w-full formgrid grid permissions">
+                    <label class="col-10 inline-block">Instructions Show</label>
+                    <p-inputSwitch formControlName="instruction" class="col-2" />
+                </div>
+            </div>
+
+            <div class="col-12 mt-2">
+                <div class="w-full formgrid grid permissions">
+                    <label class="col-10 inline-block">Answer Show</label>
+                    <p-inputSwitch formControlName="answershow" class="col-2" />
+                </div>
+            </div>
+            
+
+        </div>
+
+        <!-- Buttons -->
+
+        <div
+            class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+            <button pButton pRipple label="Cancel" class="primary-border-button px-5 mr-3 text-sm"></button>
+            <button type="submit" pButton pRipple label="Submit" (click)="saveSetting()"
+                class="primary-button px-5 text-sm"></button>
+        </div>
+
+    </form>
+
+</div>

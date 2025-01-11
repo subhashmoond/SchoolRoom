@@ -21,6 +21,8 @@ export class CreateTestComponent {
   @Input() lessonId: any;
   @Input() contentTypes: any;
   @Input() contentId: any;
+  @Input() moduleName : any;
+  @Input() subSetId : any;
 
   @Output() closeSideBar = new EventEmitter<any>();
 
@@ -52,26 +54,55 @@ export class CreateTestComponent {
 
     let totalMinutes = hours * 60 + minutes;
 
-    const payload = {
-      "lesson_id": this.lessonId,
-      "title": this.addTestForm.get('title')?.value,
-      "totalTime": totalMinutes,
-      "totalMarks": this.addTestForm.get('maxmark')?.value,
-      "support_another_lang": this.addTestForm.get('supportanotherlang')?.value,
-      "another_lang": this.addTestForm.get('another_lang')?.value,
-      "lang": "Hindi",
-      "type": "Quiz"
+
+    if(this.moduleName === "testseries"){
+
+      const payload = {
+        "set_id": this.subSetId,
+        "title": this.addTestForm.get('title')?.value,
+        "totalTime": totalMinutes,
+        "totalMarks": this.addTestForm.get('maxmark')?.value,
+        "support_another_lang": this.addTestForm.get('supportanotherlang')?.value,
+        "another_lang": this.addTestForm.get('another_lang')?.value,
+        "lang": "English",
+        "types": "Test"
+      }
+  
+      this._testService.createTest(payload).subscribe((res: any) => {
+  
+        if (res.status === true) {
+          this.closeSideBar.emit(false)
+        } else {
+          this._messageService.add({ severity: 'error', detail: 'Error ' });
+        }
+  
+      })
+
+    }else{
+
+      const payload = {
+        "lesson_id": this.lessonId,
+        "title": this.addTestForm.get('title')?.value,
+        "totalTime": totalMinutes,
+        "totalMarks": this.addTestForm.get('maxmark')?.value,
+        "support_another_lang": this.addTestForm.get('supportanotherlang')?.value,
+        "another_lang": this.addTestForm.get('another_lang')?.value,
+        "lang": "Hindi",
+        "type": "Quiz"
+      }
+  
+      this._testService.addTest(payload).subscribe((res: any) => {
+  
+        if (res.status === true) {
+          this.closeSideBar.emit(false)
+        } else {
+          this._messageService.add({ severity: 'error', detail: 'Error ' });
+        }
+  
+      })
+
     }
 
-    this._testService.addTest(payload).subscribe((res: any) => {
-
-      if (res.status === true) {
-        this.closeSideBar.emit(false)
-      } else {
-        this._messageService.add({ severity: 'error', detail: 'Error ' });
-      }
-
-    })
 
 
   }
