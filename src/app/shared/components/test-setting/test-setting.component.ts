@@ -65,7 +65,7 @@ export class TestSettingComponent {
         sectionwisetime : this.testDetails.question_section_wise,
         instruction : this.testDetails.show_instructions,
         answershow : this.testDetails.ans_show,
-        totalTime : this.testDetails,
+        totalTime : this.testDetails.total_time,
         totalmarks : this.testDetails.totalMarks
       })
       // leaderborad : this.testDetails.,
@@ -93,6 +93,8 @@ export class TestSettingComponent {
       // "show_leaderboard": this.testSettingForm.get('')?.value,
       "section_time_wise": this.testSettingForm.get('sectionwisetime')?.value
     }
+
+    console.log(payload, "seting payload log")
 
     this._testService.testSettingTestSeries(this.testIdForSetting, payload).subscribe((res : any) => {
 

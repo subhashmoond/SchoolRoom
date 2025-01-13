@@ -277,7 +277,7 @@ export class CoursesService {
 
   // Get Course List Review 
   getCourseReviewList(courseId: any) {
-    const url = `${environment.basePath}course/1/reviews?limit=2&skip=0&status=approved`;
+    const url = `${environment.basePath}course/${courseId}/reviews?limit=2&skip=0&status=all`;
     return this._dataService.get(url);
   }
 

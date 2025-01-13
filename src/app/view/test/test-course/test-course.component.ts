@@ -20,11 +20,16 @@ import { CommonModule } from '@angular/common';
 import { FileUploadModule } from 'primeng/fileupload';
 import { SharedService } from '../../../shared/services/shared.service';
 import { TestCurriculumComponent } from './test-curriculum/test-curriculum.component';
+import { CourseInformationComponent } from "../../courses/course-content/course-information/course-information.component";
+import { CoursePricingComponent } from "../../courses/course-content/course-pricing/course-pricing.component";
+import { CourseCouponsComponent } from "../../courses/course-content/course-coupons/course-coupons.component";
+import { CourseCommentComponent } from "../../courses/course-content/course-comment/course-comment.component";
+import { CourseStudentsComponent } from "../../courses/course-content/course-students/course-students.component";
 
 @Component({
   selector: 'app-test-course',
   standalone: true,
-  imports: [FileUploadModule, CommonModule, ToolbarModule, TestCurriculumComponent],
+  imports: [FileUploadModule, CommonModule, ToolbarModule, TestCurriculumComponent, CourseInformationComponent, CoursePricingComponent, CourseCouponsComponent, CourseCommentComponent, CourseStudentsComponent],
   templateUrl: './test-course.component.html',
   styleUrl: './test-course.component.css'
 })
