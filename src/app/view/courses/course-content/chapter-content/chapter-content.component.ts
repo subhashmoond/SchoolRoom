@@ -28,13 +28,16 @@ import { CreateTestSectionComponent } from '../../../../shared/components/create
 import { TestContentComponent } from './test-content/test-content.component';
 import { LiveClassComponent } from './live-class/live-class.component';
 import { TagModule } from 'primeng/tag';
+import { LiveClassService } from '../../../../core/services/live-class.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-chapter-content',
   standalone: true,
   imports: [AccordionModule, ButtonModule, FormsModule, SplitButtonModule, EditorModule, DialogModule, PanelModule, AvatarModule, UploadContentComponent, SidebarModule,
-    ImageComponent, UploadVideoComponent, AudioComponent, PdfViewerModule, ReSourceComponent, RippleModule, SkeletonModule, YoutubeVideoComponent, TextComponent, MenuModule, 
+    ImageComponent, UploadVideoComponent, AudioComponent, PdfViewerModule, ReSourceComponent, RippleModule, SkeletonModule, YoutubeVideoComponent, TextComponent, MenuModule,
     ToastModule, SidebarModule, CreateTestComponent, CreateTestSectionComponent, TestContentComponent, LiveClassComponent, TagModule ],
+  providers: [MessageService],
   templateUrl: './chapter-content.component.html',
   styleUrl: './chapter-content.component.css'
 })
@@ -51,22 +54,23 @@ export class ChapterContentComponent {
   isResource: boolean = false;
   isYoutubevideo: boolean = false;
   isAudio: boolean = false;
-  isQuiz : boolean = false;
-  isSectionDetailPage : boolean = false;
-  isAddSection : boolean = false;
-  isLiveClass : boolean = false;
+  isQuiz: boolean = false;
+  isSectionDetailPage: boolean = false;
+  isAddSection: boolean = false;
+  isLiveClass: boolean = false;
   contentId: any;
-  isLoader : boolean = true;
+  isLoader: boolean = true;
 
   chapterDataList: any;
   hideHeader: boolean = true;
-  testId : any
+  testId: any;
+  editLiveData : any;
 
   items: { label?: string; icon?: string; separator?: boolean }[] = [];
 
   pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
 
-  constructor(private _coursesService: CoursesService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router : Router) {
+  constructor(private _coursesService: CoursesService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router, private _liveClassService: LiveClassService, private _messageService: MessageService) {
     this.route.paramMap.subscribe(params => {
       this.lessonId = params.get('id')!;
     });
@@ -101,14 +105,14 @@ export class ChapterContentComponent {
 
   getChapterContent() {
     this.isLoader = true
-    this._coursesService.getChapterContentList(this.coursesId, this.lessonId).subscribe((res : any) => {
+    this._coursesService.getChapterContentList(this.coursesId, this.lessonId).subscribe((res: any) => {
       this.isLoader = false
       this.chapterDataList = res.data
     })
   }
 
 
-  joinLive(){
+  joinLive() {
     this.router.navigate(['/join/youtubelive']);
   }
 
@@ -118,7 +122,7 @@ export class ChapterContentComponent {
   }
 
   uploadContent(data?: any, contentType?: any, action?: any) {
-   
+
     if (data) {
       this.contentId = data._id;
     } else {
@@ -157,14 +161,14 @@ export class ChapterContentComponent {
       case 'resource':
         this.isResource = true
         break;
-      
+
       case 'Quiz':
         this.isQuiz = true
         break;
 
       case 'Live Class':
         this.isLiveClass = true
-        break; 
+        break;
     }
     this.addContentPopup = false
 
@@ -210,7 +214,7 @@ export class ChapterContentComponent {
     }
   }
 
-  closeSideBar(event : any){
+  closeSideBar(event: any) {
     this.getChapterContent();
     this.isText = false;
     this.isResource = false;
@@ -220,9 +224,10 @@ export class ChapterContentComponent {
     this.uploadContents = false;
     this.isVideo = false;
     this.isQuiz = false;
+    this.isLiveClass = false;
   }
 
-  closeSideBarliveClass(){
+  closeSideBarliveClass() {
     this.isLiveClass = false;
 
   }
@@ -233,19 +238,55 @@ export class ChapterContentComponent {
     })
   }
 
-  deleteTest(id : any){
-    
+  deleteTest(id: any) {
+
   }
 
 
-  sectionDetailPage(data : any){
+  sectionDetailPage(data: any) {
     this.isSectionDetailPage = true;
     this.testId = data._id
   }
 
-  createSection(data : any){
+  createSection(data: any) {
     this.isAddSection = true;
     this.testId = data._id
+  }
+
+  editlive(data: any) {
+    console.log(data, "edit live data ");
+    this.editLiveData = data;
+    this.isLiveClass = true;
+  }
+
+
+  deletelive(data: any) {
+
+    console.log(data, "delete live ")
+
+    if (data.type === "youtubelive") {
+
+      this._liveClassService.deleteYouTubeLive(data._id).subscribe((res: any) => {
+        if (res.status === true) {
+          this._messageService.add({ severity: 'success', detail: 'Live Deleted Successfully! ' });
+          this.getChapterContent()
+
+        }
+      })
+
+    }
+    if (data.type === "linkewiselive") {
+
+      this._liveClassService.deleteLinkLive(data._id).subscribe((res: any) => {
+        if (res.status === true) {
+          this._messageService.add({ severity: 'success', detail: 'Live Deleted Successfully! ' });
+          this.getChapterContent()
+
+        }
+      })
+
+    }
+
   }
 
 }

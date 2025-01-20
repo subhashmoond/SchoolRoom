@@ -213,6 +213,15 @@ a {
     background: #473289 !important;
 }
 
+.primary-gradient-bg{
+    background : linear-gradient(to bottom,#f1f2f6,#c9c6c6)
+}
+.primary-hover-color:hover{
+    color: #473289;
+}
+
+
+
 .primary-secondary-bg {
     background-color: #EFEAFB;
 }
@@ -3141,4 +3150,12 @@ body p-checkbox {
 
 .side-h{
     height: calc(100vh - 105px) !important;
+}
+.gray-color{
+    color: #616161;
+}
+
+
+.live-card:hover h4{
+    color: #473289;
 }

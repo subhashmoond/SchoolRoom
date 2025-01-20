@@ -1,4 +1,4 @@
-<!-- <p-toast /> -->
+<p-toast />
 <div class="grid client-dashborad-header mb-4 align-items-center">
     <div class="col-6">
         <h4 class="subheading-color">Lesson Name</h4>
@@ -34,10 +34,23 @@
 
     <div class="grid">
         @for(data of chapterDataList.live; track data){
-        <div class="col-3" (click)="joinLive()">
-            <div class="live-card p-4 border-round-md cursor-pointer" style="background-image: url('../../../assets/images/course-tham.png');">
-                <p-tag severity="success" value="Live" />
-                <h4 class="mt-6 mb-2 text-white capitalize white-space-nowrap overflow-hidden text-overflow-ellipsis ">
+        <div class="col-3" >
+            <div class="live-card p-4 border-round-md cursor-pointer primary-gradient-bg">
+                <p-tag severity="success" value="Live" class="w-full" />
+                <span  style="float: right;">
+                    <i class="pi pi-pencil text-color cursor-pointer" (click)="editlive(data)"></i>
+                    <i class="ml-3 pi pi-trash cursor-pointer" style="color : red" (click)="deletelive(data)"></i>
+                </span>
+
+                @if(data.type === "youtubelive"){
+                    <p class="text-color w-full mt-4 p-0 m-0"> <i class="pi pi-youtube" style="color : red"></i> YouTube live </p>
+                }
+
+                @if(data.type === "linkewiselive"){
+                    <p class="text-color w-full mt-4 p-0 m-0"> <i class="pi pi-link text-primary-purple font-bold"></i> link live </p>
+                }
+
+                <h4 (click)="joinLive()" class="mt-2 primary-hover-color gray-color capitalize white-space-nowrap overflow-hidden text-overflow-ellipsis">
                     {{data.title}}</h4>
             </div>
         </div>
@@ -423,7 +436,7 @@
 
     @if(isLiveClass){
     <p-sidebar [(visible)]="isLiveClass" position="right" [style]="{width:'40%'}">
-        <app-live-class [lessonId]="lessonId" (closeSideBar)="closeSideBarliveClass()"></app-live-class>
+        <app-live-class [editLiveData]="editLiveData" (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" (closeSideBar)="closeSideBarliveClass()"></app-live-class>
     </p-sidebar>
     }
 
