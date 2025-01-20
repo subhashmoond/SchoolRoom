@@ -4,11 +4,14 @@ import { DashbordComponent } from './view/dashbord/dashbord.component';
 import { authGuard } from './core/auth/auth.guard';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { PreviewCoursesComponent } from './view/courses/preview-courses/preview-courses.component';
+import { JoinYoutubeLiveClassComponent } from './view/courses/course-content/chapter-content/live-class/join-youtube-live-class/join-youtube-live-class.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginMainComponent},
     {path : 'course/preview/:id', component : PreviewCoursesComponent},
+
+    {path : 'join/youtubelive', component : JoinYoutubeLiveClassComponent},
 
     
 

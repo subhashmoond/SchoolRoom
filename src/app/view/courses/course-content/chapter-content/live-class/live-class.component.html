@@ -1,0 +1,71 @@
+<div class="w-full">
+
+    <h4 class="m-0 pt-4 font-semibold line-height-sm">Add Live Class</h4>
+
+
+    @if(typeList){
+    <div class="grid mt-3">
+        <div class="col-12">
+            <div class="live-class-type border-round-md flex" (click)="selectedLiveClassType('youtube-live')">
+                <i class="pi pi-youtube" style="font-size: 2rem"></i>
+                <div class="ml-4">
+                    <h5 class="text-xl font-normal text-color mb-2">YouTube Live Class</h5>
+                    <span class="text-sm text-color-secondary">Your learners can attend live classes on your website and
+                        apps. An
+                        unlimited number of learners can join your live class.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+    @if(isYouTubeLiveClass){
+
+    <form [formGroup]="youtubeLiveForm">
+
+        <div class="grid mt-3">
+
+            <div class="col-12">
+                <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Youtube Live Link</label>
+                <input class="w-full capitalize" type="text" pInputText formControlName="path"
+                    placeholder="Enter youtube live link" />
+                <span>eg. https://www.youtube.com/live/Msderfv</span>
+            </div>
+
+
+            <div class="col-12">
+                <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Title</label>
+                <input class="w-full capitalize" type="text" pInputText formControlName="title" />
+            </div>
+
+
+            <div class="col-12">
+                <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> From </label>
+                <p-calendar formControlName="from" [showTime]="true" />
+            </div>
+
+
+            <div class="col-12">
+                <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> To </label>
+                <p-calendar formControlName="to" [showTime]="true" />
+            </div>
+
+
+        </div>
+
+        <div
+            class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+            <button pButton pRipple label="Cancel" class="primary-border-button px-5 mr-3 text-sm"></button>
+            <button type="submit" (click)="submit()" pButton pRipple label="Add" class="primary-button px-5 text-sm"></button>
+        </div>
+
+    </form>
+
+
+    }
+
+
+
+
+
+</div>

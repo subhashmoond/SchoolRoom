@@ -3083,3 +3083,62 @@ body p-checkbox {
 .questions-design ul{
     list-style: none;
 }
+
+.live-class-type{
+        padding: 20px;
+        border: 1px solid #edeef6;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.live-card {
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.live-body{
+    height: calc(100vh - 60px);
+}
+
+.live-footer{
+    height: 60px;
+}
+
+.live-footer ul{
+    display: flex;
+    list-style: none;
+    padding: 0px;
+    justify-content: center;
+    color: #fff;
+    margin: 0px;
+}
+
+.live-footer ul li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #fff;
+    padding: 9px 15px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.leave-button{
+    border: 2px solid red !important;
+    background: red;
+    color: #fff;
+}
+
+.live-leave {
+    transform: rotate(140deg) !important;
+}
+
+.live-side-bar{
+    background-color: #fff;
+    
+}
+
+.side-h{
+    height: calc(100vh - 105px) !important;
+}

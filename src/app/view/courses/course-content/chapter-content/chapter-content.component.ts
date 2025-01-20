@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AccordionModule } from 'primeng/accordion';
 import { CoursesService } from '../../../../core/services/courses.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { DialogModule } from 'primeng/dialog';
@@ -26,13 +26,15 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CreateTestComponent } from '../../../../shared/components/create-test/create-test.component';
 import { CreateTestSectionComponent } from '../../../../shared/components/create-test-section/create-test-section.component';
 import { TestContentComponent } from './test-content/test-content.component';
+import { LiveClassComponent } from './live-class/live-class.component';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-chapter-content',
   standalone: true,
   imports: [AccordionModule, ButtonModule, FormsModule, SplitButtonModule, EditorModule, DialogModule, PanelModule, AvatarModule, UploadContentComponent, SidebarModule,
     ImageComponent, UploadVideoComponent, AudioComponent, PdfViewerModule, ReSourceComponent, RippleModule, SkeletonModule, YoutubeVideoComponent, TextComponent, MenuModule, 
-    ToastModule, SidebarModule, CreateTestComponent, CreateTestSectionComponent, TestContentComponent ],
+    ToastModule, SidebarModule, CreateTestComponent, CreateTestSectionComponent, TestContentComponent, LiveClassComponent, TagModule ],
   templateUrl: './chapter-content.component.html',
   styleUrl: './chapter-content.component.css'
 })
@@ -51,11 +53,12 @@ export class ChapterContentComponent {
   isAudio: boolean = false;
   isQuiz : boolean = false;
   isSectionDetailPage : boolean = false;
-  isAddSection : boolean = false
+  isAddSection : boolean = false;
+  isLiveClass : boolean = false;
   contentId: any;
   isLoader : boolean = true;
 
-  chapterDataList: any[] = [];
+  chapterDataList: any;
   hideHeader: boolean = true;
   testId : any
 
@@ -63,7 +66,7 @@ export class ChapterContentComponent {
 
   pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
 
-  constructor(private _coursesService: CoursesService, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+  constructor(private _coursesService: CoursesService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router : Router) {
     this.route.paramMap.subscribe(params => {
       this.lessonId = params.get('id')!;
     });
@@ -98,10 +101,15 @@ export class ChapterContentComponent {
 
   getChapterContent() {
     this.isLoader = true
-    this._coursesService.getChapterContentList(this.coursesId, this.lessonId).subscribe(res => {
+    this._coursesService.getChapterContentList(this.coursesId, this.lessonId).subscribe((res : any) => {
       this.isLoader = false
       this.chapterDataList = res.data
     })
+  }
+
+
+  joinLive(){
+    this.router.navigate(['/join/youtubelive']);
   }
 
 
@@ -153,6 +161,10 @@ export class ChapterContentComponent {
       case 'Quiz':
         this.isQuiz = true
         break;
+
+      case 'Live Class':
+        this.isLiveClass = true
+        break; 
     }
     this.addContentPopup = false
 
@@ -208,6 +220,11 @@ export class ChapterContentComponent {
     this.uploadContents = false;
     this.isVideo = false;
     this.isQuiz = false;
+  }
+
+  closeSideBarliveClass(){
+    this.isLiveClass = false;
+
   }
 
   deleteContent(id: any) {
