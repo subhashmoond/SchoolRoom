@@ -46,7 +46,7 @@
 <div class="grid surface-600">
     <div class="col-9 surface-600 live-body flex justify-content-center align-items-center ">
         <span class="w-full px-4">
-            <iframe [src]="getYouTubeEmbedUrl('https://www.youtube.com/watch?v=GnhopMytzQU')" width="100%"
+            <iframe [src]="getYouTubeEmbedUrl(videoData.url)" width="100%"
                 height="540px" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
@@ -65,6 +65,27 @@
             </div>
 
 
+            <div class="chat-main overflow-scroll" #chatContainer style="height: 87%;">
+
+                @for(data of messagesList; track data){
+
+                <div class="chat-card flex mb-2">
+
+                    <span class="flex">
+                        <p-avatar label="{{data.user_name?.charAt(0).toUpperCase()}}" styleClass="mr-2"
+                            [style]="{ 'background-color': '#dee9fc', color: '#1a2551' }" shape="circle" />
+                        <span class="text-primary-purple text-base font-bold capitalize"> {{data.user_name}} </span>
+                    </span>
+
+                    <span class="ml-2 text-xs">
+                       {{data.message}}
+                    </span>
+
+                </div>
+
+                }
+
+            </div>
 
 
             <div class="flex fixed p-bottom-100">
@@ -72,7 +93,7 @@
                     required="true" />
 
                 <span class="absolute right-0 cursor-pointer">
-                    <i class="pi pi-send mr-3 mt-3"></i>
+                    <i class="pi pi-send mr-3 mt-3" (click)="sendMessage()"></i>
                 </span>
             </div>
 

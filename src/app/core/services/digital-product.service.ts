@@ -40,4 +40,18 @@ export class DigitalProductService {
         return this._dataService.get(url)
       }
 
+
+      updateThumbnailandTitle(payload : any){
+        const url = `${environment.basePath}digital-product/thumbnail/update/`;
+        return this._dataService.post(url, payload)
+      }
+
+
+      deleteThumbnail(thumbnailId : any){
+        const url = `${environment.basePath}digital-product/${thumbnailId}/thumbnail/`;
+        return this._dataService.delete(url);
+      }
+
+
+
 }

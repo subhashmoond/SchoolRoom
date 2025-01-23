@@ -36,55 +36,80 @@ export class AddDigitalProductComponent {
   @Output() closepopup = new EventEmitter<any>();
 
   digitalProductForm!: FormGroup;
-  addDigitalProductForm! : FormGroup;
-  addProductFile! : FormGroup;
-  addDecThumb! : FormGroup;
+  addDigitalProductForm!: FormGroup;
+  addProductFile!: FormGroup;
+  addDecThumb!: FormGroup;
+  addProductPrice!: FormGroup;
   activeIndex: number = 0;
   items: any;
-  selectedFileObjectUrl: any;
-  fileUpload: any;
-  selectedFile: any;
-  maxFileSizeLimit = 10 * 1024 * 1024;
+  // selectedFileObjectUrl: any;
+  // fileUpload: any;
+  // selectedFile: any;
+  // maxFileSizeLimit = 10 * 1024 * 1024;
 
 
-  selectedFileObjectUrlTH: any;
-  fileUploadTH: any;
-  selectedFileTH: any;
-  maxFileSizeLimitTH = 10 * 1024 * 1024;
+  // selectedFileObjectUrlTH: any;
+  // fileUploadTH: any;
+  // selectedFileTH: any;
+  // maxFileSizeLimitTH = 10 * 1024 * 1024;
 
   productType: any;
   activeIndexType: number = 0;
-  productId : any;
-  typeProduct : any
+  productId: any;
+  typeProduct: any
+
+  isAdvancedSetting: boolean = false;
+  sharePresentes: any;
 
 
-  constructor(private _router: Router, private _fb: FormBuilder, private _messageService: MessageService, private translate: TranslateService, private _sharedService: SharedService, private _digitalService: DigitalProductService) { }
+  productLable = [
+    { name: 'New Arrivals' },
+    { name: 'Pre-order' },
+    { name: 'Teacher Pick' },
+    { name: 'Trending' },
+    { name: 'Bestselling' },
+  ]
+
+
+  constructor(private router: Router, private _fb: FormBuilder, private _messageService: MessageService, private translate: TranslateService, private _sharedService: SharedService, private _digitalService: DigitalProductService) { }
 
 
   ngOnInit() {
 
     this.getDigitalProductType();
 
+
+
     this.activeIndex = 0
 
     this.items = [
       { label: 'Digital Product' },
-      { label: 'Document and Price' },
+      { label: 'Price' },
       { label: 'Thumbnail and Description' }
     ];
 
     this.addDigitalProductForm = this._fb.group({
-      title : ['', Validators.required]
+      title: ['', Validators.required],
+      productlabel: ['']
     })
 
     this.addProductFile = this._fb.group({
-      fileName : ['', Validators.required],
-      ispaid : [true],
-      price : []
+      fileName: ['', Validators.required],
+      edtition: [],
+      isDownload: []
+    })
+
+    this.addProductPrice = this._fb.group({
+      ispaid: [true],
+      price: [],
+      mrp: [],
+      timelimit: [],
+      pgfees: []
     })
 
     this.addDecThumb = this._fb.group({
-      description : []
+      description: [],
+      edtition: []
     })
 
   }
@@ -96,51 +121,87 @@ export class AddDigitalProductComponent {
   }
 
 
-  setActive(index: number, data : any) {
+
+  setActive(index: number, data: any) {
     this.activeIndexType = index;
     this.typeProduct = data.id
 
   }
 
 
+  advancedSetting() {
+    this.getInstituteSharePresentes();
+    this.isAdvancedSetting = !this.isAdvancedSetting;
 
+  }
 
-  onFileSelect(event: any) {
-    if (event.files.length > 0) {
-      this.selectedFile = event.files[0];
-      if (this.selectedFile) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.selectedFileObjectUrl = e.target?.result as string;
-        };
-        reader.readAsDataURL(this.selectedFile);
-      }
+  getInstituteSharePresentes() {
+
+    const payload = {
+      "code": 50002
     }
+
+    this._sharedService.getInstituteSharePresentes(payload).subscribe(res => {
+      this.sharePresentes = res
+      this.calculatePrice()
+    })
+
   }
 
-  profileImageRemove() {
-    this.selectedFileObjectUrl = null;
-    this.fileUpload.clear();
+
+  calculatePrice() {
+    debugger
+    const productPrice: number = this.addProductPrice.get('price')?.value; // Product price
+    const platformChargePercentage: number = this.sharePresentes.platform_charge_in_presentes; // Platform charge in percentage
+
+    // Calculate platform charge
+    const platformCharge = (platformChargePercentage / 100) * productPrice;
+
+    // Calculate final amounts
+    const amountReceived = productPrice - platformCharge;
+    const finalPayablePrice = productPrice; // Learners pay the product price
+
+    console.log(`Final payable price by learners is ₹ ${finalPayablePrice} and you’ll receive ₹ ${amountReceived}`);
   }
 
 
-  onThamFileSelect(event: any) {
-    if (event.files.length > 0) {
-      this.selectedFileTH = event.files[0];
-      if (this.selectedFileTH) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.selectedFileObjectUrlTH = e.target?.result as string;
-        };
-        reader.readAsDataURL(this.selectedFileTH);
-      }
-    }
-  }
 
-  profileThamRemove() {
-    this.selectedFileObjectUrlTH = null;
-    this.fileUploadTH.clear();
-  }
+  // onFileSelect(event: any) {
+  //   if (event.files.length > 0) {
+  //     this.selectedFile = event.files[0];
+  //     if (this.selectedFile) {
+  //       const reader = new FileReader();
+  //       reader.onload = (e) => {
+  //         this.selectedFileObjectUrl = e.target?.result as string;
+  //       };
+  //       reader.readAsDataURL(this.selectedFile);
+  //     }
+  //   }
+  // }
+
+  // profileImageRemove() {
+  //   this.selectedFileObjectUrl = null;
+  //   this.fileUpload.clear();
+  // }
+
+
+  // onThamFileSelect(event: any) {
+  //   if (event.files.length > 0) {
+  //     this.selectedFileTH = event.files[0];
+  //     if (this.selectedFileTH) {
+  //       const reader = new FileReader();
+  //       reader.onload = (e) => {
+  //         this.selectedFileObjectUrlTH = e.target?.result as string;
+  //       };
+  //       reader.readAsDataURL(this.selectedFileTH);
+  //     }
+  //   }
+  // }
+
+  // profileThamRemove() {
+  //   this.selectedFileObjectUrlTH = null;
+  //   this.fileUploadTH.clear();
+  // }
 
 
 
@@ -150,46 +211,69 @@ export class AddDigitalProductComponent {
 
 
 
-    if(this.activeIndex === 0){
-      
-      const formData = new FormData();
-      formData.append('title', this.addDigitalProductForm.get('title')?.value )
-      formData.append('productTypeId', this.typeProduct )
+    if (this.activeIndex === 0) {
 
-      this._digitalService.addDigitalProdcut(formData).subscribe((res:any) => {
-        if(res.status === true){
+      const formData = new FormData();
+      formData.append('title', this.addDigitalProductForm.get('title')?.value)
+      formData.append('productTypeId', this.typeProduct)
+      formData.append('label', this.addDigitalProductForm.get('productlabel')?.value)
+
+      this._digitalService.addDigitalProdcut(formData).subscribe((res: any) => {
+        if (res.status === true) {
           this.productId = res._id
           this.next();
-        }else{
-        this._messageService.add({ severity: 'error', detail: res.messages });
+        } else {
+          this._messageService.add({ severity: 'error', detail: res.messages });
         }
       });
 
     }
 
-    if(this.activeIndex === 1){
+    // if(this.activeIndex === 1){
 
-      const formData = new FormData();
-      formData.append('fileName', this.addProductFile.get('fileName')?.value )
-      // formData.append('filePath', this.selectedFileObjectUrl )
-      formData.append('isPaid', this.addProductFile.get('ispaid')?.value )
-      formData.append('mrp', this.addProductFile.get('price')?.value )
-      formData.append('price', this.addProductFile.get('price')?.value )
+    //   const formData = new FormData();
+    //   formData.append('fileName', this.addProductFile.get('fileName')?.value )
+    //   formData.append('filePath', this.selectedFile )
+    //   formData.append('isDownloadable', this.addProductFile.get('isDownload')?.value )
+    //   formData.append('edition', this.addProductFile.get('edtition')?.value )
 
-      this._digitalService.updateDigitalProduct(this.productId, formData).subscribe(res => {
+    //   this._digitalService.updateDigitalProduct(this.productId, formData).subscribe(res => {
+    //     this.next();
+    //   })
+
+    // }
+
+    if (this.activeIndex === 1) {
+
+      const payload = {
+
+        "isPaid": this.addProductPrice.get('ispaid')?.value,
+        "mrp": this.addProductPrice.get('mrp')?.value,
+        "price": this.addProductPrice.get('price')?.value,
+        "isDownloadable": false,
+        "is_life_time_access": this.addProductPrice.get('timelimit')?.value,
+        "validity": this.addProductPrice.get('days')?.value,
+        "allow_handling_fees": this.addProductPrice.get('pgfees')?.value
+        // "allow_handling_fees"
+      }
+
+      this._digitalService.updateDigitalProduct(this.productId, payload).subscribe(res => {
         this.next();
       })
 
     }
 
-    if(this.activeIndex === 2){
+    if (this.activeIndex === 2) {
 
-      const formData = new FormData();
-      formData.append('describe', this.addDecThumb.get('description')?.value )
-      // formData.append('thumbnail', this.selectedFileObjectUrlTH )
+      const payload = {
+        "describe": this.addDecThumb.get('description')?.value,
+        "edition": this.addDecThumb.get('edtition')?.value,
+      }
 
-      this._digitalService.updateDigitalProduct(this.productId, formData).subscribe(res => {
-        this.closepopup.emit(false)
+      this._digitalService.updateDigitalProduct(this.productId, payload).subscribe(res => {
+        
+    this.router.navigate(['digital-product/detail', this.productId])
+
       })
 
     }

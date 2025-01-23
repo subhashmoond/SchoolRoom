@@ -1,0 +1,19 @@
+ul{
+    list-style: none;
+    padding: 10px;
+    margin: 0px;
+    line-height: 37px;
+    color: #666;
+}
+ul li{
+    cursor: pointer;
+    font-weight: 500;
+}
+ul li:hover{
+    color: #473289;
+}
+
+.right-side-col{
+    height: calc(100vh - 54px);
+    overflow: scroll;
+}

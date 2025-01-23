@@ -30,6 +30,7 @@ import { LiveClassComponent } from './live-class/live-class.component';
 import { TagModule } from 'primeng/tag';
 import { LiveClassService } from '../../../../core/services/live-class.service';
 import { MessageService } from 'primeng/api';
+import { LiveWebsocketService } from '../../../../core/services/live-websocket.service';
 
 @Component({
   selector: 'app-chapter-content',
@@ -70,7 +71,7 @@ export class ChapterContentComponent {
 
   pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
 
-  constructor(private _coursesService: CoursesService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router, private _liveClassService: LiveClassService, private _messageService: MessageService) {
+  constructor(private _coursesService: CoursesService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router, private _liveClassService: LiveClassService, private _messageService: MessageService, private _liveWebsocketService : LiveWebsocketService) {
     this.route.paramMap.subscribe(params => {
       this.lessonId = params.get('id')!;
     });
@@ -112,8 +113,9 @@ export class ChapterContentComponent {
   }
 
 
-  joinLive() {
+  joinLive(data : any) {
     this.router.navigate(['/join/youtubelive']);
+    this._liveWebsocketService.openLiveClass(data)
   }
 
 

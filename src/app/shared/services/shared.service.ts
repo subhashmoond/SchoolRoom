@@ -38,5 +38,9 @@ export class SharedService {
     return this._dataService.post(url, payload)
   }
 
+  getInstituteSharePresentes(payload : any){
+    const url = `${environment.basePath}educator/institute-share-presentes/`;
+    return this._dataService.post(url, payload)
+  }
 
 }
