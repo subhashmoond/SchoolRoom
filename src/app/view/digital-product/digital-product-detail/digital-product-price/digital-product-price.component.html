@@ -1,0 +1,83 @@
+<div class="cards">
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-12">
+            <h4 class="subheading-color">Pricing</h4>
+            <p>Edit the price.</p>
+        </div>
+    </div>
+</div>
+
+<form [formGroup]="addProductPrice">
+    <div class="grid mt-4">
+
+        <div class="col-12 formgrid grid permissions">
+            <p-inputSwitch formControlName="ispaid" class="mr-2" />
+            <span class="text-lg inline-block">This is a paid course</span>
+        </div>
+
+        <!-- <div class="col-12 flex">
+                    <p-checkbox formControlName="ispaid" [binary]="true"></p-checkbox>
+                    <label class="ml-2">This is a paid course</label>
+             </div> -->
+
+        <div class="col-12 mt-4" *ngIf="addProductPrice.get('ispaid')?.value">
+            <div class="grid">
+                <div class="col-6">
+                    <label class="w-full mb-1  font-medium line-height-exsm inline-block"> Price of the product*</label>
+                    <input class="w-full" pKeyFilter="num" pInputText placeholder="e.g 2999"
+                        formControlName="mrp" />
+                </div>
+
+                <div class="col-6">
+                    <label class="w-full mb-1  font-medium line-height-exsm inline-block">Discounted price for the audience*</label>
+                    <input class="w-full" pKeyFilter="num" pInputText placeholder="2000"
+                        formControlName="price" />
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12 mb-4">
+            <span class="text-base text-primary-purple cursor-pointer " (click)="advancedSetting()"> Advanced settings </span>
+
+            @if(isAdvancedSetting){
+
+            <div class="col-12 flex mt-4 mb-2">
+                <p-checkbox formControlName="pgfees" [binary]="true"></p-checkbox>
+                <label class="ml-2">Pass internet handling fees (PG fees) to learners (₹0)</label>
+            </div>
+
+
+            <div class="p-4 surface-50">
+                <span> <i class="pi pi-sun mr-2"></i> Final payable price by learners is ₹ 0.00 and you’ll receive ₹ 0.00  </span>
+            </div>
+
+            }
+
+        </div>
+
+
+        <div class="col-12 formgrid grid permissions">
+            <p-inputSwitch formControlName="timelimit" class="mr-2" />
+            <span class="text-lg inline-block">This is available to purchase for a limited time period</span>
+        </div>
+
+        @if(addProductPrice.get('timelimit')?.value){
+
+        <div class="col-12">
+            <label class="w-full mb-1  font-medium line-height-exsm inline-block">Buy before days</label>
+            <input class="w-full" pKeyFilter="num" pInputText placeholder="e.g 365" formControlName="days" />
+        </div>
+
+        }
+
+
+
+
+    </div>
+</form>
+
+<div class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+            <button pButton pRipple label="Cancel" class="primary-border-button px-5 mr-3 text-sm"></button>
+            <button type="submit" pButton pRipple label="Save" class="primary-button px-5 text-sm"></button>
+        </div>

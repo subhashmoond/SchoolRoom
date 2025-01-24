@@ -43,4 +43,10 @@ export class SharedService {
     return this._dataService.post(url, payload)
   }
 
+
+  getLangList(){
+    const url = `${environment.basePath}educator/language/enum/`;
+    return this._dataService.get(url)
+  }
+
 }

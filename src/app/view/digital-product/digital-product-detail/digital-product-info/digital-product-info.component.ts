@@ -17,116 +17,108 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { DigitalProductService } from '../../../../core/services/digital-product.service';
+import { SharedService } from '../../../../shared/services/shared.service';
 
 @Component({
   selector: 'app-digital-product-info',
   standalone: true,
-   imports: [ReactiveFormsModule, InputGroupModule, InputGroupAddonModule, DropdownModule, CardModule, KeyFilterModule,
-      ButtonModule, InputTextModule, FileUploadModule, ToastModule, CheckboxModule, MessagesModule, EditorModule,
-      CommonModule, InputSwitchModule],
-    providers: [MessageService],
+  imports: [ReactiveFormsModule, InputGroupModule, InputGroupAddonModule, DropdownModule, CardModule, KeyFilterModule,
+    ButtonModule, InputTextModule, FileUploadModule, ToastModule, CheckboxModule, MessagesModule, EditorModule,
+    CommonModule, InputSwitchModule],
+  providers: [MessageService],
   templateUrl: './digital-product-info.component.html',
   styleUrl: './digital-product-info.component.css'
 })
 export class DigitalProductInfoComponent {
 
 
-  
-    updateDigitalProductForm!: FormGroup;
-    productType: any;
-  
-    selectedFileObjectUrlTH: any;
-    fileUploadTH: any;
-    selectedFileTH: any;
-    maxFileSizeLimitTH = 10 * 1024 * 1024;
-  
-    selectedFileObjectUrl: any;
-    fileUpload: any;
-    selectedFile: any;
-    maxFileSizeLimit = 10 * 1024 * 1024;
-  
-    digitalProductId: any
-  
-    constructor(private _router: Router, private _fb: FormBuilder, private _messageService: MessageService, private _digitalService: DigitalProductService, private route: ActivatedRoute,) {
-      this.route.paramMap.subscribe(params => {
-        this.digitalProductId = params.get('id')!;
-      });
-    }
-  
-  
-    ngOnInit() {
-  
-      this.getProductDetailById();
-      this.getDigitalProductType();
-  
-      this.updateDigitalProductForm = this._fb.group({
-        name: [],
-        typeproduct: [],
-        description: []
+
+  updateDigitalProductForm!: FormGroup;
+  productType: any;
+
+
+  digitalProductId: any
+  langlist: any;
+
+  constructor(private _router: Router, private _fb: FormBuilder, private _messageService: MessageService, private _digitalService: DigitalProductService, private route: ActivatedRoute, private _sharedService: SharedService) {
+    this.route.paramMap.subscribe(params => {
+      this.digitalProductId = params.get('id')!;
+    });
+  }
+
+
+  ngOnInit() {
+
+    this.getProductDetailById();
+    this.getDigitalProductType();
+    this.getLangData();
+
+    this.updateDigitalProductForm = this._fb.group({
+      name: [],
+      edition: [],
+      label: [],
+      language: [],
+      lifetime: [],
+      validitydays: [],
+      description: []
+    })
+
+  }
+
+  getLangData() {
+    this._sharedService.getLangList().subscribe(res => {
+      this.langlist = res
+    })
+  }
+
+  getDigitalProductType() {
+    this._digitalService.getProductType().subscribe(res => {
+      this.productType = res.data
+    })
+  }
+
+  getProductDetailById() {
+    this._digitalService.getDigitalProductDetailById(this.digitalProductId).subscribe(res => {
+
+      this.updateDigitalProductForm.patchValue({
+        name: res.data.name,
+        description: res.data.description,
+        edition: res.data.edition,
+        label: res.data.label,
+        language: res.data.language,
+        lifetime: res.data.isLifeTimeAccess,
+        // ispublished: res.data.is_published,
+        // validitydays: [],
       })
-  
+
+    })
+  }
+
+
+  // End content upload methode
+
+  updateProduct() {
+
+    console.log(this.updateDigitalProductForm.value, "info form datas ")
+
+    const formValue = this.updateDigitalProductForm.value
+
+    const payload = {
+      "title": formValue.name,
+      "is_life_time_access": formValue.lifetime,
+      // "validity":200,
+      "edition": formValue.edition,
+      "aboutus": formValue.description,
+      "label": formValue.label,
+      "language": formValue.language,
     }
-  
-    getDigitalProductType() {
-      this._digitalService.getProductType().subscribe(res => {
-        this.productType = res.data
-      })
-    }
-  
-    getProductDetailById() {
-      this._digitalService.getDigitalProductDetailById(this.digitalProductId).subscribe(res => {
-  
-        this.updateDigitalProductForm.patchValue({
-          name: res.data.name,
-          typeproduct: res.data.productType.id,
-          description: res.data.description 
-        })
-  
-      })
-    }
-  
-    onThamFileSelect(event: any) {
-      if (event.files.length > 0) {
-        this.selectedFileTH = event.files[0];
-        if (this.selectedFileTH) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedFileObjectUrlTH = e.target?.result as string;
-          };
-          reader.readAsDataURL(this.selectedFileTH);
-        }
-      }
-    }
-  
-    profileThamRemove() {
-      this.selectedFileObjectUrlTH = null;
-      this.fileUploadTH.clear();
-    }
-  
-  
-    // Document File Upload 
-    onFileSelect(event: any) {
-      if (event.files.length > 0) {
-        this.selectedFile = event.files[0];
-        if (this.selectedFile) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedFileObjectUrl = e.target?.result as string;
-          };
-          reader.readAsDataURL(this.selectedFile);
-        }
-      }
-    }
-  
-    profileImageRemove() {
-      this.selectedFileObjectUrl = null;
-      this.fileUpload.clear();
-    }
-  
-    // End content upload methode
-  
-    updateProduct(){
+
+    this._digitalService.updateDigitalProduct(this.digitalProductId, payload).subscribe( res => {
       
-    }
+      this.getProductDetailById();
+
+    })
+
+  }
 
 }

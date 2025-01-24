@@ -52,6 +52,26 @@ export class DigitalProductService {
         return this._dataService.delete(url);
       }
 
+      addDigitalProductContent(productId : any, payload : any){
+        const url = `${environment.basePath}digital-product/${productId}/content/add`;
+        return this._dataService.post(url, payload);
+      }
 
+      getDigitalProductContentList(productId : any){
+        const url = `${environment.basePath}digital-product/${productId}/content-list/`;
+        return this._dataService.get(url);
+      }
+
+      allowReviews(productId : any, payload : any){
+        const url = `${environment.basePath}digital-product/${productId}/review-status/update`;
+        return this._dataService.post(url, payload)
+      }
+
+      deleteDigitalProductContent(digitalId : any, contentId : any){
+        const url = `${environment.basePath}digital-product/${digitalId}/content/${contentId}/`;
+        return this._dataService.delete(url);
+      }
+
+      
 
 }

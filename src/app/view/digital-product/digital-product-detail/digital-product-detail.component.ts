@@ -10,12 +10,15 @@ import { DigitalProductInfoComponent } from './digital-product-info/digital-prod
 import { DialogModule } from 'primeng/dialog';
 import { UpdateThumbnailComponent } from './update-thumbnail/update-thumbnail.component';
 import { SharedService } from '../../../shared/services/shared.service';
+import { ContentComponent } from './content/content.component';
+import { DigitalProductPriceComponent } from './digital-product-price/digital-product-price.component';
+import { DigitalProductReviewComponent } from './digital-product-review/digital-product-review.component';
+import { DigitalProductFaqComponent } from './digital-product-faq/digital-product-faq.component';
 
 @Component({
   selector: 'app-digital-product-detail',
   standalone: true,
-  imports: [
-    ButtonModule, ToastModule, MessagesModule, CommonModule, DigitalProductInfoComponent, DialogModule, UpdateThumbnailComponent ],
+  imports: [ButtonModule, ToastModule, MessagesModule, CommonModule, DigitalProductInfoComponent, DialogModule, UpdateThumbnailComponent, ContentComponent, DigitalProductPriceComponent, DigitalProductReviewComponent, DigitalProductFaqComponent ],
   providers: [MessageService],
   templateUrl: './digital-product-detail.component.html',
   styleUrl: './digital-product-detail.component.css'
@@ -24,7 +27,7 @@ export class DigitalProductDetailComponent {
 
   digitalProductId : any;
 
-  currentActiveTab : string = 'info';
+  currentActiveTab : string = 'content';
   isThumbnail : boolean = false;
 
   digitalProductDetail : any;

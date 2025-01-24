@@ -1,0 +1,15 @@
+<p-toast></p-toast>
+
+
+<div class="cards">
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-6">
+            <h4 class="subheading-color">Review</h4>
+            <p>Edit the review.</p>
+        </div>
+
+        <div class="col-6 flex justify-content-end">
+            <p-inputSwitch [(ngModel)]="allowReview" (onChange)="onAllowReviewChange()" [trueValue]="true" />
+        </div>
+    </div>
+</div>

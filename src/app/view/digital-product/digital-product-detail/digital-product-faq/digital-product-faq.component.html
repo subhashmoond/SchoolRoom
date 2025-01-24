@@ -1,0 +1,63 @@
+<p-toast></p-toast>
+
+
+<div class="cards">
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-6">
+            <h4 class="subheading-color">Frequently Asked Questions</h4>
+            <p>Edit the Frequently Asked Questions.</p>
+        </div>
+
+        <div class="col-6 flex justify-content-end ">
+            <button pButton pRipple (click)="addFaq()" label="Add"
+            class="primary-border-button px-5 mr-3 text-sm"></button>
+        </div>
+    </div>
+</div>
+
+
+<form [formGroup]="faqFrom">
+    <p-table [value]="faq.controls" [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true"
+             scrollHeight="37.938rem" selectionMode="single" class="client-data-table" formArrayName="faq">
+      <!-- Table Header -->
+      <ng-template pTemplate="header" class="p-4">
+        <tr class="w-full flex flex-wrap">
+          <th style="width:30%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">QUESTION</th>
+          <th style="width:60%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">ANSWER</th>
+          <th style="width:10%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color"></th>
+        </tr>
+      </ng-template>
+  
+      <!-- Table Body -->
+      <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+        <tr class="w-full flex flex-wrap" [formGroupName]="rowIndex">
+          <td style="width: 30%;word-break:break-all;" class="pl-4">
+            <input class="w-full capitalize mb-3" pInputText placeholder="Enter question"
+                   formControlName="question" required />
+          </td>
+          <td style="width: 60%;" class="pl-4">
+            <input class="w-full capitalize mb-3" pInputText placeholder="Enter answer"
+                   formControlName="answer" required />
+          </td>
+
+          <td style="width: 10%;" class="pl-4">
+            <i class="pi pi-trash" style="color : red" (click)="deleteFaq(rowIndex)" ></i>
+          </td>
+
+        </tr>
+      </ng-template>
+  
+      <!-- Empty Message -->
+      <ng-template pTemplate="emptymessage">
+        <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+          <img src="../../../../../assets/images/icon/no-data.svg">
+          <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Frequently Asked Questions </p>
+          <p class="text-primary-purple text-base font-normal mt-2">There is no Frequently Asked Questions to show you right now.</p>
+        </div>
+      </ng-template>
+    </p-table>
+  </form>
+  
+  <div class="col-12 flex justify-content-end  bg-white pb-6 pt-4">
+    <button (click)="saveFaq()" type="button" pButton pRipple label="Save" class="secondary-button px-6"></button>
+</div>

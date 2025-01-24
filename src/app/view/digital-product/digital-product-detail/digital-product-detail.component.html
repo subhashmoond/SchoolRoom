@@ -75,6 +75,18 @@
         @case ("info") {
         <app-digital-product-info></app-digital-product-info>
         }
+        @case("content"){
+            <app-content [digitalProductDetail]="digitalProductDetail" ></app-content>
+        }
+        @case("price"){
+            <app-digital-product-price></app-digital-product-price>
+        }
+        @case("review"){
+            <app-digital-product-review [digitalProductDetail]="digitalProductDetail" ></app-digital-product-review>
+        }
+        @case("faq"){
+            <app-digital-product-faq></app-digital-product-faq>
+        }
 
         }
 
