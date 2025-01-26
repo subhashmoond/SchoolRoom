@@ -19,42 +19,73 @@ import { ToastModule } from 'primeng/toast';
 @Component({
   selector: 'app-digital-product-review',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, ToastModule, RadioButtonModule, InputSwitchModule, SkeletonModule, ReactiveFormsModule, FormsModule, CheckboxModule, CalendarModule, MessagesModule],
+  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, ToastModule, RadioButtonModule, InputSwitchModule, SkeletonModule, ReactiveFormsModule, FormsModule, CheckboxModule, CalendarModule, MessagesModule, TableModule],
   providers: [MessageService],
   templateUrl: './digital-product-review.component.html',
   styleUrl: './digital-product-review.component.css'
 })
 export class DigitalProductReviewComponent {
 
-  @Input() digitalProductDetail : any;
+  @Input() digitalProductDetail: any;
 
-  allowReview : any;
-  digitalProductId : any;
+  allowReview: any;
+  digitalProductId: any;
+  reviewlist: any;
 
-  constructor( private _digitalService : DigitalProductService, private route : ActivatedRoute, private _messageService: MessageService){
+  constructor(private _digitalService: DigitalProductService, private route: ActivatedRoute, private _messageService: MessageService) {
     this.route.paramMap.subscribe(params => {
       this.digitalProductId = params.get('id')!;
     });
   }
 
 
-  ngOnInit(){
+  ngOnInit() {
 
-    this.allowReview = this.digitalProductDetail.allowReviews
+    this.allowReview = this.digitalProductDetail.allowReviews;
+
+    this.getProductlist();
 
   }
 
-  onAllowReviewChange(){
+  getProductlist() {
+
+    this._digitalService.getReviewlist(this.digitalProductId).subscribe(res => {
+      this.reviewlist = res.reviews
+    })
+
+  }
+
+  onAllowReviewChange() {
     console.log(this.allowReview, "Allow reviews")
 
     const payload = {
       "allowCourseReview": this.allowReview
-  }
+    }
 
-    this._digitalService.allowReviews(this.digitalProductId, payload).subscribe((res : any) => {
-      if(res.status === true){
+    this._digitalService.allowReviews(this.digitalProductId, payload).subscribe((res: any) => {
+      if (res.status === true) {
         this._messageService.add({ severity: 'success', detail: 'Review Allow Successfull !' });
       }
+    })
+
+  }
+
+  approveReview(reviewId: any, type: any) {
+    let payload = {};
+    if (type === "Approve") {
+      payload = {
+        "status": "approved"
+      }
+    }
+
+    if (type === "Reject") {
+      payload = {
+        "status": "rejected"
+      }
+    }
+
+    this._digitalService.reviewApprove(this.digitalProductId, reviewId, payload).subscribe(res => {
+      this._messageService.add({ severity: 'success', detail: 'Status Updated Successfull !' });
     })
 
   }

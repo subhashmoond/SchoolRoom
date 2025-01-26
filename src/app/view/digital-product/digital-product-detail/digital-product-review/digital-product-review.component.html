@@ -13,3 +13,52 @@
         </div>
     </div>
 </div>
+
+
+<p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
+    selectionMode="single" class="client-data-table" [value]="reviewlist">
+
+    <ng-template pTemplate="header" class="p-4">
+        <tr class="w-full flex flex-wrap">
+            <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">User Name</th>
+            <th style="width:40%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Review text</th>
+            <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Status</th>
+            <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Action</th>
+        </tr>
+
+    </ng-template>
+
+    <ng-template pTemplate="body" let-data>
+        <tr class="w-full flex flex-wrap">
+            <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
+                {{data.userName}}
+            </td>
+            <td style="width: 40%;word-break:break-all;" class="pl-4">
+                {{data.review_text}}
+            </td>
+
+            <td style="width: 20%;word-break:break-all;" class="pl-4">
+                {{data.reviewStatus}}
+            </td>
+
+            <td style="width: 20%;" class="pl-4">
+                @if(data.reviewStatus === "pending"){
+
+                    <button type="submit" (click)="approveReview(data.id, 'Approve')" pButton pRipple label="Approve" class="primary-button px-2 text-sm"></button>
+                    <button pButton pRipple label="Reject" (click)="approveReview(data.id, 'Reject')" class="primary-border-button px-2 mr-3 text-sm"></button>
+
+
+                }
+
+            </td>
+
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="5">No customers found.</td>
+        </tr>
+    </ng-template>
+
+</p-table>

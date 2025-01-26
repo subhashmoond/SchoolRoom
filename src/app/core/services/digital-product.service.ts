@@ -72,6 +72,16 @@ export class DigitalProductService {
         return this._dataService.delete(url);
       }
 
+      getReviewlist(productId : any){
+        const url = `${environment.basePath}digital-product/teacher/${productId}/reviews?limit=10&skip=0&status=all`;
+        return this._dataService.get(url);
+      }
+
+      reviewApprove(productId : any, reviewId : any, payload : any){
+        const url = `${environment.basePath}digital-product/${productId}/review/${reviewId}/update`;
+        return this._dataService.post(url, payload);
+      }
+
       
 
 }
