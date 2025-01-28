@@ -11,6 +11,7 @@ import { DialogModule } from 'primeng/dialog';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { SettingCommunityComponent } from './setting-community/setting-community.component';
+import { CommunityWebsocketService } from '../../core/services/community-websocket.service';
 
 @Component({
   selector: 'app-community',
@@ -23,29 +24,39 @@ import { SettingCommunityComponent } from './setting-community/setting-community
 export class CommunityComponent {
 
   currentActiveTab: any = 'theme';
-  communitysList : any;
-  isAddGroup : boolean = false;
-  communityId : any;
-  groupData: any
+  communitysList: any;
+  isAddGroup: boolean = false;
+  communityId: any;
+  groupData: any;
+  activeGroupId: number | null = null;
 
-  constructor(private _sharedService: SharedService, private _communityService : CommunityService, private _messageService: MessageService,) { }
+  constructor(private _sharedService: SharedService, private _communityService: CommunityService, private _messageService: MessageService, private _communityWebService: CommunityWebsocketService) { }
 
   ngOnInit() {
     this._sharedService.settoggleButtonValue(false);
     this.getCommunitContent();
+
   }
 
-  getCommunitContent(){
+  setActiveGroup(groupId: number): void {
+    this.activeGroupId = groupId;
+  }
+
+  isActiveGroup(groupId: number): boolean {
+    return this.activeGroupId === groupId;
+  }
+
+  getCommunitContent() {
     this._communityService.getCommunityContent().subscribe(res => {
-      if(res.status === true){
+      if (res.status === true) {
         this.communitysList = res.data
       }
     })
   }
 
-  
 
-  communitySetting(type : any){
+
+  communitySetting(type: any) {
     this.currentActiveTab = type;
   }
 
@@ -53,23 +64,25 @@ export class CommunityComponent {
     this.currentActiveTab = type;
   }
 
-  addCommunity(type : any){
+  addCommunity(type: any) {
     this.currentActiveTab = type;
 
   }
 
-  groupDetail(groupData :any, type : any, communityId : any){
+  groupDetail(groupData: any, type: any, communityId: any) {
     this.currentActiveTab = type;
     this.groupData = groupData;
-    this.communityId = communityId
+    this.communityId = communityId;
+    this._communityWebService.setGroupData(groupData);
+    this.setActiveGroup(groupData.id);
   }
 
-  addGroups(data : any){
+  addGroups(data: any) {
     this.isAddGroup = true;
     this.communityId = data.id
   }
 
-  closePopup(event : any){
+  closePopup(event: any) {
     this.isAddGroup = event;
     this._messageService.add({ severity: 'success', detail: 'Group added successfully.' });
   }

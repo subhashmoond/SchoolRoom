@@ -39,6 +39,7 @@ export class DigitalProductInfoComponent {
 
   digitalProductId: any
   langlist: any;
+  productCategoryData : any;
 
   constructor(private _router: Router, private _fb: FormBuilder, private _messageService: MessageService, private _digitalService: DigitalProductService, private route: ActivatedRoute, private _sharedService: SharedService) {
     this.route.paramMap.subscribe(params => {
@@ -52,6 +53,7 @@ export class DigitalProductInfoComponent {
     this.getProductDetailById();
     this.getDigitalProductType();
     this.getLangData();
+    this.getProductCategory();
 
     this.updateDigitalProductForm = this._fb.group({
       name: [],
@@ -60,7 +62,8 @@ export class DigitalProductInfoComponent {
       language: [],
       lifetime: [],
       validitydays: [],
-      description: []
+      description: [],
+      productcategory : []
     })
 
   }
@@ -68,6 +71,12 @@ export class DigitalProductInfoComponent {
   getLangData() {
     this._sharedService.getLangList().subscribe(res => {
       this.langlist = res
+    })
+  }
+
+  getProductCategory(){
+    this._digitalService.getDigitalProductCategoryList().subscribe(res => {
+      this.productCategoryData = res.data
     })
   }
 
@@ -87,6 +96,7 @@ export class DigitalProductInfoComponent {
         label: res.data.label,
         language: res.data.language,
         lifetime: res.data.isLifeTimeAccess,
+        productcategory : res.data.category.id
         // ispublished: res.data.is_published,
         // validitydays: [],
       })

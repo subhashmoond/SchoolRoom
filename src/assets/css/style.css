@@ -2468,14 +2468,36 @@ small.p-error {
 
 .signature-upload .p-fileupload-choose {
     margin: 0;
-    padding: 0.531rem 1.25rem;
+    padding: 0.831rem 1.25rem;
     background: #DDDDED;
+}
+
+
+.community .p-fileupload .p-fileupload-buttonbar{
+    background: none !important;
+    float: left;
+}
+
+.community .signature-upload .p-fileupload-choose{
+    color: #473289;
+    margin-right: 10px;
+}
+
+.send-msg{
+    padding: 0.831rem 1.25rem;
+    background-color: #DDDDED;
+    color: #473289;
+    border-radius: 5px;
 }
 
 .signature-upload .p-fileupload-choose .p-button-label {
     font-size: 0.75rem;
     font-weight: 500;
     color: #473289;
+}
+
+.chat-file-upload .p-button-label{
+    display: none;
 }
 
 .document-icon {
@@ -3161,4 +3183,18 @@ body p-checkbox {
 
 .live-card:hover h4{
     color: #473289;
+}
+
+.category-main a{
+    font-size: 1rem !important;
+    color: inherit !important;
+}
+
+
+.category-main .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link{
+    color: #3B82F6 !important;
+}
+
+.category-main .p-tabview .p-tabview-nav li .p-tabview-nav-link{
+    color: #6b7280 !important;
 }

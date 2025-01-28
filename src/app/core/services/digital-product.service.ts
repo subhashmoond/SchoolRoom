@@ -10,6 +10,11 @@ export class DigitalProductService {
 
       constructor(private http : HttpClient, private _dataService : DataMethodService) { }
 
+      getDigitalProductCategoryList(){
+        const url = `${environment.basePath}digital-product/product-category/list/`;
+        return this._dataService.get(url)
+      }
+
       getDigitalProduct(){
         const url = `${environment.basePath}digital-product/get/AllProduct`
         return this._dataService.get(url)

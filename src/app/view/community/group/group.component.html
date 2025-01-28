@@ -5,7 +5,8 @@
     <div class="text-left p-2 ml-4">
       <!-- <p-avatar label="{{userName.username | uppercase | slice:0:1}}" shape="circle"
                     class="mr-1"></p-avatar> -->
-      <p-avatar label="{{groupDatas.name | uppercase | slice:0:1}}" shape="circle" class="mr-1"></p-avatar> {{groupDatas.name}}
+      <p-avatar label="{{groupDatas.name | uppercase | slice:0:1}}" shape="circle" class="mr-1"></p-avatar>
+      {{groupDatas.name}}
     </div>
   </div>
   <div class="col-4">
@@ -24,23 +25,125 @@
       }
     </div>
   </div>
+
+</div>
+
+<div class="grid nested-grid">
+
+  <div class="col-12 px-6 py-4">
+
+    <div class="chat-main overflow-scroll" #chatContainer style=" height: calc(100vh - 215px);">
+
+      @for(data of messagesList; track $index){
+
+      <div class="chat-card flex mb-4 chat-card-container" (mouseenter)="hoveredIndex = $index" 
+      (mouseleave)="hoveredIndex = null">
+
+        <span class="flex">
+          <p-avatar label="{{data.user_name?.charAt(0).toUpperCase()}}" styleClass="mr-2"
+            [style]="{ 'background-color': '#dee9fc', color: '#1a2551' }" shape="circle" />
+
+        </span>
+
+
+        <div class="secondry-bg-color px-4 py-2 border-round-md chat-card ">
+
+          <span class="text-primary-purple flex align-items-start text-base font-bold capitalize">
+            {{data.user_name}} <span class="ml-4 text-xs text-color ">{{ data.time | date: 'medium' }}</span> </span>
+
+          @if (data.attach_data) {
+
+          <span class="mt-4">
+            <p-image [src]="data.attach_data" alt="Image" width="250" [preview]="true" />
+          </span>
+
+          }
+          @else {
+
+          <span class="text-xs flex mt-2 align-items-start ">
+            {{data.message}}
+          </span>
+
+          }
+
+        </div>
+
+
+        @if(hoveredIndex === $index){
+
+          <span class="chat-action">
+            <i class="pi pi-pencil cursor-pointer action-hovr" (click)="editMessage(data)"></i>
+            <i class="pi  pi-trash ml-2 cursor-pointer action-hovr" (click)="deleteMesage(data.id)"></i>
+          </span>
+        }
+
+
+      </div>
+
+      }
+
+    </div>
+
+  </div>
+
+  <div class="col-12">
+
+    <div class="grid flex w-full px-5">
+      <div class="col-10">
+
+        <input class="block text-sm" [(ngModel)]="messageValue" pInputText placeholder="Write Message..." />
+
+      </div>
+
+      <div class="col-2 community">
+
+
+        <p-fileUpload name="demo[]" styleClass="p-0 m-0 signature-upload chat-file-upload"
+          uploadStyleClass="signature-remove-button" cancelStyleClass="signature-remove-button" chooseIcon="pi pi-link"
+          chooseLabel="" [multiple]="true" progress="10" url="https://www.primefaces.org/cdn/api/upload.php"
+          accept="image/*" (onSelect)="onFileSelect($event)">
+        </p-fileUpload>
+
+        <span class="send-msg ml-2 flex justify-content-center align-items-center cursor-pointer"
+          (click)="sendMessage()">
+          <i class="pi pi-send"></i>
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
 
 
 @if(isMember){
-  <p-sidebar [(visible)]="isMember" position="right" styleClass="w-30rem">
-    <app-member [groupData]="groupDatas"></app-member>
-  </p-sidebar>
+<p-sidebar [(visible)]="isMember" position="right" styleClass="w-30rem">
+  <app-member [groupData]="groupDatas"></app-member>
+</p-sidebar>
 }
 
 @if(isEditGroup){
-  <p-dialog header="Edit Group" [modal]="true" [(visible)]="isEditGroup" [style]="{ width: '50rem', height : '40rem'}">
-      <app-add-group (closePopup)="closePopup($event)" [communityId]="communityId" [editGroupData]="editGroupData"></app-add-group>
-  </p-dialog>
+<p-dialog header="Edit Group" [modal]="true" [(visible)]="isEditGroup" [style]="{ width: '50rem', height : '40rem'}">
+  <app-add-group (closePopup)="closePopup($event)" [communityId]="communityId"
+    [editGroupData]="editGroupData"></app-add-group>
+</p-dialog>
 }
 
 @if(isAddMember){
-  <p-dialog header="Add Member" [modal]="true" [(visible)]="isAddMember" [style]="{ width: '50rem', height : '40rem'}">
-    <app-add-member [groupData]="groupDatas" (closePopup)="closeMemberPopup($event)"></app-add-member>
+<p-dialog header="Add Member" [modal]="true" [(visible)]="isAddMember" [style]="{ width: '50rem', height : '40rem'}">
+  <app-add-member [groupData]="groupDatas" (closePopup)="closeMemberPopup($event)"></app-add-member>
 </p-dialog>
 }
+
+
+@if(isEditMessage){
+  <p-dialog header="Edit Message" [modal]="true" [(visible)]="isEditMessage" [style]="{ width: '40rem',}">
+
+    <!-- <input class="block text-sm" [(ngModel)]="editMessageValue" pInputText placeholder="Write Message..." /> -->
+
+    <textarea rows="5" class="w-full mt-5 mb-3" pTextarea [(ngModel)]="editMessageValue"></textarea>
+
+    <button type="submit" (click)="saveEditMessage()" pButton pRipple label="Save" class="secondary-button px-6 text-sm"></button>
+  </p-dialog>
+  }

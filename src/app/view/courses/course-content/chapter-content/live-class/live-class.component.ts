@@ -141,14 +141,14 @@ export class LiveClassComponent {
   submit() {
 
     const formData = new FormData();
-    const allFormControlNameValue = this.youtubeLiveForm.value
+    const allFormControlNameValue = this.youtubeLiveForm?.value
 
-    formData.append('title', allFormControlNameValue.title);
-    formData.append('path', allFormControlNameValue.path);
+    formData.append('title', allFormControlNameValue?.title);
+    formData.append('path', allFormControlNameValue?.path);
     formData.append('lesson_id', this.lessonId);
     formData.append('livetype', this.liveType);
-    formData.append('available_from', this.convertToDesiredFormat(allFormControlNameValue.from));
-    formData.append('available_to', this.convertToDesiredFormat(allFormControlNameValue.to));
+    formData.append('available_from', this.convertToDesiredFormat(allFormControlNameValue?.from));
+    formData.append('available_to', this.convertToDesiredFormat(allFormControlNameValue?.to));
 
     console.log(formData, "payload data ")
 

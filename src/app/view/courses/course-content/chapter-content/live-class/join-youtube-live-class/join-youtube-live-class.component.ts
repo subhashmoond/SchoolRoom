@@ -85,7 +85,6 @@ export class JoinYoutubeLiveClassComponent {
     }
 
     this.getMessages();
-
   }
 
 

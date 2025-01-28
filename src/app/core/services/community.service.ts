@@ -65,4 +65,9 @@ export class CommunityService {
     return this._dataService.post(url, payload)
   }
 
+  fileUploadInGroup(groupId : any, payload : any){
+    const url = `${environment.basePath}c/group-chat/${groupId}/`;
+    return this._dataService.post(url, payload)
+  }
+
 }

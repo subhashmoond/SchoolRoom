@@ -7,15 +7,16 @@ import { DigitalProductService } from '../../core/services/digital-product.servi
 import { TagModule } from 'primeng/tag';
 import { SidebarModule } from 'primeng/sidebar';
 import { AddDigitalProductComponent } from './add-digital-product/add-digital-product.component';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-digital-product',
   standalone: true,
-  imports: [ButtonModule, TableModule, PaginatorModule, CommonModule, TagModule, SidebarModule, AddDigitalProductComponent, ToastModule ],
-  providers: [MessageService],
+  imports: [ButtonModule, TableModule, PaginatorModule, CommonModule, ConfirmDialogModule, TagModule, SidebarModule, AddDigitalProductComponent, ToastModule ],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './digital-product.component.html',
   styleUrl: './digital-product.component.css'
 })
@@ -24,7 +25,7 @@ export class DigitalProductComponent {
   digitalProductList : any;
   addDigitalProduct : boolean = false
 
-  constructor( private _digitalService : DigitalProductService, private _messageService: MessageService, private router : Router ){}
+  constructor( private _digitalService : DigitalProductService, private _confirmationService: ConfirmationService, private _messageService: MessageService, private router : Router ){}
 
   ngOnInit(){
     this.getDigitalProductList()
@@ -46,14 +47,35 @@ export class DigitalProductComponent {
 
   deleteProduct(data : any){
 
-    this._digitalService.deleteDigitalProduct(data.id).subscribe((res : any) => {
+    this._confirmationService.confirm({
+      header: '',
+      message: 'Are you sure. You want to delete digital product ?',
+      icon: 'null',
+      acceptButtonStyleClass: "danger-button text-base font-semibold",
+      rejectButtonStyleClass: "danger-border text-base button-text-danger bg-white font-semibold",
+      acceptLabel: "Yes",
+      acceptIcon: "none",
+      rejectLabel: "No",
+      rejectIcon: "none",
+      accept: () => {
 
-      if(res.status === true){
-        this._messageService.add({ severity: 'success', detail: "Degital product deleted successfully!" });
-        this.getDigitalProductList();
+        this._digitalService.deleteDigitalProduct(data.id).subscribe((res : any) => {
+
+          if(res.status === true){
+            this._messageService.add({ severity: 'success', detail: "Degital product deleted successfully!" });
+            this.getDigitalProductList();
+          }
+    
+        })
+        
+      },
+      reject: () => {
+
       }
 
-    })
+    });
+
+    
 
   }
 

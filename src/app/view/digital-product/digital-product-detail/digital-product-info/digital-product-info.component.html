@@ -33,6 +33,16 @@
 
         <div class="col-9">
 
+            <label class="w-full mb-1 mt-3 text-color font-semibold  font-medium line-height-exsm inline-block">Product Category </label>
+
+            <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
+                [required]="true" formControlName="productcategory" [options]="productCategoryData" optionValue="id"
+                optionLabel="name" placeholder="Select Category "></p-dropdown>
+
+        </div>
+
+        <div class="col-9">
+
             <label class="w-full mb-1 mt-3 text-color font-semibold  font-medium line-height-exsm inline-block">language </label>
 
             <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"

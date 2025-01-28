@@ -42,6 +42,7 @@ export class AddDigitalProductComponent {
   addProductPrice!: FormGroup;
   activeIndex: number = 0;
   items: any;
+  digitalProductCategoryListData : any;
   // selectedFileObjectUrl: any;
   // fileUpload: any;
   // selectedFile: any;
@@ -77,6 +78,7 @@ export class AddDigitalProductComponent {
   ngOnInit() {
 
     this.getDigitalProductType();
+    this.getDigitalProductCategory()
 
 
 
@@ -90,7 +92,8 @@ export class AddDigitalProductComponent {
 
     this.addDigitalProductForm = this._fb.group({
       title: ['', Validators.required],
-      productlabel: ['']
+      productlabel: [''],
+      productcategory : ['']
     })
 
     this.addProductFile = this._fb.group({
@@ -117,6 +120,13 @@ export class AddDigitalProductComponent {
   getDigitalProductType() {
     this._digitalService.getProductType().subscribe(res => {
       this.productType = res.data
+    })
+  }
+
+
+  getDigitalProductCategory(){
+    this._digitalService.getDigitalProductCategoryList().subscribe(res => {
+      this.digitalProductCategoryListData = res.data
     })
   }
 
@@ -216,6 +226,7 @@ export class AddDigitalProductComponent {
       const formData = new FormData();
       formData.append('title', this.addDigitalProductForm.get('title')?.value)
       formData.append('productTypeId', this.typeProduct)
+      formData.append('category', this.addDigitalProductForm.get('productcategory')?.value)
       formData.append('label', this.addDigitalProductForm.get('productlabel')?.value)
 
       this._digitalService.addDigitalProdcut(formData).subscribe((res: any) => {

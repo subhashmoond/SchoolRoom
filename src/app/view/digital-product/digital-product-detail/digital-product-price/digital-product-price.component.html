@@ -1,3 +1,5 @@
+<p-toast />
+
 <div class="cards">
     <div class="grid client-dashborad-header mb-4 align-items-center">
         <div class="col-12">
@@ -6,6 +8,7 @@
         </div>
     </div>
 </div>
+
 
 <form [formGroup]="addProductPrice">
     <div class="grid mt-4">
@@ -79,5 +82,5 @@
 
 <div class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
             <button pButton pRipple label="Cancel" class="primary-border-button px-5 mr-3 text-sm"></button>
-            <button type="submit" pButton pRipple label="Save" class="primary-button px-5 text-sm"></button>
+            <button type="submit" (click)="submit()" pButton pRipple label="Save" class="primary-button px-5 text-sm"></button>
         </div>

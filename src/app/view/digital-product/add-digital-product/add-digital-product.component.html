@@ -26,7 +26,18 @@
                 </div>
             </div>
 
-            <div class="col-12 mb-5">
+            <div class="col-6 mb-5">
+                <div class="w-full">
+                    <label class="w-full mb-1  font-medium line-height-exsm inline-block">Product Category</label>
+
+                    <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
+                        [required]="true" formControlName="productcategory" [options]="digitalProductCategoryListData" optionValue="id"
+                        optionLabel="name" placeholder="Select Label"></p-dropdown>
+
+                </div>
+            </div>
+
+            <div class="col-6 mb-5">
                 <div class="w-full">
                     <label class="w-full mb-1  font-medium line-height-exsm inline-block">Product label</label>
 

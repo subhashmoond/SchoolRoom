@@ -36,5 +36,29 @@ export class ExamCategoryService {
       return this._dataService.post(url, payload);
     }
 
+
+    // Digital Product Category 
+
+    getDigitalProductCategory(){
+      const url = `${environment.basePath}digital-product/product-category/list/`;
+      return this._dataService.get(url);
+    }
+
+    addDigitalProduct(payload :any){
+      const url = `${environment.basePath}digital-product/product-category/add/`;
+      return this._dataService.post(url, payload);
+    }
+
+    editDigitalProdcutCategory(id : any, payload : any){
+      const url =`${environment.basePath}digital-product/product-category/${id}/details`;
+      return this._dataService.post(url, payload);
+    }
+
+
+    deleteDigitalCategory(id :any){
+      const url = `${environment.basePath}digital-product/product-category/${id}/details`;
+      return this._dataService.delete(url);
+    }
+
   
 }

@@ -17,7 +17,7 @@ export class NavService {
         { path: 'course', title: 'Courses', type: 'link' },
         { path: 'test', title: 'Test Series', type: 'link' },
         { path: 'digital-product', title: 'Digi Product', type: 'link' },
-        { path: 'exam-category', title: 'Exam Cate.', type: 'link' },
+        { path: 'exam-category', title: 'Category', type: 'link' },
         // { path: '', title: 'Assignment', type: 'link' },
       ]
     },
