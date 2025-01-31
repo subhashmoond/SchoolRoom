@@ -1,10 +1,19 @@
 <p-toast></p-toast>
 <p-confirmDialog styleClass="confirmation-pop-up-dialog"></p-confirmDialog>
-<div class="grid mt-8 test-contents">
 
+
+<div class="grid client-dashborad-header mb-4 align-items-center">
     <div class="col-12">
-        <h4 class="subheading-color capitalize">{{testDetailsData.title}}</h4>
+        <h4 class="subheading-color capitalize"><i class="pi pi-arrow-left mr-2 cursor-pointer font-bold "
+                (click)="backContentListPage()"></i> {{testDetailsData.title}}</h4>
     </div>
+  
+
+</div>
+
+
+<div class="grid mt-4">
+
 
     <div class="col-12 ">
 
@@ -20,7 +29,7 @@
                         </ng-template>
         
                         <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true"
-                            scrollHeight="37.938rem" selectionMode="single" class="client-data-table" [value]="data.questions">
+                            scrollHeight="37.938rem" selectionMode="single" class="client-data-table test-table" [value]="data.questions">
         
                             <ng-template pTemplate="body" let-data>
                                 <tr class="w-full flex flex-wrap">

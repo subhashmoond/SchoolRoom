@@ -265,8 +265,8 @@ export class CoursesService {
   }
 
   // Get Student lists
-  getStudentList() {
-    const url = `${environment.basePath}course/buy-course/students/`;
+  getStudentList(courseId : any) {
+    const url = `${environment.basePath}course/buy_course/details/${courseId}/`;
     return this._dataService.get(url);
   }
 
@@ -277,7 +277,7 @@ export class CoursesService {
 
   // Get Course List Review 
   getCourseReviewList(courseId: any) {
-    const url = `${environment.basePath}course/${courseId}/reviews?limit=2&skip=0&status=all`;
+    const url = `${environment.basePath}course/${courseId}/reviews?limit=10&skip=0&status=all`;
     return this._dataService.get(url);
   }
 
@@ -285,6 +285,11 @@ export class CoursesService {
   setLessionPreview(id : any, payload : any){
     const url = `${environment.basePath}course/${id}/sample/create`;
     return this._dataService.post(url, payload)
+  }
+
+  courseThumbnailUpdate(payload : any){
+    const url = `${environment.basePath}course/thumbnail/add/`;
+    return this._dataService.post(url, payload);
   }
 
 }

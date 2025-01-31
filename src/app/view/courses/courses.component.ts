@@ -15,12 +15,15 @@ import { AddCoursesComponent } from './add-courses/add-courses.component';
 import { CoursesService } from '../../core/services/courses.service';
 import { TagModule } from 'primeng/tag';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-courses',
   standalone: true,
   imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule,
-    SkeletonModule, AddCoursesComponent, TagModule, SelectButtonModule],
+    SkeletonModule, AddCoursesComponent, TagModule, SelectButtonModule, ConfirmDialogModule],
+  providers: [ConfirmationService],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.css'
 })
@@ -37,7 +40,7 @@ export class CoursesComponent {
   openDropdownId: number | null = null;
   tableView: boolean = false
 
-  mainLoader : boolean = true
+  mainLoader: boolean = true
 
   value: any;
   justifyOptions: any[] = [
@@ -46,7 +49,7 @@ export class CoursesComponent {
   ];
 
 
-  constructor(private renderer: Renderer2, private _router: Router, private _coursesService: CoursesService) {
+  constructor(private renderer: Renderer2, private _router: Router, private _coursesService: CoursesService, private _confirmationService: ConfirmationService) {
   }
 
   ngOnInit() {
@@ -80,29 +83,50 @@ export class CoursesComponent {
 
   deleteCourse(id: any) {
 
+    this._confirmationService.confirm({
+      header: '',
+      message: 'Are you sure. You want to delete course ?',
+      icon: 'null',
+      acceptButtonStyleClass: "danger-button text-base font-semibold",
+      rejectButtonStyleClass: "danger-border text-base button-text-danger bg-white font-semibold",
+      acceptLabel: "Yes",
+      acceptIcon: "none",
+      rejectLabel: "No",
+      rejectIcon: "none",
+      accept: () => {
+
+        const payload = {
+          "course_id": id
+        }
+    
+        this._coursesService.deleteCourse(payload).subscribe(res => {
+          this.getCourses();
+        })
+        
+      },
+      reject: () => {
+
+      }
+
+    });
+
+    
+
+  }
+
+  publishCourse(id: any) {
     const payload = {
-      "course_id": id
+      "course_id": id,
+      "publish": true
     }
 
-    this._coursesService.deleteCourse(payload).subscribe(res => {
+    this._coursesService.coursePublish(payload).subscribe(res => {
 
     })
 
   }
 
-  publishCourse(id : any){
-    const payload = {
-      "course_id": id,
-      "publish":true
-  }
 
-  this._coursesService.coursePublish(payload).subscribe(res => {
-
-  })
-
-  }
-
- 
 
 
 
@@ -114,7 +138,7 @@ export class CoursesComponent {
   onDocumentClick(event: Event) {
     const target = event.target as HTMLElement;
     if (!target.closest('.action-menu')) {
-      this.openDropdownId = null; 
+      this.openDropdownId = null;
     }
   }
 

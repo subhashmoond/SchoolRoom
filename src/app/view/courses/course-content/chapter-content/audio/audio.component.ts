@@ -67,13 +67,13 @@ export class AudioComponent {
     this._coursesService.getAudioSetting(this.contentId).subscribe(res => {
       console.log(res, "content get API")
 
-      this.settingContent.setValue({
+      this.settingContent.patchValue({
         title: res.title,
         duration: res.duration,
         available: res.always_available,
-        tags: res.tags,
-        formdate: res.available_from,
-        todate: res.available_to
+        // tags: res.tags,
+        formdate: new Date(res.available_from),
+        todate: new Date(res.available_to)
       })
 
     })

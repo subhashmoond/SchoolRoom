@@ -8,7 +8,16 @@
 .type {
     display: grid;
     padding: 20px;
-    border: 1px solid #eee;
     cursor: pointer;
+    background: #F3F4F9;
+    border : 1px solid #F3F4F9;
 }
 
+.type:hover{
+    border : 1px solid #473289;
+}
+
+.content-type-img{
+    width : 50px;
+    margin-bottom: 10px;
+}

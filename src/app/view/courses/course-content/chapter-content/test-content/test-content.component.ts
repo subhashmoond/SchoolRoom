@@ -12,6 +12,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { environment } from '../../../../../../environments/environment';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-test-content',
@@ -22,7 +23,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   styleUrl: './test-content.component.css'
 })
 export class TestContentComponent {
-  @Input() testId: any;
+  testId: any;
   questionsList: any;
   isCreateSection: boolean = false;
   isAddQuestion: boolean = false;
@@ -31,12 +32,28 @@ export class TestContentComponent {
   sectionData: any
   sectionIdForQuestion: any;
   questionId: any;
+  lessionId : any;
+  courseId : any
 
-  constructor(private _testService: TestService, private _messageService: MessageService, private _confirmationService: ConfirmationService) { }
+  constructor( private _router : Router, private route : ActivatedRoute, private _testService: TestService, private _messageService: MessageService, private _confirmationService: ConfirmationService) { 
+    this.route.paramMap.subscribe(params => {
+      this.testId = params.get('id')!;
+    });
+
+    this.route.queryParams.subscribe(params => {
+      this.lessionId = params['lessionId'];
+      this.courseId = params['courseId'];
+    });
+
+  }
 
   ngOnInit() {
     this.getTestDetailPage();
     // this.getSectionContent();
+  }
+
+  backContentListPage(){
+    this._router.navigate(['/course/lesson', this.lessionId], { queryParams: { courseId: this.courseId } });
   }
 
   getTestDetailPage() {

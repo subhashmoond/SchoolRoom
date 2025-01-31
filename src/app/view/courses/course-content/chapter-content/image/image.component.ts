@@ -67,15 +67,14 @@ export class ImageComponent {
 
   getContentSetting() {
     this._coursesService.getImageSetting(this.contentId).subscribe(res => {
-      console.log(res, "content get API")
 
-      this.settingContent.setValue({
+      this.settingContent.patchValue({
         title: res.title,
         downloadable: res.downloadable,
         available: res.always_available,
-        formdate: res.available_from,
-        todate: res.available_to,
-        tags: "new",
+        formdate: new Date(res.available_from),
+        todate: new Date(res.available_to),
+        // tags: "new",
       })
 
     })

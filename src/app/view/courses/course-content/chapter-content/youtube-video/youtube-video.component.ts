@@ -62,14 +62,13 @@ export class YoutubeVideoComponent {
 
   getContentSetting() {
     this._coursesService.getYoutubeVideoSetting(this.contentId).subscribe(res => {
-      this.settingContent.setValue({
+      this.settingContent.patchValue({
         title: res.title,
         duration: res.duration,
         watermark: res.enable_Watermark,
         available: res.always_available,
-        tags: res.tags,
-        formdate: res.available_from,
-        todate: res.available_to
+        formdate: new Date(res.available_from),
+        todate: new Date(res.available_to)
       })
     })
   }

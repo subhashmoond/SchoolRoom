@@ -1,5 +1,5 @@
 <!-- <p-toast></p-toast> -->
-
+<p-confirmDialog styleClass="confirmation-pop-up-dialog"></p-confirmDialog>
 @if(!mainLoader){
 
 <div class="card">
@@ -16,7 +16,7 @@
                                         </ng-template>
                                 </p-selectButton> -->
 
-                        <p-button class="create-button border-round-md" (click)="openSidebar()">Add
+                        <p-button class="create-button border-round-md" (click)="openSidebar()"> +  Add
                                 Course</p-button>
 
                         <div
@@ -89,11 +89,11 @@
                                                         </button>
 
                                                         <button (click)="publishCourse(data.id)">
-                                                                <i class="pi pi-eye"></i> Publish Course
+                                                                <i class="pi pi-cloud-upload"></i> Publish Course
                                                         </button>
 
                                                         <button (click)="deleteCourse(data.id)">
-                                                                <i class="pi pi-trash"></i> Delete
+                                                                <i class="pi pi-trash" style="color: red;" ></i> Delete
                                                         </button>
                                                 </div>
                                                 }
@@ -110,8 +110,8 @@
                 </ng-template>
 
         </p-table>
-        <p-paginator class="paginator-row paginator-dropdown" (onPageChange)="onPageChange($event)" [first]="offset"
-                [rows]="limit" [rowsPerPageOptions]="[15, 30, 50]" [totalRecords]=totalRecorde></p-paginator>
+        <!-- <p-paginator class="paginator-row paginator-dropdown" (onPageChange)="onPageChange($event)" [first]="offset"
+                [rows]="limit" [rowsPerPageOptions]="[15, 30, 50]" [totalRecords]=totalRecorde></p-paginator> -->
         }
         @else {
 
@@ -124,7 +124,7 @@
                                 <img class="w-full border-round-md" src="../../../assets/images/course-tham.png">
         
                                 <div class="c-content p-3">
-                                        <h5 class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full ">
+                                        <h5 class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full capitalize ">
                                                 {{data.title}}</h5>
                                 </div>
         

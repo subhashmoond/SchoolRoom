@@ -54,7 +54,7 @@ export class CourseStudentsComponent {
   }
 
   getStudentList() {
-    this._courseService.getStudentList().subscribe(res => {
+    this._courseService.getStudentList(this.courseId).subscribe(res => {
       this.studentList = res.response
     })
   }

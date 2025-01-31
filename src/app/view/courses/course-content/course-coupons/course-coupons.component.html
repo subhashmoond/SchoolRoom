@@ -58,30 +58,31 @@
                 
     
             <ng-template pTemplate="emptymessage">
-
-    
-                        <tr>
-                            <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
-                        </tr>
-                        <tr>
-                            <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
-                        </tr>
-
-                <!-- <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+                <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
                     <img src="../../../../../assets/images/icon/no-data.svg">
                     <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Coupons</p>
                     <p class="text-primary-purple text-base font-normal mt-2">There is no Coupons to show you right now.</p>
-                </div> -->
+                </div>
 
             </ng-template>
+
+
+            @if(isLoader){
+                <tr>
+                    <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
+                </tr>
+
+                <tr>
+                    <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
+                </tr>
+
+                <tr>
+                    <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
+                </tr>
+                <tr>
+                    <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
+                </tr>
+            }
     
         </p-table>
     </div>

@@ -126,20 +126,17 @@
 
                     <div class="card flex justify-content-center">
                       <div class="action-menu">
-                        <button class="three-dot-button" (click)="toggleDropdownLesson(j)">
+                        <button class="three-dot-button" (click)="toggleDropdownLesson(i, j)">
                           ⋮
                         </button>
 
-                        @if(openDropdownIdLession === j){
+                        @if(openDropdownIdLession[i] === j){
                         <div class="dropdown-menu">
 
                           @if(!isEditLesson[i][j]){
                           <button type="button" (click)="enableEditLesson(i, j)" pButton class="curriculum-btn"> <i
                               class="pi pi-pencil"></i> Edit</button>
                           }
-
-                          <button type="button" (click)="setPreview(i, j, course.get('id')?.value)" pButton
-                            class="curriculum-btn"> Set Preview </button>
 
                           <button type="button" style="color: red;" (click)="deleteLesson(i, j, course.get('id')?.value)" pButton
                             class="danger-button"><i class="pi pi-trash"></i> Delete</button>
@@ -167,8 +164,9 @@
                   class="grid grid-nogutter client-dashborad-header align-items-center border-bottom-light p-3 border-top-light">
                   <div class="col-6">
 
-                    <p-button icon="pi pi-plus" (click)="addLesson(i)" label="New Lesson" [text]="true"
-                      severity="secondary"></p-button>
+                      <p-button icon="pi pi-plus" (click)="addLesson(i)" label="New Lesson" [text]="true"
+                        severity="secondary"></p-button>
+
                   </div>
                 </div>
               </div>

@@ -1,10 +1,12 @@
+<p-toast />
+
 <div class="grid nested-grid border-bottom-light px-5 py-3">
     <div class="col-8 p-0">
         <h5 class="subheading-color">Configure Your App</h5>
         <p class="m-0 pt-2">Add basic details to set the theme of your app</p>
     </div>
     <div class="col-4 p-0 flex justify-content-end align-items-center">
-        <button type="submit" pButton pRipple label="Save Changes" class="secondary-button px-6 text-sm"></button>
+        <button type="submit" (click)="saveAppSetting()" pButton pRipple label="Save Changes" class="secondary-button px-6 text-sm"></button>
     </div>
 </div>
 

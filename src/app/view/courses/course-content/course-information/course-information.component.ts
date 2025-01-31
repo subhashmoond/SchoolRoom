@@ -18,12 +18,13 @@ import { ActivatedRoute } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { MessageService } from 'primeng/api';
+import { EditorModule } from 'primeng/editor';
 
 @Component({
   selector: 'app-course-information',
   standalone: true,
   imports: [ReactiveFormsModule, StepsModule, TableModule, InputGroupModule, InputGroupAddonModule, DropdownModule, CardModule, CalendarModule, KeyFilterModule,
-    ButtonModule, InputTextModule, FileUploadModule, ToastModule, InputNumberModule, CheckboxModule,],
+    ButtonModule, InputTextModule, FileUploadModule, ToastModule, InputNumberModule, CheckboxModule, EditorModule ],
     providers : [MessageService],
   templateUrl: './course-information.component.html',
   styleUrl: './course-information.component.css'
@@ -120,6 +121,14 @@ export class CourseInformationComponent {
     return this.courseInformation.get('highlights') as FormArray;
   }
 
+  // get whatlearn(): FormArray {
+  //   return this.courseInformation.get('whatlearn') as FormArray;
+  // }
+
+  // get faq(): FormArray {
+  //   return this.courseInformation.get('faq') as FormArray;
+  // }
+
   get whatlearn(): FormArray {
     return this.courseInformation.get('whatlearn') as FormArray;
   }
@@ -138,16 +147,13 @@ export class CourseInformationComponent {
 
   addWhatlearn() {
     const rowGroup = this._fb.group({
-      icon: ['pi pi-megaphone'],  // Default icon (can be dynamic)
       title: ['', Validators.required],
       description: ['', Validators.required]
     });
-
     this.whatlearn.push(rowGroup);
   }
 
-  // Method to remove a row
-  removeRow(index: number) {
+  removeWhatlearn(index: number) {
     this.whatlearn.removeAt(index);
   }
 
@@ -156,14 +162,39 @@ export class CourseInformationComponent {
       question: ['', Validators.required],
       answer: ['', Validators.required]
     });
-
     this.faq.push(rowGroup);
   }
 
-  // Method to remove a row
   removeFaq(index: number) {
     this.faq.removeAt(index);
   }
+
+  // addWhatlearn() {
+  //   const rowGroup = this._fb.group({
+  //     icon: ['pi pi-megaphone'],  
+  //     title: ['', Validators.required],
+  //     description: ['', Validators.required]
+  //   });
+
+  //   this.whatlearn.push(rowGroup);
+  // }
+
+  // removeRow(index: number) {
+  //   this.whatlearn.removeAt(index);
+  // }
+
+  // addFaq() {
+  //   const rowGroup = this._fb.group({
+  //     question: ['', Validators.required],
+  //     answer: ['', Validators.required]
+  //   });
+
+  //   this.faq.push(rowGroup);
+  // }
+
+  // removeFaq(index: number) {
+  //   this.faq.removeAt(index);
+  // }
 
 
   getCourseDetails() {

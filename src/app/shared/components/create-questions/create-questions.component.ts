@@ -129,7 +129,7 @@ export class CreateQuestionsComponent {
       
     };
 
-    if(formValue.selecttitle === "da3c7e928ea749dfa675a6c8dccb62ab" || formValue.selecttitle === "7d192728b70a45d4917bfcf135054fb3"){
+    if(formValue.selecttitle === "2d9481c71ce7405db965c9171991a421" || formValue.selecttitle === "518a019f95f64611a782c018c167ea73"){
 
       payload.options = formValue.options.map((option: any, index: number) => ({
         id: index + 1,
@@ -143,7 +143,7 @@ export class CreateQuestionsComponent {
 
     }
 
-    if(formValue.selecttitle === "5e21c4de68e441af9ba9fe447838d3d0" || formValue.selecttitle === "be73610bb75047a4b56dcb062b7a5a7a"){
+    if(formValue.selecttitle === "2d9481c71ce7405db965c9171991a421" || formValue.selecttitle === "518a019f95f64611a782c018c167ea73"){
       payload.ans = formValue.answer
     }
 

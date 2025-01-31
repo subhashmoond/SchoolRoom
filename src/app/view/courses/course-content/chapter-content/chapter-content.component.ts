@@ -37,7 +37,7 @@ import { LiveWebsocketService } from '../../../../core/services/live-websocket.s
   standalone: true,
   imports: [AccordionModule, ButtonModule, FormsModule, SplitButtonModule, EditorModule, DialogModule, PanelModule, AvatarModule, UploadContentComponent, SidebarModule,
     ImageComponent, UploadVideoComponent, AudioComponent, PdfViewerModule, ReSourceComponent, RippleModule, SkeletonModule, YoutubeVideoComponent, TextComponent, MenuModule,
-    ToastModule, SidebarModule, CreateTestComponent, CreateTestSectionComponent, TestContentComponent, LiveClassComponent, TagModule ],
+    ToastModule, SidebarModule, CreateTestComponent, CreateTestSectionComponent, LiveClassComponent, TagModule ],
   providers: [MessageService],
   templateUrl: './chapter-content.component.html',
   styleUrl: './chapter-content.component.css'
@@ -56,7 +56,6 @@ export class ChapterContentComponent {
   isYoutubevideo: boolean = false;
   isAudio: boolean = false;
   isQuiz: boolean = false;
-  isSectionDetailPage: boolean = false;
   isAddSection: boolean = false;
   isLiveClass: boolean = false;
   contentId: any;
@@ -84,8 +83,11 @@ export class ChapterContentComponent {
 
 
   ngOnInit() {
-
     this.getChapterContent()
+  }
+
+  backCourseDetailPage(){
+    this.router.navigate(['/course/content', this.coursesId]);
   }
 
   getSafeUrl(url: string): SafeResourceUrl {
@@ -152,7 +154,7 @@ export class ChapterContentComponent {
         this.isImage = true
         break;
 
-      case 'audio':
+      case 'Audio':
         this.isAudio = true
         break;
 
@@ -227,6 +229,8 @@ export class ChapterContentComponent {
     this.isVideo = false;
     this.isQuiz = false;
     this.isLiveClass = false;
+    this._messageService.add({ severity: 'success', detail: 'Content Added Successfully ! ' });
+
   }
 
   closeSideBarliveClass() {
@@ -236,6 +240,7 @@ export class ChapterContentComponent {
 
   deleteContent(id: any) {
     this._coursesService.deletePDF(id).subscribe(res => {
+      this._messageService.add({ severity: 'success', detail: 'Content Deleted Successfully! ' });
       this.getChapterContent()
     })
   }
@@ -246,8 +251,9 @@ export class ChapterContentComponent {
 
 
   sectionDetailPage(data: any) {
-    this.isSectionDetailPage = true;
-    this.testId = data._id
+    this.testId = data._id;
+
+    this.router.navigate(['/course/test-content/', this.testId], { queryParams: { lessionId: this.lessonId, courseId : this.coursesId } });
   }
 
   createSection(data: any) {

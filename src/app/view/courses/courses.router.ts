@@ -4,6 +4,7 @@ import { AddCoursesComponent } from './add-courses/add-courses.component';
 import { CourseContentComponent } from './course-content/course-content.component';
 import { ChapterContentComponent } from './course-content/chapter-content/chapter-content.component';
 import { PreviewCoursesComponent } from './preview-courses/preview-courses.component';
+import { TestContentComponent } from './course-content/chapter-content/test-content/test-content.component';
 
 export const routes: Routes = [
     // { path: '', redirectTo: 'batche', pathMatch: 'full' },
@@ -11,6 +12,7 @@ export const routes: Routes = [
     {path : 'add', component : AddCoursesComponent},
     {path : 'content/:id', component : CourseContentComponent},
     {path : 'lesson/:id', component : ChapterContentComponent},
-    {path : 'preview/:id', component : PreviewCoursesComponent}
+    {path : 'preview/:id', component : PreviewCoursesComponent},
+    {path : 'test-content/:id', component : TestContentComponent }
 ];
 

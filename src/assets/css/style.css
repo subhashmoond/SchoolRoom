@@ -3198,3 +3198,25 @@ body p-checkbox {
 .category-main .p-tabview .p-tabview-nav li .p-tabview-nav-link{
     color: #6b7280 !important;
 }
+
+
+/* .client-data-table {
+    height: 500px;
+    display: block;
+} */
+
+.client-data-table .p-datatable-tbody {
+    height: 450px;
+}
+
+.test-table .p-datatable-tbody {
+    height: auto;
+}
+
+.course-card:hover{
+    border: 1px solid #473289;
+}
+
+.dropdown-menu .p-button{
+    background: none !important;
+}

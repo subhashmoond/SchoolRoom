@@ -65,7 +65,7 @@ export class UploadVideoComponent {
   getContentSetting() {
     this._coursesService.getVideoSetting(this.contentId).subscribe(res => {
       
-      this.settingContent.setValue({
+      this.settingContent.patchValue({
         title: res.title,
         duration: res.duration,
         watermark: res.enable_Watermark,

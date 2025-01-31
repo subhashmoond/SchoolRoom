@@ -86,12 +86,14 @@ export class CreateTestSectionComponent {
         }
 
         if (this.testDataForSectionCreate.isDuration) {
-          let timeParts = time.split(":");
-          let thours = parseInt(timeParts[0]);
-          let tminutes = parseInt(timeParts[1]);
-          let ttotalMinutes = thours * 60 + tminutes;
-
-          payload.duration = ttotalMinutes
+         
+            let timeParts = time.split(":");
+            let thours = parseInt(timeParts[0]);
+            let tminutes = parseInt(timeParts[1]);
+            let ttotalMinutes = thours * 60 + tminutes;
+  
+            payload.duration = ttotalMinutes
+          
         }
 
         this._testService.editTestSeriesSection(this.editSectionData.id, payload).subscribe((res : any) => {
@@ -119,12 +121,14 @@ export class CreateTestSectionComponent {
           }
 
           if (this.testDataForSectionCreate.isDuration) {
-            let timeParts = time.split(":");
-            let thours = parseInt(timeParts[0]);
-            let tminutes = parseInt(timeParts[1]);
-            let ttotalMinutes = thours * 60 + tminutes;
+            
+              let timeParts = time.split(":");
+              let thours = parseInt(timeParts[0]);
+              let tminutes = parseInt(timeParts[1]);
+              let ttotalMinutes = thours * 60 + tminutes;
+              payload.duration = ttotalMinutes
+            
 
-            payload.duration = ttotalMinutes
           }
 
           this._testService.createSection(this.testDataForSectionCreate?.id, payload).subscribe((res: any) => {
@@ -140,16 +144,24 @@ export class CreateTestSectionComponent {
 
         } else {
 
-          let timeParts = time.split(":");
-          let hours = parseInt(timeParts[0]);
-          let minutes = parseInt(timeParts[1]);
-          let totalMinutes = hours * 60 + minutes;
 
-          const payload = {
+           
+          
+
+          const payload : any = {
             "name": this.addSection.get('title')?.value,
             "max_marks": this.addSection.get('maxmark')?.value,
             "allowed_section_wise_time": this.addSection.get('sectionwise')?.value,
-            "duration": totalMinutes
+            // "duration": totalMinutes;
+
+          }
+
+          if(time){
+            let timeParts = time.split(":");
+            let hours = parseInt(timeParts[0]);
+            let minutes = parseInt(timeParts[1]);
+            let totalMinutes = hours * 60 + minutes;
+            payload.duration = totalMinutes
           }
 
           this._testService.addTestSection(this.testDetailId, payload).subscribe((res: any) => {

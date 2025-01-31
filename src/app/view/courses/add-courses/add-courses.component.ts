@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CoursesComponent } from '../courses.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -9,7 +9,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { FileUploadModule } from 'primeng/fileupload';
+import { FileUpload, FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -26,13 +26,15 @@ import { StepsModule } from 'primeng/steps';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CoursesService } from '../../../core/services/courses.service';
 import { SharedService } from '../../../shared/services/shared.service';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { EditorModule } from 'primeng/editor';
 
 @Component({
   selector: 'app-add-courses',
   standalone: true,
   imports: [ReactiveFormsModule, StepsModule, InputGroupModule, InputGroupAddonModule, DropdownModule, CardModule, CalendarModule, KeyFilterModule,
     ButtonModule, InputTextModule, FileUploadModule, ToastModule, InputNumberModule, CheckboxModule, MessagesModule, AccordionModule,
-    TranslateModule, BlockUIModule, ProgressSpinnerModule, CommonModule, InputSwitchModule],
+    TranslateModule, BlockUIModule, ProgressSpinnerModule, CommonModule, InputSwitchModule, RadioButtonModule, EditorModule ],
   providers: [MessageService],
   templateUrl: './add-courses.component.html',
   styleUrl: './add-courses.component.css'
@@ -43,7 +45,6 @@ export class AddCoursesComponent {
   aiContentForm!: FormGroup;
   examCategoryForm!: FormGroup;
   selectedFileObjectUrl: any;
-  fileUpload: any;
   selectedFile: any;
   isThumbnail: boolean = false;
   aiDescripationData: any = [];
@@ -56,6 +57,7 @@ export class AddCoursesComponent {
   subCategoryExamList : any;
   courseType : any
   subCategoryShow: boolean = false;
+  isButtonLoader : boolean = false
 
   // loader boolean Var
   descriptionAIResp: boolean = false;
@@ -63,6 +65,8 @@ export class AddCoursesComponent {
   stepTwo: boolean = false;
   stepTree: boolean = false;
   stepFor: boolean = false;
+
+  @ViewChild('fileUpload') fileUpload!: FileUpload;
 
   constructor(private _courseService: CoursesService, private _router: Router, private _fb: FormBuilder, private messageService: MessageService, private translate: TranslateService, private _sharedService: SharedService) { }
 
@@ -94,13 +98,13 @@ export class AddCoursesComponent {
       name: [''],
       description: [''],
       ispaid: [true],
-      price: ['']
+      price: [''],
+      mrp : ['']
     });
 
     this.aiContentForm = this._fb.group({
-      isScratch: [''],
-      isGenerate: true,
-      descibeCourse: []
+      isScratch: ['scratch'],
+      descibeCourse: ['']
     })
 
     this.examCategoryForm = this._fb.group({
@@ -123,16 +127,40 @@ export class AddCoursesComponent {
   }
 
   selectOption() {
-    this.selectedOption != this.selectedOption
+    this.selectedOption = true;
+    this.selectedFile = null
+  }
+
+  onFileSelect(event: any) {
+    debugger
+    this.selectedOption = false
+    if (event.files.length > 0) {
+      this.selectedOption = false;
+      this.selectedFile = event.files[0];
+      if (this.selectedFile) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.selectedFileObjectUrl = e.target?.result as string;
+        };
+        reader.readAsDataURL(this.selectedFile);
+      }
+    }
+  }
+
+  profileImageRemove() {
+    this.selectedFileObjectUrl = null;
+    this.fileUpload.clear();
   }
 
   submit() {
 
     if (this.activeIndex === 0) {
+      this.isButtonLoader = true
       this.stepOne = true
 
       const body = {
         "name": this.coursesForm.get('name')?.value,
+        "mrp" : this.coursesForm.get('mrp')?.value,
         "price": this.coursesForm.get('price')?.value,
         "describe": this.coursesForm.get('description')?.value,
         "language": 2,
@@ -140,6 +168,7 @@ export class AddCoursesComponent {
         "coursetype": this.courseType
       }
       this._courseService.addCourses(body).subscribe((res: any) => {
+        this.isButtonLoader = false
         if (res.status == "Success") {
           this.courseId = res.course.id
           this.stepOne = false
@@ -152,13 +181,15 @@ export class AddCoursesComponent {
     }
 
     if (this.activeIndex === 1) {
-      this.stepTwo = true
+      this.stepTwo = true;
+      this.isButtonLoader = true
 
       const formData = new FormData();
       formData.append('thumbnail', this.selectedFileObjectUrl);
       formData.append('course_id', this.courseId);
 
       this._courseService.addThumbnail(formData).subscribe(res => {
+        this.isButtonLoader = false
         console.log(res, "thamblanupdate")
         this.stepTwo = false
         this.next();
@@ -167,6 +198,7 @@ export class AddCoursesComponent {
 
     if(this.activeIndex === 2){
       this.stepTree = true;
+      this.isButtonLoader = true;
       
       const category = this.examCategoryForm.get('category')?.value;
       const subcategory = this.examCategoryForm.get('subcategory')?.value;
@@ -177,6 +209,7 @@ export class AddCoursesComponent {
       }
 
       this._courseService.addExamCategoryInCourse(payload, this.courseId).subscribe(res => {
+        this.isButtonLoader = false;
         this.stepTree = false
       })
       this.next();
@@ -185,6 +218,7 @@ export class AddCoursesComponent {
     }
 
     if (this.activeIndex === 3) {
+      this.isButtonLoader = true;
 
       const selectOptionValue = this.aiContentForm.get('isGenerate')?.value
 
@@ -197,6 +231,8 @@ export class AddCoursesComponent {
         }
 
         this._sharedService.getAIResponse(body).subscribe((res: any) => {
+        this._router.navigate(['/course/content', this.courseId]);
+          this.isButtonLoader = false
           this.stepFor = false
           const resData = res.data
           this.aiDescripationData = JSON.parse(resData)
@@ -285,23 +321,7 @@ export class AddCoursesComponent {
 
 
 
-  onFileSelect(event: any) {
-    if (event.files.length > 0) {
-      this.selectedFile = event.files[0];
-      if (this.selectedFile) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.selectedFileObjectUrl = e.target?.result as string;
-        };
-        reader.readAsDataURL(this.selectedFile);
-      }
-    }
-  }
-
-  profileImageRemove() {
-    this.selectedFileObjectUrl = null;
-    this.fileUpload.clear();
-  }
+  
 
   aiSubmit() {
     this.descriptionAIResp = true
@@ -328,5 +348,10 @@ export class AddCoursesComponent {
 
   }
 
+
+  ngOnDestroy() {
+    this.coursesForm.reset();
+    this.examCategoryForm.reset();
+  }
 
 }

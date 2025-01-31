@@ -26,7 +26,8 @@ export class CurriculumComponent {
   dragData : any;
   isLoader : boolean = true;
   openDropdownId: number | null = null;
-  openDropdownIdLession: number | null = null;
+  openDropdownIdLession: { [key: number]: number | null } = {};
+  // openDropdownIdLession: number | null = null;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private _messageService: MessageService, private _router: Router, private _courseService: CoursesService) {
     this.route.paramMap.subscribe(params => {
@@ -297,8 +298,8 @@ toggleDropdown(itemId: any) {
   this.openDropdownId = this.openDropdownId === itemId ? null : itemId;
 }
 
-toggleDropdownLesson(itemId : any){
-  this.openDropdownIdLession = this.openDropdownIdLession === itemId ? null : itemId;
+toggleDropdownLesson(i: any, itemId : any){
+  this.openDropdownIdLession[i] = this.openDropdownIdLession[i] === itemId ? null : itemId;
 }
 
 

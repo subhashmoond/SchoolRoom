@@ -1,19 +1,17 @@
 <p-toast />
 <div class="grid client-dashborad-header mb-4 align-items-center">
     <div class="col-6">
-        <h4 class="subheading-color">Lesson Name</h4>
+        <h4 class="subheading-color"><i class="pi pi-arrow-left mr-2 cursor-pointer font-bold "
+                (click)="backCourseDetailPage()"></i> Lesson Name</h4>
     </div>
     <div class="col-6 flex justify-content-end	">
-        <button type="submit" pButton pRipple label="Add Content" (click)="addContent()"
+        <button type="submit" pButton pRipple label=" +  Add Content" (click)="addContent()"
             class="secondary-button px-6 text-sm"></button>
     </div>
 
 </div>
 
 @if (!isLoader) {
-
-
-
 
 
 @if (chapterDataList.content.length < 1 ) { <div
@@ -34,23 +32,26 @@
 
     <div class="grid">
         @for(data of chapterDataList.live; track data){
-        <div class="col-3" >
+        <div class="col-3">
             <div class="live-card p-4 border-round-md cursor-pointer primary-gradient-bg">
                 <p-tag severity="success" value="Live" class="w-full" />
-                <span  style="float: right;">
+                <span style="float: right;">
                     <i class="pi pi-pencil text-color cursor-pointer" (click)="editlive(data)"></i>
                     <i class="ml-3 pi pi-trash cursor-pointer" style="color : red" (click)="deletelive(data)"></i>
                 </span>
 
                 @if(data.type === "youtubelive"){
-                    <p class="text-color w-full mt-4 p-0 m-0"> <i class="pi pi-youtube" style="color : red"></i> YouTube live </p>
+                <p class="text-color w-full mt-4 p-0 m-0"> <i class="pi pi-youtube" style="color : red"></i> YouTube
+                    live </p>
                 }
 
                 @if(data.type === "linkewiselive"){
-                    <p class="text-color w-full mt-4 p-0 m-0"> <i class="pi pi-link text-primary-purple font-bold"></i> link live </p>
+                <p class="text-color w-full mt-4 p-0 m-0"> <i class="pi pi-link text-primary-purple font-bold"></i> link
+                    live </p>
                 }
 
-                <h4 (click)="joinLive(data)" class="mt-2 primary-hover-color gray-color capitalize white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                <h4 (click)="joinLive(data)"
+                    class="mt-2 primary-hover-color gray-color capitalize white-space-nowrap overflow-hidden text-overflow-ellipsis">
                     {{data.title}}</h4>
             </div>
         </div>
@@ -60,229 +61,215 @@
 
 
     @if(chapterDataList.content.length > 0){
-        
-        <div class="mt-5 mb-3">
-            <h5> All Contents </h5>
+
+    <div class="mt-5 mb-3">
+        <h5> All Contents </h5>
+    </div>
+
+    @for(data of chapterDataList.content; track data){
+    <div class="content-card mb-4">
+        <div class="p-3">
+            <i class="pi pi-microsoft font-bold text-primary-color"></i>
         </div>
+        <div class="border-left">
 
-        @for(data of chapterDataList.content; track data){
-        <div class="content-card mb-4">
-            <div class="p-3">
-                <i class="pi pi-microsoft font-bold text-primary-color"></i>
-            </div>
-            <div class="border-left">
+            <div class="card">
+                <p-panel [toggleable]="true">
+                    <ng-template pTemplate="header">
+                        <div class="flex align-items-center gap-2">
+                            @switch (data.type) {
+                            @case ("Article") {
+                            <span class="font-bold">
+                                Article
+                            </span>
+                            }
+                            @case ("Video") {
+                            <span class="font-bold">
+                                Videos
+                            </span>
+                            }
+                            @case ("Audio") {
+                            <span class="font-bold">
+                                Audios
+                            </span>
+                            }
+                            @case ("Notes") {
+                            <span class="font-bold">
+                                Notes
+                            </span>
+                            }
+                            @case ("Image") {
+                            <span class="font-bold">
+                                Images
+                            </span>
+                            }
+                            @case ("YoutubeVideo") {
+                            <span class="font-bold">
+                                Youtube Videos
+                            </span>
+                            }
+                            
 
-                <div class="card">
-                    <p-panel [toggleable]="true">
-                        <ng-template pTemplate="header">
-                            <div class="flex align-items-center gap-2">
-                                @switch (data.type) {
-                                @case ("Article") {
-                                <span class="font-bold">
-                                    Article
-                                </span>
-                                }
-                                @case ("Video") {
-                                <span class="font-bold">
-                                    Videos
-                                </span>
-                                }
-                                @case ("Audio") {
-                                <span class="font-bold">
-                                    Audios
-                                </span>
-                                }
-                                @case ("Notes") {
-                                <span class="font-bold">
-                                    Notes
-                                </span>
-                                }
-                                @case ("image") {
-                                <span class="font-bold">
-                                    Images
-                                </span>
-                                }
-                                @case ("YoutubeVideo") {
-                                <span class="font-bold">
-                                    Youtube Videos
-                                </span>
-                                }
-                                @case ("resource") {
-                                <span class="font-bold">
-                                    Resource
-                                </span>
-                                }
+                            @case("Test") {
+                            <span class="font-bold">
+                                Test
+                            </span>
+                            }
 
-                                @case("Test") {
-                                <span class="font-bold">
-                                    Test
-                                </span>
-                                }
-
-                                }
+                            }
 
 
-                            </div>
-                        </ng-template>
+                        </div>
+                    </ng-template>
 
-                        <ng-template pTemplate="icons">
+                    <ng-template pTemplate="icons">
 
 
 
-                            <!-- <button class="p-panel-header-icon p-link mr-2" (click)="menu.toggle($event)"> -->
-                            <!-- <button class="p-panel-header-icon p-link mr-2" (click)="editContent(data.type, data.id)">
+                        <!-- <button class="p-panel-header-icon p-link mr-2" (click)="menu.toggle($event)"> -->
+                        <!-- <button class="p-panel-header-icon p-link mr-2" (click)="editContent(data.type, data.id)">
                                         <span class="pi pi-cog"></span>
                                     </button> -->
 
-                            @switch (data.type) {
-                            @case ("Article") {
-                            <a (click)="uploadContent(data, 'text', 'edit')"> Edit </a>
-                            <button (click)="deleteContent(data.id)" class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-trash label-required"></span>
-                            </button>
-                            }
-                            @case ("Video") {
-                            <button (click)="uploadContent(data, 'Video', 'edit')" class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-cog"></span>
-                            </button>
-                            <button (click)="deleteContent(data.id)" class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-trash label-required"></span>
-                            </button>
-                            }
-                            @case ("Audio") {
-                            <button (click)="uploadContent(data, 'Video', 'edit')" class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-cog"></span>
-                            </button>
-                            <button (click)="deleteContent(data.id)" class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-trash label-required"></span>
-                            </button>
-                            }
-                            @case ("Notes") {
-                            <button (click)="uploadContent(data, 'notes', 'edit')" class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-cog"></span>
-                            </button>
-                            <button (click)="deleteContent(data.id)" class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-trash label-required"></span>
-                            </button>
-                            }
-                            @case ("image") {
-                            <button (click)="uploadContent(data, 'image', 'edit')" class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-cog"></span>
-                            </button>
-                            <button (click)="deleteContent(data.id)" class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-trash label-required"></span>
-                            </button>
-                            }
-                            @case ("YoutubeVideo") {
-                            <button (click)="uploadContent(data, 'youtubevideo', 'edit')"
-                                class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-cog"></span>
-                            </button>
-                            <button (click)="deleteContent(data.id)" class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-trash label-required"></span>
-                            </button>
-                            }
-                            @case ("resource") {
-                            <button (click)="uploadContent(data, 'resource', 'edit')"
-                                class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-cog"></span>
-                            </button>
-                            <button (click)="deleteContent(data.id)" class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-trash label-required"></span>
-                            </button>
-                            }
-
-                            @case("Test") {
-                            <button (click)="uploadContent(data, 'test', 'edit')" class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-cog"></span>
-                            </button>
-
-                            <button (click)="deleteTest(data.id)" class="p-panel-header-icon p-link mr-2">
-                                <span class="pi pi-trash label-required"></span>
-                            </button>
-
-                            }
-
-                            }
-
-
-
-
-                        </ng-template>
-
-
                         @switch (data.type) {
                         @case ("Article") {
-                        <p class="m-0">
-                            <!-- {{data.text}} -->
-                            <p-editor [(ngModel)]="data.text" [readonly]="true" [style]="{ height: '320px' }"
-                                [class.hide-toolbar]="hideHeader"></p-editor>
-
-                        </p>
+                        <a class="cursor-pointer" (click)="uploadContent(data, 'text', 'edit')"> Edit </a>
+                        <button (click)="deleteContent(data._id)" class="p-panel-header-icon p-link mr-2">
+                            <span class="pi pi-trash label-required"></span>
+                        </button>
                         }
-                        @case ("video") {
-                        <video width="100%" height="540px" controls>
-                            <source [src]="getSafeUrl(data.url)" type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                        }
-                        @case ("Notes") {
-                        <iframe [src]="getSafeUrl('https://docs.google.com/gview?embedded=true&url=' + data.url)"
-                            width="100%" height="600" frameborder="0">
-                            Your browser does not support PDFs.
-                        </iframe>
+                        @case ("Video") {
+                        <button (click)="uploadContent(data, 'Video', 'edit')" class="p-panel-header-icon p-link mr-2">
+                            <span class="cursor-pointer pi pi-cog"></span>
+                        </button>
+                        <button (click)="deleteContent(data._id)" class="p-panel-header-icon p-link mr-2">
+                            <span class="pi pi-trash label-required"></span>
+                        </button>
                         }
                         @case ("Audio") {
-                        <audio controls>
-                            <source [src]="getSafeUrl(data.url)" type="audio/mpeg" />
-                            Your browser does not support the audio element.
-                        </audio>
+                        <button (click)="uploadContent(data, 'Audio', 'edit')" class="p-panel-header-icon p-link mr-2">
+                            <span class="cursor-pointer pi pi-cog"></span>
+                        </button>
+                        <button (click)="deleteContent(data._id)" class="p-panel-header-icon p-link mr-2">
+                            <span class="pi pi-trash label-required"></span>
+                        </button>
                         }
-                        @case ("image") {
-                        <img src="../../../../../assets/images/client-profile.png">
+                        @case ("Notes") {
+                        <button (click)="uploadContent(data, 'notes', 'edit')" class="p-panel-header-icon p-link mr-2">
+                            <span class="cursor-pointer pi pi-cog"></span>
+                        </button>
+                        <button (click)="deleteContent(data._id)" class="p-panel-header-icon p-link mr-2">
+                            <span class="pi pi-trash label-required"></span>
+                        </button>
+                        }
+                        @case ("Image") {
+                        <button (click)="uploadContent(data, 'image', 'edit')" class="p-panel-header-icon p-link mr-2">
+                            <span class="cursor-pointer pi pi-cog"></span>
+                        </button>
+                        <button (click)="deleteContent(data._id)" class="p-panel-header-icon p-link mr-2">
+                            <span class="pi pi-trash label-required"></span>
+                        </button>
                         }
                         @case ("YoutubeVideo") {
-                        <iframe [src]="getYouTubeEmbedUrl(data.url)" width="100%" height="540px" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
+                        <button (click)="uploadContent(data, 'youtubevideo', 'edit')"
+                            class="p-panel-header-icon p-link mr-2">
+                            <span class="cursor-pointer pi pi-cog"></span>
+                        </button>
+                        <button (click)="deleteContent(data._id)" class="p-panel-header-icon p-link mr-2">
+                            <span class="pi pi-trash label-required"></span>
+                        </button>
                         }
-                        @case ("resource") {
-                        <img src="../../../../../assets/images/client-profile.png">
-                        }
+                        
 
                         @case("Test") {
+                            
+                        <!-- <button (click)="uploadContent(data, 'test', 'edit')" class="p-panel-header-icon p-link mr-2">
+                            <span class="cursor-pointer pi pi-cog"></span>
+                        </button> -->
 
-                        @if(true){
+                        <button (click)="deleteContent(data._id)" class="p-panel-header-icon p-link mr-2">
+                            <span class="pi pi-trash label-required"></span>
+                        </button>
 
-                        <div class="grid cursor-pointer" (click)="sectionDetailPage(data)">
-                            <div class="col-12  ">
-                                <h6 class="underline capitalize">{{data.title}}</h6>
-                                <span class="text-sm text-color-secondary"> 12 Questions </span>
-                            </div>
+                        }
+
+                        }
+
+
+
+
+                    </ng-template>
+
+
+                    @switch (data.type) {
+                    @case ("Article") {
+                    <p class="m-0">
+                        <!-- {{data.text}} -->
+                        <p-editor [(ngModel)]="data.text" [readonly]="true" [style]="{ height: 'auto' }"
+                            [class.hide-toolbar]="hideHeader"></p-editor>
+
+                    </p>
+                    }
+                    @case ("Video") {
+                    <video width="100%" height="540px" controls>
+                        <source [src]="getSafeUrl(data.url)" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                    }
+                    @case ("Notes") {
+                    <iframe [src]="getSafeUrl('https://docs.google.com/gview?embedded=true&url=' + data.url)"
+                        width="100%" height="600" frameborder="0">
+                        Your browser does not support PDFs.
+                    </iframe>
+                    }
+                    @case ("Audio") {
+                    <audio controls>
+                        <source [src]="getSafeUrl(data.url)" type="audio/mpeg" />
+                        Your browser does not support the audio element.
+                    </audio>
+                    }
+                    @case ("Image") {
+                    <img [src]="data.url">
+                    }
+                    @case ("YoutubeVideo") {
+                    <iframe [src]="getYouTubeEmbedUrl(data.url)" width="100%" height="540px" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                    }
+
+                    @case("Test") {
+
+                    @if(true){
+
+                    <div class="grid cursor-pointer" (click)="sectionDetailPage(data)">
+                        <div class="col-12  ">
+                            <h6 class="underline capitalize">{{data.title}}</h6>
+                            <!-- <span class="text-sm text-color-secondary"> 12 Questions </span> -->
                         </div>
-                        }@else {
-                        <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
-                            <img src="../../../../../assets/images/icon/no-loan-application.svg">
-                            <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">Add Section to quiz your students
-                            </p>
-                            <button type="button" pRipple label="View" (click)="sectionDetailPage(data)" pButton
-                                class="secondary-button curriculum-btn px-6 text-sm mt-3"></button>
-                        </div>
-                        }
+                    </div>
+                    }@else {
+                    <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+                        <img src="../../../../../assets/images/icon/no-loan-application.svg">
+                        <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">Add Section to quiz your students
+                        </p>
+                        <button type="button" pRipple label="View" (click)="sectionDetailPage(data)" pButton
+                            class="secondary-button curriculum-btn px-6 text-sm mt-3"></button>
+                    </div>
+                    }
 
-                        }
+                    }
 
-                        }
-
-
-                    </p-panel>
-                </div>
+                    }
 
 
+                </p-panel>
             </div>
+
+
         </div>
-        }
+    </div>
+    }
 
     }
 
@@ -316,119 +303,120 @@
 
     <!-- Add Lesson Contents  -->
 
-    <p-sidebar [(visible)]="addContentPopup" position="right" [style]="{width:'27.6%'}">
-        <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Add Content </h4>
+    <p-sidebar [(visible)]="addContentPopup" position="right" [style]="{width:'40%'}">
+        <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm"> Add Content </h4>
         <div class="content-type">
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+            <div pRipple class="type border-round-lg cursor-pointer justify-content-center align-items-center"
                 (click)="uploadContent('', 'text', 'add')">
-                <i class="pi pi-align-left font-bold flex mb-2 justify-content-center"></i>
+                <img class="content-type-img" src="../../../../../assets/images/icon/text.png">
+                <!-- <i class="pi pi-align-left font-bold flex mb-2 justify-content-center"></i> -->
                 <h6>Text</h6>
             </div>
 
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+            <div pRipple class="type border-round-lg cursor-pointer justify-content-center align-items-center"
                 (click)="uploadContent('', 'Video', 'add')">
-                <i class="pi pi-play font-bold flex mb-2 justify-content-center"></i>
+                <!-- <i class="pi pi-play font-bold flex mb-2 justify-content-center"></i> -->
+                <img class="content-type-img" src="../../../../../assets/images/icon/video.svg">
                 <h6>Video</h6>
             </div>
 
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+            <div pRipple class="type border-round-lg cursor-pointer justify-content-center align-items-center"
                 (click)="uploadContent('', 'notes', 'add')">
-                <i class="pi pi-file font-bold flex mb-2 justify-content-center"></i>
+                <!-- <i class="pi pi-file font-bold flex mb-2 justify-content-center"></i> -->
+                <img class="content-type-img" src="../../../../../assets/images/icon/Pdf.svg">
                 <h6>PDF</h6>
             </div>
 
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+            <div pRipple class="type border-round-lg cursor-pointer justify-content-center align-items-center"
                 (click)="uploadContent('', 'image', 'add')">
-                <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
+                <!-- <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i> -->
+                <img class="content-type-img" src="../../../../../assets/images/icon/Image.svg">
                 <h6>Image</h6>
             </div>
 
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+            <div pRipple class="type border-round-lg cursor-pointer justify-content-center align-items-center"
                 (click)="uploadContent('', 'audio', 'add')">
-                <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
+                <!-- <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i> -->
+                <img class="content-type-img" src="../../../../../assets/images/icon/Audio.svg">
                 <h6>Audio</h6>
             </div>
 
 
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+            <div pRipple class="type border-round-lg cursor-pointer justify-content-center align-items-center"
                 (click)="uploadContent('', 'youtubevideo', 'add')">
-                <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
+                <!-- <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i> -->
+                <img class="content-type-img" src="../../../../../assets/images/icon/youtube.png">
                 <h6>Youtube Video</h6>
             </div>
 
-
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
-                (click)="uploadContent('', 'resource', 'add')">
-                <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
-                <h6>Resource</h6>
-            </div>
-
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+            <div pRipple class="type border-round-lg cursor-pointer justify-content-center align-items-center"
                 (click)="uploadContent('', 'Quiz', 'add')">
-                <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i>
+                <!-- <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i> -->
+                <img class="content-type-img" src="../../../../../assets/images/icon/Quiz.png">
                 <h6>Quiz</h6>
             </div>
 
-            <div pRipple class="type cursor-pointer justify-content-center align-items-center"
+            <div pRipple class="type border-round-lg cursor-pointer justify-content-center align-items-center"
                 (click)="uploadContent('', 'Live Class', 'add')">
-                <i class="pi pi-bullseye font-bold flex mb-2 justify-content-center"></i>
-                <h6>Live Class</h6>
+                <!-- <i class="pi pi-bullseye font-bold flex mb-2 justify-content-center"></i> -->
+                <img class="content-type-img" src="../../../../../assets/images/icon/live-class.png">
+                <h6>Live</h6>
             </div>
 
         </div>
     </p-sidebar>
 
     @if(uploadContents){
-    <p-sidebar [(visible)]="uploadContents" position="right" [style]="{width:'27.6%'}">
+    <p-sidebar [(visible)]="uploadContents" position="right" [style]="{width:'40%'}">
         <app-upload-content (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentId]="contentId"
             [contentTypes]="contentTypes"></app-upload-content>
     </p-sidebar>
     }
 
     @if(isImage){
-    <p-sidebar [(visible)]="isImage" position="right" [style]="{width:'27.6%'}">
+    <p-sidebar [(visible)]="isImage" position="right" [style]="{width:'40%'}">
         <app-image (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes"
             [contentId]="contentId"></app-image>
     </p-sidebar>
     }
 
     @if(isVideo){
-    <p-sidebar [(visible)]="isVideo" position="right" [style]="{width:'27.6%'}">
+    <p-sidebar [(visible)]="isVideo" position="right" [style]="{width:'40%'}">
         <app-upload-video (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes"
             [contentId]="contentId"></app-upload-video>
     </p-sidebar>
     }
 
     @if(isAudio){
-    <p-sidebar [(visible)]="isAudio" position="right" [style]="{width:'27.6%'}">
+    <p-sidebar [(visible)]="isAudio" position="right" [style]="{width:'40%'}">
         <app-audio (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes"
             [contentId]="contentId"></app-audio>
     </p-sidebar>
     }
 
     @if(isResource){
-    <p-sidebar [(visible)]="isResource" position="right" [style]="{width:'27.6%'}">
+    <p-sidebar [(visible)]="isResource" position="right" [style]="{width:'40%'}">
         <app-re-source (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes"
             [contentId]="contentId"></app-re-source>
     </p-sidebar>
     }
 
     @if(isYoutubevideo){
-    <p-sidebar [(visible)]="isYoutubevideo" position="right" [style]="{width:'27.6%'}">
+    <p-sidebar [(visible)]="isYoutubevideo" position="right" [style]="{width:'40%'}">
         <app-youtube-video (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes"
             [contentId]="contentId"></app-youtube-video>
     </p-sidebar>
     }
 
     @if(isText){
-    <p-sidebar [(visible)]="isText" position="right" [style]="{width:'27.6%'}">
+    <p-sidebar [(visible)]="isText" position="right" [style]="{width:'40%'}">
         <app-text (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes"
             [contentId]="contentId"></app-text>
     </p-sidebar>
     }
 
     @if(isQuiz){
-    <p-sidebar [(visible)]="isQuiz" position="right" [style]="{width:'27.6%'}">
+    <p-sidebar [(visible)]="isQuiz" position="right" [style]="{width:'40%'}">
         <app-create-test (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes"
             [contentId]="contentId"></app-create-test>
     </p-sidebar>
@@ -436,14 +424,8 @@
 
     @if(isLiveClass){
     <p-sidebar [(visible)]="isLiveClass" position="right" [style]="{width:'40%'}">
-        <app-live-class [editLiveData]="editLiveData" (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" (closeSideBar)="closeSideBarliveClass()"></app-live-class>
+        <app-live-class [editLiveData]="editLiveData" (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId"
+            (closeSideBar)="closeSideBarliveClass()"></app-live-class>
     </p-sidebar>
     }
 
-
-    @if(isSectionDetailPage){
-    <p-sidebar class="p-0 pt-1 pb-1" [(visible)]="isSectionDetailPage" [fullScreen]="true">
-        <app-test-content [testId]="testId"></app-test-content>
-    </p-sidebar>
-
-    }

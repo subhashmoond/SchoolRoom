@@ -38,12 +38,12 @@ export class LiveClassComponent {
   ngOnInit() {
 
 
-    if (this.editLiveData.type === "youtubelive") {
+    if (this.editLiveData?.type === "youtubelive") {
       this.isEditLive = true;
       this.getLiveDetail();
     }
 
-    if(this.editLiveData.type === "linkewiselive"){
+    if(this.editLiveData?.type === "linkewiselive"){
       this.isEditLive = true;
       this.getLiveDetail();
     }

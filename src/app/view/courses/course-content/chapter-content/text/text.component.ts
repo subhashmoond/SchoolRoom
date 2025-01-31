@@ -69,12 +69,11 @@ export class TextComponent {
 
   getContentSetting() {
     this._coursesService.getTextContent(this.contentId).subscribe(res => {
-      console.log(res, "content get API")
 
-      this.settingContent.setValue({
+      this.settingContent.patchValue({
         title: res.title,
         text: res.text,
-        available: res.always_available
+        available: true
       })
 
     })
@@ -90,7 +89,6 @@ export class TextComponent {
     body.append('article_text', this.addContent.get('text')?.value);
 
     this._coursesService.addText(body).subscribe(res => {
-      console.log(res, "Image Uplodaed Successfully");
       this.closeSideBar.emit(false)
     }, error => {
       this._messageService.add({ severity: 'error', detail: 'Error ' });
@@ -107,7 +105,6 @@ export class TextComponent {
     }
 
     this._coursesService.editTextContent(this.contentId, payload).subscribe(res => {
-      console.log(res, "PDF Setting ");
       this.closeSideBar.emit(false)
     })
 

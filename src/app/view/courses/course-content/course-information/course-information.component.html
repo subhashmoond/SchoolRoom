@@ -37,7 +37,8 @@
         <div class="col-12 mt-4">
             <div class="w-full">
                 <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Description</label>
-                <textarea rows="5" style="width: 100%;" pInputTextarea formControlName="description"></textarea>
+                <!-- <textarea rows="5" style="width: 100%;" pInputTextarea formControlName="description"></textarea> -->
+                <p-editor formControlName="description" [style]="{ height: '300px' }" />
             </div>
         </div>
 
@@ -109,8 +110,8 @@
 
         <div class="col-12">
 
-            <p-table [value]="whatlearn.value" [rows]="10" [showLoader]="true" [responsive]="true"
-                [scrollable]="true" scrollHeight="37.938rem" selectionMode="single" class="client-data-table">
+            <p-table [value]="whatlearn.controls" [rows]="10" [showLoader]="true" [responsive]="true"
+                [scrollable]="true" scrollHeight="37.938rem" selectionMode="single" class="test-table client-data-table" formArrayName="whatlearn">
                 <!-- Table Header -->
                 <ng-template pTemplate="header" class="p-4">
                     <tr class="w-full flex flex-wrap">
@@ -178,10 +179,8 @@
 
         <div class="col-12">
 
-           
-
                 <p-table [value]="faq.controls" [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true"
-                    scrollHeight="37.938rem" selectionMode="single" class="client-data-table">
+                    scrollHeight="37.938rem" selectionMode="single" class="client-data-table test-table" formArrayName="faq">
                     <!-- Table Header -->
                     <ng-template pTemplate="header" class="p-4">
                         <tr class="w-full flex flex-wrap">
@@ -218,11 +217,6 @@
                     </ng-template>
                 </p-table>
             
-
-            
-
-
-
         </div>
 
         <div class="col-12">

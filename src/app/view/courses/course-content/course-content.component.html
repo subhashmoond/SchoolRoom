@@ -1,9 +1,25 @@
 <div class="grid grid-nogutter nested-grid">
     <div class="col-2 secondry-bg-color">
 
-        <div class="w-full relative overflow-hidden	h-10rem">
+        <!-- <div class="w-full relative overflow-hidden	h-10rem">
             <img src="../../../../assets/images/course-tham.png">
             <h5 class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full absolute bottom-0 p-3 text-white-alpha-90 ">UI/UX Design</h5>
+        </div> -->
+
+        <div class="w-full relative overflow-hidden	h-10rem">
+
+            <i (click)="updateThumbnail()" class="pi pi-pencil border-circle p-2 bg-white absolute right-0 m-3 cursor-pointer"></i>
+
+            @if(courseDetails.image_url == "undefined"){
+
+                <img src="../../../../assets/images/course-tham.png">
+            }
+            @else{
+                <img style="width: 100%; height: 100%; object-fit: cover;" [src]="courseDetails.image_url">
+            }
+
+
+            <h5 class="text-primary-purple capitalize white-space-nowrap overflow-hidden text-overflow-ellipsis w-full absolute bottom-0 p-3">{{courseDetails.name}}</h5>
         </div>
 
         <ul class="sidebar-menu course-s-b">
@@ -91,3 +107,14 @@
 
 
 </div>
+
+
+
+<!-- Update and Add new  Thambnail  -->
+@if(isThumbnail){
+    
+    <p-dialog header="Update Course Thumbnail" [modal]="true" [(visible)]="isThumbnail" [style]="{ width: '35rem' }">
+        <app-course-thumbnail (closepoup)="closeThumbnailPopup($event)" [thumbnalAndTitleData]="thumbnalAndTitleData"></app-course-thumbnail>
+    </p-dialog>
+
+}

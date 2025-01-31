@@ -6,11 +6,15 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { AppSettingService } from '../../../core/services/app-setting.service';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-configuration',
   standalone: true,
-  imports: [CommonModule, ButtonModule, ReactiveFormsModule, InputTextModule, RadioButtonModule, FormsModule, CheckboxModule, FileUploadModule ],
+  imports: [CommonModule, ButtonModule, ReactiveFormsModule, InputTextModule, RadioButtonModule, FormsModule, CheckboxModule, FileUploadModule, ToastModule ],
+  providers: [MessageService],
   templateUrl: './configuration.component.html',
   styleUrl: './configuration.component.css'
 })
@@ -33,7 +37,7 @@ export class ConfigurationComponent {
   ];
   selectedTheme = this.themes[0];
 
-  constructor( private _fb : FormBuilder ){}
+  constructor( private _fb : FormBuilder, private _appSettingService : AppSettingService, private _messageService: MessageService, ){}
 
   ngOnInit(){
 
@@ -103,5 +107,24 @@ export class ConfigurationComponent {
       reader.readAsDataURL(file);
     }
   }
+
+
+  saveAppSetting(){
+
+    const payload = new FormData()
+
+    payload.append('name', this.configurationForm.get('appname')?.value )
+    payload.append('color_theme', this.selectedTheme?.color )
+    payload.append('logo', this.selectedFile)
+
+    console.log(payload, "app name")
+
+    this._appSettingService.addAppConfiguration(payload).subscribe(res => {
+      this._messageService.add({ severity: 'error', detail: 'res.message' });
+    })
+
+  }
+
+
 
 }
