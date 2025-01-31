@@ -95,7 +95,7 @@
         <app-course-coupons></app-course-coupons>
         }
         @case ("comment") {
-        <app-course-comment></app-course-comment>
+        <app-course-comment [allowReviewStatus]="allowReviewStatus"></app-course-comment>
         }
         @case ("student") {
         <app-course-students></app-course-students>

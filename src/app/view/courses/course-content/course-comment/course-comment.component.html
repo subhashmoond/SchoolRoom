@@ -1,39 +1,50 @@
-<div class="card">
 
+<p-toast />
     <div class="grid client-dashborad-header mb-4 align-items-center">
-        <div class="col-12">
+        <div class="col-6">
             <h4 class="subheading-color">Courses Comment</h4>
         </div>
-        <!-- <div class="col-6 flex justify-content-end">
-            <p-button class="create-button border-round-md" (click)="openCreateCouponsSidebar()">Add Comment</p-button>
-        </div> -->
+        <div class="col-6 flex justify-content-end">
+            <p-inputSwitch [(ngModel)]="allowReview" (onChange)="onAllowReviewChange()" [trueValue]="true" />
+        </div>
     </div>
 
-    <div class="curiculam-h" >
+    <!-- <div class="curiculam-h" > -->
 
         <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
             selectionMode="single" class="client-data-table" [value]="reviewList">
     
             <ng-template pTemplate="header" class="p-4">
                 <tr class="w-full flex flex-wrap">
-                    <th style="width:25%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">NAME</th>
-                    <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">RATING</th>
-                    <th style="width:50%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">REVIEW TEXT
+                    <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">NAME</th>
+                    <th style="width:10%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">RATING</th>
+                    <th style="width:40%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">REVIEW TEXT
                     </th>
+                    <th style="width:30%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">ACTION</th>
+
                 </tr>
             </ng-template>
     
             <ng-template pTemplate="body" let-data>
                 <tr class="w-full flex flex-wrap">
-                    <td style="width: 25%;word-break:break-all;" class="pl-4 capitalize">
+                    <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
                         {{data.userName}}
                     </td>
-                    <td style="width: 25%;word-break:break-all;" class="pl-4">
+                    <td style="width: 10%;word-break:break-all;" class="pl-4">
                         {{data.rating}}
                     </td>
-                    <td style="width: 50%;" class="pl-4">
+                    <td style="width: 40%;" class="pl-4">
                         {{data.review_text}}
                     </td>
+
+                    <td style="width: 30%;word-break:break-all;" class="pl-4">
+                         @if(data.reviewStatus === "pending"){
+                            <button type="submit" pButton pRipple label="Approve" (click)="approveReview(data.id, 'approve')" class="primary-button px-3 text-sm"></button>
+                            <button type="submit" pButton pRipple label="Reject" (click)="approveReview(data.id, 'reject')" class=" ml-2 primary-button px-3 text-sm" style="background: red; border-color: red;" ></button>
+                         }
+
+                    </td>
+
                 </tr>
             </ng-template>
     
@@ -46,9 +57,8 @@
             </ng-template>
     
         </p-table>
-    </div>
+    <!-- </div> -->
 
-</div>
 
 @if(isCreateCoupons){
     <p-sidebar [(visible)]="isCreateCoupons" position="right" [style]="{width:'27.6%'}">

@@ -38,7 +38,8 @@ export class CourseContentComponent {
   courseId: any;
   courseDetails: any;
   isThumbnail: boolean = false;
-  thumbnalAndTitleData: any
+  thumbnalAndTitleData: any;
+  allowReviewStatus : any;
 
   constructor(private _sharedService: SharedService, private messageService: MessageService, private _courseService: CoursesService, private route: ActivatedRoute) {
     this.route.paramMap.subscribe(params => {
@@ -56,7 +57,8 @@ export class CourseContentComponent {
 
   getCourseDetail() {
     this._courseService.getCourseById(this.courseId).subscribe(res => {
-      this.courseDetails = res.course
+      this.courseDetails = res.course;
+      this.allowReviewStatus = this.courseDetails.allowReview
     })
   }
 

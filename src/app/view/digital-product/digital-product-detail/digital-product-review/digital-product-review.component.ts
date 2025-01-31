@@ -19,7 +19,7 @@ import { ToastModule } from 'primeng/toast';
 @Component({
   selector: 'app-digital-product-review',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, ToastModule, RadioButtonModule, InputSwitchModule, SkeletonModule, ReactiveFormsModule, FormsModule, CheckboxModule, CalendarModule, MessagesModule, TableModule],
+  imports: [TableModule, InputTextModule, ToolbarModule, FormsModule, ButtonModule, ToastModule, RadioButtonModule, InputSwitchModule, SkeletonModule, ReactiveFormsModule, FormsModule, CheckboxModule, CalendarModule, MessagesModule, TableModule],
   providers: [MessageService],
   templateUrl: './digital-product-review.component.html',
   styleUrl: './digital-product-review.component.css'

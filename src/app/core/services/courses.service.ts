@@ -292,4 +292,14 @@ export class CoursesService {
     return this._dataService.post(url, payload);
   }
 
+  allowReviews(courseId : any, payload : any){
+    const url = `${environment.basePath}course/${courseId}/review-status/update`;
+    return this._dataService.post(url, payload)
+  }
+
+  approveAndRejectReview(courseId : any, reviewId : any, payload : any){
+    const url = `${environment.basePath}course/${courseId}/review/${reviewId}/update`;
+    return this._dataService.post(url, payload);
+  }
+
 }
