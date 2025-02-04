@@ -52,6 +52,9 @@ export const routes: Routes = [
             },
             {
                 path : 'app', loadChildren : () => import('./view/your-app/you-app.router').then((m) => m.routes)
+            },
+            {
+                path : 'setting', loadChildren : () => import('./view/setting/setting.router').then((m) => m.routes)
             }
         ],
         canActivate: [authGuard]

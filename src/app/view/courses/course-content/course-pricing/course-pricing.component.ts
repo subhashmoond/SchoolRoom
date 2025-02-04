@@ -19,11 +19,12 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
+import { KeyFilterModule } from 'primeng/keyfilter';
 
 @Component({
   selector: 'app-course-pricing',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, RadioButtonModule, InputSwitchModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, FormsModule, CheckboxModule, CalendarModule, MessagesModule],
+  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, RadioButtonModule, InputSwitchModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, FormsModule, CheckboxModule, CalendarModule, MessagesModule, KeyFilterModule],
   providers: [MessageService],
   templateUrl: './course-pricing.component.html',
   styleUrl: './course-pricing.component.css'
@@ -37,10 +38,10 @@ export class CoursePricingComponent {
   isEditPlan: boolean = false;
   planDetailByIds: any;
   updatePlanId: any;
-  courseId : any;
-  isLoader : boolean = true
+  courseId: any;
+  isLoader: boolean = true
 
-  constructor(private _courseService: CoursesService, private route : ActivatedRoute, private _fb: FormBuilder, private _messageService: MessageService) {
+  constructor(private _courseService: CoursesService, private route: ActivatedRoute, private _fb: FormBuilder, private _messageService: MessageService) {
     this.route.paramMap.subscribe(params => {
       this.courseId = params.get('id')!;
     });
@@ -53,7 +54,8 @@ export class CoursePricingComponent {
 
   formGroup() {
     this.createPlanForm = this._fb.group({
-      price: ['', Validators.required],
+      planname: ['', Validators.required],
+      mrp: ['', Validators.required],
       discount: [''],
       instalment: false,
       duration: false,
@@ -79,12 +81,15 @@ export class CoursePricingComponent {
 
   getPriceList() {
     this.isLoader = true
-    this._courseService.getCoursePriceList(this.courseId).subscribe((res : any) => {
+    this._courseService.getCoursePriceList(this.courseId).subscribe((res: any) => {
       this.priceList = res;
-      this.isLoader = false
-      if(res.status == false){
-        this._messageService.add({severity:'warn', summary: res.msg});
-      }
+      this.isLoader = false;
+      // if(res.status == false){
+      //   this._messageService.add({severity:'warn', summary: res.msg});
+      // } 
+
+      
+
     })
   }
 
@@ -103,20 +108,22 @@ export class CoursePricingComponent {
       this.planDetailByIds = res
       this.isCreatePlan = true;
 
-      this.createPlanForm.setValue({
-        price: this.planDetailByIds?.price,
-        discount: this.planDetailByIds?.mrp,
-        instalment: this.planDetailByIds?.isInstalment,
-        // duration: false,
-        // instalmentMonths: [],
-        // instalmentMonthsValue: [],
-        // instalmentWeekly: [],
-        // instalmentWeeklyValue: [],
-        // durationDate: [],
-        // durationDateValue: [],
-        // durationDays: [],
-        // durationDaysValue: [],
-        // instalmentType: null
+
+      this.createPlanForm.patchValue({
+        planname: this.planDetailByIds.name,
+        mrp: this.planDetailByIds.mrp,
+        discount: this.planDetailByIds.price,
+        instalment: this.planDetailByIds.isInstalment,
+        duration: this.planDetailByIds.is_validity,
+        // instalmentMonths: this.planDetailByIds?,
+        instalmentMonthsValue: this.planDetailByIds?.instalment.totalInstalment,
+        // instalmentWeekly: this.planDetailByIds?,
+        // instalmentWeeklyValue: this.planDetailByIds?,
+        durationDate: this.planDetailByIds?.validityType,
+        durationDateValue: new Date(this.planDetailByIds?.validityDate),
+        // durationDays: this.planDetailByIds?,
+        durationDaysValue: this.planDetailByIds?.validityDays,
+        instalmentType: this.planDetailByIds.instalment.instalmentType
       })
 
     })
@@ -127,12 +134,12 @@ export class CoursePricingComponent {
   }
 
   deletePlan(data: any) {
-    this._courseService.deletePlanById(this.courseId, data.id).subscribe((res:any) => {
+    this._courseService.deletePlanById(this.courseId, data.id).subscribe((res: any) => {
       console.log(res, "delete done");
       this.getPriceList();
       this._messageService.add({ severity: 'success', summary: 'Plan Delete Successfully' });
-      if(res.status == false){
-        this._messageService.add({severity:'warn', summary: res.msg});
+      if (res.status == false) {
+        this._messageService.add({ severity: 'warn', summary: res.msg });
       }
     })
   }
@@ -143,9 +150,10 @@ export class CoursePricingComponent {
     if (!this.isEditPlan) {
 
       var payload: any = {
+        "name" : this.createPlanForm.get('planname')?.value,
         "planType": "Paid",// Paid /Free
-        "mrp": this.createPlanForm.get('discount')?.value,
-        "price": this.createPlanForm.get('price')?.value,
+        "mrp": this.createPlanForm.get('mrp')?.value,
+        "price": this.createPlanForm.get('discount')?.value,
         "isInstalment": this.createPlanForm.get('instalment')?.value,
         "isValidity": true,
         // "validityDays":"2025-12-10",
@@ -157,19 +165,21 @@ export class CoursePricingComponent {
       }
 
       if (validityTypeData == 'Date') {
-        payload.validityDate = this.createPlanForm.get('durationDateValue')?.value || "2025-12-10";
+        // payload.validityDate = this.createPlanForm.get('durationDateValue')?.value || "2025-12-10";
+        payload.validityDate = "2025-12-10";
       } else {
-        payload.validityDays = this.createPlanForm.get('durationDateValue')?.value || "44";
+        // payload.validityDays = this.createPlanForm.get('durationDateValue')?.value || "44";
+        payload.validityDays = this.createPlanForm.get('durationDateValue')?.value || "30";
       }
 
-      this._courseService.createPlan(this.courseId, payload).subscribe((res:any) => {
+      this._courseService.createPlan(this.courseId, payload).subscribe((res: any) => {
         console.log(res, "Create Plan Response");
         this.getPriceList();
         this.isCreatePlan = false;
         this._messageService.add({ severity: 'success', summary: 'Plan Created Successfully' });
 
-        if(res.status == false){
-          this._messageService.add({severity:'warn', summary: res.msg});
+        if (res.status == false) {
+          this._messageService.add({ severity: 'warn', summary: res.msg });
         }
 
       }, error => {
@@ -179,9 +189,10 @@ export class CoursePricingComponent {
     } else {
 
       var updatePayload: any = {
+        "name" : this.createPlanForm.get('planname')?.value,
         "planType": "Paid",// Paid /Free
-        "mrp": this.createPlanForm.get('discount')?.value,
-        "price": this.createPlanForm.get('price')?.value,
+        "mrp": this.createPlanForm.get('mrp')?.value,
+        "price": this.createPlanForm.get('discount')?.value,
         "isInstalment": this.createPlanForm.get('instalment')?.value,
         "isValidity": true,
         // "validityDays":"2025-12-10",
@@ -193,18 +204,20 @@ export class CoursePricingComponent {
       }
 
       if (validityTypeData == 'Date') {
-        updatePayload.validityDate = this.createPlanForm.get('durationDateValue')?.value || "2025-12-10";
+        updatePayload.validityDate = "2025-12-10";
+        // updatePayload.validityDate = this.createPlanForm.get('durationDateValue')?.value || "2025-12-10";
       } else {
-        updatePayload.validityDays = this.createPlanForm.get('durationDateValue')?.value || "55";
+        updatePayload.validityDays = "55";
+        // updatePayload.validityDays = this.createPlanForm.get('durationDateValue')?.value || "55";
       }
 
-      this._courseService.updatePlanById(this.courseId, this.updatePlanId, updatePayload).subscribe((res:any) => {
-       
+      this._courseService.updatePlanById(this.courseId, this.updatePlanId, updatePayload).subscribe((res: any) => {
+
         this.getPriceList();
         this.isCreatePlan = false;
-        this._messageService.add({severity:'success', summary:'Plan Updated Successfully'});
-        if(res.status == false){
-          this._messageService.add({severity:'warn', summary: res.msg});
+        this._messageService.add({ severity: 'success', summary: 'Plan Updated Successfully' });
+        if (res.status == false) {
+          this._messageService.add({ severity: 'warn', summary: res.msg });
         }
       })
 

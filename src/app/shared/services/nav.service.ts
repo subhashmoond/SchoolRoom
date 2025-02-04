@@ -12,7 +12,8 @@ export class NavService {
   MENUITEMS: Menus[] = [
     { path: 'dashborad', title: 'Dashborad', icon: 'assets/images/home.png', type: 'link', active: true },
 
-    { title: "Products", icon: 'assets/images/product.png', type: 'sub', active: true,
+    {
+      title: "Products", icon: 'assets/images/product.png', type: 'sub', active: true,
       children: [
         { path: 'course', title: 'Courses', type: 'link' },
         { path: 'test', title: 'Test Series', type: 'link' },
@@ -23,14 +24,14 @@ export class NavService {
     },
 
     { path: 'templatepreview', title: 'Website', icon: 'assets/images/web.png', type: 'link', active: true },
-    {path : 'app', title : 'Your App', icon : 'assets/images/app.png', type : 'link', active : true},
+    { path: 'app', title: 'Your App', icon: 'assets/images/app.png', type: 'link', active: true },
 
     {
       path: 'sales', title: "Marketing", icon: 'assets/images/discount.png', type: 'sub', active: true,
       children: [
         { path: 'marketing/coupons', title: 'Coupons', type: 'link' },
         { path: 'marketing/referral', title: 'Referral Code', type: 'link' },
-        {path : 'marketing/wallet', title: 'Wallet', type : 'link'}
+        { path: 'marketing/wallet', title: 'Wallet', type: 'link' }
       ]
     },
 
@@ -39,14 +40,14 @@ export class NavService {
       children: [
         { path: 'user/student', title: 'Students', type: 'link' },
         { path: 'user/team', title: 'Team', type: 'link' },
-        { path : 'user/role', title: 'Roles', type : 'link' }
+        { path: 'user/role', title: 'Roles', type: 'link' }
       ]
     },
 
-    {path : 'integrations', title : 'Integrations', icon: 'assets/images/integration.png', type: 'link', active: true},
+    { path: 'integrations', title: 'Integrations', icon: 'assets/images/integration.png', type: 'link', active: true },
 
     { path: 'community', title: 'Community', icon: 'assets/images/community.png', type: 'link', active: true },
-    {path : 'newsfeed', title : 'Newsfeed', icon : 'assets/images/news.png', type: 'link', active : true},
+    { path: 'newsfeed', title: 'Newsfeed', icon: 'assets/images/news.png', type: 'link', active: true },
     { path: 'setting', title: 'Setting', icon: 'assets/images/settings.png', type: 'link', active: true }
 
 
@@ -64,12 +65,12 @@ export class NavService {
   ];
 
 
-// PROFILEMENUITEMS
+  // PROFILEMENUITEMS
 
   PROFILEMENUITEMS: ProfileMenu[] = [
     { path: 'logout', label: 'Log Out', icon: 'fa fa-sign-out', type: 'link', active: false },
-    {path: 'setting', label: 'Setting', icon: 'fa fa-cog', type: 'link', active: false },
-    {path: 'profile', label: 'Profile', icon: 'fa fa-user', type: 'link', active: false }
+    { path: 'setting', label: 'Setting', icon: 'fa fa-cog', type: 'link', active: false },
+    { path: 'profile', label: 'Profile', icon: 'fa fa-user', type: 'link', active: false }
   ];
 
 }

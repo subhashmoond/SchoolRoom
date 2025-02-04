@@ -3220,3 +3220,8 @@ body p-checkbox {
 .dropdown-menu .p-button{
     background: none !important;
 }
+
+
+.small-sidebar .p-sidebar .p-sidebar-header {
+    border-bottom: 1px solid rgb(237, 238, 246);
+}

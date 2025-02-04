@@ -6,65 +6,66 @@
         </div>
 
         <div class="col-6 flex justify-content-end">
-                <p-button class="create-button border-round-md" (click)="openCreatePriceSidebar()">Add Pricing
-                    Plan</p-button>
+            <p-button class="create-button border-round-md" (click)="openCreatePriceSidebar()">Add Pricing
+                Plan</p-button>
         </div>
 
     </div>
 
 
-    <div class="curiculam-h" >
+    <div class="curiculam-h">
         <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
             selectionMode="single" class="client-data-table " [value]="priceList">
-    
+
             <ng-template pTemplate="header" class="p-4">
                 <tr class="w-full flex flex-wrap">
-                    <th style="width:33%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Plan Type</th>
+                    <th style="width:33%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Plan Name
+                    </th>
                     <th style="width:33%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Price</th>
                     <th style="width:33%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Action
                     </th>
                 </tr>
-    
+
             </ng-template>
 
-            
-                <ng-template pTemplate="body" let-data>
-                    <tr class="w-full flex flex-wrap">
-                        <td style="width: 33%;word-break:break-all;" class="pl-4 capitalize">
-                            {{data.type}}
-                        </td>
-                        <td style="width: 33%;word-break:break-all;" class="pl-4">
-                            @if(data.price === null){
-                                00.0
-                            }@else {
-                                {{data.price}}
-                            }
-                        </td>
-        
-                        <td style="width: 33%;" class="pl-4">
-                            <i class="pi pi-pen-to-square mr-3" (click)="editPlan(data)"></i>
-                            <i class="pi pi-trash red-500 input-required-color" (click)="deletePlan(data)"></i>
-                        </td>
-        
-                    </tr>
-                </ng-template>
-            
 
-    
+            <ng-template pTemplate="body" let-data>
+                <tr class="w-full flex flex-wrap">
+                    <td style="width: 33%;word-break:break-all;" class="pl-4 capitalize">
+                        {{data.name}}
+                    </td>
+                    <td style="width: 33%;word-break:break-all;" class="pl-4">
+                        @if(data.price === null){
+                        00.0
+                        }@else {
+                        {{data.price}}
+                        }
+                    </td>
+
+                    <td style="width: 33%;" class="pl-4">
+                        <i class="pi pi-pen-to-square mr-3" (click)="editPlan(data)"></i>
+                        <i class="pi pi-trash red-500 input-required-color" (click)="deletePlan(data)"></i>
+                    </td>
+
+                </tr>
+            </ng-template>
+
+
+
             <ng-template pTemplate="emptymessage">
 
-                    <tr>
-                        <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
-                    </tr>
+                <tr>
+                    <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
+                </tr>
+                <tr>
+                    <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
+                </tr>
+                <tr>
+                    <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
+                </tr>
+                <tr>
+                    <td colspan="5"><p-skeleton height="3rem" styleClass="mb-2" /></td>
+                </tr>
 
                 <!-- <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
                     <img src="../../../../../assets/images/icon/no-data.svg">
@@ -72,7 +73,7 @@
                     <p class="text-primary-purple text-base font-normal mt-2">There is no Pricing to show you right now.</p>
                 </div> -->
             </ng-template>
-    
+
         </p-table>
     </div>
 
@@ -90,17 +91,24 @@
             <div class="col-12">
                 <div class="grid">
 
+                    <div class="col-12">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Plan Name
+                            <span>*</span></label>
+                        <input class="w-full capitalize" placeholder="Enter Name" type="text" pInputText
+                            formControlName="planname" />
+                    </div>
+
                     <div class="col-6">
                         <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Price
                             <span>*</span></label>
-                        <input class="w-full capitalize" placeholder="10,000" type="text" pInputText
-                            formControlName="price" />
+                        <input class="w-full capitalize" placeholder="e.g 10,000" pKeyFilter="num" type="text" pInputText
+                            formControlName="mrp" />
                     </div>
 
                     <div class="col-6">
                         <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Discount Price
                         </label>
-                        <input class="w-full capitalize" placeholder="8,000" type="text" pInputText
+                        <input class="w-full capitalize" placeholder="e.g 8,000" pKeyFilter="num" type="text" pInputText
                             formControlName="discount" />
                     </div>
 
@@ -123,7 +131,7 @@
                         <div class="plan-inner">
                             @if(instalmentType === 'Monthly'){
 
-                            <input class="w-full capitalize" type="text" pInputText
+                            <input class="w-full capitalize" type="text" pInputText pKeyFilter="num"
                                 formControlName="instalmentMonthsValue" placeholder="No. of months" />
                             }
                         </div>
@@ -137,7 +145,7 @@
                         <!-- Show this input if the weekly instalment is selected -->
                         <div class="plan-inner">
                             @if(instalmentType === 'weekly'){
-                            <input class="w-full capitalize" type="text" pInputText placeholder="No. of weeks"
+                            <input class="w-full capitalize" type="text" pKeyFilter="num" pInputText placeholder="No. of weeks"
                                 formControlName="instalmentMonthsValue" />
                             }
                         </div>
@@ -184,7 +192,7 @@
                     </div>
 
                     @if(createPlanForm.get('duration')?.value === true){
-                    <div class="col-12 plan-design pb-4 mb-4">
+                    <div class="col-12 plan-design">
                         <div class="plan-inner">
                             <p-radioButton name="durationDate" value="Date" formControlName="durationDate" />
                             <label class="ml-2"> Until fixed date </label>
@@ -197,8 +205,11 @@
                         </div>
                         }
 
+                    </div>
 
 
+                    <div class="col-12 plan-design pb-4 mb-4">
+                        
                         <div class="plan-inner">
                             <p-radioButton name="durationDate" value="Days" formControlName="durationDate" />
                             <label class="ml-2"> Until specific number of days</label>

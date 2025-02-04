@@ -21,10 +21,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 @Component({
   selector: 'app-add-coupon',
   standalone: true,
-  imports: [TableModule, ToastModule, InputTextModule, ToolbarModule, KeyFilterModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, 
-    CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule, CheckboxModule, 
+  imports: [TableModule, ToastModule, InputTextModule, ToolbarModule, KeyFilterModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule,
+    CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule, CheckboxModule,
   ],
-  providers : [MessageService],
+  providers: [MessageService],
   templateUrl: './add-coupon.component.html',
   styleUrl: './add-coupon.component.css'
 })
@@ -32,9 +32,9 @@ export class AddCouponComponent {
 
   createCouponsForm!: FormGroup;
   @Output() closeSideBars = new EventEmitter<any>();
-  @Input() editItemData : any;
+  @Input() editItemData: any;
 
-  constructor(private _fb: FormBuilder, private _couponService: CouponsService, private _messageService : MessageService) { }
+  constructor(private _fb: FormBuilder, private _couponService: CouponsService, private _messageService: MessageService) { }
 
 
   ngOnInit() {
@@ -42,14 +42,14 @@ export class AddCouponComponent {
     this.createCouponsForm = this._fb.group({
       discount: ['', Validators.required],
       valid_to: ['', Validators.required],
-      suggest : [false]
+      suggest: [false]
     })
 
-    if(this.editItemData){
+    if (this.editItemData) {
       this.createCouponsForm.setValue({
         discount: this.editItemData.discount,
         valid_to: new Date(this.editItemData.valid_date),
-        suggest : this.editItemData.actvie
+        suggest: this.editItemData.actvie
       })
     }
 
@@ -57,17 +57,28 @@ export class AddCouponComponent {
 
   createCoupon() {
 
+    const selectedDate = new Date(this.createCouponsForm.get('valid_to')?.value);
+const dateofBirth = selectedDate.toISOString().split('T')[0]; // Extract YYYY-MM-DD format
+
+    
+    const payload = {
+      "course":["4e7db7bedff542e5bcb10a4eb25961b4"],
+      "suggest_during_checkout":true,
+      "valid_to": dateofBirth,
+      "discount": this.createCouponsForm.get('discount')?.value
+    };
+
     // const selectedDate = new Date(this.createCouponsForm.get('valid_to')?.value);
     // const dateofBirth = moment(selectedDate).format('DD MMM YYYY');
 
-    const payload = {
-      // "course": [10],
-      "suggest_during_checkout": this.createCouponsForm.get('suggest')?.value,
-      // "valid_to": dateofBirth,
-      "discount": this.createCouponsForm.get('discount')?.value
-    }
+    // const payload = {
+    //   // "course": [10],
+    //   "suggest_during_checkout": this.createCouponsForm.get('suggest')?.value,
+    //   // "valid_to": dateofBirth,
+    //   "discount": this.createCouponsForm.get('discount')?.value
+    // }
 
-    if(!this.editItemData){
+    if (!this.editItemData) {
 
       this._couponService.createCoupons(payload).subscribe(res => {
         this.closeSideBars.emit(false)
@@ -75,7 +86,7 @@ export class AddCouponComponent {
         this._messageService.add({ severity: 'error', detail: 'Error ' });
       })
 
-    }else{
+    } else {
 
       this._couponService.editCoupons(this.editItemData.id, payload).subscribe((res: any) => {
         this._messageService.add({ severity: 'success', detail: res.message });
