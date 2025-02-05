@@ -1,9 +1,16 @@
+<p-toast />
 <div class="card">
 
     <div class="grid client-dashborad-header mb-4 align-items-center">
-        <div class="col-12">
+        <div class="col-6">
             <h4 class="subheading-color">Courses Coupons</h4>
         </div>
+
+        <div class="col-6 flex justify-content-end">
+            <button type="submit" (click)="addCoupone()" pButton pRipple label="+ Add Coupone"
+            class="secondary-button px-6 text-sm"></button>
+        </div>
+
     </div>
 
 
@@ -89,8 +96,8 @@
 
 </div>
 
-<!-- @if(isCreateCoupons){
-    <p-sidebar [(visible)]="isCreateCoupons" position="right" [style]="{width:'27.6%'}">
+@if(isAddCoupons){
+    <p-sidebar [(visible)]="isAddCoupons" position="right" [style]="{width:'27.6%'}">
     <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Create Coupons </h4>
 
         <form [formGroup]="createCouponsForm" (ngSubmit)="createCouponse()" class="w-full flex flex-wrap">
@@ -137,4 +144,4 @@
         </form>
         
     </p-sidebar>
-} -->
+}

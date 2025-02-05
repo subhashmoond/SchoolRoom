@@ -61,6 +61,7 @@ export class CourseInformationComponent {
       title: ['', Validators.required],
       description: ['', Validators.required],
       tagline: ['', Validators.required],
+      lang : [''],
       highlights: this._fb.array([]),
       whatlearn: this._fb.array([]),
       faq: this._fb.array([])
@@ -83,7 +84,8 @@ export class CourseInformationComponent {
     this.courseInformation.patchValue({
       title: this.courseDetails.name || '', // Course name
       description: this.courseDetails.details || '', // Course details
-      tagline: this.courseDetails.tagline || '' // Course tagline
+      tagline: this.courseDetails.tagline || '', // Course tagline
+      lang : this.courseDetails.language || ''
     });
 
     // Clear existing FormArray controls before repopulating
@@ -266,7 +268,8 @@ export class CourseInformationComponent {
       "highlights": this.courseInformation.get('highlights')?.value,
       "short_describe": this.courseInformation.get('tagline')?.value,
       "faq": faqData,
-      "features": featuresData
+      "features": featuresData,
+      "language" : this.courseInformation.get('lang')?.value,
     }
 
     this._coursesService.editCourseById(this.courseId, payload).subscribe(res => {

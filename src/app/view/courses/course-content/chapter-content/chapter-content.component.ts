@@ -154,7 +154,7 @@ export class ChapterContentComponent {
         this.isImage = true
         break;
 
-      case 'Audio':
+      case 'audio':
         this.isAudio = true
         break;
 
