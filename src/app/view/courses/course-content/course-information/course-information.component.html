@@ -54,6 +54,17 @@
 
         <div class="col-12 heading-button mt-8">
             <div>
+                <h4 class="subheading-color">Teachers List</h4>
+            </div>
+            <div class="flex justify-content-end">
+                <button pButton pRipple (click)="addTeachers()" label="+ Add Teacher"
+                    class="primary-border-button px-5 mr-3 text-sm"></button>
+            </div>
+
+        </div>
+
+        <div class="col-12 heading-button mt-8">
+            <div>
                 <h4 class="subheading-color">Key Highlights</h4>
             </div>
             <div>
@@ -89,6 +100,9 @@
                 </div>
             </div>
         }
+
+
+       
 
 
         <div class="col-12 heading-button mt-8">
@@ -227,3 +241,48 @@
 
     </div>
 </form>
+
+
+
+
+
+
+@if(isTeacher){
+    <p-sidebar [(visible)]="isTeacher" position="right" [style]="{width:'27.6%'}">
+    <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Add Teacher </h4>
+
+        <form [formGroup]="addTeacherForm" class="w-full flex flex-wrap">
+
+            <div class="grid nested-grid mt-3">
+    
+                <div class="col-12 w-full">
+                    <div class="grid w-full">
+
+                        <div class="col-12 w-full">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Select Teacher
+                                <span>*</span></label>
+                            <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
+                            [required]="true" formControlName="selectTeacher" [options]="allTeacherList"
+                            optionValue="id" optionLabel="name"
+                            placeholder="Select Teacher"></p-dropdown>
+                        </div>
+                       
+    
+                    </div>
+                </div>
+    
+    
+    
+            </div>
+    
+            <div
+                class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+                <button pButton pRipple label="Cancel"
+                    class="primary-border-button px-5 mr-3 text-sm" (click)="closeTeacherFor()"></button>
+                <button type="submit" pButton pRipple label="Save"
+                    class="primary-button px-5 text-sm" (click)="createTeachert()"></button>
+            </div>
+        </form>
+        
+    </p-sidebar>
+}

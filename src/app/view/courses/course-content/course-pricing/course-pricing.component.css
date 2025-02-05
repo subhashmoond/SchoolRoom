@@ -4,6 +4,12 @@
     grid-template-columns: 2fr 2fr;
     gap: 1rem;
 }
+.plan-design-3{
+    display: grid;
+    grid-auto-flow: dense;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1rem;
+}
 .border-top{
     border-top: 1px solid #f5f5f5;
 }

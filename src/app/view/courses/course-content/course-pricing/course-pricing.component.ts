@@ -20,11 +20,12 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-course-pricing',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, RadioButtonModule, InputSwitchModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, FormsModule, CheckboxModule, CalendarModule, MessagesModule, KeyFilterModule],
+  imports: [TableModule, InputTextModule, ToolbarModule, ToastModule, ButtonModule, RadioButtonModule, InputSwitchModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, FormsModule, CheckboxModule, CalendarModule, MessagesModule, KeyFilterModule],
   providers: [MessageService],
   templateUrl: './course-pricing.component.html',
   styleUrl: './course-pricing.component.css'
@@ -63,6 +64,7 @@ export class CoursePricingComponent {
       instalmentMonthsValue: [],
       instalmentWeekly: [],
       instalmentWeeklyValue: [],
+      emiamount: [],
       durationDate: [],
       durationDateValue: [],
       durationDays: [],
@@ -88,7 +90,7 @@ export class CoursePricingComponent {
       //   this._messageService.add({severity:'warn', summary: res.msg});
       // } 
 
-      
+
 
     })
   }
@@ -135,22 +137,26 @@ export class CoursePricingComponent {
 
   deletePlan(data: any) {
     this._courseService.deletePlanById(this.courseId, data.id).subscribe((res: any) => {
-      console.log(res, "delete done");
-      this.getPriceList();
-      this._messageService.add({ severity: 'success', summary: 'Plan Delete Successfully' });
-      if (res.status == false) {
+
+      if(res.status === true){
+        this.getPriceList();
+        this._messageService.add({ severity: 'success', summary: 'Plan Deleted Successfully' });
+      }else{
         this._messageService.add({ severity: 'warn', summary: res.msg });
       }
+
     })
   }
 
   submitPlan() {
     const validityTypeData = this.createPlanForm.get('durationDate')?.value;
 
+    console.log(this.createPlanForm.value)
+
     if (!this.isEditPlan) {
 
       var payload: any = {
-        "name" : this.createPlanForm.get('planname')?.value,
+        "name": this.createPlanForm.get('planname')?.value,
         "planType": "Paid",// Paid /Free
         "mrp": this.createPlanForm.get('mrp')?.value,
         "price": this.createPlanForm.get('discount')?.value,
@@ -160,16 +166,17 @@ export class CoursePricingComponent {
         // "validityDate": "2025-12-10",
         "validityType": this.createPlanForm.get('durationDate')?.value, // Date/Days,
         "instalmentType": this.createPlanForm.get('instalmentType')?.value, //Monthly/weekly
-        "emiPrice": 600,
+        "emiPrice": this.createPlanForm.get('emiamount')?.value,
         "totalEmi": this.createPlanForm.get('instalmentMonthsValue')?.value
       }
 
       if (validityTypeData == 'Date') {
-        // payload.validityDate = this.createPlanForm.get('durationDateValue')?.value || "2025-12-10";
-        payload.validityDate = "2025-12-10";
+        const dateObj = new Date(this.createPlanForm.get('durationDateValue')?.value);
+        const formattedDate = dateObj.toLocaleDateString("en-CA");
+        payload.validityDate = formattedDate;
+        // payload.validityDate = "2025-12-10";
       } else {
-        // payload.validityDays = this.createPlanForm.get('durationDateValue')?.value || "44";
-        payload.validityDays = this.createPlanForm.get('durationDateValue')?.value || "30";
+        payload.validityDays = this.createPlanForm.get('durationDaysValue')?.value;
       }
 
       this._courseService.createPlan(this.courseId, payload).subscribe((res: any) => {
@@ -189,7 +196,7 @@ export class CoursePricingComponent {
     } else {
 
       var updatePayload: any = {
-        "name" : this.createPlanForm.get('planname')?.value,
+        "name": this.createPlanForm.get('planname')?.value,
         "planType": "Paid",// Paid /Free
         "mrp": this.createPlanForm.get('mrp')?.value,
         "price": this.createPlanForm.get('discount')?.value,
@@ -199,16 +206,17 @@ export class CoursePricingComponent {
         // "validityDate": "2025-12-10",
         "validityType": this.createPlanForm.get('durationDate')?.value, // Date/Days,
         "instalmentType": this.createPlanForm.get('instalmentType')?.value, //Monthly/weekly
-        "emiPrice": 600,
+        "emiPrice": this.createPlanForm.get('emiamount')?.value,
         "totalEmi": this.createPlanForm.get('instalmentMonthsValue')?.value
       }
 
       if (validityTypeData == 'Date') {
-        updatePayload.validityDate = "2025-12-10";
-        // updatePayload.validityDate = this.createPlanForm.get('durationDateValue')?.value || "2025-12-10";
+        const dateObj = new Date(this.createPlanForm.get('durationDateValue')?.value);
+        const formattedDate = dateObj.toLocaleDateString("en-CA");
+
+        updatePayload.validityDate = formattedDate;
       } else {
-        updatePayload.validityDays = "55";
-        // updatePayload.validityDays = this.createPlanForm.get('durationDateValue')?.value || "55";
+        updatePayload.validityDays = this.createPlanForm.get('durationDaysValue')?.value;
       }
 
       this._courseService.updatePlanById(this.courseId, this.updatePlanId, updatePayload).subscribe((res: any) => {

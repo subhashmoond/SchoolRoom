@@ -19,24 +19,30 @@ import { TableModule } from 'primeng/table';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { MessageService } from 'primeng/api';
 import { EditorModule } from 'primeng/editor';
+import { SidebarModule } from 'primeng/sidebar';
+import { UserService } from '../../../../core/services/user.service';
 
 @Component({
   selector: 'app-course-information',
   standalone: true,
   imports: [ReactiveFormsModule, StepsModule, TableModule, InputGroupModule, InputGroupAddonModule, DropdownModule, CardModule, CalendarModule, KeyFilterModule,
-    ButtonModule, InputTextModule, FileUploadModule, ToastModule, InputNumberModule, CheckboxModule, EditorModule ],
-    providers : [MessageService],
+    ButtonModule, InputTextModule, FileUploadModule, ToastModule, InputNumberModule, CheckboxModule, EditorModule, SidebarModule],
+  providers: [MessageService],
   templateUrl: './course-information.component.html',
   styleUrl: './course-information.component.css'
 })
 export class CourseInformationComponent {
   courseInformation!: FormGroup;
+  addTeacherForm!: FormGroup;
   courseId: any;
   aiDescripationData: any;
   courseDetails: any;
-  courseTypeId : any;
+  courseTypeId: any;
+  isTeacher: boolean = false;
+  allTeacherList : any
 
-  constructor(private _fb: FormBuilder, private _messageService : MessageService, private _coursesService: CoursesService, private route: ActivatedRoute, private _sharedService: SharedService) {
+
+  constructor(private _fb: FormBuilder, private _messageService: MessageService, private _coursesService: CoursesService, private route: ActivatedRoute, private _sharedService: SharedService, private _userService: UserService) {
     this.route.paramMap.subscribe(params => {
       this.courseId = params.get('id')!;
     });
@@ -45,6 +51,12 @@ export class CourseInformationComponent {
   ngOnInit() {
     this.getCourseDetails();
     this.getCourseType();
+    this.getTeacherList();
+
+    this.addTeacherForm = this._fb.group({
+      selectTeacher: ['']
+    })
+
     this.courseInformation = this._fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -53,6 +65,15 @@ export class CourseInformationComponent {
       whatlearn: this._fb.array([]),
       faq: this._fb.array([])
     })
+
+  }
+
+  getTeacherList() {
+
+    this._userService.getTeacherList().subscribe(res => {
+      this.allTeacherList = res.teacher
+    })
+
   }
 
   dataSetOnFromArray() {
@@ -64,19 +85,19 @@ export class CourseInformationComponent {
       description: this.courseDetails.details || '', // Course details
       tagline: this.courseDetails.tagline || '' // Course tagline
     });
-  
+
     // Clear existing FormArray controls before repopulating
     this.highlights.clear();
     this.whatlearn.clear();
     this.faq.clear();
-  
+
     // Populate Highlights FormArray
     if (this.courseDetails.keyHighlights && Array.isArray(this.courseDetails.keyHighlights)) {
       this.courseDetails.keyHighlights.forEach((highlight: string) => {
         this.highlights.push(this._fb.control(highlight, Validators.required));
       });
     }
-  
+
     // Populate WhatLearn (Features) FormArray
     if (this.courseDetails.features && Array.isArray(this.courseDetails.features)) {
       this.courseDetails.features.forEach((feature: any) => {
@@ -89,7 +110,7 @@ export class CourseInformationComponent {
         );
       });
     }
-  
+
     // Populate FAQ FormArray
     if (this.courseDetails.faq && Array.isArray(this.courseDetails.faq)) {
       this.courseDetails.faq.forEach((faqItem: any) => {
@@ -101,15 +122,15 @@ export class CourseInformationComponent {
         );
       });
     }
-  
+
     console.log('Form populated:', this.courseInformation.value);
   }
-  
 
-  getCourseType(){
+
+  getCourseType() {
     this._coursesService.getCourseType().subscribe(res => {
-      res.data.forEach((item :any) => {
-        if(item === "Live"){
+      res.data.forEach((item: any) => {
+        if (item === "Live") {
           this.courseTypeId = item.id
         }
       })
@@ -204,7 +225,7 @@ export class CourseInformationComponent {
     })
   }
 
-  
+
 
 
   // AI Response 
@@ -254,6 +275,28 @@ export class CourseInformationComponent {
     }, error => {
       this._messageService.add({ severity: 'error', detail: error });
 
+    })
+
+  }
+
+
+
+  addTeachers() {
+    this.isTeacher = true
+  }
+
+  closeTeacherFor(){
+    this.isTeacher = false;
+  }
+
+  createTeachert(){
+
+    const payload = {
+    "teacher_list":[this.addTeacherForm.get('selectTeacher')?.value],
+    }
+
+    this._coursesService.editCourseById(this.courseId, payload).subscribe(res => {
+      this.getCourseDetails()
     })
 
   }
