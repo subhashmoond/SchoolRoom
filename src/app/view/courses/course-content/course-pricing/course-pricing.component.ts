@@ -15,7 +15,6 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
@@ -25,14 +24,16 @@ import { ToastModule } from 'primeng/toast';
 @Component({
   selector: 'app-course-pricing',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ToastModule, ButtonModule, RadioButtonModule, InputSwitchModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, FormsModule, CheckboxModule, CalendarModule, MessagesModule, KeyFilterModule],
+  imports: [TableModule, InputTextModule, ToolbarModule, ToastModule, ButtonModule, InputSwitchModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, FormsModule, CheckboxModule, CalendarModule, MessagesModule, CheckboxModule, KeyFilterModule],
   providers: [MessageService],
   templateUrl: './course-pricing.component.html',
   styleUrl: './course-pricing.component.css'
 })
 export class CoursePricingComponent {
 
-  createPlanForm!: FormGroup
+  createPlanForm!: FormGroup;
+  courseSaleForm! : FormGroup;
+  taxForm! : FormGroup;
   priceTableDesign: any;
   priceList: any = [];
   isCreatePlan: boolean = false;
@@ -40,7 +41,8 @@ export class CoursePricingComponent {
   planDetailByIds: any;
   updatePlanId: any;
   courseId: any;
-  isLoader: boolean = true
+  isLoader: boolean = true;
+  courseDetailPage : any;
 
   constructor(private _courseService: CoursesService, private route: ActivatedRoute, private _fb: FormBuilder, private _messageService: MessageService) {
     this.route.paramMap.subscribe(params => {
@@ -51,6 +53,41 @@ export class CoursePricingComponent {
   ngOnInit() {
     this.getPriceList();
     this.formGroup();
+
+    this.getCourseDetails();
+
+    this.courseSaleForm = this._fb.group({
+      website : [true],
+      android : [true],
+      ios : [false]
+    })
+
+
+    this.taxForm = this._fb.group({
+      taxRate : [18],
+      yes : [true],
+      no : [false]
+    })
+
+  }
+
+  getCourseDetails(){
+    this._courseService.getCourseById(this.courseId).subscribe(res => {
+      this.courseDetailPage = res.course;
+
+      this.courseSaleForm.patchValue({
+        website : this.courseDetailPage.available_for_web,
+        android : this.courseDetailPage.available_for_android,
+        ios : this.courseDetailPage.available_for_ios
+      })
+
+
+      this.taxForm.patchValue({
+        taxRate : this.courseDetailPage.tax_rate,
+        yes : this.courseDetailPage.tax_include
+      })
+
+    })
   }
 
   formGroup() {
@@ -231,6 +268,30 @@ export class CoursePricingComponent {
 
     }
 
+
+  }
+
+  saveDetails(){
+
+    console.log(this.courseSaleForm.value, "Asd", this.taxForm.value, "asd asd erwersdf sdfdsfwer")
+
+    const payload = {
+       "available_for_android": this.courseSaleForm.get('android')?.value,
+      "available_for_ios": this.courseSaleForm.get('ios')?.value,
+      "available_for_web": this.courseSaleForm.get('website')?.value,
+      // "marketLevelCourse": this.courseSaleForm.get('')?.value,
+      "tax_include": this.taxForm.get('yes')?.value,
+      "tax_rate": this.taxForm.get('taxRate')?.value,  //in presentes
+    };
+
+    this._courseService.editCourseById(this.courseId, payload).subscribe((res : any) => {
+      if(res.status === true){
+        this._messageService.add({ severity: 'success', summary: 'Details Saved Successfully!' });
+        this.getCourseDetails();
+      }else{
+        this._messageService.add({ severity: 'error', summary: res.message });
+      }
+    })
 
   }
 

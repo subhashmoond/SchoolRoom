@@ -16,11 +16,15 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { CouponsService } from '../../../../core/services/coupons.service';
 import { CoursesService } from '../../../../core/services/courses.service';
 import { UserService } from '../../../../core/services/user.service';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-course-students',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule],
+  imports: [TableModule, InputTextModule, ToastModule, ToolbarModule, KeyFilterModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule],
+  providers: [MessageService],
   templateUrl: './course-students.component.html',
   styleUrl: './course-students.component.css'
 })
@@ -30,10 +34,10 @@ export class CourseStudentsComponent {
   isAddStudent: boolean = false;
   createCouponsForm!: FormGroup;
   courseId: any;
-  studentList: any[] = [];
+  buyStudentList: any[] = [];
   allStudentList : any[] = [];
 
-  constructor(private _fb: FormBuilder, private _courseService: CoursesService, private route: ActivatedRoute, private _userService : UserService) {
+  constructor( private _messageService: MessageService, private _fb: FormBuilder, private _courseService: CoursesService, private route: ActivatedRoute, private _userService : UserService) {
 
     this.route.paramMap.subscribe(params => {
       this.courseId = params.get('id')!;
@@ -44,7 +48,7 @@ export class CourseStudentsComponent {
     // this.priceTableDesign = [
     //   { type: 'One time paymet', price: 20000 }
     // ]
-    this.getStudentList()
+    this.getBuyStudentList()
 
     this.createCouponsForm = this._fb.group({
       selectstudent: ['', Validators.required],
@@ -53,11 +57,13 @@ export class CourseStudentsComponent {
     })
   }
 
-  getStudentList() {
+  getBuyStudentList() {
     this._courseService.getStudentList(this.courseId).subscribe(res => {
-      this.studentList = res.response
+      this.buyStudentList = res.data
     })
   }
+
+ 
 
   openSidebar() {
     this.isAddStudent = true;
@@ -65,25 +71,42 @@ export class CourseStudentsComponent {
   }
 
   getAllStudentList(){
-    this._userService.getStudentData().subscribe(res => {
-      this.allStudentList = res.studentList
+    this._courseService.getStudentsList().subscribe(res => {
+      this.allStudentList = res.data
     })
   }
 
   createStudent(){
 
+    const dateObj = new Date(this.createCouponsForm.get('todate')?.value);
+    const formattedDate = dateObj.toLocaleDateString("en-CA");
+
     const payload = {
       "course_id": this.courseId,
       "students": this.createCouponsForm.get('selectstudent')?.value,
-      "endDate": this.createCouponsForm.get('todate')?.value,
+      "endDate": new Date(this.createCouponsForm.get('todate')?.value),
       "amout": this.createCouponsForm.get('amount')?.value
     }
 
-    this._courseService.addStudentCourse(payload).subscribe(res => {
-      this.getStudentList();
-      this.isAddStudent = false
+    this._courseService.addStudentCourse(payload).subscribe((res : any) => {
+
+      if(res.status === true){
+        this.getBuyStudentList();
+        this.isAddStudent = false;
+        this._messageService.add({ severity: 'success', summary: 'Plan Created Successfully' });
+        this.createCouponsForm.reset();
+      }else{
+        this._messageService.add({ severity: 'error', summary: res.message });
+      }
+
     })
 
+  }
+
+
+  closeSideBar(){
+    this.createCouponsForm.reset();
+    this.isAddStudent = false;
   }
 
 

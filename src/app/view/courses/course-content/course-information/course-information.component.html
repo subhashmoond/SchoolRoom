@@ -63,101 +63,34 @@
 
         </div>
 
-        <div class="col-12 heading-button mt-8">
-            <div>
-                <h4 class="subheading-color">Key Highlights</h4>
-            </div>
-            <div>
-                <button pButton pRipple (click)="addHighlights()" label="Add"
-                    class="primary-border-button px-5 mr-3 text-sm"></button>
-
-                <button type="button" (click)="aiHighlights()" pButton pRipple
-                    class="secondary-button px-6 text-sm">
-                    <img class="btn-img mr-2" src="../../../../../assets/images/ai-w.png">
-                    Regenerate
-                </button>
-            </div>
-
-        </div>
-
-        @if(highlights.length < 0){
-            <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
-                <img src="../../../../../assets/images/icon/no-data.svg">
-                <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Key Highlights </p>
-                <p class="text-primary-purple text-base font-normal mt-2">There is no Key Highlights to show you right now.</p>
-            </div>
-
-        }@else {
-
-            <div class="col-12">
-                
-                <div formArrayName="highlights">
-                    @for(item of highlights.controls; track item; let i = $index){
-                    <input class="w-full capitalize mb-3" pInputText [formControlName]="i" placeholder="Enter highlights"
-                        required="true" />
-                    <!-- <button type="button" (click)="removeItem(i)">Remove</button> -->
-                    }
-                </div>
-            </div>
-        }
-
-
-       
-
-
-        <div class="col-12 heading-button mt-8">
-            <div>
-                <h4 class="subheading-color">What you will learn</h4>
-            </div>
-            <div>
-
-                <button pButton pRipple (click)="addWhatlearn()" label="Add"
-                    class="primary-border-button px-5 mr-3 text-sm"></button>
-
-                <button type="button" pButton pRipple class="secondary-button px-6 text-sm">
-                    <img class="btn-img mr-2" src="../../../../../assets/images/ai-w.png">
-                    Regenerate
-                </button>
-            </div>
-
-        </div>
-
         <div class="col-12">
 
-            <p-table [value]="whatlearn.controls" [rows]="10" [showLoader]="true" [responsive]="true"
-                [scrollable]="true" scrollHeight="37.938rem" selectionMode="single" class="test-table client-data-table" formArrayName="whatlearn">
+            <p-table [value]="courseDetails.faculties" [rows]="10" [showLoader]="true" [responsive]="true"
+                [scrollable]="true" scrollHeight="37.938rem" selectionMode="single" class="test-table client-data-table">
                 <!-- Table Header -->
                 <ng-template pTemplate="header" class="p-4">
                     <tr class="w-full flex flex-wrap">
-                        <th style="width:25%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">ICON
+                        <th style="width:25%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Name
                         </th>
-                        <th style="width:25%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">TITLE
-                        </th>
-                        <th style="width:50%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
-                            DESCRIPTION</th>
+                        <th style="width:75%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                            EXPERTISE</th>
                     </tr>
                 </ng-template>
 
                 <!-- Table Body -->
                 <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
                     
-                    <tr class="w-full flex flex-wrap" [formGroupName]="rowIndex">
+                    <tr class="w-full flex flex-wrap">
                         <!-- ICON Field (static for now, can be dynamic if needed) -->
                         <td style="width: 25%;word-break:break-all;" class="pl-4">
-                            <i class="pi pi-megaphone icon-primary-color font-bold"></i>
-                        </td>
-
-                        <!-- TITLE Field (bound to FormArray) -->
-                        <td style="width: 25%;word-break:break-all;" class="pl-4">
-                            <input class="w-full capitalize mb-3" pInputText placeholder="Enter title"
-                                formControlName="title" required />
+                            {{ rowData.name }} 
                         </td>
 
                         <!-- DESCRIPTION Field (bound to FormArray) -->
-                        <td style="width: 50%;" class="pl-4">
-                            <input class="w-full capitalize mb-3" pInputText placeholder="Enter description"
-                                formControlName="description" required />
+                        <td style="width: 75%;" class="pl-4">
+                        {{rowData.expertise}}
                         </td>
+
                     </tr>
                 </ng-template>
 
@@ -165,14 +98,15 @@
                 <ng-template pTemplate="emptymessage">
                         <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
                             <img src="../../../../../assets/images/icon/no-data.svg">
-                            <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No What you will learn</p>
-                            <p class="text-primary-purple text-base font-normal mt-2">There is no What you will learn to show you right now.</p>
+                            <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Teacher List</p>
+                            <p class="text-primary-purple text-base font-normal mt-2">There is no teacher list to show you right now.</p>
                         </div>
                 </ng-template>
             </p-table>
 
-
         </div>
+
+        
 
         <div class="col-12 heading-button mt-8">
             <div>

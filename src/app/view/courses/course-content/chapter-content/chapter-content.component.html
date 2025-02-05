@@ -78,39 +78,39 @@
                     <ng-template pTemplate="header">
                         <div class="flex align-items-center gap-2">
                             @switch (data.type) {
-                            @case ("Article") {
+                            @case ("article") {
                             <span class="font-bold">
                                 Article
                             </span>
                             }
-                            @case ("Video") {
+                            @case ("video") {
                             <span class="font-bold">
                                 Videos
                             </span>
                             }
-                            @case ("Audio") {
+                            @case ("audio") {
                             <span class="font-bold">
                                 Audios
                             </span>
                             }
-                            @case ("Notes") {
+                            @case ("notes") {
                             <span class="font-bold">
                                 Notes
                             </span>
                             }
-                            @case ("Image") {
+                            @case ("image") {
                             <span class="font-bold">
                                 Images
                             </span>
                             }
-                            @case ("YoutubeVideo") {
+                            @case ("youtubevideo") {
                             <span class="font-bold">
                                 Youtube Videos
                             </span>
                             }
                             
 
-                            @case("Test") {
+                            @case("test") {
                             <span class="font-bold">
                                 Test
                             </span>
@@ -132,13 +132,13 @@
                                     </button> -->
 
                         @switch (data.type) {
-                        @case ("Article") {
+                        @case ("article") {
                         <a class="cursor-pointer" (click)="uploadContent(data, 'text', 'edit')"> Edit </a>
                         <button (click)="deleteContent(data._id)" class="p-panel-header-icon p-link mr-2">
                             <span class="pi pi-trash label-required"></span>
                         </button>
                         }
-                        @case ("Video") {
+                        @case ("video") {
                         <button (click)="uploadContent(data, 'Video', 'edit')" class="p-panel-header-icon p-link mr-2">
                             <span class="cursor-pointer pi pi-cog"></span>
                         </button>
@@ -146,7 +146,7 @@
                             <span class="pi pi-trash label-required"></span>
                         </button>
                         }
-                        @case ("Audio") {
+                        @case ("audio") {
                         <button (click)="uploadContent(data, 'Audio', 'edit')" class="p-panel-header-icon p-link mr-2">
                             <span class="cursor-pointer pi pi-cog"></span>
                         </button>
@@ -154,7 +154,7 @@
                             <span class="pi pi-trash label-required"></span>
                         </button>
                         }
-                        @case ("Notes") {
+                        @case ("notes") {
                         <button (click)="uploadContent(data, 'notes', 'edit')" class="p-panel-header-icon p-link mr-2">
                             <span class="cursor-pointer pi pi-cog"></span>
                         </button>
@@ -162,7 +162,7 @@
                             <span class="pi pi-trash label-required"></span>
                         </button>
                         }
-                        @case ("Image") {
+                        @case ("image") {
                         <button (click)="uploadContent(data, 'image', 'edit')" class="p-panel-header-icon p-link mr-2">
                             <span class="cursor-pointer pi pi-cog"></span>
                         </button>
@@ -170,7 +170,7 @@
                             <span class="pi pi-trash label-required"></span>
                         </button>
                         }
-                        @case ("YoutubeVideo") {
+                        @case ("youtubevideo") {
                         <button (click)="uploadContent(data, 'youtubevideo', 'edit')"
                             class="p-panel-header-icon p-link mr-2">
                             <span class="cursor-pointer pi pi-cog"></span>
@@ -181,7 +181,7 @@
                         }
                         
 
-                        @case("Test") {
+                        @case("test") {
                             
                         <!-- <button (click)="uploadContent(data, 'test', 'edit')" class="p-panel-header-icon p-link mr-2">
                             <span class="cursor-pointer pi pi-cog"></span>
@@ -202,7 +202,7 @@
 
 
                     @switch (data.type) {
-                    @case ("Article") {
+                    @case ("article") {
                     <p class="m-0">
                         <!-- {{data.text}} -->
                         <p-editor [(ngModel)]="data.text" [readonly]="true" [style]="{ height: 'auto' }"
@@ -210,35 +210,35 @@
 
                     </p>
                     }
-                    @case ("Video") {
+                    @case ("video") {
                     <video width="100%" height="540px" controls>
                         <source [src]="getSafeUrl(data.url)" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                     }
-                    @case ("Notes") {
+                    @case ("notes") {
                     <iframe [src]="getSafeUrl('https://docs.google.com/gview?embedded=true&url=' + data.url)"
                         width="100%" height="600" frameborder="0">
                         Your browser does not support PDFs.
                     </iframe>
                     }
-                    @case ("Audio") {
+                    @case ("audio") {
                     <audio controls>
                         <source [src]="getSafeUrl(data.url)" type="audio/mpeg" />
                         Your browser does not support the audio element.
                     </audio>
                     }
-                    @case ("Image") {
+                    @case ("image") {
                     <img [src]="data.url">
                     }
-                    @case ("YoutubeVideo") {
+                    @case ("youtubevideo") {
                     <iframe [src]="getYouTubeEmbedUrl(data.url)" width="100%" height="540px" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen>
                     </iframe>
                     }
 
-                    @case("Test") {
+                    @case("test") {
 
                     @if(true){
 

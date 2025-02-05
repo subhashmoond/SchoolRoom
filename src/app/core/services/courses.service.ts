@@ -302,4 +302,9 @@ export class CoursesService {
     return this._dataService.post(url, payload);
   }
 
+ getStudentsList(){
+  const url = `${environment.basePath}educator/student-list/?page=1&page_size=100`;
+  return this._dataService.get(url)
+ }
+
 }
