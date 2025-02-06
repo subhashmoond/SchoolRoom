@@ -61,6 +61,13 @@
                     <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
             </li>
+            <li [ngClass]="{'active': currentActiveTab === 'addon'}">
+                <a href="javascript:void(0)" (click)="courseTabs('addon')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span> Add-On </span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
             <li [ngClass]="{'active': currentActiveTab === 'comment'}">
                 <a href="javascript:void(0)" (click)="courseTabs('comment')" routerLinkActive="active"
                     class="sidebar-header flex align-items-center px-3">
@@ -100,6 +107,13 @@
         @case ("student") {
         <app-course-students></app-course-students>
         }
+
+        @case ("addon") {
+            
+            <app-addon-product></app-addon-product>
+
+        }
+
         }
 
     </div>

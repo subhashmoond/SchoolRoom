@@ -17,12 +17,13 @@ import { DialogModule } from 'primeng/dialog';
 import { CourseThumbnailComponent } from './course-thumbnail/course-thumbnail.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { AddonProductComponent } from './addon-product/addon-product.component';
 
 @Component({
   selector: 'app-course-content',
   standalone: true,
   imports: [FileUploadModule, CommonModule, ToolbarModule, CurriculumComponent, CourseInformationComponent, CoursePricingComponent, CoursePricingComponent,
-    CourseCouponsComponent, CourseCommentComponent, CourseStudentsComponent, DialogModule, CourseThumbnailComponent, ToastModule],
+    CourseCouponsComponent, CourseCommentComponent, CourseStudentsComponent, DialogModule, CourseThumbnailComponent, ToastModule, AddonProductComponent ],
   providers: [MessageService],
   templateUrl: './course-content.component.html',
   styleUrl: './course-content.component.css'

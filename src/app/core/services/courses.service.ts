@@ -307,4 +307,23 @@ export class CoursesService {
   return this._dataService.get(url)
  }
 
+
+//  Add-On Product in COurse 
+
+postAddOnProdcut(courseId : any, payload : any){
+  const url = `${environment.basePath}course/${courseId}/add-on/product/`;
+  return this._dataService.post( url, payload );
+}
+
+getAddOnProductList(courseId : any){
+  const url = `${environment.basePath}course/${courseId}/add-on/product-list/`;
+  return this._dataService.get(url);
+}
+
+deleteAddedProduct(productId : any, payload : any){
+  const url = `${environment.basePath}course/${productId}/add-on/product-remove/`;
+  return this._dataService.post(url, payload);
+}
+
+
 }
