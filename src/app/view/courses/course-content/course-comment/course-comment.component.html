@@ -42,6 +42,10 @@
                             <button type="submit" pButton pRipple label="Approve" (click)="approveReview(data.id, 'approve')" class="primary-button px-3 text-sm"></button>
                             <button type="submit" pButton pRipple label="Reject" (click)="approveReview(data.id, 'reject')" class=" ml-2 primary-button px-3 text-sm" style="background: red; border-color: red;" ></button>
                          }
+                         @else{
+                            <button type="submit" pButton pRipple label="Block" (click)="blockReviews(data.id)" class="primary-button px-3 text-sm"></button>
+                            
+                         }
 
                     </td>
 

@@ -65,6 +65,18 @@ export class CourseCommentComponent {
       this.reviewList = res.reviews
     })
   }
+
+  blockReviews(reviewId : any){
+
+    const payload = {
+      "isblock":true
+    }
+
+    this._courseService.blockStudentReview(reviewId, payload).subscribe(res => {
+      this.getReviewsList();
+    })
+
+  }
   
   onAllowReviewChange() {
     console.log(this.allowReview, "Allow reviews")

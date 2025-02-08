@@ -19,9 +19,9 @@
     <div class="col-12">
 
       <form [formGroup]="addForm">
-        <div formArrayName="courses">
+        <div formArrayName="courses" cdkDropList (cdkDropListDropped)="drop($event)">
           @for(course of courses.controls; track course; let i = $index){
-          <div [attr.draggable]="true" [formGroupName]="i"
+          <div [attr.draggable]="true" [formGroupName]="i" cdkDrag
             class="content-card mb-4">
             <div class="p-3">
               <img class="icon-img-11" src="../../../../../assets/images/chapter-icon.svg">
@@ -82,10 +82,10 @@
                 </div>
               </div>
 
-              <div formArrayName="lessons">
+              <div formArrayName="lessons" cdkDropList cdkDropList (cdkDropListDropped)="drop($event, i)" >
                 @for(lesson of lessons(i).controls; track lesson; let j = $index){
                 <div [formGroupName]="j"
-                  class="grid grid-nogutter p-3 border-bottom-light">
+                  class="grid grid-nogutter p-3 border-bottom-light" cdkDrag >
                   <div class="col-6 flex">
                     <!-- <i class="pi pi-microsoft pr-4 pt-1 text-primary-color"></i> -->
                     <div class="p-1 pr-3">

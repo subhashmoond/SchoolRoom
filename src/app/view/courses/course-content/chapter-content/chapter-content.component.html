@@ -229,7 +229,7 @@
                     </audio>
                     }
                     @case ("image") {
-                    <img [src]="data.url">
+                    <img [src]="data.url" style=" width: 100%; " >
                     }
                     @case ("youtubevideo") {
                     <iframe [src]="getYouTubeEmbedUrl(data.url)" width="100%" height="540px" frameborder="0"

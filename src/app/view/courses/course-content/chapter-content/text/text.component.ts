@@ -54,6 +54,7 @@ export class TextComponent {
 
   formGroup() {
     this.addContent = this._fb.group({
+      title : ['', Validators.required],
       text : ['', Validators.required]
     })
   }
@@ -87,6 +88,7 @@ export class TextComponent {
     const body = new FormData;
     body.append('lesson_id', this.lessonId);
     body.append('article_text', this.addContent.get('text')?.value);
+    body.append('title', this.addContent.get('title')?.value)
 
     this._coursesService.addText(body).subscribe(res => {
       this.closeSideBar.emit(false)

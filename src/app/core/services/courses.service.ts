@@ -275,12 +275,21 @@ export class CoursesService {
     return this._dataService.post(url, payload)
   }
 
+  removeStudentInCourse(courseId : any, payload : any){
+    const url = `${environment.basePath}course/course-student/${courseId}/remove`;
+    return this._dataService.post( url, payload );
+  }
+
   // Get Course List Review 
   getCourseReviewList(courseId: any) {
     const url = `${environment.basePath}course/${courseId}/reviews?limit=10&skip=0&status=all`;
     return this._dataService.get(url);
   }
 
+  blockStudentReview(reviewId : any, payload : any){
+    const url = `${environment.basePath}course/review/${reviewId}/featured-status/`;
+    return this._dataService.post(url, payload);
+  }
 
   setLessionPreview(id : any, payload : any){
     const url = `${environment.basePath}course/${id}/sample/create`;
@@ -325,5 +334,17 @@ deleteAddedProduct(productId : any, payload : any){
   return this._dataService.post(url, payload);
 }
 
+
+// Position Change Using Drag and Drop 
+
+subjectPositionChange(payload : any){
+  const url = `${environment.basePath}course/subject/move-position/`;
+  return this._dataService.post(url, payload)
+}
+
+lessionPositionChange(payload : any){
+  const url = `${environment.basePath}course/chapter/move-position/`;
+  return this._dataService.post(url, payload)
+}
 
 }

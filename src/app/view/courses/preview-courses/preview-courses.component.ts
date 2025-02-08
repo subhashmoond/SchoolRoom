@@ -44,7 +44,7 @@ export class PreviewCoursesComponent {
   activeLinkIndex = 0; // Index of the active link in the active section
   courseId : any;
   subjectAndLessionData : any;
-  chapterDataList : any;
+  chapterDataList : any[] = [];
   lessonId : any;
   hideHeader: boolean = true;
   pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
@@ -88,7 +88,7 @@ export class PreviewCoursesComponent {
 
   getChapterContent() {
     this._coursesService.getChapterContentList(this.courseId, this.lessonId).subscribe(res => {
-      this.chapterDataList = res.data
+      this.chapterDataList = res.data.content
     })
   }
 

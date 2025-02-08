@@ -20,7 +20,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   selector: 'app-exam-category',
   standalone: true,
   imports: [CommonModule, ButtonModule, SidebarModule, AddExamCategoryComponent, ConfirmDialogModule, ToastModule, TableModule, PaginatorModule, TooltipModule, SubCategoryComponent, TagModule, CategoryDetailComponent, TabViewModule, AddDigitalProductCategoryComponent ],
-  providers: [MessageService, ConfirmDialogModule],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './exam-category.component.html',
   styleUrl: './exam-category.component.css'
 })

@@ -54,7 +54,6 @@ export class UploadContentComponent {
       title: [],
       downloadable: [],
       available: [true],
-      tags: [],
       formdate: [],
       todate: []
     })
@@ -78,7 +77,7 @@ export class UploadContentComponent {
 
   formGroup() {
     this.addContent = this._fb.group({
-
+      title : ['', Validators.required]
     })
   }
 
@@ -96,8 +95,9 @@ export class UploadContentComponent {
   submitForm() {
 
     const body = new FormData;
-    body.append('lesson_id', this.lessonId);
-    body.append('pdf_file', this.selectFiles);
+    body.append('lesson_id', this.lessonId );
+    body.append('pdf_file', this.selectFiles );
+    body.append('title', this.addContent.get('title')?.value )
 
     this._coursesService.addPDFFile(body).subscribe(res => {
       console.log(res, "Content Datas")

@@ -31,6 +31,7 @@ export class ImageComponent {
   settingContent! : FormGroup;
   submitbutton: boolean = false;
   selectFiles: any;
+  selectFilesName : any;
   oldFile: any;
   editForm: boolean = false;
 
@@ -84,6 +85,15 @@ export class ImageComponent {
   onFileSelect(event: any) {
     const file = event.files[0];
     this.selectFiles = file;
+
+    if (file) {
+      this.selectFilesName = {
+        objectURL: URL.createObjectURL(file),
+        name: file.name,
+        type: file.type
+      };
+    }
+
   }
 
   fileRemove() {
@@ -96,6 +106,7 @@ export class ImageComponent {
     const body = new FormData;
     body.append('lesson_id', this.lessonId);
     body.append('image', this.selectFiles);
+    body.append('title', this.selectFilesName.name );
 
     this._coursesService.addImageFile(body).subscribe(res => {
       console.log(res, "Image Uplodaed Successfully")

@@ -32,6 +32,7 @@ export class AudioComponent {
   settingContent! : FormGroup;
   submitbutton: boolean = false;
   selectFiles: any;
+  selectFilesName : any;
   oldFile: any;
   editForm: boolean = false;
 
@@ -89,6 +90,15 @@ export class AudioComponent {
   onFileSelect(event: any) {
     const file = event.files[0];
     this.selectFiles = file;
+
+    if (file) {
+      this.selectFilesName = {
+        objectURL: URL.createObjectURL(file),
+        name: file.name,
+        type: file.type
+      };
+    }
+
   }
 
   fileRemove() {
@@ -101,9 +111,9 @@ export class AudioComponent {
     const body = new FormData;
     body.append('lesson_id', this.lessonId);
     body.append('audio_file', this.selectFiles);
+    body.append('title', this.addContent.get('selectFilesName')?.value );
 
     this._coursesService.addAudioFile(body).subscribe(res => {
-      console.log(res, "Image Uplodaed Successfully");
       this.closeSideBar.emit(false)
     }, error => {
       this._messageService.add({ severity: 'error', detail: 'Error ' });

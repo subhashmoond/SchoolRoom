@@ -103,6 +103,20 @@ export class CourseStudentsComponent {
 
   }
 
+  removeStudent(studentId : any){
+
+    const payload = {
+      "student_id": studentId
+    }
+
+    this._courseService.removeStudentInCourse(this.courseId, payload).subscribe(res => {
+      
+      this.getBuyStudentList();
+
+    })
+
+  }
+
 
   closeSideBar(){
     this.createCouponsForm.reset();

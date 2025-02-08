@@ -35,7 +35,8 @@ export class UploadVideoComponent {
   oldFile: any;
   editForm: boolean = false;
 
-
+  thumbnailUrl: string | null = null;
+  videoDuration: any;
 
   constructor(private _fb: FormBuilder, private _messageService: MessageService, private translate: TranslateService, private _coursesService: CoursesService, private _confirmationService: ConfirmationService) {
     translate.setDefaultLang('en-US')
@@ -88,7 +89,81 @@ export class UploadVideoComponent {
   onFileSelect(event: any) {
     const file = event.files[0];
     this.selectFiles = file;
+
+    // If it's a video, generate the thumbnail
+    if (file.type.startsWith('video/')) {
+      this.generateVideoThumbnail(file);
+      this.getVideoMetadata(file);
+
+    } else {
+      this.thumbnailUrl = null; // Reset for images
+      this.videoDuration = null;
+    }
+
   }
+
+
+  generateVideoThumbnail(file: File) {
+
+    // debugger
+
+    const video = document.createElement('video');
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+
+    if (!context) {
+      console.error('Canvas context is not available');
+      return;
+    }
+
+    video.src = URL.createObjectURL(file);
+    video.crossOrigin = 'anonymous';
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = 'metadata';
+
+    video.onloadedmetadata = () => {
+      video.currentTime = 2; // Capture the frame at 2 seconds
+    };
+
+    video.onseeked = () => {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      this.thumbnailUrl = canvas.toDataURL('image/jpeg');
+      video.remove();
+    };
+
+    video.onerror = (error) => console.error('Error generating thumbnail:', error);
+  }
+
+
+  getVideoMetadata(file: File) {
+    const video : any = document.createElement('video');
+    video.src = URL.createObjectURL(file);
+    video.crossOrigin = 'anonymous';
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = 'metadata';
+
+    video.onloadedmetadata = () => {
+      // Get video duration
+      this.videoDuration = this.formatDuration(video.duration);
+
+      // Generate thumbnail
+      this.generateVideoThumbnail(video);
+    };
+
+    video.onerror = (error : any) => console.error('Error loading video metadata:', error);
+  }
+
+  formatDuration(duration: number): string {
+    const minutes = Math.floor(duration / 60);
+    const seconds = Math.floor(duration % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+
+
 
   fileRemove() {
     this.selectFiles = null;
@@ -100,6 +175,7 @@ export class UploadVideoComponent {
     const body = new FormData;
     body.append('lesson_id', this.lessonId);
     body.append('video_file', this.selectFiles);
+    body.append('duration', this.videoDuration);
 
     this._coursesService.addVideoFile(body).subscribe(res => {
       console.log(res, "Image Uplodaed Successfully")
