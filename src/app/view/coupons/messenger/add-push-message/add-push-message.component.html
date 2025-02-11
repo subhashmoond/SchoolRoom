@@ -1,0 +1,39 @@
+<h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Create New Campaign</h4>
+
+<form [formGroup]="campaignFrom" class="w-full flex flex-wrap">
+
+    <div class="grid nested-grid mt-3">
+
+        <div class="col-12">
+            <div class="grid">
+
+                <div class="col-12">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Title <span>*</span> </label>
+                    <input class="w-full capitalize" pKeyFilter="num" pInputText formControlName="title" placeholder="Enter push message title" />
+                </div>
+
+                <div class="col-12">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Valid To </label>
+                    <p-calendar formControlName="valid_to" />
+                </div>
+
+                <div class="col-12">
+                    <div class="w-full formgrid grid permissions">
+                        <label class="col-10 inline-block">Suggest During Checkout</label>
+                        <p-inputSwitch formControlName="suggest" class="col-2" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+        <button pButton pRipple label="Cancel" (click)="closeSideBar()"
+            class="primary-border-button px-5 mr-3 text-sm"></button>
+        <button type="submit" pButton pRipple label="Add" class="primary-button px-5 text-sm"></button>
+    </div>
+</form>

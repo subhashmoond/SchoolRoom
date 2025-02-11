@@ -1,0 +1,208 @@
+<p-toast></p-toast>
+
+<div class="card">
+
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-6">
+            <h4 class="subheading-color">Messenger Records</h4>
+        </div>
+        <div class="col-6 flex justify-content-end	">
+
+            <p-button class="create-button border-round-md" (click)="openSidebar()"> + Add Campaign</p-button>
+            
+        </div>
+
+    </div>
+
+    @if(!isLoader){
+
+    <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
+        selectionMode="single" class="client-data-table" [value]="messengerList">
+
+        <ng-template pTemplate="header" class="p-4">
+            <tr class="w-full flex flex-wrap">
+                <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Code</th>
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Discount</th>
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Used Count
+                </th>
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Valid To
+                </th>
+                <th style="width:10%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Status
+                </th>
+                <th style="width:10%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color"> Action</th>
+            </tr>
+
+        </ng-template>
+
+        <ng-template pTemplate="body" let-data>
+            <tr class="w-full flex flex-wrap">
+                <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
+                    {{data.code}}
+                </td>
+                <td style="width: 20%;word-break:break-all;" class="pl-4">
+                    {{data.discount}}
+                </td>
+                <td style="width: 20%;word-break:break-all;" class="pl-4">
+                    {{data.used_count}}
+                </td>
+                <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
+                    {{data.valid_date }}
+                </td>
+
+                <td style="width: 10%;" class="pl-4">
+                    @if(data.actvie === true){
+                    Actvie
+                    }@else {
+                    Deactive
+                    }
+                </td>
+
+                <td style="width: 10%;" class="pl-4">
+
+                    zxc
+
+                </td>
+
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">No customers found.</td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+    <p-paginator class="paginator-row paginator-dropdown" (onPageChange)="onPageChange($event)" [first]="offset"
+        [rows]="limit" [rowsPerPageOptions]="[15, 30, 50]" [totalRecords]=totalRecorde></p-paginator>
+    }
+    @else {
+    <div class="table-view big-card mb-3">
+        <div class="card py-3 px-2">
+            
+            <table class="mt-4 w-full">
+                <tr class="grid mt-2 gap justify-content-between">
+                    <td class="col-9"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                    </td>
+                    <td class="col-2"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                    <td class="col-1"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                </tr>
+                <tr class="grid mt-2 gap justify-content-between">
+                    <td class="col-9"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                    </td>
+                    <td class="col-2"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                    <td class="col-1"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                </tr>
+                <tr class="grid mt-2 gap justify-content-between">
+                    <td class="col-9"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                    </td>
+                    <td class="col-2"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                    <td class="col-1"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                </tr>
+                <tr class="grid mt-2 gap justify-content-between">
+                    <td class="col-9"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                    </td>
+                    <td class="col-2"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                    <td class="col-1"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                </tr>
+                <tr class="grid mt-2 gap justify-content-between">
+                    <td class="col-9"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                    </td>
+                    <td class="col-2"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                    <td class="col-1"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                </tr>
+                <tr class="grid mt-2 gap justify-content-between">
+                    <td class="col-9"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                    </td>
+                    <td class="col-2"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                    <td class="col-1"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                </tr>
+                <tr class="grid mt-2 gap justify-content-between">
+                    <td class="col-9"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                    </td>
+                    <td class="col-2"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                    <td class="col-1"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                </tr>
+                <tr class="grid mt-2 gap justify-content-between">
+                    <td class="col-9"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                    </td>
+                    <td class="col-2"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                    <td class="col-1"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                </tr>
+                <tr class="grid mt-2 gap justify-content-between">
+                    <td class="col-9"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                    </td>
+                    <td class="col-2"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                    <td class="col-1"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                </tr>
+                <tr class="grid mt-2 gap justify-content-between">
+                    <td class="col-9"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                    </td>
+                    <td class="col-2"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                    <td class="col-1"><p-skeleton
+                            styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    }
+
+
+</div>
+
+
+
+@if(addMessenger){
+<p-sidebar [(visible)]="addMessenger" position="right" styleClass="w-6">
+    <app-add-push-message></app-add-push-message>
+</p-sidebar>
+}

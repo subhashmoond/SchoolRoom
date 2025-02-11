@@ -48,25 +48,6 @@ export class CurriculumComponent {
 
 
 
-
-  // drop(event: CdkDragDrop<FormArray>, courseIndex: number) {
-  //   const courseFormArray = this.addForm.get('courses') as FormArray;
-  //   const lessonsFormArray = courseFormArray.at(courseIndex).get('lessons') as FormArray;
-
-  //   if (lessonsFormArray) {
-  //     // Move the form control inside the form array
-  //     const lesson = lessonsFormArray.at(event.previousIndex);
-  //     lessonsFormArray.removeAt(event.previousIndex);
-  //     lessonsFormArray.insert(event.currentIndex, lesson);
-
-  //     // Get chapter ID (assuming it is stored in the form)
-  //     const chapterId = lesson.get('id')?.value;
-
-  //     // Call API to update order
-  //     this.updateLessonPosition(chapterId, event.currentIndex);
-  //   }
-  // }
-
   drop(event: CdkDragDrop<FormArray>, courseIndex?: number) {
     if (courseIndex === undefined) {
       // Handling Course Drag & Drop
@@ -144,24 +125,26 @@ export class CurriculumComponent {
   }
 
   setCourses(data: any) {
-    const courseArray = data.course.lectures_section.map((course: any, index: number) => {
-      this.isSavedCourses[index] = false;  // Initialize the isSavedCourses array
-      this.isEditLesson[index] = [];       // Initialize the isEditLesson array
-
+    // debugger;
+    const courseArray = data.data.map((course: any, index: number) => {
+      this.isSavedCourses[index] = false; // Initialize the isSavedCourses array
+      this.isEditLesson[index] = []; // Initialize the isEditLesson array
+  
       return this.fb.group({
-        id: [course.id],
-        items: [course.name],
+        id: [course.subject_id], // Changed from course.id to subject_id
+        items: [course.subject_name], // Changed from course.name to subject_name
         lessons: this.fb.array(course.lectures_lession.map((lesson: any, lessonIndex: number) => {
-          this.isEditLesson[index][lessonIndex] = false;  // Initialize each lesson's edit state
+          this.isEditLesson[index][lessonIndex] = false; // Initialize each lesson's edit state
+  
           return this.fb.group({
-            id: [lesson.id],
-            items: [lesson.name, Validators.required],
-            isPublished: [lesson.isPublished]
+            id: [lesson.chapter_id], // Changed from lesson.id to chapter_id
+            items: [lesson.chapter_name, Validators.required], // Changed from lesson.name to chapter_name
+            isPublished: [lesson.isPublished] // Correctly map isPublished
           });
         }))
       });
     });
-
+  
     this.addForm.setControl('courses', this.fb.array(courseArray));
   }
 
@@ -214,11 +197,6 @@ export class CurriculumComponent {
     //   console.error('Error deleting course', error);
     // });
   }
-
-  // enableEditLesson(courseIndex: number, lessonIndex: number): void {
-  //   this.isEditLesson[courseIndex].fill(false); // Disable all lessons for the course
-  //   this.isEditLesson[courseIndex][lessonIndex] = true; // Enable only the clicked lesson
-  // }
 
   enableEditLesson(courseIndex: number, lessonIndex: number): void {
     this.isEditLesson[courseIndex][lessonIndex] = true; // Enable editing
