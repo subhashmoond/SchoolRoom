@@ -93,7 +93,8 @@ export class CreateTestCourseComponent {
       name: [''],
       description: [''],
       ispaid: [true],
-      price: ['']
+      price: [''],
+      mrp : ['']
     });
 
     this.aiContentForm = this._fb.group({
@@ -132,6 +133,7 @@ export class CreateTestCourseComponent {
 
       const body = {
         "name": this.coursesForm.get('name')?.value,
+        "mrp": this.coursesForm.get('mrp')?.value,
         "price": this.coursesForm.get('price')?.value,
         "describe": this.coursesForm.get('description')?.value,
         "language": 2,
