@@ -14,7 +14,7 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToolbarModule } from 'primeng/toolbar';
 import { CreateMainTestComponent } from '../main-test/create-main-test/create-main-test.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route } from '@angular/router';
 import { CoursesService } from '../../../core/services/courses.service';
 import { CommonModule } from '@angular/common';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -25,11 +25,15 @@ import { CoursePricingComponent } from "../../courses/course-content/course-pric
 import { CourseCouponsComponent } from "../../courses/course-content/course-coupons/course-coupons.component";
 import { CourseCommentComponent } from "../../courses/course-content/course-comment/course-comment.component";
 import { CourseStudentsComponent } from "../../courses/course-content/course-students/course-students.component";
+import { DialogModule } from 'primeng/dialog';
+import { TestThumbnailComponent } from './test-curriculum/test-thumbnail/test-thumbnail.component';
+import { TestSericeReportComponent } from './test-serice-report/test-serice-report.component';
 
 @Component({
   selector: 'app-test-course',
   standalone: true,
-  imports: [FileUploadModule, CommonModule, ToolbarModule, TestCurriculumComponent, CourseInformationComponent, CoursePricingComponent, CourseCouponsComponent, CourseCommentComponent, CourseStudentsComponent],
+  imports: [FileUploadModule, CommonModule, ToolbarModule, TestCurriculumComponent, CourseInformationComponent, CoursePricingComponent, CourseCouponsComponent, 
+    CourseCommentComponent, CourseStudentsComponent, DialogModule, TestThumbnailComponent, TestSericeReportComponent ],
   templateUrl: './test-course.component.html',
   styleUrl: './test-course.component.css'
 })
@@ -42,10 +46,19 @@ export class TestCourseComponent {
   selectedFileObjectUrl: string | null = null;
   currentActiveTab : string = 'curriculum';
 
-  constructor(private _sharedService : SharedService){}
+  thumbnalAndTitleData : any;
+  isThumbnail : boolean = false;
+  courseId : any;
+  courseDetails : any;
+  allowReviewStatus : any;
+
+  constructor(private _sharedService : SharedService, private route : ActivatedRoute, private _courseService: CoursesService ){
+    this.route.paramMap.subscribe(params => {
+      this.courseId = params.get('id')!;
+    });
+  }
 
   async ngOnInit(){
-    // this.currentActiveTab =  "curriculum"
 
     this._sharedService.settoggleButtonValue(false);
 
@@ -53,6 +66,16 @@ export class TestCourseComponent {
       console.log(res, "course content datas")
     });
 
+    this.getCourseDetail()
+
+  }
+
+  getCourseDetail(){
+
+    this._courseService.getCourseById(this.courseId).subscribe(res => {
+      this.courseDetails = res.course;
+      this.allowReviewStatus = this.courseDetails.allowReview
+    })
 
   }
 
@@ -75,6 +98,14 @@ export class TestCourseComponent {
     this.fileUpload.clear();
   }
 
+
+  updateThumbnail() {
+    this.isThumbnail = true;
+    this.thumbnalAndTitleData = {
+      "id": this.courseDetails.id,
+      "url": this.courseDetails.image_url,
+    }
+  }
   
   courseTabs(type : any){
     this.currentActiveTab = type;
@@ -83,7 +114,10 @@ export class TestCourseComponent {
     console.log(this.currentActiveTab, "curent tab name ")
   }
 
-
+  closeThumbnailPopup(event : any){
+    this.isThumbnail = false;
+    this.getCourseDetail();
+  }
 
   ngOnDestroy(){
     this._sharedService.settoggleButtonValue(true);

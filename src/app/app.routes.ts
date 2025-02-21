@@ -55,6 +55,9 @@ export const routes: Routes = [
             },
             {
                 path : 'setting', loadChildren : () => import('./view/setting/setting.router').then((m) => m.routes)
+            },
+            {
+                path : 'question-bank', loadChildren : () => import('./view/question-bank/question-bank.router').then((m) => m.routes)
             }
         ],
         canActivate: [authGuard]

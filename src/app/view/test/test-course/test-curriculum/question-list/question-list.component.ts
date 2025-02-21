@@ -8,11 +8,12 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../../../environments/environment';
 import { TestService } from '../../../../../core/services/test.service';
 import { BulkQuestionUploadComponent } from '../../../../../shared/components/bulk-question-upload/bulk-question-upload.component';
+import { SidebarModule } from 'primeng/sidebar';
 
 @Component({
   selector: 'app-question-list',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, CreateQuestionsComponent, DialogModule, BulkQuestionUploadComponent ],
+  imports: [CommonModule, TableModule, ButtonModule, CreateQuestionsComponent, DialogModule, BulkQuestionUploadComponent, SidebarModule ],
   templateUrl: './question-list.component.html',
   styleUrl: './question-list.component.css'
 })

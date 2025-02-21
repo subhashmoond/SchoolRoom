@@ -2,10 +2,10 @@
 
 
     <div class="w-full">
-        <!-- <h4 class="m-0 pt-4 font-semibold line-height-sm">Add Section</h4> -->
+        <h4 class="m-0 pt-4 font-semibold line-height-sm">Add Section</h4>
         <!-- <p class="m-0 font-semibold line-height-sm">Add a new Section</p> -->
 
-        <form [formGroup]="addSection" class="w-full flex flex-wrap mt-4 mb-4">
+        <form [formGroup]="addSection" class="w-full flex flex-wrap mt-5 mb-4">
             <div class="flex flex-wrap w-full mb-4">
                 <div class="w-full">
                     <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Section Title
@@ -20,8 +20,14 @@
                 <div class="w-full">
                     <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Max Marks
                     </label>
-                    <input class="w-full block text-sm"  pKeyFilter="num" pInputText formControlName="maxmark"
-                        placeholder="0" required="true" />
+
+                    <p-inputGroup>
+                        <input class="w-full block text-sm"  pKeyFilter="num" pInputText formControlName="maxmark"
+                        placeholder="100" required="true" />
+                        <p-inputGroupAddon>%</p-inputGroupAddon>
+                    </p-inputGroup>
+
+                    
                 </div>
             </div>
 
@@ -39,8 +45,14 @@
                         <div class="w-full">
                             <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Duration
                             </label>
-                            <input class="w-full block text-sm" type="time" pKeyFilter="num" pInputText formControlName="duration"
-                                placeholder="0" required="true" />
+
+                            <p-inputGroup>
+                                <input class="w-full block text-sm" type="text" pKeyFilter="num" pInputText formControlName="duration"
+                                placeholder="60" required="true" />
+                                <p-inputGroupAddon>Mint</p-inputGroupAddon>
+                            </p-inputGroup>
+
+                            
                         </div>
                     </div>
                 }
@@ -51,8 +63,12 @@
                     <div class="w-full">
                         <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Duration
                         </label>
-                        <input class="w-full block text-sm" type="time" pKeyFilter="num" pInputText formControlName="duration"
-                            placeholder="0" required="true" />
+                        <p-inputGroup>
+                            <input class="w-full block text-sm" type="text" pKeyFilter="num" pInputText formControlName="duration"
+                            placeholder="60" required="true" />
+                            <p-inputGroupAddon>Mint</p-inputGroupAddon>
+                        </p-inputGroup>
+                        
                     </div>
                 </div>
             }

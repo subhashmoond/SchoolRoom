@@ -8,7 +8,7 @@
 <!-- Step 1: Course Details -->
 @if(activeIndex === 0){
 
-<div class="add-courses mt-4">
+<div class="add-courses mt-4 pb-7">
 
     <div class="text-center mb-5">
         <h3 class="m-0 pb-2">Create Test Series</h3>
@@ -55,7 +55,8 @@
             <div class="col-12 mt-4">
                 <div class="w-full">
                     <label class="w-full mb-1  font-medium line-height-exsm inline-block">Description</label>
-                    <textarea rows="5" style="width: 100%;" pInputTextarea formControlName="description"></textarea>
+                    <!-- <textarea rows="5" style="width: 100%;" pInputTextarea formControlName="description"></textarea> -->
+                    <p-editor formControlName="description" [style]="{ height: '250px' }" />
                 </div>
             </div>
 
@@ -93,69 +94,73 @@
 <!-- Step 2: Thumbnail Upload  -->
 @if(activeIndex === 1){
 
-<div class="grid w-6 m-0-a mt-4">
+    <div class="grid w-6 m-0-a mt-4 pb-7">
 
-    <div class="text-center mb-5">
-        <h2 class="m-0 pb-2">Add a thumbnail image</h2>
-        <p class="m-0 text-color-secondary line-height-3">The thumbnail is displayed at checkout and throughout the member experience.
-            Upload one now or
-            choose one later.</p>
-    </div>
-
-    <div class="col-6">
-        <div
-            class="border-solid border-round-lg main-border-color border-2 p-4 flex flex-column flex-wrap align-items-center justify-content-center user-image relative">
-
-            <img width="100" height="100"
-                [src]="selectedFileObjectUrl ? selectedFileObjectUrl : '../../../../assets/images/icon/Image.svg'"
-                alt="Image Preview" [ngClass]="selectedFileObjectUrl ? 'w-full h-full' : 'w-4rem h-4rem'" />
-            @if(selectedFileObjectUrl){
-            <i class="pi pi-times profile-remove-icon" (click)="profileImageRemove()" style="font-size: 1rem"></i>
-            }
-
-            @if(!selectedFileObjectUrl){
-            <span class="text-xs text-color-secondary mt-3"> Recommended size: 1024x576 </span>
-            }
-
-            <span class="flex flex-wrap align-items-center justify-content-center mt-2 mb-1">
-                @if(!selectedFileObjectUrl){
-                <img class="h-1rem w-1rem" src="../../../../assets/images/icon/upload-icon.svg">
-                }
-                <p-fileUpload #fileUpload [showUploadButton]="true" mode="basic"
-                    class="bg-none text-base text-700 border-0 z-2 required-upload profile-message-remove"
-                    chooseLabel="Upload Image*" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
-                    accept="image/*" [maxFileSize]="maxFileSizeLimit" (onSelect)="onFileSelect($event)"></p-fileUpload>
-            </span>
-
+        <div class="text-center mb-5">
+            <h2 class="m-0 pb-2">Add a thumbnail image</h2>
+            <p class="m-0 text-color-secondary line-height-3">The thumbnail is displayed at checkout and throughout the
+                member experience.
+                Upload one now or
+                choose one later.</p>
         </div>
-
-
-
-    </div>
-
-
-    @if(!selectedFileObjectUrl){
-
+    
+        <div class="col-6">
+    
+    
+            <div
+                class="border-solid border-round-lg main-border-color border-2 p-4 flex flex-column flex-wrap align-items-center justify-content-center user-image relative">
+    
+                <img width="100" height="100"
+                    [src]="selectedFileObjectUrl ? selectedFileObjectUrl : '../../../../assets/images/icon/Image.svg'"
+                    alt="Image Preview" [ngClass]="selectedFileObjectUrl ? 'w-full h-full' : 'w-4rem h-4rem'" />
+                @if(selectedFileObjectUrl){
+                <i class="pi pi-times profile-remove-icon" (click)="profileImageRemove()" style="font-size: 1rem"></i>
+                }
+    
+                @if(!selectedFileObjectUrl){
+                <span class="text-xs text-color-secondary mt-3"> Recommended size: 1024x576 </span>
+                }
+    
+                <span class="flex flex-wrap align-items-center justify-content-center mt-2 mb-1">
+                    @if(!selectedFileObjectUrl){
+                    <img class="h-1rem w-1rem" src="../../../../assets/images/icon/upload-icon.svg">
+                    }
+                    <p-fileUpload #fileUpload [showUploadButton]="true" mode="basic"
+                        class="bg-none text-base text-700 border-0 z-2 required-upload profile-message-remove"
+                        chooseLabel="Upload Image*" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php"
+                        accept="image/*" [maxFileSize]="maxFileSizeLimit" (onSelect)="onFileSelect($event)"></p-fileUpload>
+                </span>
+    
+            </div>
+    
+    
+    
+        </div>
+    
+    
+        @if(!selectedFileObjectUrl){
+    
         <div class="col-6">
             <div (click)="selectOption()"
                 class="cursor-pointer border-solid main-border-color border-round-lg border-2 flex flex-column w-full h-full px-3 justify-content-center align-items-center "
-                [ngClass]="{'selected': selectedOption === true}">
+                [ngClass]="{'selected': selectedOption}">
                 <h5 class="m-0 text-color">I don't have one</h5>
                 <span class="text-xs text-color-secondary mt-2">Skip this step for now, I will add it later</span>
             </div>
         </div>
-
-    }
-
-
-
-</div>
+    
+        }
+    
+    
+    
+    </div>
 }
 
 
 <!-- Step 3: Exam Categoray -->
 @if(activeIndex === 2){
-<div class="add-courses mt-4">
+
+<div class="add-courses mt-4 pb-7">
     <div class="text-center mb-5">
         <h2 class="m-0 pb-2"> Select Exam Category </h2>
         <p class="m-0 text-color-secondary line-height-3">Select Your Perfect Course Exam Category</p>
@@ -183,6 +188,7 @@
 
     </form>
 </div>
+
 }
 
 <!-- Step 4: AI Content Create -->
@@ -224,7 +230,7 @@
 
 
 <!-- Navigation Buttons -->
-<div class="w-98 border-top-1 border-color-main bg-white absolute bottom-0 grid m-0-a">
+<div class="w-98 border-top-1 border-color-main bg-white fixed bottom-0 grid m-0-a">
     <div class="col-6">
         <button type="button" pButton pRipple (click)="back()" label="Back"
             class="primary-border-button px-5 mr-3 text-sm" [disabled]="activeIndex === 0"></button>

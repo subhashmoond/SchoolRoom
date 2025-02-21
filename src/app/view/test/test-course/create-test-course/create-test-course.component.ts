@@ -24,14 +24,15 @@ import { MessagesModule } from 'primeng/messages';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { StepsModule } from 'primeng/steps';
 import { SharedService } from '../../../../shared/services/shared.service';
+import { EditorModule } from 'primeng/editor';
 
 @Component({
   selector: 'app-create-test-course',
   standalone: true,
   imports: [ReactiveFormsModule, StepsModule, InputGroupModule, InputGroupAddonModule, DropdownModule, CardModule, CalendarModule, KeyFilterModule,
-      ButtonModule, InputTextModule, FileUploadModule, ToastModule, InputNumberModule, CheckboxModule, MessagesModule, AccordionModule,
-      TranslateModule, BlockUIModule, ProgressSpinnerModule, CommonModule, InputSwitchModule],
-    providers: [MessageService],
+    ButtonModule, InputTextModule, FileUploadModule, ToastModule, InputNumberModule, CheckboxModule, MessagesModule, AccordionModule,
+    TranslateModule, BlockUIModule, ProgressSpinnerModule, CommonModule, InputSwitchModule, EditorModule ],
+  providers: [MessageService],
   templateUrl: './create-test-course.component.html',
   styleUrl: './create-test-course.component.css'
 })
@@ -53,8 +54,8 @@ export class CreateTestCourseComponent {
   courseId: any
   selectedOption: boolean = false
   examList: any;
-  subCategoryExamList : any;
-  courseType : any
+  subCategoryExamList: any;
+  courseType: any
   subCategoryShow: boolean = false;
 
   // loader boolean Var
@@ -62,7 +63,8 @@ export class CreateTestCourseComponent {
   stepOne: boolean = false;
   stepTwo: boolean = false;
   stepTree: boolean = false;
-  stepFor: boolean = false;
+
+  isButtonLoader: boolean = false;
 
   constructor(private _courseService: CoursesService, private _router: Router, private _fb: FormBuilder, private messageService: MessageService, private translate: TranslateService, private _sharedService: SharedService) { }
 
@@ -76,10 +78,10 @@ export class CreateTestCourseComponent {
 
     this.getExamCategory();
 
-    this._courseService.getCourseType().subscribe((res : any) => {
+    this._courseService.getCourseType().subscribe((res: any) => {
 
-      res.data.forEach((item : any) => {
-        if(item.types === 'Test Series'){
+      res.data.forEach((item: any) => {
+        if (item.types === 'Test Series') {
           this.courseType = item.id
         }
       })
@@ -94,7 +96,7 @@ export class CreateTestCourseComponent {
       description: [''],
       ispaid: [true],
       price: [''],
-      mrp : ['']
+      mrp: ['']
     });
 
     this.aiContentForm = this._fb.group({
@@ -105,7 +107,7 @@ export class CreateTestCourseComponent {
 
     this.examCategoryForm = this._fb.group({
       category: '',
-      subcategory : ''
+      subcategory: ''
     })
 
   }
@@ -123,13 +125,17 @@ export class CreateTestCourseComponent {
   }
 
   selectOption() {
-    this.selectedOption != this.selectedOption
+    this.selectedOption = true;
+    this.selectedFile = null
   }
 
   submit() {
 
+    debugger
+
     if (this.activeIndex === 0) {
-      this.stepOne = true
+      this.stepOne = true;
+      this.isButtonLoader = true
 
       const body = {
         "name": this.coursesForm.get('name')?.value,
@@ -141,34 +147,47 @@ export class CreateTestCourseComponent {
         "coursetype": this.courseType
       }
       this._courseService.addCourses(body).subscribe((res: any) => {
+        this.isButtonLoader = false
         if (res.status == "Success") {
           this.courseId = res.course.id
           this.stepOne = false
           // this._router.navigate(['/course/content', courseId]);
           this.next();
-        }else{
-          this.messageService.add({ severity: 'error', detail: res.message});
+        } else {
+          this.messageService.add({ severity: 'error', detail: res.message });
         }
       })
     }
 
     if (this.activeIndex === 1) {
-      this.stepTwo = true
 
-      const formData = new FormData();
-      formData.append('thumbnail', this.selectedFileObjectUrl);
-      formData.append('course_id', this.courseId);
 
-      this._courseService.addThumbnail(formData).subscribe(res => {
-        console.log(res, "thamblanupdate")
+      this.stepTwo = true;
+      this.isButtonLoader = true;
+
+      if(!this.selectedOption){
+        const formData = new FormData();
+        formData.append('thumbnail', this.selectedFileObjectUrl);
+        formData.append('course_id', this.courseId);
+  
+        this._courseService.addThumbnail(formData).subscribe(res => {
+          this.isButtonLoader = false;
+          console.log(res, "thamblanupdate")
+          this.stepTwo = false
+          this.next();
+        })
+      }else{
+        this.isButtonLoader = false;
         this.stepTwo = false
         this.next();
-      })
+      }
+
     }
 
-    if(this.activeIndex === 2){
+    if (this.activeIndex === 2) {
       this.stepTree = true;
-      
+      this.isButtonLoader = true;
+
       const category = this.examCategoryForm.get('category')?.value;
       const subcategory = this.examCategoryForm.get('subcategory')?.value;
 
@@ -178,11 +197,13 @@ export class CreateTestCourseComponent {
       }
 
       this._courseService.addExamCategoryInCourse(payload, this.courseId).subscribe(res => {
-        this.stepTree = false
+        this.isButtonLoader = false;
+        this.stepTree = false;
       })
       this.next();
 
       this.closeCreateTestForm.emit(false)
+      this._router.navigate(['/test/test-detail', this.courseId]);
 
     }
 
@@ -199,16 +220,16 @@ export class CreateTestCourseComponent {
   }
 
 
-  backCategory(){
+  backCategory() {
     this.subCategoryShow = false;
 
     this.examCategoryForm.setValue({
-      subcategory : ''
+      subcategory: ''
     })
 
   }
 
-  nextSubCategory(){
+  nextSubCategory() {
     this.subCategoryShow = true;
 
     const categoryId = this.examCategoryForm.get('category')?.value;
@@ -217,8 +238,8 @@ export class CreateTestCourseComponent {
       "category_id": categoryId[0]
     }
 
-    this._sharedService.getExamSubCategory(payload).subscribe((res:any) => {
-      if(res.status === true){
+    this._sharedService.getExamSubCategory(payload).subscribe((res: any) => {
+      if (res.status === true) {
         this.subCategoryExamList = res.data
       }
     })

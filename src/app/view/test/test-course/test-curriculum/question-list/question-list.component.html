@@ -43,9 +43,13 @@
 
 
 @if(isQestion){
-    <p-dialog header="Create Section" [modal]="true" [(visible)]="isQestion" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+    <p-sidebar [(visible)]="isQestion" [fullScreen]="true">
         <app-create-questions (closepopup)="closepopup($event)" [moduleName]="moduleName" [sectionIdForQuestion]="sectionId"></app-create-questions>
-    </p-dialog>
+
+    </p-sidebar>
+    <!-- <p-dialog header="Create Section" [modal]="true" [(visible)]="isQestion" [style]="{ width: '100vh' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+        <app-create-questions (closepopup)="closepopup($event)" [moduleName]="moduleName" [sectionIdForQuestion]="sectionId"></app-create-questions>
+    </p-dialog> -->
 }
 
 

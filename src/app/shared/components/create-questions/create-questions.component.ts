@@ -25,7 +25,7 @@ export class CreateQuestionsComponent {
   @Input() questionId: any;
   @Output() closepopup = new EventEmitter<any>();
 
-  @Input() moduleName : any;
+  @Input() moduleName: any;
 
 
   addQuestionForm!: FormGroup;
@@ -48,7 +48,7 @@ export class CreateQuestionsComponent {
       text: [],
       options: this._fb.array([]),
       explanation: [],
-      answer : []
+      answer: []
     })
 
     this.addOption();
@@ -89,7 +89,7 @@ export class CreateQuestionsComponent {
         isCorrect: [option.isCorrect]
       }));
     });
-    
+
   }
 
 
@@ -101,6 +101,7 @@ export class CreateQuestionsComponent {
     const optionGroup = this._fb.group({
       text: ['', Validators.required], // Option text input
       isCorrect: [false], // Checkbox for correct option
+      otherLang: []
     });
     this.options.push(optionGroup);
   }
@@ -118,15 +119,22 @@ export class CreateQuestionsComponent {
   submit() {
 
 
-    const formValue = this.addQuestionForm.value; // Get form values
 
-    let payload : any = {
+    const formValue = this.addQuestionForm.value; // Get form values
+    console.log(formValue, "form data ")
+
+    let payload: any = {
       section_id: this.sectionIdForQuestion,
       question_type: formValue.selecttitle,
       text: formValue.text,
-      subject: formValue.subject,
-      chapter: formValue.chapter,
-      
+      difficulty: "Simple",
+      lang: "Hindi",
+      solution_text: "indian history",
+      lang_solution_text: "jjdjdjdjddjjddjdjdddddd",
+      default_lang: "English",
+      // "test_id":""
+      one_word_ans: "boss"
+
     };
 
     if(formValue.selecttitle === "2d9481c71ce7405db965c9171991a421" || formValue.selecttitle === "518a019f95f64611a782c018c167ea73"){
@@ -135,6 +143,12 @@ export class CreateQuestionsComponent {
         id: index + 1,
         content: option.text,
       })),
+
+      payload.langData = formValue.options.map((option: any, index: number) => ({
+        id: index + 1,
+        content: option.otherLang,
+      })),
+
       payload.correct_option = formValue.options
         .map((option: any, index: number) => (option.isCorrect ? index + 1 : null))
         .filter((id: number | null) => id !== null),
@@ -148,7 +162,7 @@ export class CreateQuestionsComponent {
     }
 
 
-    if(this.moduleName === 'testseries'){
+    if (this.moduleName === 'testseries') {
 
       this._testService.createQestionTestSerice(payload).subscribe((res: any) => {
 
@@ -157,10 +171,10 @@ export class CreateQuestionsComponent {
         } else {
           this._messageService.add({ severity: 'error', detail: 'Error ' });
         }
-  
+
       })
 
-    }else{
+    } else {
 
       this._testService.addQuestions(payload).subscribe((res: any) => {
 
@@ -169,7 +183,7 @@ export class CreateQuestionsComponent {
         } else {
           this._messageService.add({ severity: 'error', detail: 'Error ' });
         }
-  
+
       })
 
     }

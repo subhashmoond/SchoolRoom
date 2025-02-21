@@ -10,11 +10,13 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ToastModule } from 'primeng/toast';
 import { TestService } from '../../../core/services/test.service';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 @Component({
   selector: 'app-create-test-section',
   standalone: true,
-  imports: [SidebarModule, ButtonModule, TranslateModule, ReactiveFormsModule, CalendarModule, InputTextModule, ToastModule, CheckboxModule, KeyFilterModule],
+  imports: [SidebarModule, ButtonModule, TranslateModule, ReactiveFormsModule, CalendarModule, InputTextModule, ToastModule, CheckboxModule, KeyFilterModule, InputGroupModule, InputGroupAddonModule],
   providers: [MessageService],
   templateUrl: './create-test-section.component.html',
   styleUrl: './create-test-section.component.css'
@@ -81,8 +83,8 @@ export class CreateTestSectionComponent {
         const payload: any = {
           "name": this.addSection.get('title')?.value,
           "max_marks": this.addSection.get('maxmark')?.value,
-          // "allowed_section_wise_time": this.addSection.get('sectionwise')?.value,
-          // "duration": totalMinutes
+          "allowed_section_wise_time": true,
+          "duration": this.addSection.get('duration')?.value
         }
 
         if (this.testDataForSectionCreate.isDuration) {
@@ -113,22 +115,12 @@ export class CreateTestSectionComponent {
 
 
         if (this.moduleName === "testseries") {
+          debugger
           const payload: any = {
             "name": this.addSection.get('title')?.value,
             "max_marks": this.addSection.get('maxmark')?.value,
-            // "allowed_section_wise_time": this.addSection.get('sectionwise')?.value,
-            // "duration": totalMinutes
-          }
-
-          if (this.testDataForSectionCreate.isDuration) {
-            
-              let timeParts = time.split(":");
-              let thours = parseInt(timeParts[0]);
-              let tminutes = parseInt(timeParts[1]);
-              let ttotalMinutes = thours * 60 + tminutes;
-              payload.duration = ttotalMinutes
-            
-
+            "allowed_section_wise_time": true,
+            "duration": this.addSection.get('duration')?.value
           }
 
           this._testService.createSection(this.testDataForSectionCreate?.id, payload).subscribe((res: any) => {

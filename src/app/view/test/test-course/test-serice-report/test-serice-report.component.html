@@ -1,0 +1,113 @@
+<div class="card">
+    <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Test Reports </h4>
+</div>
+
+
+<p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
+    selectionMode="single" class="test-table" [value]="reportDetail">
+
+    <ng-template pTemplate="header" class="p-4">
+        <tr class="w-full flex flex-wrap">
+                <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">
+                        Rank
+                </th>
+               
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                        Email Id
+                </th>
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                    Attempt Date
+                </th>
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                    Marks %
+                </th>
+
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                    Action
+                </th>
+        </tr>
+
+</ng-template>
+
+    <ng-template pTemplate="body" let-datas >
+        <tr class="w-full flex flex-wrap cursor-pointer">
+            <td style="width: 20%;word-break:break-all;" class="text-xl capitalize table-p">
+                {{datas.rank}}
+            </td>
+            <td style="width: 20%;word-break:break-all;" class="text-xl capitalize table-p">
+                {{datas.student__email}}
+            </td>
+            <td style="width: 20%;word-break:break-all;" class="text-xl capitalize table-p">
+                {{datas.attemptTime}}
+            </td>
+            <td style="width: 20%;word-break:break-all;" class="text-xl capitalize table-p">
+                {{datas.percentage}}
+            </td>
+
+
+            <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
+
+
+                <i class="pi pi-eye" (click)="studentSideBar(datas)"></i>
+            </td>
+
+
+
+        </tr>
+    </ng-template>
+
+
+
+</p-table>
+
+
+<p-sidebar [(visible)]="isStudentFullReport" position="right" [style]="{width:'40%'}">
+
+    <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Student Report </h4>
+
+    <div class="grid px-3 py-4">
+        <div class="col-12 mb-2 flex">
+            <p-avatar label="V" styleClass="mr-2" size="large" [style]="{ 'background-color': '#ece9fc', color: '#2a1261' }" shape="circle" />
+            <div>
+                <h6 class="mb-1">{{studentFullReport?.student__email}}</h6>
+            <p class="m-0 text-color text-lg">{{studentFullReport?.student__phone_number}}</p>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="p-4 gray-bg border-round-sm bg-right" style="background-image: url('../../../../../assets/images/rank-bg.png'); background-position: right; background-repeat: no-repeat;" >
+                <h5>{{studentFullReport?.rank}}</h5>
+                <p class="m-0 font-semibold pt-2">Rank</p>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="p-4 gray-bg border-round-sm bg-right" style="background-image: url('../../../../../assets/images/exam-mark.png'); background-position: right; background-repeat: no-repeat;">
+                <h5>{{studentFullReport?.marks}} / {{studentFullReport?.totalTestMarks}}</h5>
+                <p class="m-0 font-semibold pt-2">Marks</p>
+            </div>
+        </div>
+
+        <div class="col-12 mt-2 mb-2">
+            <h5> Questions Report </h5>
+        </div>
+
+        <div class="col-12 p-4 border-round-md cursor-pointer primary-gradient-bg">
+            <ul class="m-0 p-0">
+                <li class="" style="display: grid ; grid-auto-flow: column;">
+                    <span class="m-0 py-2 text-xl font-medium text-color">Attempt Questions</span>
+                    <span class="m-0 py-2 text-right text-xl font-semibold">{{studentFullReport?.attempt_count}}</span>
+                </li>
+                <li class="" style="display: grid ; grid-auto-flow: column;">
+                    <span class="m-0 py-2 text-xl font-medium text-color">Not Attempt Questions</span>
+                    <span class="m-0 py-2 text-right text-xl font-semibold">{{studentFullReport?.totalNotAttemptedQuestions}}</span>
+                </li>
+                <li class="" style="display: grid ; grid-auto-flow: column;">
+                    <span class="m-0 py-2 text-xl font-medium text-color">Total Questions</span>
+                    <span class="m-0 py-2 text-right text-xl font-semibold">{{studentFullReport?.totalQuestions  }}</span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+   
+</p-sidebar>

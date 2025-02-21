@@ -13,11 +13,12 @@ import { CreateTestComponent } from '../../../../../shared/components/create-tes
 import { ActivatedRoute, Router } from '@angular/router';
 import { TestService } from '../../../../../core/services/test.service';
 import { TestSettingComponent } from '../../../../../shared/components/test-setting/test-setting.component';
+import { TestSericeReportComponent } from '../../test-serice-report/test-serice-report.component';
 
 @Component({
   selector: 'app-test-list',
   standalone: true,
-  imports: [CommonModule, AccordionModule, ButtonModule, ConfirmDialogModule, TableModule, CreateTestSectionComponent, SidebarModule, DialogModule, ToastModule, CreateTestComponent, TestSettingComponent ],
+  imports: [CommonModule, AccordionModule, ButtonModule, ConfirmDialogModule, TableModule, CreateTestSectionComponent, SidebarModule, DialogModule, ToastModule, CreateTestComponent, TestSettingComponent, TestSericeReportComponent ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './test-list.component.html',
   styleUrl: './test-list.component.css'
@@ -32,9 +33,10 @@ export class TestListComponent {
   testDataForSectionCreate: any;
   editSectionData : any;
   isTestSetting : boolean = false;
+  isReportView : boolean = false
   testIdForSetting : any
 
-  constructor(private route: ActivatedRoute, private _messageService: MessageService, private _testService: TestService, private _router: Router,) {
+  constructor(private route: ActivatedRoute, private _messageService: MessageService, private _testService: TestService, private _router: Router, private _confirmationService: ConfirmationService) {
     this.route.paramMap.subscribe(params => {
       this.subSetId = params.get('id');
     });
@@ -91,23 +93,66 @@ export class TestListComponent {
 
   deleteSection(sectionId: any) {
 
-    this._testService.deleteTestSeriesSection(sectionId).subscribe((res : any) => {
-      if(res.status === true){
-        this._messageService.add({ severity: 'success', detail: 'Section deleted successfully!' });
-        this.getTestList();
+    this._confirmationService.confirm({
+      header: '',
+      message: 'Are you sure. You want to delete section ?',
+      icon: 'null',
+      acceptButtonStyleClass: "danger-button text-base font-semibold",
+      rejectButtonStyleClass: "danger-border text-base button-text-danger bg-white font-semibold",
+      acceptLabel: "Yes",
+      acceptIcon: "none",
+      rejectLabel: "No",
+      rejectIcon: "none",
+      accept: () => {
+
+        this._testService.deleteTestSeriesSection(sectionId).subscribe((res : any) => {
+          if(res.status === true){
+            this._messageService.add({ severity: 'success', detail: 'Section deleted successfully!' });
+            this.getTestList();
+          }
+        })
+        
+      },
+      reject: () => {
+
       }
-    })
+
+    });
+
+    
 
   }
 
 
   deleteTest(testId : any){
-    this._testService.deleteTestTestSeries(testId).subscribe((res : any) => {
-      if(res.status === true){
-        this._messageService.add({ severity: 'success', detail: 'Test deleted successfully!' });
-        this.getTestList();
+
+    this._confirmationService.confirm({
+      header: '',
+      message: 'Are you sure. You want to delete test ?',
+      icon: 'null',
+      acceptButtonStyleClass: "danger-button text-base font-semibold",
+      rejectButtonStyleClass: "danger-border text-base button-text-danger bg-white font-semibold",
+      acceptLabel: "Yes",
+      acceptIcon: "none",
+      rejectLabel: "No",
+      rejectIcon: "none",
+      accept: () => {
+
+        this._testService.deleteTestTestSeries(testId).subscribe((res : any) => {
+          if(res.status === true){
+            this._messageService.add({ severity: 'success', detail: 'Test deleted successfully!' });
+            this.getTestList();
+          }
+        })
+        
+      },
+      reject: () => {
+
       }
-    })
+
+    });
+
+    
 
   }
 
@@ -122,5 +167,12 @@ export class TestListComponent {
     this.getTestList();
   }
 
+
+  reportView(testId : any){
+    this.isReportView = true;
+    // this._router.navigate([test-report/])
+    this._router.navigate(['/test/test-report', testId])
+
+  }
 
 }

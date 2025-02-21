@@ -19,6 +19,7 @@ export class NavService {
         { path: 'test', title: 'Test Series', type: 'link' },
         { path: 'digital-product', title: 'Digi Product', type: 'link' },
         { path: 'exam-category', title: 'Category', type: 'link' },
+        { path: 'question-bank', title: 'Question Bank', type: 'link' }
         // { path: '', title: 'Assignment', type: 'link' },
       ]
     },
@@ -29,7 +30,7 @@ export class NavService {
     {
       path: 'sales', title: "Marketing", icon: 'assets/images/discount.png', type: 'sub', active: true,
       children: [
-        { path : 'marketing/messenger', title: 'Messenger', type : 'link' },
+        { path: 'marketing/messenger', title: 'Messenger', type: 'link' },
         { path: 'marketing/coupons', title: 'Coupons', type: 'link' },
         { path: 'marketing/referral', title: 'Referral Code', type: 'link' },
         { path: 'marketing/wallet', title: 'Wallet', type: 'link' }

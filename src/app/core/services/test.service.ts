@@ -10,6 +10,10 @@ export class TestService {
 
   constructor(private http : HttpClient, private _dataService : DataMethodService) { }
 
+  getLangList(){
+    const url = `${environment.basePath}ts/languages/`;
+    return this._dataService.get(url);
+  }
   getQuestionType(){
     const url = `${environment.basePath}content/question-type/list/`;
     return this._dataService.get(url);
@@ -143,6 +147,12 @@ export class TestService {
   deleteTestTestSeries(testId : any){
     const url = `${environment.basePath}ts/test/${testId}/`;
     return this._dataService.delete(url);
+  }
+
+  // Test Reports 
+  getTestReportData(testId : any){
+    const url = `${environment.basePath}ts/test/${testId}/reports?page=1&page_size=15`;
+    return this._dataService.get(url)
   }
 
 }

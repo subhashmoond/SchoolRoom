@@ -7,7 +7,7 @@
             <div class="col-12">
                 <div class="w-full">
                     <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">
-                        Title 
+                        Title
                     </label>
                     <input class="w-full capitalize" pInputText formControlName="title" placeholder="Enter title"
                         required />
@@ -17,20 +17,29 @@
             <div class="col-12">
                 <div class="w-full">
                     <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">
-                        Total Time 
+                        Total Time
                     </label>
-                    <input class="w-full capitalize" pInputText formControlName="totalTime" placeholder="e.g 30 mints"
-                        required />
+
+                    <p-inputGroup>
+                        <input class="w-full capitalize" pInputText formControlName="totalTime"
+                            placeholder="e.g 30 mints" required />
+                        <p-inputGroupAddon>Mint</p-inputGroupAddon>
+                    </p-inputGroup>
                 </div>
             </div>
 
             <div class="col-12">
                 <div class="w-full">
                     <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">
-                        Total Marks 
+                        Total Marks
                     </label>
-                    <input class="w-full capitalize" pInputText formControlName="totalmarks" placeholder="e.g 60 mints"
+
+                    <p-inputGroup>
+                        <input class="w-full capitalize" pInputText formControlName="totalmarks" placeholder="e.g 60 mints"
                         required />
+                        <p-inputGroupAddon>%</p-inputGroupAddon>
+                    </p-inputGroup>
+                    
                 </div>
             </div>
 
@@ -48,34 +57,43 @@
 
             <div class="col-12">
                 <div class="w-full">
+
                     <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Passing marks
                     </label>
 
-                    <input class="w-full capitalize" pInputText formControlName="passsingmark" placeholder="e.g 50"
+                    <p-inputGroup>
+                        <input class="w-full capitalize" pInputText formControlName="passsingmark" placeholder="e.g 50"
                         required />
+                        <p-inputGroupAddon>%</p-inputGroupAddon>
+                    </p-inputGroup>
+                   
 
                 </div>
             </div>
 
             <div class="col-12">
                 <div class="w-full">
+
                     <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Min Submit Time</label>
 
-                    <input class="w-full capitalize" pInputText formControlName="minsubmittime" placeholder="e.g 50 Mint"
-                        required />
+                    <p-inputGroup>
+                        <input class="w-full capitalize" pInputText formControlName="minsubmittime"
+                            placeholder="e.g 50 Mint" required />
+                        <p-inputGroupAddon>Mint</p-inputGroupAddon>
+                    </p-inputGroup>
 
                 </div>
             </div>
 
             <div class="col-12 mt-2">
-                <div class="w-full formgrid grid permissions">
+                <div class="switch-bg w-full formgrid grid permissions">
                     <label class="col-10 inline-block">Publish</label>
                     <p-inputSwitch formControlName="publish" class="col-2" />
                 </div>
             </div>
 
             <div class="col-12 mt-2">
-                <div class="w-full formgrid grid permissions">
+                <div class="switch-bg w-full formgrid grid permissions">
                     <label class="col-10 inline-block">Rank Show</label>
                     <p-inputSwitch formControlName="rankshow" class="col-2" />
                 </div>
@@ -83,7 +101,7 @@
 
 
             <div class="col-12 mt-2">
-                <div class="w-full formgrid grid permissions">
+                <div class="switch-bg w-full formgrid grid permissions">
                     <label class="col-10 inline-block">LeaderBoard </label>
                     <p-inputSwitch formControlName="leaderborad" class="col-2" />
                 </div>
@@ -91,7 +109,7 @@
 
 
             <div class="col-12 mt-2">
-                <div class="w-full formgrid grid permissions">
+                <div class="switch-bg w-full formgrid grid permissions">
                     <label class="col-10 inline-block">Section Wise Time</label>
                     <p-inputSwitch formControlName="sectionwisetime" class="col-2" />
                 </div>
@@ -99,19 +117,19 @@
 
 
             <div class="col-12 mt-2">
-                <div class="w-full formgrid grid permissions">
+                <div class="switch-bg w-full formgrid grid permissions">
                     <label class="col-10 inline-block">Instructions Show</label>
                     <p-inputSwitch formControlName="instruction" class="col-2" />
                 </div>
             </div>
 
-            <div class="col-12 mt-2">
-                <div class="w-full formgrid grid permissions">
+            <div class="col-12 mt-2 pb-7">
+                <div class="switch-bg w-full formgrid grid permissions">
                     <label class="col-10 inline-block">Answer Show</label>
                     <p-inputSwitch formControlName="answershow" class="col-2" />
                 </div>
             </div>
-            
+
 
         </div>
 

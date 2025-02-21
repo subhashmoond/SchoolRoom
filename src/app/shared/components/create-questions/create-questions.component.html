@@ -1,7 +1,10 @@
 <p-toast />
 
 
-<div class="w-full">
+<div class="w-full p-8 ">
+
+  <h4 class="m-0 pt-4 font-semibold line-height-sm mb-5">Add Question</h4>
+
 
     <form [formGroup]="addQuestionForm" class="w-full flex flex-wrap mt-4 mb-4">
         <div class="flex flex-wrap w-full mb-4">
@@ -14,7 +17,7 @@
             </div>
         </div>
 
-        <div class="flex flex-wrap w-full mb-4">
+        <!-- <div class="flex flex-wrap w-full mb-4">
             <div class="w-full">
                 <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Subject <span class="input-required-color">*</span>
                 </label>
@@ -30,7 +33,7 @@
                 <input class="w-full block text-sm" pInputText formControlName="chapter" placeholder="Enter lession name" 
                     required="true" />
             </div>
-        </div>
+        </div> -->
 
         <div class="flex flex-wrap w-full mb-4">
             <div class="w-full">
@@ -63,14 +66,15 @@
                     <div formArrayName="options">
                         @for(option of options.controls; track $index){
     
-                        <div [formGroupName]="$index" class="option-row">
+                        <div [formGroupName]="$index" class="option-row border-bottom-light mb-2">
                             <input type="checkbox" formControlName="isCorrect" />
                             <div>
                                 <label for="correctOption{{ $index }}">Option {{ $index + 1 }}</label>
                             </div>
     
                             <div class="ml-2 mr-2">
-                                <p-editor class="editor" formControlName="text" [style]="{ height: '100px' }" placeholder="e.g Option {{ $index + 1 }}" />
+                                <p-editor class="editor mb-3" formControlName="text" [style]="{ height: '100px' }" placeholder="Default language Option {{ $index + 1 }}" />
+                                <p-editor class="editor" formControlName="otherLang" [style]="{ height: '100px' }" placeholder="Other Language Option {{ $index + 1 }}" />
                             </div>
     
                             <button type="button" (click)="removeOption($index)" class="remove-button"><i class="pi pi-minus"></i></button>

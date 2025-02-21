@@ -3,10 +3,10 @@
     <div class="col-6">
         <h4 class="subheading-color">Test List</h4>
     </div>
-    <!-- <div class="col-6 flex justify-content-end	">
-        <button type="submit" pButton pRipple label="Add New Test"
+    <div class="col-6 flex justify-content-end	">
+        <button type="submit" pButton pRipple label="+ Add New Test" (click)="createTest()"
             class="secondary-button px-6 text-sm"></button>
-    </div> -->
+    </div>
 
 </div>
 
@@ -18,9 +18,9 @@
 
     <div class="col-12 ">
 
-        @for(data of testListData; track data){
+        @for(data of testListData; track $index){
             <div class="mb-4">
-                <p-accordion [multiple]="true" [activeIndex]="[0]" >
+                <p-accordion [multiple]="true" [activeIndex]="[$index]" >
                     <p-accordionTab>
         
                         <ng-template pTemplate="header">
@@ -28,13 +28,14 @@
                                 <span class="underline text-2xl capitalize white-space-nowrap overflow-hidden text-overflow-ellipsis">{{data.title}}</span>
                             </div>
                             <div class="flex">
+                                <i class="mr-3 cursor-pointer pi pi-wave-pulse" (click)="reportView(data.id)"></i>
                                 <i class="mr-3 cursor-pointer pi pi-cog" (click)="testSeting(data.id)"></i>
                                 <i class="cursor-pointer pi pi-trash label-required" (click)="deleteTest(data.id)"></i>
                             </div>
                         </ng-template>
 
                         <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true"
-                            scrollHeight="37.938rem" selectionMode="single" class="client-data-table" [value]="data.sections">
+                            scrollHeight="37.938rem" selectionMode="single" class="test-table" [value]="data.sections">
         
                             <ng-template pTemplate="body" let-datas>
                                 <tr class="w-full flex flex-wrap" >
@@ -64,7 +65,7 @@
             </div>
         }
 
-        <button type="submit" pButton pRipple label="Add Test" class="mt-3 w-full add-section-button border-dashed px-6 text-sm" (click)="createTest()"></button>
+        <!-- <button type="submit" pButton pRipple label="Add Test" class="mt-3 w-full add-section-button border-dashed px-6 text-sm" (click)="createTest()"></button> -->
 
     </div>
 
@@ -78,10 +79,10 @@
     }
 
 @if(isCreateSection){
-    <p-dialog header="Create Section" [modal]="true" [(visible)]="isCreateSection" [style]="{ width: '40rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-        <!-- <app-create-test-section (closepopup)="closepopup($event)" [testDetailId]="testDetailId"></app-create-test-section> -->
+    <p-sidebar [(visible)]="isCreateSection" position="right" [style]="{width:'27.6%'}">
         <app-create-test-section [editSectionData]="editSectionData" (closepopup)="closepopupSection($event)" [moduleName]="moduleName" [testDataForSectionCreate]="testDataForSectionCreate"></app-create-test-section>
-    </p-dialog>
+    </p-sidebar>
+    
 }
 
 
@@ -93,3 +94,9 @@
 
 }
 
+
+@if(isReportView){
+    <p-sidebar [(visible)]="isReportView" position="right" [style]="{width:'40%'}">
+        <app-test-serice-report></app-test-serice-report>
+    </p-sidebar>
+}

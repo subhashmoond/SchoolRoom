@@ -1,6 +1,6 @@
 <div class="w-full">
 
-  <h4 class="m-0 pt-4 font-semibold line-height-sm">Add Quiz</h4>
+  <h4 class="m-0 pt-4 font-semibold line-height-sm">Add Test</h4>
   <form [formGroup]="addTestForm">
     <!-- Title Input -->
     <div class="grid mt-3">
@@ -19,11 +19,18 @@
           <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Total Time
           </label>
 
-          <!-- <p-datepicker inputId="calendar-timeonly"  [timeOnly]="true"></p-datepicker> -->
-
-
-          <input class="w-full block text-sm" type="time" pKeyFilter="num" pInputText formControlName="totaltime"
-            placeholder="0" required="true" />
+          <p-inputGroup>
+            <input
+              class="w-full block text-sm"
+              type="text"
+              pKeyFilter="num"
+              pInputText
+              formControlName="totaltime"
+              placeholder="0"
+              required="true"
+            />
+            <p-inputGroupAddon>Mint</p-inputGroupAddon>
+          </p-inputGroup>
         </div>
       </div>
 
@@ -33,6 +40,18 @@
           </label>
           <input class="w-full block text-sm" pKeyFilter="num" pInputText formControlName="maxmark" placeholder="0"
             required="true" />
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="w-full">
+          <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Default Language
+          </label>
+
+          <p-dropdown class="capitalize" id="officeid" class="text-sm w-full" (onChange)="onLanguageChange()"
+                    [required]="true" formControlName="defaultlang" [options]="langList" optionValue="name"
+                    optionLabel="name" placeholder="Select Lang"></p-dropdown>
+
         </div>
       </div>
 
@@ -49,8 +68,13 @@
         <div class="w-full">
           <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Custom Language
           </label>
-          <input class="w-full block text-sm" pInputText formControlName="another_lang" placeholder="Enter name"
-            required="true" />
+
+          <p-dropdown class="capitalize" id="officeid" class="text-sm w-full"
+                    [required]="true" formControlName="another_lang" [options]="filteredLangList" optionValue="name"
+                    optionLabel="name" placeholder="Select Another Language"></p-dropdown>
+
+          <!-- <input class="w-full block text-sm" pInputText formControlName="another_lang" placeholder="Enter name"
+            required="true" /> -->
         </div>
       </div>
       }

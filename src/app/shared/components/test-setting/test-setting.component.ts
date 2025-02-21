@@ -9,11 +9,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TestService } from '../../../core/services/test.service';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { KeyFilterModule } from 'primeng/keyfilter';
 
 @Component({
   selector: 'app-test-setting',
   standalone: true,
- imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule, CheckboxModule, CalendarModule, InputSwitchModule, InputGroupModule ],
+ imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule, CheckboxModule, CalendarModule, InputSwitchModule, InputGroupModule, InputGroupAddonModule, KeyFilterModule ],
    providers: [MessageService],
   templateUrl: './test-setting.component.html',
   styleUrl: './test-setting.component.css'

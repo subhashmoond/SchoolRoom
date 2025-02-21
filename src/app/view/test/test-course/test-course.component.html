@@ -1,10 +1,27 @@
 <div class="grid grid-nogutter nested-grid">
   <div class="col-2 secondry-bg-color">
 
-      <div class="w-full relative overflow-hidden	h-10rem">
+      <!-- <div class="w-full relative overflow-hidden	h-10rem">
           <img src="../../../../assets/images/course-tham.png">
           <h5 class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full absolute bottom-0 p-3 text-white-alpha-90 ">UI/UX Design</h5>
-      </div>
+      </div> -->
+
+      <div class="w-full relative overflow-hidden	h-10rem">
+
+        <i (click)="updateThumbnail()" class="pi pi-pencil border-circle p-2 bg-white absolute right-0 m-3 cursor-pointer"></i>
+
+        @if(courseDetails.image_url == "undefined"){
+
+            <img src="../../../../assets/images/course-tham.png">
+        }
+        @else{
+            <img style="width: 100%; height: 100%; object-fit: cover;" [src]="courseDetails.image_url">
+        }
+
+
+    </div>
+
+    <h6 class="font-semibold course-heading capitalize">{{courseDetails.name}}</h6>
 
       <ul class="sidebar-menu course-s-b">
           <li [ngClass]="{'active': currentActiveTab === 'curriculum'}">
@@ -60,6 +77,17 @@
               </a>
           </li>
 
+          <!-- <li [ngClass]="{'active': currentActiveTab === 'report'}">
+            <a href="javascript:void(0)" (click)="courseTabs('report')" routerLinkActive="active"
+                class="sidebar-header flex align-items-center px-3">
+                <span>
+                    <i class="pi pi-wave-pulse"></i>
+                    <span> Report </span>
+                </span>
+                <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+            </a>
+        </li> -->
+
       </ul>
   </div>
 
@@ -84,6 +112,8 @@
       @case ("student") {
       <app-course-students></app-course-students>
       }
+     
+
       }
 
   </div>
@@ -91,3 +121,11 @@
 
 
 </div>
+
+
+@if(isThumbnail){
+    <p-dialog header="Update Course Thumbnail" [modal]="true" [(visible)]="isThumbnail" [style]="{ width: '35rem' }">
+        <app-test-thumbnail (closepoup)="closeThumbnailPopup($event)" [thumbnalAndTitleData]="thumbnalAndTitleData" ></app-test-thumbnail>
+        <!-- <app-course-thumbnail (closepoup)="closeThumbnailPopup($event)" [thumbnalAndTitleData]="thumbnalAndTitleData"></app-course-thumbnail> -->
+    </p-dialog>
+}

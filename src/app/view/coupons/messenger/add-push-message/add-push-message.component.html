@@ -4,25 +4,29 @@
 
     <div class="grid nested-grid mt-3">
 
-        <div class="col-12">
-            <div class="grid">
+        <div class="col-12 w-full">
+            <div class="grid w-full">
 
-                <div class="col-12">
+                <div class="col-12 w-full">
                     <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Title <span>*</span> </label>
                     <input class="w-full capitalize" pKeyFilter="num" pInputText formControlName="title" placeholder="Enter push message title" />
                 </div>
 
-                <div class="col-12">
+                <div class="col-12 w-full">
+                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Target Audience<span>*</span> </label>
+                    <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
+                            [required]="true" formControlName="targetAudience" [options]="targetAudience"
+                            optionValue="name" optionLabel="name"
+                            placeholder="Select Audience" (onChange)="onTargetAudienceChange($event)" ></p-dropdown>
+                </div>
+
+
+                <div class="col-12 w-full">
                     <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Valid To </label>
                     <p-calendar formControlName="valid_to" />
                 </div>
 
-                <div class="col-12">
-                    <div class="w-full formgrid grid permissions">
-                        <label class="col-10 inline-block">Suggest During Checkout</label>
-                        <p-inputSwitch formControlName="suggest" class="col-2" />
-                    </div>
-                </div>
+                
 
             </div>
         </div>

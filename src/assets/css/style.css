@@ -3245,3 +3245,16 @@ body p-checkbox {
     border-bottom: 1px solid #edeef6;
 } */
  
+
+.switch-bg{
+    background: #FAFAFA;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.gray-bg{
+    background: #f9fafb;
+}
