@@ -6,12 +6,13 @@
 
         <div class="grid client-dashborad-header mb-4 align-items-center">
                 <div class="col-6">
-                        <h4 class="subheading-color">Question Bank</h4>
+                                        
+                         <span class="mb-4 cursor-pointer" (click)="back()"><i class="pi pi-arrow-left mr-2"></i>  Back </span>
+                        <h4 class="subheading-color">Question Bank Name</h4>
                 </div>
                 <div class="col-6 flex justify-content-end">
 
-                        <p-button class="create-button border-round-md" (click)="openSidebar()">+  Add
-                                Question Bank</p-button>
+                        <p-button class="create-button border-round-md" (click)="openSidebar()">+  Add Question </p-button>
                 </div>
 
         </div>
@@ -19,7 +20,7 @@
 
 
                 <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
-                selectionMode="single" class="client-data-table" [value]="bankList">
+                selectionMode="single" class="client-data-table" [value]="questionList">
 
                 <ng-template pTemplate="header" class="p-4">
                         <tr class="w-full flex flex-wrap">
@@ -59,8 +60,8 @@
                                         {{data.total_unused_question}}
                                 </td>
                                 <td style="width: 20%;" class="pl-4">
-                                        <i class="pi pi-eye" (click)="viewDetail(data.id)"></i>
-                                        <i class="pi pi-trash ml-4" style="color: red;" (click)="deleteBank(data.id)" ></i>
+                                        <i class="pi pi-eye"></i>
+                                        <i class="pi pi-trash ml-4" style="color: red;" (click)="deleteQuestion(data.id)" ></i>
 
                                 </td>
 
@@ -211,8 +212,9 @@
 }
 
 
-@if(isAddQuestionBank){
-        <p-sidebar [(visible)]="isAddQuestionBank" position="right" styleClass="w-30rem">
-                 <app-add-question-bank (closeSideBars)="closeSideBars()"></app-add-question-bank>
-        </p-sidebar>
+@if(isAddQuestion){
+    <p-sidebar [(visible)]="isAddQuestion" position="right" styleClass="w-30rem">
+        asd 
+             <!-- <app-add-question-bank (closeSideBars)="closeSideBars()"></app-add-question-bank> -->
+    </p-sidebar>
 }

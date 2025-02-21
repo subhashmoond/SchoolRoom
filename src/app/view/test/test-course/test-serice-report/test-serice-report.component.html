@@ -32,25 +32,28 @@
     <ng-template pTemplate="body" let-datas >
         <tr class="w-full flex flex-wrap cursor-pointer">
             <td style="width: 20%;word-break:break-all;" class="text-xl capitalize table-p">
-                {{datas.rank}}
+                <div style="background-image: url('../../../../../assets/images/award-icon.png'); background-position: left; background-repeat: no-repeat; height: 45px; display: flex ; align-items: center;">
+                   <span style="margin-left: 12px;" class="font-bold text-lg">
+                    {{datas.rank}}
+                   </span> 
+                </div>
             </td>
+
             <td style="width: 20%;word-break:break-all;" class="text-xl capitalize table-p">
                 {{datas.student__email}}
             </td>
+
             <td style="width: 20%;word-break:break-all;" class="text-xl capitalize table-p">
-                {{datas.attemptTime}}
+                {{datas.attemptTime | date:'dd MMM yyyy, HH:mm:ss'}}
             </td>
+
             <td style="width: 20%;word-break:break-all;" class="text-xl capitalize table-p">
                 {{datas.percentage}}
             </td>
 
-
             <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
-
-
                 <i class="pi pi-eye" (click)="studentSideBar(datas)"></i>
             </td>
-
 
 
         </tr>

@@ -14,5 +14,15 @@ export class QuestionBankService {
     const url = `${environment.basePath}ts/question/banks/`;
     return this._dataService.get(url)
    }
+
+   deleteQuestionBank(bankId : any){
+    const url = `${environment.basePath}ts/question-bank/${bankId}/`;
+    return this._dataService.delete(url)
+   }
+
+   addQuestionBank(payload : any){
+    const url = `${environment.basePath}ts/question-bank/`;
+    return this._dataService.post(url, payload)
+   }
  
 }
