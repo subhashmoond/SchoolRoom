@@ -13,11 +13,12 @@ import { ToastModule } from 'primeng/toast';
 import { environment } from '../../../../../../environments/environment';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ImportQuestionsComponent } from '../../../../../shared/components/import-questions/import-questions.component';
 
 @Component({
   selector: 'app-test-content',
   standalone: true,
-  imports: [CommonModule, AccordionModule, ButtonModule, ConfirmDialogModule, TableModule, CreateTestSectionComponent, SidebarModule, DialogModule, CreateQuestionsComponent, ToastModule],
+  imports: [CommonModule, AccordionModule, ButtonModule, ConfirmDialogModule, TableModule, CreateTestSectionComponent, SidebarModule, DialogModule, CreateQuestionsComponent, ToastModule, ImportQuestionsComponent ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './test-content.component.html',
   styleUrl: './test-content.component.css'
@@ -27,6 +28,7 @@ export class TestContentComponent {
   questionsList: any;
   isCreateSection: boolean = false;
   isAddQuestion: boolean = false;
+  isImportQuestion : boolean = false;
   testDetailsData: any;
   testDetailId: any
   sectionData: any
@@ -77,6 +79,11 @@ export class TestContentComponent {
   addQuestion(id: any) {
     this.sectionIdForQuestion = id
     this.isAddQuestion = true
+  }
+
+  importQuestions(data : any){
+    this.isImportQuestion = true;
+    this.sectionIdForQuestion = data.id
   }
 
   editQuestion(id: any) {

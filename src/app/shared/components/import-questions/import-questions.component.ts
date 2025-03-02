@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { QuestionBankService } from '../../../core/services/question-bank.service';
@@ -17,6 +17,7 @@ export class ImportQuestionsComponent {
 
   @Input() sectionId : any;
   @Input() testId : any;
+  @Output() closepopup = new EventEmitter<any>();
 
   questionBankData: any;
   selectedQuestions: number[] = []; // Store selected question IDs
@@ -65,7 +66,7 @@ export class ImportQuestionsComponent {
     }
 
     this._questionBankService.importQuestions(payload).subscribe(res => {
-
+      this.closepopup.emit(res)
     })
 
   }

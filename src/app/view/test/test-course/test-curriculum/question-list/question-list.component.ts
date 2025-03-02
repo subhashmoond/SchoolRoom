@@ -8,11 +8,15 @@ import { ActivatedRoute } from '@angular/router';
 import { TestService } from '../../../../../core/services/test.service';
 import { SidebarModule } from 'primeng/sidebar';
 import { ImportQuestionsComponent } from '../../../../../shared/components/import-questions/import-questions.component';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { PaginatorModule } from 'primeng/paginator';
 
 @Component({
   selector: 'app-question-list',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, CreateQuestionsComponent, DialogModule, SidebarModule, ImportQuestionsComponent ],
+  imports: [CommonModule, TableModule, ButtonModule, CreateQuestionsComponent, DialogModule, SidebarModule, ImportQuestionsComponent, ToastModule, PaginatorModule ],
+  providers: [MessageService],
   templateUrl: './question-list.component.html',
   styleUrl: './question-list.component.css'
 })
@@ -27,8 +31,12 @@ export class QuestionListComponent {
   questionIdForEdit : any;
   isImportQuestion : boolean = false;
 
+  offset = 0;
+  totalRecorde = 100;
+  limit = 15;
 
-  constructor(private route: ActivatedRoute, private _testService : TestService){
+
+  constructor(private route: ActivatedRoute, private _testService : TestService, private _messageService: MessageService){
     this.route.paramMap.subscribe(params => {
       this.sectionId = params.get('id');
     });
@@ -85,6 +93,15 @@ export class QuestionListComponent {
 
   importQuestion(){
     this.isImportQuestion = true;
+  }
+
+  closeImportSideBar(event : any){
+    this.isImportQuestion = false;
+    this._messageService.add({ severity: 'success', detail: event.message });
+  }
+
+  onPageChange(event: any) {
+    console.log(event, "page change ")
   }
 
 }
