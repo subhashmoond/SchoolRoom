@@ -67,7 +67,7 @@
 
 @if (isImportQuestion) {
     <p-sidebar [(visible)]="isImportQuestion" [fullScreen]="true">
-       <app-import-questions></app-import-questions>
+       <app-import-questions [sectionId]="sectionId" [testId]="testId"></app-import-questions>
     </p-sidebar>
 }
 

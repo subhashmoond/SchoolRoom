@@ -35,7 +35,6 @@ export class QuestionListComponent {
 
     this.route.queryParamMap.subscribe(queryParams => {
       this.testId = queryParams.get('testId');
-      console.log('Test ID:', this.testId);
     });
 
   }

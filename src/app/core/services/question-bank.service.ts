@@ -35,9 +35,19 @@ export class QuestionBankService {
     return this._dataService.get(url);
    }
 
-   getAllQuestionListForImport(){
+   getAllQuestionBank(){
     const url = `${environment.basePath}ts/question/banks/`;
     return this._dataService.get(url);
+   }
+
+   getQuestionByBankID(bankId : any){
+    const url = `${environment.basePath}ts/question-bank/${bankId}/question-list/?page=1&page_size=20`;
+    return this._dataService.get(url);
+   }
+
+   importQuestions( payload : any ){
+    const url = `${environment.basePath}ts/import-questions/`;
+    return this._dataService.post( url, payload )
    }
  
 }
