@@ -74,11 +74,12 @@ export class TestCurriculumComponent {
         id: [course.id],
         items: [course.name],
         lessons: this.fb.array(course.subsets.map((lesson: any, lessonIndex: number) => {
+          
           this.isEditLesson[index][lessonIndex] = false;  // Initialize each lesson's edit state
           return this.fb.group({
             id: [lesson.id],
             items: [lesson.name, Validators.required],
-            isPublished: [lesson.isPublished]
+            isPublished: [lesson.is_published]
           });
         }))
       });
@@ -298,6 +299,8 @@ export class TestCurriculumComponent {
       if (res.status === true) {
         this.getSubjectAndChapter();
         this._messageService.add({ severity: 'success', detail: 'Lesson Published Successfully!' });
+      }else{
+        this._messageService.add({ severity: 'error', detail: res.message });
       }
     })
 

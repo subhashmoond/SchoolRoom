@@ -34,5 +34,10 @@ export class QuestionBankService {
     const url = `${environment.basePath}ts/question-bank/${questionBankId}/question-list/?page=1&page_size=20`;
     return this._dataService.get(url);
    }
+
+   getAllQuestionListForImport(){
+    const url = `${environment.basePath}ts/question/banks/`;
+    return this._dataService.get(url);
+   }
  
 }

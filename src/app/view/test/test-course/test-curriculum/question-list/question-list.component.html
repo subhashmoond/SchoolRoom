@@ -1,11 +1,10 @@
 <div class="grid client-dashborad-header mb-4 align-items-center">
     <div class="col-6">
-        <h4 class="subheading-color">Section Name </h4>
+        <h4 class="subheading-color"> <i class="mr-2 pi pi-arrow-left"></i> Back </h4>
     </div>
 
-     <div class="col-6 flex justify-content-end	">
-        <!-- <button pButton pRipple label="Bulk Upload" (click)="questionBulkUpload()" class="primary-border-button px-5 mr-3 text-sm"></button> -->
-
+    <div class="col-6 flex justify-content-end">
+        <button pButton pRipple label=" Import Questions" (click)="importQuestion()" class="primary-border-button px-5 mr-3 text-sm"></button>
 
         <button type="submit" pButton pRipple label="Add Question" (click)="createQuestion()"
             class="secondary-button px-6 text-sm"></button>
@@ -18,6 +17,8 @@
 <div class="grid">
 
     <div class="col-12">
+
+        @if(questionData?.questions?.length > 0){
 
         <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
             selectionMode="single" class="client-data-table" [value]="questionData?.questions">
@@ -37,18 +38,37 @@
 
         </p-table>
 
+        }
+        @else {
+
+        <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+            <img src="../../../../../assets/images/icon/no-loan-application.svg">
+            <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Questions</p>
+            <p class="text-primary-purple text-base font-normal mt-2">There is no questions to show you right now.</p>
+        </div>
+
+        }
+
+
     </div>
 
 </div>
 
 
 @if(isQestion){
-    <p-sidebar [(visible)]="isQestion" [fullScreen]="true">
-        <app-create-questions (closepopup)="closepopup($event)" [questionIdForEdit]="questionIdForEdit" [moduleName]="moduleName" [sectionIdForQuestion]="sectionId"></app-create-questions>
-    </p-sidebar>
-    <!-- <p-dialog header="Create Section" [modal]="true" [(visible)]="isQestion" [style]="{ width: '100vh' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+<p-sidebar [(visible)]="isQestion" [fullScreen]="true">
+    <app-create-questions (closepopup)="closepopup($event)" [testId]="testId" [questionIdForEdit]="questionIdForEdit"
+        [moduleName]="moduleName" [sectionIdForQuestion]="sectionId"></app-create-questions>
+</p-sidebar>
+<!-- <p-dialog header="Create Section" [modal]="true" [(visible)]="isQestion" [style]="{ width: '100vh' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
         <app-create-questions (closepopup)="closepopup($event)" [moduleName]="moduleName" [sectionIdForQuestion]="sectionId"></app-create-questions>
     </p-dialog> -->
+}
+
+@if (isImportQuestion) {
+    <p-sidebar [(visible)]="isImportQuestion" [fullScreen]="true">
+       <app-import-questions></app-import-questions>
+    </p-sidebar>
 }
 
 
@@ -57,6 +77,3 @@
          <app-bulk-upload-data></app-bulk-upload-data>
     </p-dialog>
 } -->
-
-
-

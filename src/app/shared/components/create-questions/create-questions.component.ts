@@ -27,6 +27,7 @@ export class CreateQuestionsComponent {
   @Input() questionIdForEdit: any;
   @Input() questionModuleType: any;
   @Input() questionBankId: any;
+  @Input() testId: any;
   @Output() closepopup = new EventEmitter<any>();
 
   @Input() moduleName: any;
@@ -34,6 +35,7 @@ export class CreateQuestionsComponent {
   addQuestionForm!: FormGroup;
   questionTypes: any;
   isOtherLang: boolean = true;
+  testDetails : any;
 
   difficultyLavel = [
     { name: 'Esay' },
@@ -76,7 +78,21 @@ export class CreateQuestionsComponent {
     this.addOption();
     this.addOption();
 
-    console.log(this.questionModuleType, "Question Type Module")
+    console.log(this.questionModuleType, "Question Type Module");
+    this.getTestDetail();
+
+  }
+
+  getTestDetail(){
+
+    this._testService.testDetailTestSeries(this.testId).subscribe((res : any) => {
+      this.testDetails = res;
+
+      if(this.testDetails.support_lang){
+        this.isOtherLang = true
+      }
+
+    })
 
   }
 

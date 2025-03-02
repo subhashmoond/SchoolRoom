@@ -5,16 +5,14 @@ import { TableModule } from 'primeng/table';
 import { CreateQuestionsComponent } from '../../../../../shared/components/create-questions/create-questions.component';
 import { DialogModule } from 'primeng/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from '../../../../../../environments/environment';
 import { TestService } from '../../../../../core/services/test.service';
-import { BulkQuestionUploadComponent } from '../../../../../shared/components/bulk-question-upload/bulk-question-upload.component';
 import { SidebarModule } from 'primeng/sidebar';
-import { BulkUploadDataComponent } from '../../../../../shared/components/bulk-upload-data/bulk-upload-data.component';
+import { ImportQuestionsComponent } from '../../../../../shared/components/import-questions/import-questions.component';
 
 @Component({
   selector: 'app-question-list',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, CreateQuestionsComponent, DialogModule, SidebarModule, BulkUploadDataComponent ],
+  imports: [CommonModule, TableModule, ButtonModule, CreateQuestionsComponent, DialogModule, SidebarModule, ImportQuestionsComponent ],
   templateUrl: './question-list.component.html',
   styleUrl: './question-list.component.css'
 })
@@ -27,6 +25,7 @@ export class QuestionListComponent {
   moduleName = 'testseries';
   testId : any;
   questionIdForEdit : any;
+  isImportQuestion : boolean = false;
 
 
   constructor(private route: ActivatedRoute, private _testService : TestService){
@@ -59,6 +58,7 @@ export class QuestionListComponent {
 
   closepopup(event : any){
     this.isQestion = false;
+    this.isBulkUpload = false;
     this.getQuestionList()
   }
 
@@ -84,5 +84,8 @@ export class QuestionListComponent {
     this.isBulkUpload = true
   }
 
+  importQuestion(){
+    this.isImportQuestion = true;
+  }
 
 }
