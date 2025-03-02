@@ -1,30 +1,32 @@
 <div class="grid nested-grid">
 
-    <div class="col-12 flex py-7 border-bottom-light">
-        <div class="grid">
+    <div class="col-12 py-7 border-bottom-light">
 
-        </div>
-        <div class="col-6">
-            <h4>Step 1 : Download Sample Template</h4>
-            <p class="text-lg text-color-secondary m-0 mt-2">Download sample template by clicking the button below.</p>
-            <p class="text-lg text-color-secondary m-0 mt-2">You can add the tyres data according to the template file.</p>
-        </div>
+        <div class="grid w-full ">
 
-        <div class="col-6 flex justify-content-end">
-            <button type="submit" pButton pRipple label="Download Sample" icon="pi pi-arrow-down" class="secondary-button px-6 text-sm"></button>
+            <div class="col-6">
+                <h4 class="mb-3">Step 1 : Download Sample Template</h4>
+                <p class="text-lg text-color-secondary m-0 mt-2">Download sample template by clicking the button below.</p>
+                <!-- <p class="text-lg text-color-secondary m-0 mt-2">You can add the tyres data according to the template file.</p> -->
+            </div>
+    
+            <div class="col-6 text-right ">
+                <button type="submit" (click)="downloadSample()" pButton pRipple label="Download Sample" icon="pi pi-arrow-down" class="secondary-button px-6 text-sm"></button>
+            </div>
+
         </div>
 
     </div>
 
 
-    <div class="col-12 flex py-7">
+    <div class="col-12 py-7">
         <div class="grid">
             <div class="col-6">
-                <h4>Step 2 : Upload CSV/XLS</h4>
+                <h4 class="mb-3" >Step 2 : Upload CSV/XLS</h4>
                 <p class="text-lg text-color-secondary m-0 mt-2">Upload the edited template by clicking the buttin below.</p>
             </div>
     
-            <div class="col-6 flex justify-content-end">
+            <div class="col-6 text-right ">
                 <button type="submit" pButton pRipple label="Upload File" icon="pi pi-paperclip" class="secondary-button px-6 text-sm"></button>
             </div>
         </div>
@@ -39,3 +41,5 @@
       </div>
 
 </div>
+
+<img src="../../../../assets/file/Question Bluk upload.xlsx">

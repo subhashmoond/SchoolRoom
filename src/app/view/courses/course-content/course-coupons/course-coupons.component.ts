@@ -17,11 +17,13 @@ import { ActivatedRoute } from '@angular/router';
 import { TagModule } from 'primeng/tag';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 @Component({
   selector: 'app-course-coupons',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToastModule, ToolbarModule, TagModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule],
+  imports: [TableModule, InputTextModule, ToastModule, ToolbarModule, TagModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule, InputGroupModule, InputGroupAddonModule ],
 providers: [MessageService],
   templateUrl: './course-coupons.component.html',
   styleUrl: './course-coupons.component.css'

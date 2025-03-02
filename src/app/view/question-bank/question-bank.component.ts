@@ -31,8 +31,9 @@ export class QuestionBankComponent {
   tableView: boolean = false;
   testListData: any;
   openDropdownId: number | null = null;
-  bankList : any
-
+  bankList : any;
+  isLoader : boolean = true;
+  editQestionBank : any;
 
   constructor(private _router: Router, private _messageService: MessageService, private _confirmationService: ConfirmationService, private _questionBank : QuestionBankService) { }
 
@@ -43,7 +44,8 @@ export class QuestionBankComponent {
 
   getQuestionBankList(){
     this._questionBank.getQuestionBankList().subscribe(res => {
-      this.bankList = res.data
+      this.bankList = res.data;
+      this.isLoader = false
     })
   }
 
@@ -66,6 +68,11 @@ export class QuestionBankComponent {
     this._router.navigate(['/question-bank/question-bank-detail', bankId]);
   }
 
+  editQuestionBank(bankData : any){
+    this.isAddQuestionBank = true;
+    this.editQestionBank = bankData;
+  }
+
   deleteBank(bankId : any){
 
     this._confirmationService.confirm({
@@ -82,7 +89,7 @@ export class QuestionBankComponent {
 
         this._questionBank.deleteQuestionBank(bankId).subscribe(res => {
           this.getQuestionBankList();
-          this._messageService.add({ severity: 'success', detail: 'Message Content' });
+          this._messageService.add({ severity: 'success', detail: 'Deleted Successfully !' });
         })
         
       },

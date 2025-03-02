@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { QuestionBankService } from '../../../core/services/question-bank.service';
@@ -9,7 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 @Component({
   selector: 'app-add-question-bank',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ButtonModule, InputTextModule ],
+  imports: [CommonModule, ReactiveFormsModule, ButtonModule, InputTextModule],
   providers: [MessageService],
 
   templateUrl: './add-question-bank.component.html',
@@ -18,10 +18,11 @@ import { InputTextModule } from 'primeng/inputtext';
 export class AddQuestionBankComponent {
 
   @Output() closeSideBars = new EventEmitter<any>();
-
+  @Input() editQestionBank: any;
   createQuestionBankForm!: FormGroup;
+  isLoader: boolean = true;
 
-  constructor(private _fb: FormBuilder, private _questionBankService : QuestionBankService, private _messageService: MessageService ) { }
+  constructor(private _fb: FormBuilder, private _questionBankService: QuestionBankService, private _messageService: MessageService) { }
 
   ngOnInit() {
 
@@ -29,24 +30,56 @@ export class AddQuestionBankComponent {
       name: ['', Validators.required]
     })
 
+    if (this.editQestionBank) {
+
+      this.createQuestionBankForm.patchValue({
+        name: this.editQestionBank.name
+      })
+
+    }
+
   }
 
 
   submit() {
-    const payload = {
-      "name": this.createQuestionBankForm.get('name')?.value
+    
+    this.isLoader = true
+
+    if (this.editQestionBank) {
+
+      const payload = {
+        "name": this.createQuestionBankForm.get('name')?.value
+      }
+
+      this._questionBankService.editQuestionBank(this.editQestionBank.id, payload).subscribe((res: any) => {
+        if (res.status === true) {
+          this.closeSideBars.emit(false)
+        }
+        this.isLoader = false
+      })
+
+    } else {
+
+      const payload = {
+        "name": this.createQuestionBankForm.get('name')?.value
+      }
+
+      this._questionBankService.addQuestionBank(payload).subscribe((res: any) => {
+        if (res.status === "Success") {
+          this.closeSideBars.emit(false)
+        }
+
+        this.isLoader = false;
+
+      })
     }
 
-    this._questionBankService.addQuestionBank(payload).subscribe((res : any) => {
-      if(res.status === "Success"){
-        this.closeSideBars.emit(false)
-      }
-    })
-
   }
+
 
   closeSideBar() {
 
   }
+
 
 }

@@ -1,87 +1,88 @@
 <p-toast></p-toast>
 <p-confirmDialog styleClass="confirmation-pop-up-dialog"></p-confirmDialog>
 
-
-<div class="card">
-
-        <div class="grid client-dashborad-header mb-4 align-items-center">
-                <div class="col-6">
-                        <h4 class="subheading-color">Question Bank</h4>
+@if(!isLoader){
+        <div class="card">
+        
+                <div class="grid client-dashborad-header mb-4 align-items-center">
+                        <div class="col-6">
+                                <h4 class="subheading-color">Question Bank</h4>
+                        </div>
+                        <div class="col-6 flex justify-content-end">
+        
+                                <p-button class="create-button border-round-md" (click)="openSidebar()">+  Add
+                                        Question Bank</p-button>
+                        </div>
+        
                 </div>
-                <div class="col-6 flex justify-content-end">
-
-                        <p-button class="create-button border-round-md" (click)="openSidebar()">+  Add
-                                Question Bank</p-button>
-                </div>
-
+        
+        
+        
+                        <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
+                        selectionMode="single" class="client-data-table" [value]="bankList">
+        
+                        <ng-template pTemplate="header" class="p-4">
+                                <tr class="w-full flex flex-wrap">
+                                        <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">
+                                                Name
+                                        </th>
+                                       
+                                        <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                                                Total Question
+                                        </th>
+                                        <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                                                Uesed Question
+                                        </th>
+                                        <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                                                Unused Question
+                                        </th>
+                                        <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                                                Action
+                                        </th>
+                                </tr>
+        
+                        </ng-template>
+        
+                        <ng-template pTemplate="body" let-data>
+                                <tr class="w-full flex flex-wrap">
+                                        <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
+                                                {{data.name}}
+                                        </td>
+                                       
+                                        <td style="width: 20%;word-break:break-all;" class="pl-4">
+                                                {{data.total_question}}
+                                        </td>
+                                        <td style="width: 20%;" class="pl-4">
+                                                {{data.total_used_question}}
+                                        </td>
+                                        <td style="width: 20%;" class="pl-4">
+                                                {{data.total_unused_question}}
+                                        </td>
+                                        <td style="width: 20%;" class="pl-4">
+                                                <i class="cursor-pointer pi pi-eye" (click)="viewDetail(data.id)"></i>
+                                                <i class="cursor-pointer pi pi-pencil ml-4" (click)="editQuestionBank(data)"></i>
+                                                <i class="cursor-pointer pi pi-trash ml-4" style="color: red;" (click)="deleteBank(data.id)" ></i>
+        
+                                        </td>
+        
+                                </tr>
+                        </ng-template>
+        
+                        <ng-template pTemplate="emptymessage">
+                                <tr>
+                                        <td colspan="5">No test found.</td>
+                                </tr>
+                        </ng-template>
+        
+                </p-table>
+                <!-- <p-paginator class="paginator-row paginator-dropdown" (onPageChange)="onPageChange($event)" [first]="offset"
+                        [rows]="limit" [rowsPerPageOptions]="[15, 30, 50]" [totalRecords]=totalRecorde></p-paginator> -->
+               
+        
         </div>
+}
 
-
-
-                <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
-                selectionMode="single" class="client-data-table" [value]="bankList">
-
-                <ng-template pTemplate="header" class="p-4">
-                        <tr class="w-full flex flex-wrap">
-                                <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">
-                                        Name
-                                </th>
-                               
-                                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
-                                        Total Question
-                                </th>
-                                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
-                                        Uesed Question
-                                </th>
-                                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
-                                        Unused Question
-                                </th>
-                                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
-                                        Action
-                                </th>
-                        </tr>
-
-                </ng-template>
-
-                <ng-template pTemplate="body" let-data>
-                        <tr class="w-full flex flex-wrap">
-                                <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
-                                        {{data.name}}
-                                </td>
-                               
-                                <td style="width: 20%;word-break:break-all;" class="pl-4">
-                                        {{data.total_question}}
-                                </td>
-                                <td style="width: 20%;" class="pl-4">
-                                        {{data.total_used_question}}
-                                </td>
-                                <td style="width: 20%;" class="pl-4">
-                                        {{data.total_unused_question}}
-                                </td>
-                                <td style="width: 20%;" class="pl-4">
-                                        <i class="pi pi-eye" (click)="viewDetail(data.id)"></i>
-                                        <i class="pi pi-trash ml-4" style="color: red;" (click)="deleteBank(data.id)" ></i>
-
-                                </td>
-
-                        </tr>
-                </ng-template>
-
-                <ng-template pTemplate="emptymessage">
-                        <tr>
-                                <td colspan="5">No test found.</td>
-                        </tr>
-                </ng-template>
-
-        </p-table>
-        <!-- <p-paginator class="paginator-row paginator-dropdown" (onPageChange)="onPageChange($event)" [first]="offset"
-                [rows]="limit" [rowsPerPageOptions]="[15, 30, 50]" [totalRecords]=totalRecorde></p-paginator> -->
-       
-
-</div>
-
-
-@if(false){
+@else{
 <div class="table-view big-card mb-3">
         <div class="card py-3 px-2">
                 <div class="grid client-dashborad-header mb-2">
@@ -90,121 +91,121 @@
                         </div>
                         <div class="col-6 flex justify-content-end">
                                 <p-skeleton styleClass="primary-bg-gray w-4rem h-2rem border-round-sm"></p-skeleton>
-                                <p-skeleton
-                                        styleClass="primary-bg-gray w-10rem h-2rem border-round-sm ml-2"></p-skeleton>
+                                
                         </div>
                 </div>
                 <table class="mt-4 w-full">
                         <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
                         </tr>
+
                         <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
                         </tr>
+
+
                         <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
                         </tr>
+
+
                         <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
                         </tr>
+
                         <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
                         </tr>
+
                         <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                        </tr>
-                        <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
                         </tr>
-                        <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
-                                </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                        </tr>
-                        <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
-                                </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                        </tr>
-                        <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
-                                </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                        </tr>
+
+                       
                 </table>
         </div>
 </div>
@@ -213,6 +214,6 @@
 
 @if(isAddQuestionBank){
         <p-sidebar [(visible)]="isAddQuestionBank" position="right" styleClass="w-30rem">
-                 <app-add-question-bank (closeSideBars)="closeSideBars()"></app-add-question-bank>
+                 <app-add-question-bank [editQestionBank]="editQestionBank" (closeSideBars)="closeSideBars()"></app-add-question-bank>
         </p-sidebar>
 }

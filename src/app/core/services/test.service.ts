@@ -45,7 +45,7 @@ export class TestService {
   }
 
   getQuestionDetail(id : any){
-    const url = `${environment.basePath}content/questions/${id}/`;
+    const url = `${environment.basePath}ts/questions/${id}/`;
     return this._dataService.get(url);
   }
 
@@ -153,6 +153,12 @@ export class TestService {
   getTestReportData(testId : any){
     const url = `${environment.basePath}ts/test/${testId}/reports?page=1&page_size=15`;
     return this._dataService.get(url)
+  }
+
+  // Bulk Upload Questions
+  bulkQuestionUpload(payload : any){
+    const url = `${environment.basePath}ts/questions-bulk/add/`;
+    return this._dataService.post(url, payload)
   }
 
 }

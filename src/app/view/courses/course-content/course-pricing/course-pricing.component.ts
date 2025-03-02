@@ -20,11 +20,14 @@ import { MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { ToastModule } from 'primeng/toast';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'app-course-pricing',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ToastModule, ButtonModule, InputSwitchModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, FormsModule, CheckboxModule, CalendarModule, MessagesModule, CheckboxModule, KeyFilterModule],
+  imports: [TableModule, InputTextModule, ToolbarModule, ToastModule, ButtonModule, InputSwitchModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, FormsModule, CheckboxModule, CalendarModule, MessagesModule, CheckboxModule, KeyFilterModule, InputGroupModule, InputGroupAddonModule, RadioButtonModule],
   providers: [MessageService],
   templateUrl: './course-pricing.component.html',
   styleUrl: './course-pricing.component.css'
@@ -32,8 +35,8 @@ import { ToastModule } from 'primeng/toast';
 export class CoursePricingComponent {
 
   createPlanForm!: FormGroup;
-  courseSaleForm! : FormGroup;
-  taxForm! : FormGroup;
+  courseSaleForm!: FormGroup;
+  taxForm!: FormGroup;
   priceTableDesign: any;
   priceList: any = [];
   isCreatePlan: boolean = false;
@@ -42,7 +45,7 @@ export class CoursePricingComponent {
   updatePlanId: any;
   courseId: any;
   isLoader: boolean = true;
-  courseDetailPage : any;
+  courseDetailPage: any;
 
   constructor(private _courseService: CoursesService, private route: ActivatedRoute, private _fb: FormBuilder, private _messageService: MessageService) {
     this.route.paramMap.subscribe(params => {
@@ -51,40 +54,40 @@ export class CoursePricingComponent {
   }
 
   ngOnInit() {
-    this.getPriceList();
     this.formGroup();
+    this.getPriceList();
 
     this.getCourseDetails();
 
     this.courseSaleForm = this._fb.group({
-      website : [true],
-      android : [true],
-      ios : [false]
+      website: [true],
+      android: [true],
+      ios: [false]
     })
 
 
     this.taxForm = this._fb.group({
-      taxRate : [18],
-      yes : [true],
-      no : [false]
+      taxRate: [18],
+      yes: [true],
+      no: [false]
     })
 
   }
 
-  getCourseDetails(){
+  getCourseDetails() {
     this._courseService.getCourseById(this.courseId).subscribe(res => {
       this.courseDetailPage = res.course;
 
       this.courseSaleForm.patchValue({
-        website : this.courseDetailPage.available_for_web,
-        android : this.courseDetailPage.available_for_android,
-        ios : this.courseDetailPage.available_for_ios
+        website: this.courseDetailPage.available_for_web,
+        android: this.courseDetailPage.available_for_android,
+        ios: this.courseDetailPage.available_for_ios
       })
 
 
       this.taxForm.patchValue({
-        taxRate : this.courseDetailPage.tax_rate,
-        yes : this.courseDetailPage.tax_include
+        taxRate: this.courseDetailPage.tax_rate,
+        yes: this.courseDetailPage.tax_include
       })
 
     })
@@ -106,7 +109,7 @@ export class CoursePricingComponent {
       durationDateValue: [],
       durationDays: [],
       durationDaysValue: [],
-      instalmentType: null
+      instalmentType: []
     })
   }
 
@@ -175,10 +178,10 @@ export class CoursePricingComponent {
   deletePlan(data: any) {
     this._courseService.deletePlanById(this.courseId, data.id).subscribe((res: any) => {
 
-      if(res.status === true){
+      if (res.status === true) {
         this.getPriceList();
         this._messageService.add({ severity: 'success', summary: 'Plan Deleted Successfully' });
-      }else{
+      } else {
         this._messageService.add({ severity: 'warn', summary: res.msg });
       }
 
@@ -271,28 +274,33 @@ export class CoursePricingComponent {
 
   }
 
-  saveDetails(){
+  saveDetails() {
 
     console.log(this.courseSaleForm.value, "Asd", this.taxForm.value, "asd asd erwersdf sdfdsfwer")
 
     const payload = {
-       "available_for_android": this.courseSaleForm.get('android')?.value,
+      "available_for_android": this.courseSaleForm.get('android')?.value,
       "available_for_ios": this.courseSaleForm.get('ios')?.value,
       "available_for_web": this.courseSaleForm.get('website')?.value,
       // "marketLevelCourse": this.courseSaleForm.get('')?.value,
+      "teacher_list" : [],
       "tax_include": this.taxForm.get('yes')?.value,
       "tax_rate": this.taxForm.get('taxRate')?.value,  //in presentes
     };
 
-    this._courseService.editCourseById(this.courseId, payload).subscribe((res : any) => {
-      if(res.status === true){
-        this._messageService.add({ severity: 'success', summary: 'Details Saved Successfully!' });
+    this._courseService.editCourseById(this.courseId, payload).subscribe((res: any) => {
+      if (res.status === "Success") {
+        this._messageService.add({ severity: 'success', summary: res.message });
         this.getCourseDetails();
-      }else{
+      } else {
         this._messageService.add({ severity: 'error', summary: res.message });
       }
     })
 
+  }
+
+  instolmentData(event: any) {
+    console.log(event, "Asd asd")
   }
 
 }

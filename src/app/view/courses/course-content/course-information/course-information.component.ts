@@ -39,7 +39,8 @@ export class CourseInformationComponent {
   courseDetails: any;
   courseTypeId: any;
   isTeacher: boolean = false;
-  allTeacherList : any
+  allTeacherList : any;
+  langListData : any
 
 
   constructor(private _fb: FormBuilder, private _messageService: MessageService, private _coursesService: CoursesService, private route: ActivatedRoute, private _sharedService: SharedService, private _userService: UserService) {
@@ -52,6 +53,7 @@ export class CourseInformationComponent {
     this.getCourseDetails();
     this.getCourseType();
     this.getTeacherList();
+    this.getLang();
 
     this.addTeacherForm = this._fb.group({
       selectTeacher: ['']
@@ -67,6 +69,12 @@ export class CourseInformationComponent {
       faq: this._fb.array([])
     })
 
+  }
+
+  getLang(){
+    this._coursesService.getLangList().subscribe(res => {
+      this.langListData = res.languages
+    })
   }
 
   getTeacherList() {

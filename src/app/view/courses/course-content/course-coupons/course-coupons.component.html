@@ -110,14 +110,27 @@
                         <div class="col-12">
                             <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Discount
                                 <span>*</span></label>
-                            <input class="w-full capitalize" type="text" pInputText formControlName="discount" />
+
+                                <p-inputGroup>
+                                    
+                                    <input class="w-full capitalize" type="text" pInputText formControlName="discount" />
+                                    <p-inputGroupAddon>%</p-inputGroupAddon>
+                                  </p-inputGroup>
+
                         </div>
     
                         
     
                         <div class="col-12">
                             <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Valid To </label>
-                            <p-calendar formControlName="todate" />
+
+                            <p-inputGroup>
+                                <p-calendar formControlName="todate" />
+                                <p-inputGroupAddon>
+                                    <i class="pi pi-calendar-clock"></i>
+                                </p-inputGroupAddon>
+                              </p-inputGroup>
+                            
                         </div>  
 
                         <div class="col-12">

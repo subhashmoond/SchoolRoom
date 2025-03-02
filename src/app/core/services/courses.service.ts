@@ -11,6 +11,11 @@ export class CoursesService {
 
   constructor(private http: HttpClient, private _dataService: DataMethodService) { }
 
+  getLangList(){
+    const url = `${environment.basePath}ts/languages/`;
+    return this._dataService.get(url);
+  }
+
   getCourseType(){
     const url = `${environment.basePath}course/types/list/`;
     return this._dataService.get(url);

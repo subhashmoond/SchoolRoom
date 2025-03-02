@@ -24,5 +24,15 @@ export class QuestionBankService {
     const url = `${environment.basePath}ts/question-bank/`;
     return this._dataService.post(url, payload)
    }
+
+   editQuestionBank(questionBankId : any, payload : any){
+    const url = `${environment.basePath}ts/question-bank/${questionBankId}/`;
+    return this._dataService.post(url, payload);
+   }
+
+   getBankQuestionList(questionBankId : any){
+    const url = `${environment.basePath}ts/question-bank/${questionBankId}/question-list/?page=1&page_size=20`;
+    return this._dataService.get(url);
+   }
  
 }

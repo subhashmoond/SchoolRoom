@@ -2,40 +2,47 @@
 <p-confirmDialog styleClass="confirmation-pop-up-dialog"></p-confirmDialog>
 
 
+@if(!isLoader){
+
 <div class="card">
 
         <div class="grid client-dashborad-header mb-4 align-items-center">
                 <div class="col-6">
-                                        
-                         <span class="mb-4 cursor-pointer" (click)="back()"><i class="pi pi-arrow-left mr-2"></i>  Back </span>
-                        <h4 class="subheading-color">Question Bank Name</h4>
+                        <!-- <span class="mb-4 cursor-pointer" > Back
+                        </span> -->
+                        <h4 class="cursor-pointer subheading-color" (click)="back()"><i
+                                        class="pi pi-arrow-left mr-2"></i> Back</h4>
                 </div>
                 <div class="col-6 flex justify-content-end">
 
-                        <p-button class="create-button border-round-md" (click)="openSidebar()">+  Add Question </p-button>
+                        <button type="button" pButton pRipple (click)="blukUpload()" label=" Question Bulk Upload "
+                                class="primary-border-button px-5 mr-3 text-sm"></button>
+
+                        <p-button class="create-button border-round-md" (click)="openSidebar()">+ Add Question
+                        </p-button>
                 </div>
 
         </div>
 
 
 
-                <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
-                selectionMode="single" class="client-data-table" [value]="questionList">
+        <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
+                selectionMode="single" class="client-data-table" [value]="bankQuestionListData">
 
                 <ng-template pTemplate="header" class="p-4">
                         <tr class="w-full flex flex-wrap">
                                 <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">
-                                        Name
+                                        Type
                                 </th>
-                               
+
                                 <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
-                                        Total Question
-                                </th>
-                                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
-                                        Uesed Question
+                                        Text
                                 </th>
                                 <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
-                                        Unused Question
+                                        Mark
+                                </th>
+                                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                                        Negative Marking
                                 </th>
                                 <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
                                         Action
@@ -47,22 +54,22 @@
                 <ng-template pTemplate="body" let-data>
                         <tr class="w-full flex flex-wrap">
                                 <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
-                                        {{data.name}}
+                                        {{data.type}}
                                 </td>
-                               
-                                <td style="width: 20%;word-break:break-all;" class="pl-4">
-                                        {{data.total_question}}
-                                </td>
-                                <td style="width: 20%;" class="pl-4">
-                                        {{data.total_used_question}}
-                                </td>
-                                <td style="width: 20%;" class="pl-4">
-                                        {{data.total_unused_question}}
-                                </td>
-                                <td style="width: 20%;" class="pl-4">
-                                        <i class="pi pi-eye"></i>
-                                        <i class="pi pi-trash ml-4" style="color: red;" (click)="deleteQuestion(data.id)" ></i>
 
+                                <td style="width: 20%;word-break:break-all;" class="pl-4">
+                                        {{stripHtml(data.text)}}
+                                </td>
+                                <td style="width: 20%;" class="pl-4">
+                                        {{data.mark}}
+                                </td>
+                                <td style="width: 20%;" class="pl-4">
+                                        {{data.negative_mark}}
+                                </td>
+                                <td style="width: 20%;" class="pl-4">
+                                        <i class="cursor-pointer pi pi-pencil ml-4"></i>
+                                        <!-- <i class="pi pi-trash ml-4" style="color: red;"
+                                                (click)="deleteQuestion(data.id)"></i> -->
                                 </td>
 
                         </tr>
@@ -76,13 +83,12 @@
 
         </p-table>
         <!-- <p-paginator class="paginator-row paginator-dropdown" (onPageChange)="onPageChange($event)" [first]="offset"
-                [rows]="limit" [rowsPerPageOptions]="[15, 30, 50]" [totalRecords]=totalRecorde></p-paginator> -->
-       
+                        [rows]="limit" [rowsPerPageOptions]="[15, 30, 50]" [totalRecords]=totalRecorde></p-paginator> -->
 
 </div>
 
-
-@if(false){
+}
+@else{
 <div class="table-view big-card mb-3">
         <div class="card py-3 px-2">
                 <div class="grid client-dashborad-header mb-2">
@@ -91,121 +97,143 @@
                         </div>
                         <div class="col-6 flex justify-content-end">
                                 <p-skeleton styleClass="primary-bg-gray w-4rem h-2rem border-round-sm"></p-skeleton>
-                                <p-skeleton
-                                        styleClass="primary-bg-gray w-10rem h-2rem border-round-sm ml-2"></p-skeleton>
+                                >
                         </div>
                 </div>
                 <table class="mt-4 w-full">
                         <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                        </tr>
-                        <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                        </tr>
-                        <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
-                                </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
                         </tr>
                         <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                        </tr>
-                        <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                        </tr>
-                        <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
-                                </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
                         </tr>
                         <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                        </tr>
-                        <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                        </tr>
-                        <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
-                                </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
-                                </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
                         </tr>
                         <tr class="grid mt-2 gap justify-content-between">
-                                <td class="col-9"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm"></p-skeleton>
                                 </td>
-                                <td class="col-2"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
-                                <td class="col-1"><p-skeleton
-                                                styleClass="block primary-bg-lightgray tr-h border-round-sm pl-3"></p-skeleton>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
                                 </td>
                         </tr>
+                        <tr class="grid mt-2 gap justify-content-between">
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                        </tr>
+                        <tr class="grid mt-2 gap justify-content-between">
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                                <td style=" width: 20%;">
+                                        <p-skeleton
+                                                styleClass="block primary-bg-lightgray p-3 border-round-sm pl-3"></p-skeleton>
+                                </td>
+                        </tr>
+
                 </table>
         </div>
 </div>
@@ -213,8 +241,15 @@
 
 
 @if(isAddQuestion){
-    <p-sidebar [(visible)]="isAddQuestion" position="right" styleClass="w-30rem">
-        asd 
-             <!-- <app-add-question-bank (closeSideBars)="closeSideBars()"></app-add-question-bank> -->
-    </p-sidebar>
+<p-sidebar [(visible)]="isAddQuestion" [fullScreen]="true">
+        <app-create-questions (closepopup)="closeSideBars()" [questionBankId]="questionBankId"
+                [questionModuleType]="questionModuleType"></app-create-questions>
+</p-sidebar>
+}
+
+@if(isBlukUpload){
+<p-dialog header="Bulk Question Upload" [modal]="true" [(visible)]="isBlukUpload" [style]="{ width: '50rem' }"
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+        <app-bulk-upload-data (closepopup)="closeBlukPopup()"></app-bulk-upload-data>
+</p-dialog>
 }

@@ -208,19 +208,34 @@
                     <div class="col-6">
                         <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Price
                             <span>*</span></label>
-                        <input class="w-full capitalize" placeholder="e.g 10,000" pKeyFilter="num" type="text"
+
+                            <p-inputGroup>
+                                <p-inputGroupAddon>
+                                    <!-- <i class="pi pi-calendar-clock"></i> -->
+                                    ₹
+                                </p-inputGroupAddon>
+                                <input class="w-full capitalize" placeholder="e.g 10,000" pKeyFilter="num" type="text"
                             pInputText formControlName="mrp" />
+                              </p-inputGroup>
+                        
                     </div>
 
                     <div class="col-6">
                         <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Discount Price
                         </label>
-                        <input class="w-full capitalize" placeholder="e.g 8,000" pKeyFilter="num" type="text" pInputText
+
+                        <p-inputGroup>
+                            <p-inputGroupAddon>
+                                ₹
+                            </p-inputGroupAddon>
+                            <input class="w-full capitalize" placeholder="e.g 8,000" pKeyFilter="num" type="text" pInputText
                             formControlName="discount" />
+                          </p-inputGroup>
+                        
                     </div>
 
                     <div class="col-12 flex justify-content-center align-items-center border-top pt-4 mt-4">
-                        <p-inputSwitch formControlName="instalment" [trueValue]="true" />
+                        <p-inputSwitch formControlName="instalment" [trueValue]="true" (onChange)="instolmentData($event)" />
                         <label class="text-sm font-medium line-height-exsm ml-2"> Add pay in instalment plan
                         </label>
                     </div>
@@ -230,13 +245,14 @@
                         <div class="plan-inner">
                             <p-radioButton value="Monthly" formControlName="instalmentType"
                                 name="instalmentType"></p-radioButton>
+                                
                             <label class="ml-2">Monthly instalments</label>
                         </div>
 
                         <!-- Show this input if the monthly instalment is selected -->
 
                         <div class="plan-inner">
-                            @if(instalmentType === 'Monthly'){
+                            @if(createPlanForm.get('instalmentType')?.value === 'Monthly'){
 
                             <input class="w-full capitalize" type="text" pInputText pKeyFilter="num"
                                 formControlName="instalmentMonthsValue" placeholder="No. of months" />
@@ -245,7 +261,7 @@
                         </div>
 
                         <div class="plan-inner">
-                            @if(instalmentType === 'Monthly'){
+                            @if(createPlanForm.get('instalmentType')?.value === 'Monthly'){
                             <input class="w-full capitalize" type="text" pInputText pKeyFilter="num"
                                 formControlName="emiamount" placeholder="EMI Amount" />
                             }
@@ -259,14 +275,14 @@
 
                         <!-- Show this input if the weekly instalment is selected -->
                         <div class="plan-inner">
-                            @if(instalmentType === 'weekly'){
+                            @if(createPlanForm.get('instalmentType')?.value === 'weekly'){
                             <input class="w-full capitalize" type="text" pKeyFilter="num" pInputText
                                 placeholder="No. of weeks" formControlName="instalmentMonthsValue" />
                             }
                         </div>
 
                         <div class="plan-inner">
-                            @if(instalmentType === 'weekly'){
+                            @if(createPlanForm.get('instalmentType')?.value === 'weekly'){
                             <input class="w-full capitalize" type="text" pInputText pKeyFilter="num"
                                 formControlName="emiamount" placeholder="EMI Amount" />
                             }
