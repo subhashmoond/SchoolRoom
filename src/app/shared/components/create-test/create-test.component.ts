@@ -27,6 +27,7 @@ export class CreateTestComponent {
   @Input() contentId: any;
   @Input() moduleName: any;
   @Input() subSetId: any;
+  @Input() testType : any;
 
   @Output() closeSideBar = new EventEmitter<any>();
 
@@ -123,7 +124,7 @@ export class CreateTestComponent {
         "support_another_lang": this.addTestForm.get('supportanotherlang')?.value,
         "another_lang": this.addTestForm.get('another_lang')?.value,
         "lang": this.addTestForm.get('defaultlang')?.value,
-        "type": "Quiz"
+        "type": this.testType
       }
 
       this._testService.addTest(payload).subscribe((res: any) => {

@@ -134,8 +134,18 @@ export class TestService {
     return this._dataService.post(url, payload)
   }
 
+  deleteTestQuestions(payload : any){
+    const url = `${environment.basePath}ts/remove-questions/`;
+    return this._dataService.post(url, payload);
+  }
+
   testDetailTestSeries(testId : any){
     const url = `${environment.basePath}ts/test/${testId}/`;
+    return this._dataService.get(url);
+  }
+
+  getCourseTestDetail(testId : any){
+    const url = `${environment.basePath}content/test/${testId}/`;
     return this._dataService.get(url);
   }
 

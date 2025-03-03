@@ -3,10 +3,17 @@
 
 
 <div class="grid client-dashborad-header mb-4 align-items-center">
-    <div class="col-12">
+    <div class="col-6">
         <h4 class="subheading-color capitalize"><i class="pi pi-arrow-left mr-2 cursor-pointer font-bold "
                 (click)="backContentListPage()"></i> {{testDetailsData.title}}</h4>
     </div>
+
+    <div class="col-6 flex justify-content-end">
+
+        <button type="submit" pButton pRipple label="+ Add New Section" (click)="createSection(testDetailsData)"
+            class="secondary-button px-6 text-sm"></button>
+    </div>
+
 </div>
 
 
@@ -14,76 +21,84 @@
 
     <div class="col-12 ">
 
-        @for(data of sectionData; track data){
-            <div class="mb-4">
-                <p-accordion [multiple]="true" [activeIndex]="[0]" >
-                    <p-accordionTab>
+        @for(data of sectionData; track $index){
+        <div class="mb-4">
+            <p-accordion [multiple]="true" [activeIndex]="[$index]">
+                <p-accordionTab>
+
+                    <ng-template pTemplate="header">
+                        <div class="section-according-content">
+                            <span
+                                class="underline text-2xl capitalize white-space-nowrap overflow-hidden text-overflow-ellipsis">{{data.name}}</span>
+                        
+                                <div class="ml-2 flex justify-content-end align-items-end">
+
+                                    <button pButton pRipple label="Import Question" icon="pi pi-upload" (click)="importQuestions(data)"
+                                        class="primary-border-button px-5 mr-3 text-sm icon-color-primery"></button>
         
-                        <ng-template pTemplate="header">
-                            <div class="community-custom-header">
-                                <span class="underline text-2xl capitalize white-space-nowrap overflow-hidden text-overflow-ellipsis">{{data.name}}</span>
-                            </div>
-                        </ng-template>
-        
-                        <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true"
-                            scrollHeight="37.938rem" selectionMode="single" class="client-data-table test-table" [value]="data.questions">
-        
-                            <ng-template pTemplate="body" let-data>
-                                <tr class="w-full flex flex-wrap">
-                                    <td style="width: 85%;word-break:break-all;" class="pl-4 underline cursor-pointer capitalize table-p" [innerHTML]="data.text"></td>
-    
-                                    <td style="width: 15%;word-break:break-all;" class="pl-4 capitalize">
-                                        <i class="mr-4 cursor-pointer pi pi-pencil" (click)="editQuestion(data.id)" ></i>
-                                        <i class="cursor-pointer pi pi-trash label-required" (click)="deleteQuestion(data.id)"></i>
-                                    </td>
-        
-                                </tr>
-                            </ng-template>
-        
-                        </p-table>
-        
-                        <div class="grid">
-                            <div class="col-6">
-                                <button type="submit" icon="pi pi-upload" pButton pRipple label="Import Question" (click)="importQuestions(data)"
-                                class="w-full accordion-inner-button border-dashed px-6 text-sm mt-4"></button>
+                                    <button type="submit" pButton pRipple icon="pi pi-plus" label="Add Question" (click)="addQuestion(data.id)"
+                                        class="secondary-button px-6 text-sm"></button>
+                                    
+                                </div>
                             </div>
 
-                            <div class="col-6">
-                                <button type="submit" icon="pi pi-plus" pButton pRipple label="Add Question" (click)="addQuestion(data.id)"
-                                class="w-full accordion-inner-button border-dashed px-6 text-sm mt-4"></button>
-                            </div>
-                        </div>
-        
-                    </p-accordionTab>
-                </p-accordion>
-            </div>
+                        
+                    </ng-template>
+
+                    <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true"
+                        scrollHeight="37.938rem" selectionMode="single" class="client-data-table test-table"
+                        [value]="data.questions">
+
+                        <ng-template pTemplate="body" let-data>
+                            <tr class="w-full flex flex-wrap">
+                                <td style="width: 85%;word-break:break-all;"
+                                    class="pl-4 underline cursor-pointer capitalize table-p" [innerHTML]="data.text">
+                                </td>
+
+                                <td style="width: 15%;word-break:break-all;" class="pl-4 capitalize">
+                                    <i class="mr-4 cursor-pointer pi pi-pencil" (click)="editQuestion(data.id)"></i>
+                                    <i class="cursor-pointer pi pi-trash label-required"
+                                        (click)="deleteQuestion(data.id)"></i>
+                                </td>
+
+                            </tr>
+                        </ng-template>
+
+                    </p-table>
+                    
+
+                </p-accordionTab>
+            </p-accordion>
+        </div>
         }
 
-        <button type="submit" pButton pRipple label="Add Section" (click)="createSection(testDetailsData.id)"
-                    class="mt-3 w-full add-section-button border-dashed px-6 text-sm"></button>
+        <!-- <button type="submit" pButton pRipple label="Add Section" (click)="createSection(testDetailsData)"
+            class="mt-3 w-full add-section-button border-dashed px-6 text-sm"></button> -->
 
     </div>
 
 </div>
 
 @if(isCreateSection){
-    <p-dialog header="Create Section" [modal]="true" [(visible)]="isCreateSection" [style]="{ width: '40rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-        <app-create-test-section (closepopup)="closepopup($event)" [testDetailId]="testDetailId"></app-create-test-section>
-    </p-dialog>
+
+<p-sidebar [(visible)]="isCreateSection" position="right" [style]="{width:'27.6%'}">
+    <app-create-test-section [testDataForSectionCreate]="testDataForSectionCreate" (closepopup)="closepopup($event)"
+        [testDetailId]="testDetailId"></app-create-test-section>
+</p-sidebar>
+
 }
 
 @if(isAddQuestion){
-    <p-sidebar [(visible)]="isAddQuestion" [fullScreen]="true">
-        <app-create-questions (closepopup)="closepopup($event)" [testId]="testId" [questionId]="questionId" [sectionIdForQuestion]="sectionIdForQuestion"></app-create-questions>
-    </p-sidebar>
-    <!-- <p-dialog header="Create Section" [modal]="true" [(visible)]="isAddQuestion" [style]="{ width: '70rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-    </p-dialog> -->
+<p-sidebar [(visible)]="isAddQuestion" [fullScreen]="true">
+    <app-create-questions [questionModuleType]="'course'" (closepopup)="closepopup($event)" [testId]="testId"
+        [questionId]="questionId" [sectionIdForQuestion]="sectionIdForQuestion"></app-create-questions>
+</p-sidebar>
+
 }
 
 @if(isImportQuestion){
-    <p-sidebar [(visible)]="isImportQuestion" [fullScreen]="true">
-        <app-import-questions [testId]="testId" [sectionId]="testDetailsData.id"></app-import-questions>
-       <!-- <app-import-questions [sectionId]="sectionId" [testId]="testId" (closepopup)="closeImportSideBar($event)"></app-import-questions> -->
-
-    </p-sidebar>
+<p-sidebar [(visible)]="isImportQuestion" [fullScreen]="true">
+    <app-import-questions (closepopup)="closeImportSideBar($event)" [testId]="testDetailsData.id"
+        [sectionId]="sectionIdForQuestion" [testType]="'courseTest'"></app-import-questions>
+</p-sidebar>
 }

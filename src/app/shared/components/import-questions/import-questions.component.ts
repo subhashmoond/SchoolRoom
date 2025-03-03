@@ -15,6 +15,7 @@ import { ButtonModule } from 'primeng/button';
 })
 export class ImportQuestionsComponent {
 
+  @Input() testType : any;
   @Input() sectionId : any;
   @Input() testId : any;
   @Output() closepopup = new EventEmitter<any>();
@@ -65,9 +66,32 @@ export class ImportQuestionsComponent {
       "question_ids": this.selectedQuestions
     }
 
-    this._questionBankService.importQuestions(payload).subscribe(res => {
-      this.closepopup.emit(res)
-    })
+    if(this.testType === "courseTest"){
+
+      const payload = {
+        "test_id": this.testId,
+        "section_id": this.sectionId,
+        "question_ids": this.selectedQuestions
+    }
+
+      this._questionBankService.importQuestionCourseTest(payload).subscribe(res => {
+        this.closepopup.emit(res)
+      })
+
+    }else{
+
+      const payload = {
+        "test_id": this.testId,
+        "section_id": this.sectionId,
+        "question_ids": this.selectedQuestions
+      }
+
+
+      this._questionBankService.importQuestions(payload).subscribe(res => {
+        this.closepopup.emit(res)
+      })
+    }
+    
 
   }
 

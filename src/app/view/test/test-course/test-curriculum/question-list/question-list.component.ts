@@ -8,15 +8,16 @@ import { ActivatedRoute } from '@angular/router';
 import { TestService } from '../../../../../core/services/test.service';
 import { SidebarModule } from 'primeng/sidebar';
 import { ImportQuestionsComponent } from '../../../../../shared/components/import-questions/import-questions.component';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { PaginatorModule } from 'primeng/paginator';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-question-list',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, CreateQuestionsComponent, DialogModule, SidebarModule, ImportQuestionsComponent, ToastModule, PaginatorModule ],
-  providers: [MessageService],
+  imports: [CommonModule, TableModule, ButtonModule, ConfirmDialogModule, CreateQuestionsComponent, DialogModule, SidebarModule, ImportQuestionsComponent, ToastModule, PaginatorModule ],
+  providers: [MessageService, ConfirmationService ],
   templateUrl: './question-list.component.html',
   styleUrl: './question-list.component.css'
 })
@@ -36,7 +37,7 @@ export class QuestionListComponent {
   limit = 15;
 
 
-  constructor(private route: ActivatedRoute, private _testService : TestService, private _messageService: MessageService){
+  constructor(private route: ActivatedRoute, private _confirmationService: ConfirmationService, private _testService : TestService, private _messageService: MessageService){
     this.route.paramMap.subscribe(params => {
       this.sectionId = params.get('id');
     });
@@ -75,14 +76,40 @@ export class QuestionListComponent {
   }
 
   deleteQuestion(id : any){
+
+    this._confirmationService.confirm({
+      header: '',
+      message: 'Are you sure. You want to delete section ?',
+      icon: 'null',
+      acceptButtonStyleClass: "danger-button text-base font-semibold",
+      rejectButtonStyleClass: "danger-border text-base button-text-danger bg-white font-semibold",
+      acceptLabel: "Yes",
+      acceptIcon: "none",
+      rejectLabel: "No",
+      rejectIcon: "none",
+      accept: () => {
+
+        const payload = {
+          "test_id": this.testId,
+          "section_id": this.sectionId,
+          "question_ids": [id]
+      }
     
-    const payload = {
-      "question_id" : id
-    }
+        this._testService.deleteTestQuestions(payload).subscribe((res : any) => {
+          if(res.status){
+            this._messageService.add({ severity: 'success', detail: res.message });
+            this.getQuestionList();
+          }
+        })
+        
+      },
+      reject: () => {
 
-    this._testService.deleteQuestionTestSeries(payload).subscribe(res => {
+      }
 
-    })
+    });
+    
+    
 
   }
 

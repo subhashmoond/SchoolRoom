@@ -56,10 +56,12 @@ export class ChapterContentComponent {
   isYoutubevideo: boolean = false;
   isAudio: boolean = false;
   isQuiz: boolean = false;
+  isTest : boolean = false;
   isAddSection: boolean = false;
   isLiveClass: boolean = false;
   contentId: any;
   isLoader: boolean = true;
+
 
   chapterDataList: any;
   hideHeader: boolean = true;
@@ -169,6 +171,10 @@ export class ChapterContentComponent {
       case 'Quiz':
         this.isQuiz = true
         break;
+      
+      case 'Test':
+        this.isTest = true
+        break;
 
       case 'Live Class':
         this.isLiveClass = true
@@ -228,6 +234,7 @@ export class ChapterContentComponent {
     this.uploadContents = false;
     this.isVideo = false;
     this.isQuiz = false;
+    this.isTest = false;
     this.isLiveClass = false;
     this._messageService.add({ severity: 'success', detail: 'Content Added Successfully ! ' });
 

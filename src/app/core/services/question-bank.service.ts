@@ -49,5 +49,10 @@ export class QuestionBankService {
     const url = `${environment.basePath}ts/import-questions/`;
     return this._dataService.post( url, payload )
    }
+
+   importQuestionCourseTest(payload : any){
+    const url = `${environment.basePath}content/import-questions/`;
+    return this._dataService.post( url, payload );
+   }
  
 }

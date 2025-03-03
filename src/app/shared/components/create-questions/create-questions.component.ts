@@ -85,14 +85,29 @@ export class CreateQuestionsComponent {
 
   getTestDetail(){
 
-    this._testService.testDetailTestSeries(this.testId).subscribe((res : any) => {
-      this.testDetails = res;
+    if(this.questionModuleType === "course"){
 
-      if(this.testDetails.support_lang){
-        this.isOtherLang = true
-      }
+      this._testService.getCourseTestDetail(this.testId).subscribe(res => {
+        this.testDetails = res;
+  
+        if(this.testDetails.support_lang){
+          this.isOtherLang = true
+        }
+      })
 
-    })
+    }else{
+
+      this._testService.testDetailTestSeries(this.testId).subscribe((res : any) => {
+        this.testDetails = res;
+  
+        if(this.testDetails.support_lang){
+          this.isOtherLang = true
+        }
+  
+      })
+
+    }
+
 
   }
 

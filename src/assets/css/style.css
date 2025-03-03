@@ -3043,6 +3043,18 @@ body p-checkbox {
     font-weight: 400 !important;
 }
 
+.section-according-content{
+    display: grid;
+    grid-template-columns: 4fr 3fr;
+    gap: 5px;
+    width: 100%;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+}
+.icon-color-primery{
+    color: #473289;
+}
+
 .list-design{
     border: 1px solid #edeef6;
     background-color: #F3F4F9;

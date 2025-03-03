@@ -35,7 +35,8 @@ export class TestContentComponent {
   sectionIdForQuestion: any;
   questionId: any;
   lessionId : any;
-  courseId : any
+  courseId : any;
+  testDataForSectionCreate : any;
 
   constructor( private _router : Router, private route : ActivatedRoute, private _testService: TestService, private _messageService: MessageService, private _confirmationService: ConfirmationService) { 
     this.route.paramMap.subscribe(params => {
@@ -71,9 +72,14 @@ export class TestContentComponent {
     })
   }
 
-  createSection(testId: any) {
-    this.testDetailId = testId
+  createSection(testData: any) {
+    debugger
+    this.testDetailId = testData.id
     this.isCreateSection = true
+    this.testDataForSectionCreate = {
+      "id": testData.id,
+      "isDuration": testData.section_time_wise
+    };
   }
 
   addQuestion(id: any) {
@@ -119,11 +125,11 @@ export class TestContentComponent {
         this._testService.deleteQuestionDetail(payload).subscribe((res : any) => {
 
           if(res.status === true){
-            this._messageService.add({ severity: 'success', detail: 'errorMsg' });
+            this._messageService.add({ severity: 'success', detail: res.message });
             this.getTestDetailPage();
 
           }else{
-            this._messageService.add({ severity: 'error', detail: 'errorMsg' });
+            this._messageService.add({ severity: 'error', detail: res.message });
           }
 
         })
@@ -140,10 +146,12 @@ export class TestContentComponent {
 
     });
 
+  }
 
-
-
-
+  closeImportSideBar(event : any){
+    this._messageService.add({ severity: 'success', detail: event.message });
+    this.isImportQuestion = false;
+    this.getTestDetailPage();
   }
 
 

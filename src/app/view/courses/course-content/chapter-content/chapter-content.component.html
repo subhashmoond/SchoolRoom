@@ -112,8 +112,14 @@
 
                             @case("Quiz") {
                             <span class="font-bold">
-                                Test
+                                Quiz
                             </span>
+                            }
+
+                            @case("Test"){
+                                <span class="font-bold">
+                                    Test
+                                </span>
                             }
 
                             }
@@ -193,6 +199,14 @@
 
                         }
 
+                        @case("Test") {
+    
+                            <button (click)="deleteContent(data._id)" class="p-panel-header-icon p-link mr-2">
+                                <span class="pi pi-trash label-required"></span>
+                            </button>
+    
+                            }
+
                         }
 
 
@@ -259,6 +273,28 @@
                     }
 
                     }
+
+                    @case("Test") {
+
+                        @if(true){
+    
+                        <div class="grid cursor-pointer" (click)="sectionDetailPage(data)">
+                            <div class="col-12  ">
+                                <h6 class="underline capitalize">{{data.title}}</h6>
+                                <!-- <span class="text-sm text-color-secondary"> 12 Questions </span> -->
+                            </div>
+                        </div>
+                        }@else {
+                        <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+                            <img src="../../../../../assets/images/icon/no-loan-application.svg">
+                            <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">Add Section to quiz your students
+                            </p>
+                            <button type="button" pRipple label="View" (click)="sectionDetailPage(data)" pButton
+                                class="secondary-button curriculum-btn px-6 text-sm mt-3"></button>
+                        </div>
+                        }
+    
+                        }
 
                     }
 
@@ -363,7 +399,7 @@
             </div>
 
             <div pRipple class="type border-round-lg cursor-pointer justify-content-center align-items-center"
-                (click)="uploadContent('', 'Quiz', 'add')">
+                (click)="uploadContent('', 'Test', 'add')">
                 <!-- <i class="pi pi-image font-bold flex mb-2 justify-content-center"></i> -->
                 <img class="content-type-img" src="../../../../../assets/images/icon/live-test.png">
                 <h6>Live test</h6>
@@ -433,8 +469,16 @@
     @if(isQuiz){
     <p-sidebar [(visible)]="isQuiz" position="right" [style]="{width:'40%'}">
         <app-create-test (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes"
-            [contentId]="contentId"></app-create-test>
+            [contentId]="contentId" [testType]="'Quiz'" ></app-create-test>
     </p-sidebar>
+    }
+
+    @if(isTest){
+        <p-sidebar [(visible)]="isTest" position="right" [style]="{width:'40%'}">
+
+            <app-create-test (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId" [contentTypes]="contentTypes"
+                [contentId]="contentId" [testType]="'Test'"></app-create-test>
+        </p-sidebar>
     }
 
     @if(isLiveClass){

@@ -1,4 +1,5 @@
 <p-toast />
+<p-confirmDialog styleClass="confirmation-pop-up-dialog"></p-confirmDialog>
 
 <div class="grid client-dashborad-header mb-4 align-items-center">
     <div class="col-6">
@@ -6,7 +7,8 @@
     </div>
 
     <div class="col-6 flex justify-content-end">
-        <button pButton pRipple label=" Import Questions" (click)="importQuestion()" class="primary-border-button px-5 mr-3 text-sm"></button>
+        <button pButton pRipple label=" Import Questions" (click)="importQuestion()"
+            class="primary-border-button px-5 mr-3 text-sm"></button>
 
         <button type="submit" pButton pRipple label="Add Question" (click)="createQuestion()"
             class="secondary-button px-6 text-sm"></button>
@@ -25,13 +27,33 @@
         <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
             selectionMode="single" class="client-data-table" [value]="questionData?.questions">
 
+            <ng-template pTemplate="header" class="p-4">
+                <tr class="w-full flex flex-wrap">
+                    <th style="width:50%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">
+                        Questions Text
+                    </th>
+                    <th style="width:30%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                        Question Type
+                    </th>
+
+                    <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                        Action
+                    </th>
+                </tr>
+
+            </ng-template>
+
             <ng-template pTemplate="body" let-data>
                 <tr class="w-full flex flex-wrap">
-                    <td style="width: 85%;word-break:break-all;"
-                        class="pl-4 text-xl underline cursor-pointer capitalize table-p" [innerHTML]="data.text">
+                    <td style="width: 50%;word-break:break-all;"
+                        class="pl-4 text-xl line-height-4 underline cursor-pointer capitalize table-p" [innerHTML]="data.text">
                     </td>
 
-                    <td style="width: 15%;word-break:break-all;" class="pl-4 capitalize">
+                    <td style="width: 30%;word-break:break-all;" class="pl-4 text-xl line-height-4 cursor-pointer capitalize table-p">
+                        {{data.question_type}}
+                    </td>
+
+                    <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
                         <i class="mr-4 cursor-pointer pi pi-pencil" (click)="editQuestion(data.id)"></i>
                         <i class="cursor-pointer pi pi-trash label-required" (click)="deleteQuestion(data.id)"></i>
                     </td>
@@ -71,9 +93,10 @@
 }
 
 @if (isImportQuestion) {
-    <p-sidebar [(visible)]="isImportQuestion" [fullScreen]="true">
-       <app-import-questions [sectionId]="sectionId" [testId]="testId" (closepopup)="closeImportSideBar($event)"></app-import-questions>
-    </p-sidebar>
+<p-sidebar [(visible)]="isImportQuestion" [fullScreen]="true">
+    <app-import-questions [sectionId]="sectionId" [testId]="testId"
+        (closepopup)="closeImportSideBar($event)"></app-import-questions>
+</p-sidebar>
 }
 
 
