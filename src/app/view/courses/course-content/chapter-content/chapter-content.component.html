@@ -192,6 +192,8 @@
                         <!-- <button (click)="uploadContent(data, 'test', 'edit')" class="p-panel-header-icon p-link mr-2">
                             <span class="cursor-pointer pi pi-cog"></span>
                         </button> -->
+                        <i class="mr-3 cursor-pointer pi pi-wave-pulse" (click)="reportView(data._id)"></i>
+
 
                         <button (click)="deleteContent(data._id)" class="p-panel-header-icon p-link mr-2">
                             <span class="pi pi-trash label-required"></span>
@@ -200,6 +202,7 @@
                         }
 
                         @case("Test") {
+                            <i class="mr-3 cursor-pointer pi pi-wave-pulse" (click)="reportView(data._id)"></i>
     
                             <button (click)="deleteContent(data._id)" class="p-panel-header-icon p-link mr-2">
                                 <span class="pi pi-trash label-required"></span>
@@ -486,4 +489,10 @@
         <app-live-class [editLiveData]="editLiveData" (closeSideBar)="closeSideBar($event)" [lessonId]="lessonId"
             (closeSideBar)="closeSideBarliveClass()"></app-live-class>
     </p-sidebar>
+    }
+
+    @if(isReportView){
+        <p-sidebar [(visible)]="isReportView" position="right" [style]="{width:'40%'}">
+            <app-test-serice-report></app-test-serice-report>
+        </p-sidebar>
     }

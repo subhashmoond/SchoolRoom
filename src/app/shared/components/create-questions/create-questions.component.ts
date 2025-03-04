@@ -35,7 +35,8 @@ export class CreateQuestionsComponent {
   addQuestionForm!: FormGroup;
   questionTypes: any;
   isOtherLang: boolean = true;
-  testDetails : any;
+  isSubTopic: boolean = false;
+  testDetails: any;
 
   difficultyLavel = [
     { name: 'Esay' },
@@ -79,31 +80,35 @@ export class CreateQuestionsComponent {
     this.addOption();
 
     console.log(this.questionModuleType, "Question Type Module");
+    if (this.questionModuleType === 'bank') {
+      this.isSubTopic = true;
+      this.isOtherLang = false;
+    }
     this.getTestDetail();
 
   }
 
-  getTestDetail(){
+  getTestDetail() {
 
-    if(this.questionModuleType === "course"){
+    if (this.questionModuleType === "course") {
 
       this._testService.getCourseTestDetail(this.testId).subscribe(res => {
         this.testDetails = res;
-  
-        if(this.testDetails.support_lang){
+
+        if (this.testDetails.support_lang) {
           this.isOtherLang = true
         }
       })
 
-    }else{
+    } else {
 
-      this._testService.testDetailTestSeries(this.testId).subscribe((res : any) => {
+      this._testService.testDetailTestSeries(this.testId).subscribe((res: any) => {
         this.testDetails = res;
-  
-        if(this.testDetails.support_lang){
+
+        if (this.testDetails.support_lang) {
           this.isOtherLang = true
         }
-  
+
       })
 
     }
@@ -195,7 +200,7 @@ export class CreateQuestionsComponent {
     console.log(formValue, "form data ")
 
     let payload: any = {
-      
+
       "question_type": formValue.selecttitle,
       "text": formValue.text,
       "difficulty": formValue.difficulty,
@@ -214,14 +219,15 @@ export class CreateQuestionsComponent {
       "marks": formValue.marks,
       "negativeMarks": formValue.nagativemarks,
       // "langData" :[{"id":1,"content":"alng_option first"},{"id":2,"content":"second option like lung here"},{"id":3,"content":"third option like lung here"},{"id":4,"content":"forth option like lung here"}],
-      "lang_solution_text": formValue.otherlangexplanation,
-      "lang_text": formValue.otherlangtext
+
     }
 
-    
-    if(this.questionModuleType === 'bank'){
-      payload.questionBank = this.questionBankId
-    }else{
+
+    if (this.questionModuleType === 'bank') {
+      payload.questionBank = this.questionBankId,
+        payload.subject = formValue.subject,
+        payload.topic = formValue.chapter
+    } else {
       payload.section_id = this.sectionIdForQuestion
     }
 
@@ -232,21 +238,31 @@ export class CreateQuestionsComponent {
         content: option.text,
       })),
 
-        payload.langData = formValue.options.map((option: any, index: number) => ({
-          id: index + 1,
-          content: option.otherLang
-        }))
 
-      payload.langData = formValue.options.map((option: any, index: number) => ({
-        id: index + 1,
-        content: option.otherLang,
-      })),
 
         payload.correct_option = formValue.options
           .map((option: any, index: number) => (option.isCorrect ? index + 1 : null))
-          .filter((id: number | null) => id !== null),
+          .filter((id: number | null) => id !== null)
 
-        payload.lang_text = formValue.explanation
+
+
+    }
+
+    if (this.questionModuleType !== 'bank') {
+
+      payload.langData = formValue.options.map((option: any, index: number) => ({
+        id: index + 1,
+        content: option.otherLang
+      }))
+
+      // payload.langData = formValue.options.map((option: any, index: number) => ({
+      //   id: index + 1,
+      //   content: option.otherLang,
+      // })),
+
+      payload.lang_text = formValue.explanation,
+      payload.lang_solution_text = formValue.otherlangexplanation,
+      payload.lang_text = formValue.otherlangtext
 
     }
 
@@ -258,6 +274,7 @@ export class CreateQuestionsComponent {
     this._testService.createQestionTestSerice(payload).subscribe((res: any) => {
       debugger
       if (res.status) {
+        this.isSubTopic = false;
         this.closepopup.emit(res.message)
       } else {
         this._messageService.add({ severity: 'error', detail: 'Error ' });

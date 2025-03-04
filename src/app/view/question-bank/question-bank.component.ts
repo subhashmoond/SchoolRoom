@@ -86,11 +86,15 @@ export class QuestionBankComponent {
       rejectLabel: "No",
       rejectIcon: "none",
       accept: () => {
-
-        this._questionBank.deleteQuestionBank(bankId).subscribe(res => {
+        this._questionBank.deleteQuestionBank(bankId).subscribe((res : any) => {
           this.getQuestionBankList();
-          this._messageService.add({ severity: 'success', detail: 'Deleted Successfully !' });
-        })
+          if(res.status == true){
+            this._messageService.add({ severity: 'success', detail: res.message });
+          }
+        }, (error) => {
+          this._messageService.add({ severity: 'error', detail: error.error.message });
+
+        });
         
       },
       reject: () => {

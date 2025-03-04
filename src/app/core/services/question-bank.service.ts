@@ -30,8 +30,8 @@ export class QuestionBankService {
     return this._dataService.post(url, payload);
    }
 
-   getBankQuestionList(questionBankId : any){
-    const url = `${environment.basePath}ts/question-bank/${questionBankId}/question-list/?page=1&page_size=20`;
+   getBankQuestionList(filterData : any){
+    const url = `${environment.basePath}ts/question-bank/${filterData.bankId}/question-list/?page=${filterData.page}&page_size=${filterData.page_size}`;
     return this._dataService.get(url);
    }
 
@@ -53,6 +53,11 @@ export class QuestionBankService {
    importQuestionCourseTest(payload : any){
     const url = `${environment.basePath}content/import-questions/`;
     return this._dataService.post( url, payload );
+   }
+
+   deleteQuestionInBank(payload : any){
+    const url = `${environment.basePath}ts/question-delete/`;
+    return this._dataService.post(url, payload)
    }
  
 }

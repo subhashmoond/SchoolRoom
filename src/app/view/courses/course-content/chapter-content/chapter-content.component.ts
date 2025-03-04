@@ -31,13 +31,14 @@ import { TagModule } from 'primeng/tag';
 import { LiveClassService } from '../../../../core/services/live-class.service';
 import { MessageService } from 'primeng/api';
 import { LiveWebsocketService } from '../../../../core/services/live-websocket.service';
+import { TestSericeReportComponent } from '../../../test/test-course/test-serice-report/test-serice-report.component';
 
 @Component({
   selector: 'app-chapter-content',
   standalone: true,
   imports: [AccordionModule, ButtonModule, FormsModule, SplitButtonModule, EditorModule, DialogModule, PanelModule, AvatarModule, UploadContentComponent, SidebarModule,
     ImageComponent, UploadVideoComponent, AudioComponent, PdfViewerModule, ReSourceComponent, RippleModule, SkeletonModule, YoutubeVideoComponent, TextComponent, MenuModule,
-    ToastModule, SidebarModule, CreateTestComponent, CreateTestSectionComponent, LiveClassComponent, TagModule ],
+    ToastModule, SidebarModule, CreateTestComponent, CreateTestSectionComponent, LiveClassComponent, TagModule, TestSericeReportComponent ],
   providers: [MessageService],
   templateUrl: './chapter-content.component.html',
   styleUrl: './chapter-content.component.css'
@@ -67,6 +68,8 @@ export class ChapterContentComponent {
   hideHeader: boolean = true;
   testId: any;
   editLiveData : any;
+
+  isReportView : boolean = false
 
   items: { label?: string; icon?: string; separator?: boolean }[] = [];
 
@@ -272,6 +275,13 @@ export class ChapterContentComponent {
     console.log(data, "edit live data ");
     this.editLiveData = data;
     this.isLiveClass = true;
+  }
+
+  reportView(testId : any){
+    this.isReportView = true;
+    // this._router.navigate([test-report/])
+    this.router.navigate(['/test/test-report', testId])
+
   }
 
 

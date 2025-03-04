@@ -3270,3 +3270,15 @@ body p-checkbox {
 .gray-bg{
     background: #f9fafb;
 }
+
+
+.ellipsis-two-lines {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%; /* Adjust width as needed */
+    white-space: normal; /* Ensure text wraps */
+  }
+  

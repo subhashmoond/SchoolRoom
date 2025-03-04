@@ -66,7 +66,9 @@ export class BulkUploadDataComponent {
     payload.append('questionBankId', '331516a26436423da3a61fbb220dfa44');
 
     this._tsService.bulkQuestionUpload(payload).subscribe((res : any) => {
-
+      if(res.status){
+        this.closepopup.emit(false)
+      }
     })
 
   }

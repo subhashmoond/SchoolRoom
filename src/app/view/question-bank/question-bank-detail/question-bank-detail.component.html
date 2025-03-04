@@ -15,11 +15,20 @@
                 </div>
                 <div class="col-6 flex justify-content-end">
 
-                        <button type="button" pButton pRipple (click)="blukUpload()" label=" Question Bulk Upload "
+                        <!-- <button type="button" icon="pi pi-user" pButton pRipple (click)="blukUpload()" label="Question Bulk Upload "
                                 class="primary-border-button px-5 mr-3 text-sm"></button>
 
-                        <p-button class="create-button border-round-md" (click)="openSidebar()">+ Add Question
-                        </p-button>
+                        <p-button icon="pi pi-user" pButton pRipple class="create-button border-round-md" (click)="openSidebar()">Add Question
+                        </p-button> -->
+
+                        <button pButton pRipple icon="pi pi-upload" label="Question Bulk Upload" (click)="blukUpload()"
+                        class="primary-border-button px-5 mr-3 text-sm"></button>
+            
+                    <button type="submit" pButton pRipple icon="pi pi-plus" label="Add Question" (click)="openSidebar()"
+                        class="secondary-button px-6 text-sm text-white"></button>
+
+
+
                 </div>
 
         </div>
@@ -31,20 +40,23 @@
 
                 <ng-template pTemplate="header" class="p-4">
                         <tr class="w-full flex flex-wrap">
-                                <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">
-                                        Type
+                                <th style="width:16%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">
+                                        Created Date
                                 </th>
 
-                                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                                <th style="width:16%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
                                         Text
                                 </th>
-                                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
-                                        Mark
+                                <th style="width:16%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                                        Subject
                                 </th>
-                                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
-                                        Negative Marking
+                                <th style="width:16%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                                        Topic
                                 </th>
-                                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                                <th style="width:16%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                                        Used In
+                                </th>
+                                <th style="width:16%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
                                         Action
                                 </th>
                         </tr>
@@ -53,23 +65,28 @@
 
                 <ng-template pTemplate="body" let-data>
                         <tr class="w-full flex flex-wrap">
-                                <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
-                                        {{data.type}}
+                                <td style="width: 16%;word-break:break-all;" class="pl-4 capitalize">
+                                        {{data.create_date | date:'dd/MM/yyyy HH:mm:ss'}}
                                 </td>
 
-                                <td style="width: 20%;word-break:break-all;" class="pl-4">
-                                        {{stripHtml(data.text)}}
+                                <td style="width: 16%;word-break:break-all;" class="pl-4">
+                                        <span class="ellipsis-two-lines">
+                                                {{stripHtml(data.text)}}
+                                        </span>
                                 </td>
-                                <td style="width: 20%;" class="pl-4">
-                                        {{data.mark}}
+                                <td style="width: 16%;" class="pl-4">
+                                        {{data.subject}}
                                 </td>
-                                <td style="width: 20%;" class="pl-4">
-                                        {{data.negative_mark}}
+                                <td style="width: 16%;" class="pl-4">
+                                        {{data.topic}}
                                 </td>
-                                <td style="width: 20%;" class="pl-4">
+                                <td style="width: 16%;" class="pl-4">
+                                        {{data.used_in}}
+                                </td>
+                                <td style="width: 16%;" class="pl-4">
                                         <i class="cursor-pointer pi pi-pencil ml-4"></i>
-                                        <!-- <i class="pi pi-trash ml-4" style="color: red;"
-                                                (click)="deleteQuestion(data.id)"></i> -->
+                                        <i class="pi pi-trash ml-4" style="color: red;"
+                                                (click)="deleteQuestion(data.id)"></i>
                                 </td>
 
                         </tr>
@@ -77,13 +94,17 @@
 
                 <ng-template pTemplate="emptymessage">
                         <tr>
-                                <td colspan="5">No test found.</td>
+                                <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+                                        <img src="../../../../assets/images/icon/no-data.svg">
+                                        <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Questions</p>
+                                        <p class="text-primary-purple text-base font-normal mt-2">There is no questions to show you right now.</p>
+                                    </div>
                         </tr>
                 </ng-template>
 
         </p-table>
-        <!-- <p-paginator class="paginator-row paginator-dropdown" (onPageChange)="onPageChange($event)" [first]="offset"
-                        [rows]="limit" [rowsPerPageOptions]="[15, 30, 50]" [totalRecords]=totalRecorde></p-paginator> -->
+        <p-paginator class="paginator-row paginator-dropdown" (onPageChange)="onPageChange($event)"
+                        [rows]="limit" [rowsPerPageOptions]="[15, 30, 50]" [totalRecords]=totalRecorde></p-paginator>
 
 </div>
 
@@ -250,6 +271,6 @@
 @if(isBlukUpload){
 <p-dialog header="Bulk Question Upload" [modal]="true" [(visible)]="isBlukUpload" [style]="{ width: '50rem' }"
         [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
-        <app-bulk-upload-data (closepopup)="closeBlukPopup()"></app-bulk-upload-data>
+        <app-bulk-upload-data (closepopup)="closeBlukPopup($event)"></app-bulk-upload-data>
 </p-dialog>
 }

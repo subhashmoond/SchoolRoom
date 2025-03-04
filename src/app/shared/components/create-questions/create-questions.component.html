@@ -17,6 +17,25 @@
             </div>
         </div>
 
+        @if(isSubTopic){
+
+            <div class="flex flex-wrap w-full mb-4">
+                <div class="w-full">
+                    <label class="w-full mb-1 text-lg font-medium line-height-exsm inline-block"> Subject </label>
+                    <input class="w-full block text-sm" pInputText formControlName="subject" placeholder="Enter subject" 
+                        required="true" />
+                </div>
+            </div>
+
+            <div class="flex flex-wrap w-full mb-4">
+                <div class="w-full">
+                    <label class="w-full mb-1 text-lg font-medium line-height-exsm inline-block"> lesson </label>
+                    <input class="w-full block text-sm" pInputText formControlName="chapter" placeholder="Enter lesson" 
+                        required="true" />
+                </div>
+            </div>
+        }
+
         <div class="flex flex-wrap w-full mb-4">
             <div class="w-full">
                 <label class="w-full mb-1 text-lg font-medium line-height-exsm inline-block"> Difficulty Type <span class="input-required-color">*</span>
@@ -39,7 +58,7 @@
         @if(isOtherLang){
             <div class="flex flex-wrap w-full mb-4">
                 <div class="w-full">
-                    <label class="w-full mb-1 text-lg font-medium line-height-exsm inline-block">{{testDetails.another_lang.language_name}} Lang Question Text <span class="input-required-color">*</span>
+                    <label class="w-full mb-1 text-lg font-medium line-height-exsm inline-block">{{testDetails?.another_lang?.language_name}} Lang Question Text <span class="input-required-color">*</span>
                     </label>
                     <p-editor formControlName="otherlangtext" [style]="{ height: '100px' }" placeholder="e.g Q.What is Javascripat" />
                 </div>
@@ -78,7 +97,7 @@
                                 <p-editor class="editor mb-3" formControlName="text" [style]="{ height: '100px' }" placeholder="Default language Option {{ $index + 1 }}" />
 
                                 @if(isOtherLang){
-                                    <p-editor class="editor" formControlName="otherLang" [style]="{ height: '100px' }" placeholder="{{testDetails.another_lang.language_name}} Language Option {{ $index + 1 }}" />
+                                    <p-editor class="editor" formControlName="otherLang" [style]="{ height: '100px' }" placeholder="{{testDetails?.another_lang?.language_name}} Language Option {{ $index + 1 }}" />
                                 }
 
                             </div>
@@ -109,7 +128,7 @@
         @if(isOtherLang){
             <div class="flex flex-wrap w-full mb-4">
                 <div class="w-full">
-                    <label class="w-full mb-1 text-lg font-medium line-height-exsm inline-block">{{testDetails.another_lang.language_name}} Lang Explanation
+                    <label class="w-full mb-1 text-lg font-medium line-height-exsm inline-block">{{testDetails?.another_lang?.language_name}} Lang Explanation
                     </label>
                     <p-editor formControlName="otherlangexplanation" [style]="{ height: '100px' }" placeholder="e.g - JavaScript is a programming language primarily used for creating interactive and dynamic web pages. It works alongside HTML and CSS to add interactivity, handle events, and manipulate content. Known for its versatility, JavaScript is used in both client-side (browser) and server-side (Node.js) development, making it a core technology in web development." />
     
