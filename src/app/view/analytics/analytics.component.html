@@ -27,6 +27,14 @@
                 </a>
             </li>
 
+            <li [ngClass]="{'active': currentActiveTab === 'revenu'}">
+                <a href="javascript:void(0)" (click)="courseTabs('revenu')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span> Revenue </span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+
             <li [ngClass]="{'active': currentActiveTab === 'transaction'}">
                 <a href="javascript:void(0)" (click)="courseTabs('transaction')" routerLinkActive="active"
                     class="sidebar-header flex align-items-center px-3">
@@ -54,8 +62,10 @@
         @case ("transaction") {
         <app-transaction></app-transaction>
         }
+        @case('revenu'){
+            <app-revenu></app-revenu>
+        }
        
-
         }
 
     </div>

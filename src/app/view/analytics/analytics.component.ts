@@ -7,11 +7,12 @@ import { SignupUserComponent } from './signup-user/signup-user.component';
 import { ActiveUserComponent } from './active-user/active-user.component';
 import { NewEnrollmentComponent } from './new-enrollment/new-enrollment.component';
 import { TransactionComponent } from './transaction/transaction.component';
+import { RevenuComponent } from './revenu/revenu.component';
 
 @Component({
   selector: 'app-analytics',
   standalone: true,
-  imports: [FileUploadModule, CommonModule, ToolbarModule, SignupUserComponent, ActiveUserComponent, NewEnrollmentComponent, TransactionComponent ],
+  imports: [FileUploadModule, CommonModule, ToolbarModule, SignupUserComponent, ActiveUserComponent, NewEnrollmentComponent, TransactionComponent, RevenuComponent ],
   templateUrl: './analytics.component.html',
   styleUrl: './analytics.component.css'
 })

@@ -1,1 +1,68 @@
-<p>new-enrollment works!</p>
+<!-- <p-toast /> -->
+
+<div class="cards">
+
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-8">
+            <h4 class="subheading-color">New Enrollment Analytics</h4>
+            <p class="m-0 mt-2">Track and analyze new enrollment data. </p>
+        </div>
+
+        <div class="col-4">
+
+            <div class="flex justify-content-end">
+
+                <ul class="mb-2 p-0  flex text-xs list-none filter-li">
+                    <li (click)="applicationFilter(null, 'last_7_days')" class="cursor-pointer"> Week </li>
+                    <li (click)="applicationFilter(null, 'last_30_days')" class="cursor-pointer">Month</li>
+                    <li (click)="applicationFilter(null, 'this_month')" class="cursor-pointer">This Month</li>
+                    <li (click)="applicationFilter(null, 'last_month')" class="cursor-pointer">Last Month </li>
+                    <li (click)="applicationFilter(null, 'all_time')" class="cursor-pointer">All Time</li>
+                </ul>
+            </div>
+
+
+                <p-calendar [(ngModel)]="fromToDateValue" (onSelect)="applicationFilter(fromToDateValue, 'custom')"
+                    selectionMode="range" placeholder="Start Date - End Date" [readonlyInput]="true" inputId="range"
+                    [numberOfMonths]="2" [showIcon]="true" [maxDate]="maxDate" [defaultDate]="prevMonth" [showButtonBar]="true">
+                </p-calendar>
+
+
+
+        </div>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="col-3">
+            <div class="total-loan-amount-card mb-1 w-full borderall p-3" style="background: #F3F4F9; border-radius: 5px;">
+                <div class="grid grid-nogutter">
+                    <div class="col-8 flex flex-wrap align-items-center">
+                        <div class="w-full">
+                            <h6 class="line-height-exsm font-medium">New Enrollment</h6>
+                            <h4 class="font-semibold mt-1  white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                                {{chartData.total_record}}
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-4 flex flex-wrap justify-content-end">
+                        <span
+                            class="block primary-bg-purple h-4rem w-4rem border-circle flex flex-wrap align-items-center justify-content-center">
+                            <i class="primary-color text-3xl pi pi-users"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12 mt-3">
+            <app-line-chart></app-line-chart>
+        </div>
+
+    </div>
+
+
+</div>

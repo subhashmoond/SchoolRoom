@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class SignupUserComponent {
 
-  userData : any;
+  chartData : any;
 
   fromToDateValue: Date[] = [];
   maxDate: Date = new Date(); // Disables future dates
@@ -29,14 +29,10 @@ export class SignupUserComponent {
   }
 
   ngOnInit(){
-    this.getSignUpUserData();
+    this.applicationFilter(null, 'last_7_days');
   }
 
-  getSignUpUserData(){
-    // this._analyticsService.getSignupUserReport().subscribe(res => {
-    //   this.userData = res
-    // })
-  }
+ 
 
   applicationFilter(event: any, type : any){
 
@@ -51,7 +47,11 @@ export class SignupUserComponent {
     }
 
     this._analyticsService.getSignupUserReport(payload).subscribe(res => {
-      this.userData = res
+      
+      this.chartData = res;
+
+      this._analyticsService.updateData(res.report_data);
+
     })
 
   }
