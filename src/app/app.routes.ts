@@ -59,7 +59,7 @@ export const routes: Routes = [
             {
                 path : 'question-bank', loadChildren : () => import('./view/question-bank/question-bank.router').then((m) => m.routes)
             },
-            {path : 'report', loadChildren : () => import('./view/report/report.router').then((m) => m.routes) }
+            {path : 'analytics', loadChildren : () => import('./view/analytics/analytics.router').then((m) => m.routes) }
         ],
         canActivate: [authGuard]
     }

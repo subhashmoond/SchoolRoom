@@ -1,0 +1,65 @@
+<div class="grid grid-nogutter nested-grid">
+    <div class="col-2 secondry-bg-color">
+
+        <h6 class="p-4 border-bottom-light font-bold ">Analytics</h6>
+
+        <ul class="sidebar-menu course-s-b p-0 ml-2 mr-2">
+            <li [ngClass]="{'active': currentActiveTab === 'signup-user'}">
+                <a href="javascript:void(0)" (click)="courseTabs('signup-user')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span> Signup User </span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li [ngClass]="{'active': currentActiveTab === 'active-user'}">
+                <a href="javascript:void(0)" (click)="courseTabs('active-user')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span> Active User </span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+
+            <li [ngClass]="{'active': currentActiveTab === 'new-enrollment'}">
+                <a href="javascript:void(0)" (click)="courseTabs('new-enrollment')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span> New Enrollment </span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+
+            <li [ngClass]="{'active': currentActiveTab === 'transaction'}">
+                <a href="javascript:void(0)" (click)="courseTabs('transaction')" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <span> Transaction </span>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                </a>
+            </li>
+
+
+        </ul>
+    </div>
+
+
+    <div class="col-10 bg-white p-4 website-h">
+        @switch (currentActiveTab) {
+        @case ("signup-user") {
+        <app-signup-user></app-signup-user>
+        }
+        @case ("active-user") {
+        <app-active-user></app-active-user>
+        }
+        @case ("new-enrollment") {
+        <app-new-enrollment></app-new-enrollment>
+        }
+        @case ("transaction") {
+        <app-transaction></app-transaction>
+        }
+       
+
+        }
+
+    </div>
+
+
+
+</div>

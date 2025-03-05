@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
 import { NgApexchartsModule } from "ng-apexcharts";
 import {
@@ -25,10 +25,17 @@ export type ChartOptions = {
 })
 export class LineChartComponent {
 
+  @Input() data : any
+
    @ViewChild("chart") chart : ChartComponent | undefined;
           public chartOptions: ChartOptions;
         
           constructor() {
+            
+          }
+
+          ngOnInit(){
+            
             this.chartOptions = {
               series: [
                 {
@@ -48,6 +55,7 @@ export class LineChartComponent {
                 categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"]
               }
             };
+
           }
     
 

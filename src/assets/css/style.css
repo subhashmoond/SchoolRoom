@@ -3282,3 +3282,10 @@ body p-checkbox {
     white-space: normal; /* Ensure text wraps */
   }
   
+.filter-li li{
+    border: 1px solid #DDDDED;
+    padding: 2px 5px;
+    color: #473289;
+    margin-right: 4px;
+    border-radius: 2px;
+}

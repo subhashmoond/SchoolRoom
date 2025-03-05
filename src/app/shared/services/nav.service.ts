@@ -11,6 +11,7 @@ export class NavService {
 
   MENUITEMS: Menus[] = [
     { path: 'dashborad', title: 'Dashborad', icon: 'assets/images/home.png', type: 'link', active: true },
+    { path: 'analytics', title: 'Analytics', icon: 'assets/images/report.png', type: 'link', active: true },
 
     {
       title: "Products", icon: 'assets/images/product.png', type: 'sub', active: true,
@@ -46,13 +47,6 @@ export class NavService {
       ]
     },
 
-    {
-      path: 'report', title: "Reports", icon: 'assets/images/report.png', type: 'sub', active: true,
-      children: [
-        { path: 'report', title: 'Overview', type: 'link' },
-        { path: 'report/transactions', title: 'Transactions', type: 'link' }
-      ]
-    },
 
     { path: 'integrations', title: 'Integrations', icon: 'assets/images/integration.png', type: 'link', active: true },
 
