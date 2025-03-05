@@ -46,6 +46,14 @@ export class NavService {
       ]
     },
 
+    {
+      path: 'report', title: "Reports", icon: 'assets/images/report.png', type: 'sub', active: true,
+      children: [
+        { path: 'report', title: 'Overview', type: 'link' },
+        { path: 'report/transactions', title: 'Transactions', type: 'link' }
+      ]
+    },
+
     { path: 'integrations', title: 'Integrations', icon: 'assets/images/integration.png', type: 'link', active: true },
 
     { path: 'community', title: 'Community', icon: 'assets/images/community.png', type: 'link', active: true },
