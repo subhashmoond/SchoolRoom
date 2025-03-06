@@ -19,6 +19,17 @@ export class AnalyticsService {
     this.dataSource.next(newData);
   }
 
+
+  getDashboradAnalyticsData() {
+    const url = `${environment.basePath}educator/overview/analytics`;
+    return this._dataService.get(url)
+  }
+
+  getSeduledEventsDashbord() {
+    const url = `${environment.basePath}content/live/session-list/`;
+    return this._dataService.get(url)
+  }
+
   getSignupUserReport(payload: any) {
     let url = `${environment.basePath}educator/signup-user/analytics?filter_type=${payload.filter_type}`;
 
@@ -46,10 +57,6 @@ export class AnalyticsService {
     return this._dataService.get(url);
   }
 
-  // getNewEnrollmentUserReport() {
-  //   const url = `${environment.basePath}educator/enrollment/analytics?start_date=2025-02-23&filter_type=custom`;
-  //   return this._dataService.get(url);
-  // }
 
   getRevenueReport(payload: any) {
     let url = `${environment.basePath}educator/revenue/analytics?filter_type=${payload.filter_type}`;
@@ -59,13 +66,9 @@ export class AnalyticsService {
     return this._dataService.get(url);
   }
 
-  // getRevenueReport() {
-  //   const url = `${environment.basePath}educator/revenue/analytics?start_date=2025-02-23&filter_type=last_7_days`;
-  //   return this._dataService.get(url);
-  // }
-
   getTransactionsReport() {
     const url = `${environment.basePath}educator/transactions?product_ids=008da9dbbaf348c4816cd5ef697c53ba&product_ids=ec26884c735e44a38742059392b12f5c`;
     return this._dataService.get(url);
   }
+
 }

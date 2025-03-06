@@ -16,3 +16,9 @@
 .getStarted h2, p{
     color: #fff !important;
 }
+
+.card-img{
+    height: 230px;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}

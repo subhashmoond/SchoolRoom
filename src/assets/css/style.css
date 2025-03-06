@@ -1035,9 +1035,9 @@ textarea {
 
 /* Footer css  */
 .main-footer {
-    background: #ffffff;
+    background: #F3F4F9;
     border-radius: 20px;
-    margin: 2rem;
+    padding: 2rem;
 }
 
 .main-footer ul {
@@ -3304,7 +3304,7 @@ body p-checkbox {
     border-radius: 2px;
 }
 
-.p-button {
+.analytics .p-button {
     background: #473289 !important;
     border-color: #473289 !important;
 }
