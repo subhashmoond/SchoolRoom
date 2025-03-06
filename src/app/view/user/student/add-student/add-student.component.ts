@@ -30,7 +30,9 @@ ngOnInit(){
   this.addStudent = this._fb.group({
     name : ['', Validators.required],
     password : ['', Validators.required],
-    mobile : ['', Validators.required]
+    email : ['', Validators.required],
+    username : ['', Validators.required],
+    mobile : ['']
   })
 
 }
@@ -39,8 +41,9 @@ ngOnInit(){
 
     const formData = new FormData();
 
-    formData.append('username', this.addStudent.get('mobile')?.value);
+    formData.append('username', this.addStudent.get('username')?.value);
     formData.append('name', this.addStudent.get('name')?.value);
+    formData.append('email', this.addStudent.get('email')?.value);
     formData.append('password', this.addStudent.get('password')?.value);
 
     this._userService.addStudent(formData).subscribe(res => {
@@ -51,7 +54,7 @@ ngOnInit(){
   }
 
   closeButton(){
-
+    this.sideBars.emit(false)
   }
 
 }
