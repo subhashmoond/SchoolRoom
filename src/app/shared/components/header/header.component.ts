@@ -24,15 +24,12 @@ export class HeaderComponent {
 
   selectedItem: any;
 
-  suggestions: any[] | undefined;
-  togglesidebar:any
-  profileToggle:boolean = false;
-  profileMenuItems!:Menus[];
+  suggestions : any[] | undefined;
+  togglesidebar : any
+  profileToggle : boolean = false;
+  profileMenuItems! : Menus[];
   userData : any;
   userName : any
-
-
-
 
 constructor(public _sharedService:SharedService, private router : Router, private _nav: NavService){
   this.userData = localStorage.getItem('userData')

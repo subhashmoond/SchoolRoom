@@ -5,4 +5,5 @@ export interface Menus {
     type?: string;
     active?: boolean;
     children?: Menus[];
+    permission?: string;
 }

@@ -15,12 +15,16 @@ import { UserService } from '../../../core/services/user.service';
 import { ThisReceiver } from '@angular/compiler';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { AvatarModule } from 'primeng/avatar';
+import { CommonModule } from '@angular/common';
+import { catchError, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-team',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, RippleModule, SkeletonModule, AddTeamComponent, ToastModule],
-  providers : [MessageService],
+  imports: [ TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, 
+    RippleModule, SkeletonModule, AddTeamComponent, ToastModule, AvatarModule, CommonModule ],
+  providers : [ MessageService ],
   templateUrl: './team.component.html',
   styleUrl: './team.component.css'
 })
@@ -56,7 +60,12 @@ export class TeamComponent {
     this.addTeamSideBar = true;
   }
 
-  closeSideBar(){
+  closeSideBar(event : any){
+
+    if(event === true){
+      this.messageService.add({ severity: 'success', detail: 'Teacher Created & Permissions Assigned Successfully' });
+    }
+    
     this.addTeamSideBar = false;
     this.getTeacherList();
   }
@@ -73,16 +82,21 @@ export class TeamComponent {
     const formData = new FormData();
     formData.append('teacher_id', data.id);
 
-    this._userService.deleteTeacher(formData).subscribe(res => {
+    this._userService.deleteTeacher(formData).subscribe((res : any) => {
 
-      if(res){
+      if(res.status === 'Success'){
         this.messageService.add({ severity: 'success', detail: 'Teacher Delete Successfully' });
         this.getTeacherList();
+      }else{
+        this.messageService.add({ severity: 'error', detail: res.message });
       }
 
     })
 
   }
+
+  
+  
 
 
 }

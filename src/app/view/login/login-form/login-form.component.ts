@@ -11,6 +11,7 @@ import { ToastModule } from 'primeng/toast';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UrlHandlerService } from '../../../shared/services/url-handler.service';
 import Gemini from 'gemini-ai';
+import { switchMap } from 'rxjs';
 
 
 @Component({
@@ -26,8 +27,6 @@ export class LoginFormComponent {
   title = 'Log in'
   submitMsg!: string;
   showPassword: boolean = false;
-
-
 
   constructor(private fb: FormBuilder, private _authService: AuthService, private router: Router, private _messageService: MessageService, private translate: TranslateService, private _urlHandlerService: UrlHandlerService) {
     translate.setDefaultLang('en-US');
@@ -67,33 +66,69 @@ export class LoginFormComponent {
     this.showPassword = !this.showPassword
   }
 
+  // loginUser() {
+
+  //   if (this.loginForm.valid) {
+
+  //     const formData = new FormData();
+  //     formData.append('username', this.loginForm.get('username')?.value);
+  //     formData.append('password', this.loginForm.get('password')?.value);
+
+  //     this._authService.userLogin(formData).subscribe((res: any) => {
+
+  //       this._authService.getUserPermissions().subscribe(res => {
+
+  //       })
+
+  //       localStorage.setItem('userData', JSON.stringify(res));
+  //       localStorage.setItem('isLoggedIn', JSON.stringify(true));
+  //       this.router.navigate(['/dashborad']);
+  //       const storedUrl = this._urlHandlerService.getStoreUrl();
+  //       // if (storedUrl) {
+  //       //   this._urlHandlerService.clearStoreUrl();
+  //       //   this.router.navigateByUrl(storedUrl);
+  //       // } else {
+  //       // }
+  //       this._messageService.add({ severity: 'success', summary: 'Success', detail: 'User Login Successful' });
+  //     }, error => {
+  //       // const errormsg = error.error.userMessageGlobalisationCode
+  //       // this._messageService.add({ severity: 'error', summary: ' Error', detail: this.translate.instant(errormsg) });
+  //     })
+  //   }
+  // }
+
   loginUser() {
-
     if (this.loginForm.valid) {
-
       const formData = new FormData();
       formData.append('username', this.loginForm.get('username')?.value);
       formData.append('password', this.loginForm.get('password')?.value);
-
-      this._authService.userLogin(formData).subscribe((res: any) => {
-        localStorage.setItem('userData', JSON.stringify(res));
-        localStorage.setItem('isLoggedIn', JSON.stringify(true));
+  
+      this._authService.userLogin(formData).pipe(
+        switchMap((res: any) => {
+          // Store user data in localStorage
+          localStorage.setItem('userData', JSON.stringify(res));
+          localStorage.setItem('isLoggedIn', 'true');
+  
+          // Call permission API and return the observable
+          return this._authService.getUserPermissions();
+        })
+      ).subscribe((permissions: any) => {
+        // Store permissions in localStorage
+        localStorage.setItem('userPermissions', JSON.stringify(permissions.permissions));
+        // localStorage.setItem('userPermissions', JSON.stringify(this.permissions));
+        
+  
+        // Navigate to the dashboard
         this.router.navigate(['/dashborad']);
-        const storedUrl = this._urlHandlerService.getStoreUrl();
-        // if (storedUrl) {
-        //   this._urlHandlerService.clearStoreUrl();
-        //   this.router.navigateByUrl(storedUrl);
-        // } else {
-        // }
+  
+        // Success message
         this._messageService.add({ severity: 'success', summary: 'Success', detail: 'User Login Successful' });
       }, error => {
-        // const errormsg = error.error.userMessageGlobalisationCode
-        // this._messageService.add({ severity: 'error', summary: ' Error', detail: this.translate.instant(errormsg) });
-      })
+        this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Login failed. Please try again.' });
+      });
     }
   }
-
-
+  
 
 
 

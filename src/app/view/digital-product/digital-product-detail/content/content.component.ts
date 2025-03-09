@@ -13,11 +13,14 @@ import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { EditorModule } from 'primeng/editor';
+import { TooltipModule } from 'primeng/tooltip';
+import { SidebarModule } from 'primeng/sidebar';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-content',
   standalone: true,
-  imports: [TranslateModule, SkeletonModule, FormsModule, FileUploadModule, DialogModule, ButtonModule, ConfirmDialogModule, ToastModule, CommonModule, InputTextModule, EditorModule ],
+  imports: [TranslateModule, SkeletonModule, FormsModule, FileUploadModule, DialogModule, ButtonModule, ConfirmDialogModule, ToastModule, CommonModule, InputTextModule, EditorModule, TooltipModule, SidebarModule ],
   providers: [MessageService],
   templateUrl: './content.component.html',
   styleUrl: './content.component.css'
@@ -38,8 +41,12 @@ export class ContentComponent {
   fileTitleValue : any;
   contentStringValue : any;
   contentURLValue : any;
+  isContentPreview : boolean = false;
+  contentViewData : any;
+  hideHeader: boolean = true;
 
-  constructor( private _digitalProductService : DigitalProductService, private route: ActivatedRoute,  private _messageService: MessageService,){
+
+  constructor( private _digitalProductService : DigitalProductService, private sanitizer: DomSanitizer, private route: ActivatedRoute,  private _messageService: MessageService,){
     this.route.paramMap.subscribe(params => {
       this.digitalProductId = params.get('id')!;
     });
@@ -48,7 +55,7 @@ export class ContentComponent {
 
   ngOnInit(){
     this.getContentFileList();
-    console.log(this.digitalProductDetail, "Digital Product Datas")
+    // console.log(this.digitalProductDetail, "Digital Product Datas")
   }
 
   getContentFileList(){
@@ -57,6 +64,10 @@ export class ContentComponent {
     })
   }
 
+
+  getSafeUrl(url: string): SafeResourceUrl {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
 
   onFileSelect(event: any) {
     if (event.files.length > 0) {
@@ -79,7 +90,7 @@ export class ContentComponent {
 
   submit(){
 
-    debugger
+    // debugger
     const formdata = new FormData();
     formdata.append('title', this.fileTitleValue)
 
@@ -114,7 +125,7 @@ export class ContentComponent {
 
     })
 
-    this.getContentFileList();
+    // this.getContentFileList();
     
   }
 
@@ -126,6 +137,16 @@ export class ContentComponent {
       }
     })
 
+  }
+
+  videoContent(data : any){
+    this.contentViewData = data
+    console.log(data, "Conetnt")
+    this.isContentPreview = true
+  }
+
+  back(){
+    this.isContentPreview = false
   }
 
 }

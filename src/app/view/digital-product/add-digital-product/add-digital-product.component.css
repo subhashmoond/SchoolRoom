@@ -1,3 +1,26 @@
   
  
+  .underscore-text::before {
+    content: attr(data-text);
+    white-space: pre;
+  }
+  
+  .underscore-text {
+    visibility: hidden;
+    position: relative;
+  }
+  
+  .underscore-text::before {
+    visibility: visible;
+    position: absolute;
+    content: attr(data-text);
+  }
+  
+  .underscore-text::before {
+    content: attr(data-text);
+  }
+  
+  .underscore-text::before {
+    content: attr(data-text);
+  }
   

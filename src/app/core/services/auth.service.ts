@@ -13,17 +13,16 @@ export class AuthService {
   private localStorageKey = 'device_id';
 
 
-  constructor(private http: HttpClient, private _dataService: DataMethodService, private router : Router) { }
+  constructor(private http: HttpClient, private _dataService: DataMethodService, private router: Router) { }
 
-  userLogin(body: any){
+  userLogin(body: any) {
     const url = `${environment.basePath}educator/login/`;
     return this._dataService.post(url, body);
   }
 
-  createLoanApplication(payload : any){
-    const url = `${environment.basePath}fineract-provider/api/v1/loans/loanapplication`;
-    // const url = `${environment.basePath}fineract-provider/api/v1/loans/newApplicationForm`;
-    return this._dataService.post(url, payload);
+  getUserPermissions() {
+    const url = `${environment.basePath}educator/teacher/permissions/`;
+    return this._dataService.get(url)
   }
 
   getDeviceId(): string {
@@ -37,22 +36,22 @@ export class AuthService {
 
   // Student App API 
 
-  signUpStudent(payload : any){
+  signUpStudent(payload: any) {
     const url = `${environment.basePath}learner/register/`;
     return this._dataService.post(url, payload)
   }
 
-  studentLogIn(payload : any){
+  studentLogIn(payload: any) {
     const url = `${environment.basePath}learner/login/`;
     return this._dataService.post(url, payload);
   }
 
-  otpVerify(payload : any){
+  otpVerify(payload: any) {
     const url = `${environment.basePath}learner/otp_verify/`;
     return this._dataService.post(url, payload);
   }
 
-  reSendOtp(payload : any){
+  reSendOtp(payload: any) {
     const url = `${environment.basePath}learner/resend-otp/`;
     return this._dataService.post(url, payload);
   }

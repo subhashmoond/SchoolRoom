@@ -16,24 +16,22 @@
                                         </ng-template>
                                 </p-selectButton> -->
 
-                        <p-button class="create-button border-round-md" (click)="openSidebar()"> +  Add
+                        <p-button class="create-button border-round-md" (click)="openSidebar()"> + Add
                                 Course</p-button>
 
                         <div
                                 class="primary-purple-bg view-tab flex ml-3 flex-wrap border-round-md p-1 border-round-md button-shadow justify-content-center aign-items-center">
                                 <button (click)="listViewChange('card')" [class.bg-white]="!tableView"
                                         class="p-element p-0 cursor-pointer border-none w-2rem flex flex-wrap align-items-center justify-content-center border-round-sm form-header-bg p-button p-component">
-                                        <img
-                                                src="../../../../assets/images/icon/mage-dashboard.svg" alt=""
-                                                class="icon-size-medium"> 
-                                         </button>
+                                        <img src="../../../../assets/images/icon/mage-dashboard.svg" alt=""
+                                                class="icon-size-medium">
+                                </button>
                                 <button (click)="listViewChange('table')" [class.bg-white]="tableView"
                                         class="p-element p-0 cursor-pointer border-none w-2rem flex flex-wrap align-items-center justify-content-center border-round-sm p-button p-component">
-                                        <img
-                                                src="../../../../assets/images/icon/list-bold.svg" alt=""
+                                        <img src="../../../../assets/images/icon/list-bold.svg" alt=""
                                                 class="icon-size-medium">
 
-                                        </button>
+                                </button>
                         </div>
                         <!-- appUserPermissions accessType='CREATE_CLIENT' -->
                 </div>
@@ -93,7 +91,7 @@
                                                         </button>
 
                                                         <button (click)="deleteCourse(data.id)">
-                                                                <i class="pi pi-trash" style="color: red;" ></i> Delete
+                                                                <i class="pi pi-trash" style="color: red;"></i> Delete
                                                         </button>
                                                 </div>
                                                 }
@@ -104,9 +102,17 @@
                 </ng-template>
 
                 <ng-template pTemplate="emptymessage">
-                        <tr>
+
+                        <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+                                <img src="../../../assets/images/icon/no-data.svg">
+                                <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Course</p>
+                                <p class="text-primary-purple text-base font-normal mt-2">There is no course to show you right now.</p>
+                        </div>
+
+
+                        <!-- <tr>
                                 <td colspan="5">No customers found.</td>
-                        </tr>
+                        </tr> -->
                 </ng-template>
 
         </p-table>
@@ -116,33 +122,47 @@
         @else {
 
         <div class="grid">
-                @for(data of coursesList; track data){
 
-                <div class="col-3">
+                @if (coursesList.lenght > 0 ) {
 
-                        <div class="shadow-1 cursor-pointer course-card secondry-color-border border-round-md" (click)="courseBullder(data.id)">
-                                <img class="w-full border-round-md" src="../../../assets/images/course-tham.png">
+                        @for(data of coursesList; track data){
         
-                                <div class="c-content p-3">
-                                        <h5 class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full capitalize ">
-                                                {{data.title}}</h5>
-                                </div>
+                        <div class="col-3">
         
-                                <div class="c-footer flex border-top-1 primary-purple-border p-3">
-                                        <div class="flex-1 flex justify-content-start">
-                                                @if(data.publish === true){
-                                                <p-tag severity="success" value="Published" />
-                                                }@else {
-                                                <p-tag severity="secondary" value="Unpublished" />
-                                                }
+                                <div class="shadow-1 cursor-pointer course-card secondry-color-border border-round-md"
+                                        (click)="courseBullder(data.id)">
+                                        <img class="w-full border-round-md" src="../../../assets/images/course-tham.png">
+        
+                                        <div class="c-content p-3">
+                                                <h5
+                                                        class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full capitalize ">
+                                                        {{data.title}}</h5>
                                         </div>
-                                        <div class="flex-1 flex justify-content-end">
-                                                {{data.number_students}} <i class="pi pi-users ml-2"></i>
+        
+                                        <div class="c-footer flex border-top-1 primary-purple-border p-3">
+                                                <div class="flex-1 flex justify-content-start">
+                                                        @if(data.publish === true){
+                                                        <p-tag severity="success" value="Published" />
+                                                        }@else {
+                                                        <p-tag severity="secondary" value="Unpublished" />
+                                                        }
+                                                </div>
+                                                <div class="flex-1 flex justify-content-end">
+                                                        {{data.number_students}} <i class="pi pi-users ml-2"></i>
+                                                </div>
                                         </div>
                                 </div>
                         </div>
-                </div>
+                        }
                 }
+                @else {
+                        <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+                                <img src="../../../assets/images/icon/no-data.svg">
+                                <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Course</p>
+                                <p class="text-primary-purple text-base font-normal mt-2">There is no course to show you right now.</p>
+                            </div>
+                }
+
         </div>
 
         }

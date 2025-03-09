@@ -71,9 +71,14 @@
     </ng-template>
 
     <ng-template pTemplate="emptymessage">
-        <tr>
+        <!-- <tr>
             <td colspan="5">No customers found.</td>
-        </tr>
+        </tr> -->
+        <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+            <img src="../../../assets/images/icon/no-data.svg">
+            <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Digital Product</p>
+            <p class="text-primary-purple text-base font-normal mt-2">There is no digital product to show you right now.</p>
+        </div>
     </ng-template>
 
 </p-table>
@@ -82,7 +87,8 @@
         [rows]="limit" [rowsPerPageOptions]="[15, 30, 50]" [totalRecords]=totalRecorde></p-paginator> -->
 
 
-
-<p-sidebar class="p-0 pt-1 pb-1" [(visible)]="addDigitalProduct" [fullScreen]="true">
-    <app-add-digital-product></app-add-digital-product>
-</p-sidebar>
+@if(addDigitalProduct){
+    <p-sidebar class="p-0 pt-1 pb-1" [(visible)]="addDigitalProduct" [fullScreen]="true">
+        <app-add-digital-product></app-add-digital-product>
+    </p-sidebar>
+}

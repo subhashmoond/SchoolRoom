@@ -1,4 +1,3 @@
-
 <p-toast />
 
 <div class="card">
@@ -12,7 +11,7 @@
                     src="../../../../../assets/images/icon/download.svg"></p-button>
             <p-button class="mr-2 border-round-md button-shadow"> <img
                     src="../../../../../assets/images/icon/filter.svg"> </p-button>
-            <p-button class="create-button border-round-md" (click)="openSidebar()">Add Team</p-button>
+            <p-button class="create-button border-round-md" (click)="openSidebar()"> + Add Team</p-button>
             <!-- appUserPermissions accessType='CREATE_CLIENT' -->
         </div>
 
@@ -38,38 +37,46 @@
 
         <ng-template pTemplate="body" let-data>
             <tr class="w-full flex flex-wrap">
+                
                 <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
+                    <p-avatar label="{{data.name | uppercase | slice:0:1}}" class="uppercase" styleClass="mr-2"
+                        size="large" [style]="{ 'background-color': '#ece9fc', color: '#2a1261' }" shape="circle" />
                     {{data.name}}
                 </td>
+
                 <td style="width: 20%;word-break:break-all;" class="pl-4">
                     {{data.email}}
                 </td>
+
                 <td style="width: 20%;word-break:break-all;" class="pl-4">
                     {{data.last_login}}
                 </td>
+
                 <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
-                    {{data.join_date}}
+                    {{ data.join_date | date: 'yyyy-MM-dd ; HH:mm:ss' }}
                 </td>
 
-                <td style="width: 20%;" class="pl-4" ><span
-                    class="relative flex flex-wrap align-items-center">
-
-                        <img (click)="viewDetails()"
-                        src="../../../../assets/images/icon/mdi_eye.svg"
-                        class="search-icon client-view-icon">
-
-                        <img (click)="deleteUser(data)" src="../../../../assets/images/icon/delete-unfill-icon.svg" class="search-icon client-view-icon ml-3">
-
-                    
-                    </span></td>
+                <td style="width: 20%;" class="pl-4">
+                    <span class="relative flex flex-wrap align-items-center">
+                        <img (click)="viewDetails()" src="../../../../assets/images/icon/mdi_eye.svg"
+                            class="search-icon client-view-icon">
+                        <img (click)="deleteUser(data)" src="../../../../assets/images/icon/delete-unfill-icon.svg"
+                            class="search-icon client-view-icon ml-3">
+                    </span>
+                </td>
 
             </tr>
         </ng-template>
 
         <ng-template pTemplate="emptymessage">
-            <tr>
+            <!-- <tr>
                 <td colspan="5">No customers found.</td>
-            </tr>
+            </tr> -->
+            <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+                <img src="../../../assets/images/icon/no-data.svg">
+                <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Team</p>
+                <p class="text-primary-purple text-base font-normal mt-2">There is no team to show you right now.</p>
+            </div>
         </ng-template>
 
     </p-table>
@@ -197,7 +204,7 @@
 }
 
 @if(addTeamSideBar){
-    <p-sidebar [(visible)]="addTeamSideBar" position="right" styleClass="w-30rem">
-    <app-add-team (sidebar)="closeSideBar()"></app-add-team>
+<p-sidebar [(visible)]="addTeamSideBar" position="right" styleClass="w-30rem">
+    <app-add-team (sidebar)="closeSideBar($event)"></app-add-team>
 </p-sidebar>
 }

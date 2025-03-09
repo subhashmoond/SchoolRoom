@@ -1,9 +1,9 @@
 <p-toast />
 
  <div class="w-full">
-    <h4 class="m-0 font-semibold line-height-sm">Add Teacher</h4>
+    <h4 class=" pt-4 pb-4 m-0 font-semibold line-height-sm">Add Teacher</h4>
     <!-- <p class="m-0 font-semibold line-height-sm">Enter details to create student account manually</p> -->
-    <form [formGroup]="addTeacher" (ngSubmit)="submitStudent()" class="w-full flex flex-wrap mt-7">
+    <form [formGroup]="addTeacher" class="w-full flex flex-wrap mt-4">
         <div class="flex flex-wrap w-full mb-4">
             <div class="w-full">
                 <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Name
@@ -48,28 +48,18 @@
 
         <h4 class="mb-3 mt-4">Permissions</h4>
 
-        <div class="flex flex-wrap w-full mb-4">
-            <div class="w-full formgrid grid permissions">
-                <h5 class="col-10 inline-block">Course</h5>
-                <p-inputSwitch formControlName="permissions" class="col-2" />
+        @for(data of permissionList; track data){
+
+            <div class="flex flex-wrap w-full mb-4">
+                <div class="w-full formgrid grid permissions">
+                    <h6 class="col-10 inline-block">{{data.name}}</h6>
+                    <p-inputSwitch formControlName="{{data.family}}" class="col-2" />
+                </div>
             </div>
-        </div>
 
-        <div class="flex flex-wrap w-full mb-4">
-            <div class="w-full formgrid grid permissions">
-                <h5 class="col-10 inline-block">Batches</h5>
-                <p-inputSwitch formControlName="permissions" class="col-2" />
-            </div>
-        </div>
+        }
 
-
-        <div class="flex flex-wrap w-full mb-4">
-            <div class="w-full formgrid grid permissions">
-                <h5 class="col-10 inline-block">Manage Fees</h5>
-                <p-inputSwitch formControlName="permissions" class="col-2" />
-            </div>
-        </div>
-
+        <!-- <div class="py-4"></div> -->
 
         <!-- <div class="flex flex-wrap w-full mb-4">
             <div class="w-full formgrid grid permissions">
@@ -84,7 +74,7 @@
             class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
             <button pButton pRipple (click)="closeButton()" label="Cancel"
                 class="primary-border-button px-5 mr-3 text-sm"></button>
-            <button type="submit" pButton pRipple label="Submit" class="primary-button px-5 text-sm"></button>
+            <button type="submit" pButton pRipple label="Submit" (click)="submitStudent()" class="primary-button px-5 text-sm"></button>
         </div>
     </form>
 </div>

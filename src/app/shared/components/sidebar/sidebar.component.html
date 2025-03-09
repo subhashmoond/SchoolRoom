@@ -1,40 +1,43 @@
 @if(togglesidebar){
-<div class="side-bar h-sidebar pl-3 pr-3 fixed ls-2 mt-6 z-4 border-right-light">
+<div class="side-bar h-sidebar fixed ls-2 mt-6 z-4 border-right-light" >
 
-    <div class="sidebar w-full">
+    <div class="sidebar pl-3 pr-3 w-full" style="overflow-y: scroll; height: 85vh; ">
 
-        <ul class="sidebar-menu p-0	m-0 pt-4">
-            @for(menuItem of menuItems; track menuItem.title){
-            <li class="fl" >
-                <!-- (mouseenter)="onMouseEnter(menuItem)" -->
+        <ul class="sidebar-menu p-0 m-0 pt-4">
+            @for(menuItem of menuItems; track menuItem.path){
+            <li class="fl" appUserPermissions [accessType]="menuItem?.permission">
 
-                <!-- for sub menu -->
                 @if(menuItem.type === 'sub'){
-                <a href="javascript:void(0)" (click)="toggleNavActive(menuItem)" [ngClass]="{'active':activeSubMenu  === menuItem}" routerLinkActive="active" (click)="toggleSubMenu(menuItem)" class="sidebar-header flex align-items-center px-3">
-                    <img [src]=menuItem.icon>   
+                <a href="javascript:void(0)" appUserPermissions [accessType]="menuItem?.permission"
+                    (click)="toggleNavActive(menuItem)" routerLinkActive="active"
+                    [ngClass]="{'active': activeSubMenu === menuItem}"
+                    class="sidebar-header flex align-items-center px-3">
+                    <img [src]="menuItem.icon">
                     <span> {{menuItem.title}} </span>
-                        <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
+                    <i class="text-base submenu-icon ml-auto fa fa-angle-right"></i>
                 </a>
                 }
 
-                <!-- for link menu -->
                 @if(menuItem.type === 'link'){
-                <a [routerLink]="menuItem.path" (click)="toggleNavActive(menuItem)" [ngClass]="{'active':activeMenuItem === menuItem}" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
-                    <img [src]=menuItem.icon>
+                <a [routerLink]="menuItem.path" (click)="toggleNavActive(menuItem)"
+                    [ngClass]="{'active': activeMenuItem === menuItem}" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
+                    <img [src]="menuItem.icon">
                     <span> {{menuItem.title}} </span>
                 </a>
                 }
 
-                <!-- for childern link  -->
                 @if(menuItem.children && isSubMenuOpen(menuItem)){
-                <ul class="sidebar-submenu p-0 mr-3 ml-3">
-                    @for(childernItem of menuItem.children; track childernItem){
-                    <li>
-                        <a [routerLink]="childernItem.path" (click)="toggleNavActive(childernItem)" [ngClass]="{'active':activeMenuItem === childernItem}" routerLinkActive="active" class="flex align-items-center px-3">
-                            <img [src]=childernItem.icon>
-                            <span> {{childernItem.title}} </span>
-                        </a>
 
+                <ul class="sidebar-submenu p-0 mr-3 ml-3">
+                    @for(childItem of menuItem.children; track childItem.path){
+                    <li appUserPermissions [accessType]="childItem?.permission">
+                        <a [routerLink]="childItem.path" 
+                            [ngClass]="{'active': activeMenuItem === childItem}" routerLinkActive="active"
+                            class="flex align-items-start px-3">
+                            <img [src]="childItem.icon">
+                            <span> {{childItem.title}} </span>
+                        </a>
                     </li>
                     }
                 </ul>
@@ -43,15 +46,21 @@
             }
         </ul>
 
+
+
+
     </div>
 
-    <div class="grid sidebar-footer flex justify-content-center relative mt-auto mb-0">
+    <div class="grid sidebar-footer flex justify-content-center relative mt-auto mb-0" >
 
-        <div class="col-12 flex justify-content-center mt-2 relative">
+        <!-- <div class="col-12 flex justify-content-center">
+            <p-button [raised]="true"> <img src="../../../../assets/images/icon/command-center.svg"> </p-button>
+        </div> -->
+
+        <!-- <div class="col-12 flex justify-content-center mt-2 relative">
             <h6 (mouseenter)="onProfileMouseEnter()" class="capitalize">
                 @if(profileToggle){
                 <div class="absolute profile-menu" (mouseleave)="onProfileMouseLeave()">
-                    <!-- <p-menu [model]="profileMenuItems"></p-menu> -->
                     <p-menu [model]="profileMenuItems">
                         <ng-template pTemplate="item" let-item>
                             <a (click)="profileAction(item)"><i class="{{item.icon}}"></i> {{item.label}}</a>
@@ -62,13 +71,20 @@
                 <p-avatar label="{{userName.username | uppercase | slice:0:1}}" shape="circle"
                     class="mr-1"></p-avatar>{{userName.username}}
             </h6>
-        </div>
+        </div> -->
 
-       
+
 
     </div>
 
+    <div class=" pl-3 pr-3 pt-3 personal-logo" style="border-top: 1px solid #edeef6; " >
+        <img class="w-full" src="../../../../assets/images/footer-logo.svg">
+    </div>
+    
+
 </div>
+
+
 }
 
 @else{
@@ -78,27 +94,35 @@
 
         <ul class="sidebar-menu p-0	m-0 pt-4">
             @for(menuItem of menuItems; track menuItem.title){
-            <li class="fl relative" [class.hover-remove]="isHoverRemoved">
+            <li class="fl relative" [class.hover-remove]="isHoverRemoved" appUserPermissions
+                [accessType]="menuItem?.permission">
                 <!-- for sub menu -->
                 @if(menuItem.type === 'sub'){
-                <a href="javascript:void(0)" (click)="toggleSubMenu(menuItem)" (click)="toggleNavActive(menuItem)" [ngClass]="{'active':activeMenuItem === menuItem}" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                <a href="javascript:void(0)" appUserPermissions [accessType]="menuItem?.permission"
+                    (click)="toggleSubMenu(menuItem)" (click)="toggleNavActive(menuItem)"
+                    [ngClass]="{'active':activeMenuItem === menuItem}" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
                     <img [src]=menuItem.icon>
                 </a>
                 }
 
                 <!-- for link menu -->
                 @if(menuItem.type === 'link'){
-                <a [routerLink]="menuItem.path" (click)="toggleNavActive(menuItem)" [ngClass]="{'active':activeMenuItem === menuItem}" routerLinkActive="active" class="sidebar-header flex align-items-center px-3">
+                <a [routerLink]="menuItem.path" (click)="toggleNavActive(menuItem)"
+                    [ngClass]="{'active':activeMenuItem === menuItem}" routerLinkActive="active"
+                    class="sidebar-header flex align-items-center px-3">
                     <img [src]=menuItem.icon>
                 </a>
                 }
 
                 <!-- for childern link  -->
                 @if(menuItem.children && isSubMenuOpen(menuItem)){
-                <ul class="sidebar-submenu p-0 mr-3 ml-3" (mouseleave)="onMouseLeave(menuItem)">
+                <ul class="sidebar-submenu p-0 mr-3 ml-3">
                     @for(childernItem of menuItem.children; track childernItem){
-                    <li>
-                        <a [routerLink]="childernItem.path" (click)="toggleNavActive(childernItem)" [ngClass]="{'active':activeSubMenu === childernItem}" routerLinkActive="active" class="flex align-items-center px-3">
+                    <li appUserPermissions [accessType]="childernItem?.permission">
+                        <a [routerLink]="childernItem.path" (click)="toggleNavActive(childernItem)"
+                            [ngClass]="{'active':activeSubMenu === childernItem}" routerLinkActive="active"
+                            class="flex align-items-center px-3">
                             <img [src]=childernItem.icon>
                         </a>
 
@@ -118,14 +142,12 @@
         <div class="col-12 flex justify-content-center">
             <p-button [raised]="true"> <img src="../../../../assets/images/icon/command-center.svg"> </p-button>
         </div>
-        <div class="col-12 flex justify-content-center mt-2">
+        <!-- <div class="col-12 flex justify-content-center mt-2">
 
-            
+
 
             <h6 class="capitalize" (mouseenter)="onProfileMouseEnter()">
                 @if(profileToggle){
-
-
                 <div class="absolute profile-menu" (mouseleave)="onProfileMouseLeave()">
                     <p-menu [model]="profileMenuItems">
                         <ng-template pTemplate="item" let-item>
@@ -133,11 +155,10 @@
                         </ng-template>
                     </p-menu>
                 </div>
-
                 }
                 <p-avatar label="{{userName.username | uppercase | slice:0:1}}" shape="circle" class="mr-1"></p-avatar>
             </h6>
-        </div>
+        </div> -->
     </div>
 
 </div>

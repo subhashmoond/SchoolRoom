@@ -120,6 +120,7 @@ export class AddDigitalProductComponent {
   getDigitalProductType() {
     this._digitalService.getProductType().subscribe(res => {
       this.productType = res.data
+      console.log(this.productType, "product type data lists")
     })
   }
 
@@ -134,7 +135,9 @@ export class AddDigitalProductComponent {
 
   setActive(index: number, data: any) {
     this.activeIndexType = index;
-    this.typeProduct = data.id
+    this.typeProduct = data.type
+
+    console.log(data, "seleted product type datas")
 
   }
 
@@ -225,7 +228,7 @@ export class AddDigitalProductComponent {
 
       const formData = new FormData();
       formData.append('title', this.addDigitalProductForm.get('title')?.value)
-      formData.append('productTypeId', this.typeProduct)
+      formData.append('productType', this.typeProduct)
       formData.append('category', this.addDigitalProductForm.get('productcategory')?.value)
       formData.append('label', this.addDigitalProductForm.get('productlabel')?.value)
 

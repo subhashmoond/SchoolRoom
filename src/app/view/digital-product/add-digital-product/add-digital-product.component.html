@@ -55,29 +55,29 @@
                     <div class="digital-product border-round-md flex " [class.active]="activeIndexType === $index"
                         (click)="setActive($index, data)">
 
-                        @switch (data.name) {
-                        @case ('Document') {
+                        @switch (data.type) {
+                        @case ('document') {
                         <i class="pi pi-file" style="font-size: 2rem"></i>
                         }
-                        @case ('Image(s)') {
+                        @case ('image') {
                         <i class="pi pi-image" style="font-size: 2rem"></i>
                         }
-                        @case ('Link') {
+                        @case ('link') {
                         <i class="pi pi-link" style="font-size: 2rem"></i>
                         }
-                        @case ('Video') {
+                        @case ('video') {
                         <i class="pi pi-video" style="font-size: 2rem"></i>
                         }
-                        @case ('Text') {
+                        @case ('text') {
                         <i class="pi pi-book" style="font-size: 2rem"></i>
                         }
-                        @case ('Physical goods') {
+                        @case ('physical_goods') {
                         <i class="pi pi-truck" style="font-size: 2rem"></i>
                         }
                         }
 
                         <div class="ml-4">
-                            <h5 class="text-xl font-normal text-color mb-2">{{ data.name }}</h5>
+                            <h5 class="text-xl font-normal text-color mb-2">{{ data.type }}</h5>
                             <span class="text-sm text-color-secondary">{{ data.description }}</span>
                         </div>
 

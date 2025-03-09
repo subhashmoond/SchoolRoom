@@ -9,12 +9,13 @@ import { BingMapsService } from '../../services/bing-maps.service';
 import { CommonModule } from '@angular/common';
 import { MenuModule } from 'primeng/menu';
 import { SharedService } from '../../services/shared.service';
+import { UserPermissionsDirective } from '../../../core/directives/user-permissions.directive';
 
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLink, PanelMenuModule, AvatarModule, ButtonModule,CommonModule,MenuModule],
+  imports: [RouterLink, PanelMenuModule, AvatarModule, ButtonModule, CommonModule, MenuModule, UserPermissionsDirective ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
@@ -29,22 +30,25 @@ export class SidebarComponent {
   profileToggle:boolean = false;
   activeMenuItem: any;
   activeSubMenu :any;
+  userPermissions : any;
+  storedData : any
 
   constructor(private _nav: NavService,public _sharedService:SharedService, private renderer : Renderer2, private router : Router) {
     this.renderer.setStyle(document.body, 'overflow', 'unset');
     this.userData = localStorage.getItem('userData')
     this.userName = JSON.parse(this.userData)
 
+    
+    this.storedData = localStorage.getItem('userPermissions'); // Get stored permissions from localStorage
+    this.userPermissions = JSON.parse(this.storedData)
 
   }
 
   ngOnInit() {
     console.log(this.userName, "local storage data get in component")
 
-    if(this.userName.user_type === "Admin"){
+    if(this.userName.user_type === "Admin" || this.userName.user_type === "Teacher"){
       this.menuItems = this._nav.MENUITEMS
-    }else{
-      this.menuItems = this._nav.STUDENTMENU
     }
 
 
@@ -77,9 +81,14 @@ export class SidebarComponent {
     this.isOpenSubmenus[menuItem.title] = true
   }
 
+  //   isSubMenuOpen(menuItem: any): boolean {
+  //   return this.isOpenSubmenus[menuItem.title] || false;
+  // }
   isSubMenuOpen(menuItem: any): boolean {
-    return this.isOpenSubmenus[menuItem.title] || false;
+    console.log("Checking submenu for", menuItem.title, "State:", this.activeSubMenu === menuItem);
+    return this.activeSubMenu === menuItem;
   }
+  
 
   onProfileMouseLeave(){
     this.profileToggle = false;
@@ -97,6 +106,20 @@ export class SidebarComponent {
     
   }
 
+
+
+  hasSubmenuPermission(menuItem: any): boolean {
+    debugger
+    if (!menuItem.children) return false; // No children, no need to check
+  
+    return menuItem.children.some((child : any) => this.hasPermission(child.permission));
+  }
+  
+  // Replace this with your actual permission check logic
+  hasPermission(permission: string): boolean {
+    // Implement actual permission check based on your authentication service
+    return this.userPermissions.includes(permission);
+  }
 
 
 }

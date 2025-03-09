@@ -11,7 +11,7 @@
                     src="../../../../../assets/images/icon/download.svg"></p-button>
             <p-button class="mr-2 border-round-md button-shadow"> <img
                     src="../../../../../assets/images/icon/filter.svg"> </p-button> -->
-            <p-button class="create-button border-round-md"  (click)="openSidebar()">+  Add Student</p-button>
+            <p-button class="create-button border-round-md" (click)="openSidebar()">+ Add Student</p-button>
             <!-- appUserPermissions accessType='CREATE_CLIENT' -->
         </div>
 
@@ -38,7 +38,8 @@
         <ng-template pTemplate="body" let-data>
             <tr class="w-full flex flex-wrap">
                 <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
-                    <p-avatar [label]="data.photo" class="uppercase" styleClass="mr-2" size="large" [style]="{ 'background-color': '#ece9fc', color: '#2a1261' }" shape="circle" />
+                    <p-avatar [label]="data.photo" class="uppercase" styleClass="mr-2" size="large"
+                        [style]="{ 'background-color': '#ece9fc', color: '#2a1261' }" shape="circle" />
 
                     {{data.name}}
                 </td>
@@ -53,17 +54,23 @@
                 </td>
 
                 <td style="width: 20%;" class="pl-4" (click)="viewDetails()"><span
-                    class="relative flex flex-wrap align-items-center"><img
-                        src="../../../../assets/images/icon/mdi_eye.svg"
-                        class="search-icon client-view-icon"></span></td>
+                        class="relative flex flex-wrap align-items-center"><img
+                            src="../../../../assets/images/icon/mdi_eye.svg"
+                            class="search-icon client-view-icon"></span></td>
 
             </tr>
         </ng-template>
 
         <ng-template pTemplate="emptymessage">
-            <tr>
+            <!-- <tr>
                 <td colspan="5">No customers found.</td>
-            </tr>
+            </tr> -->
+            <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+                <img src="../../../assets/images/icon/no-data.svg">
+                <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Students</p>
+                <p class="text-primary-purple text-base font-normal mt-2">There is no students to show you right now.
+                </p>
+            </div>
         </ng-template>
 
     </p-table>
@@ -191,7 +198,7 @@
 }
 
 @if(addStudentSideBar){
-    <p-sidebar [(visible)]="addStudentSideBar" position="right" styleClass="w-30rem">
-        <app-add-student (sideBars)="closeSideBar()"></app-add-student>
-    </p-sidebar>
+<p-sidebar [(visible)]="addStudentSideBar" position="right" styleClass="w-30rem">
+    <app-add-student (sideBars)="closeSideBar()"></app-add-student>
+</p-sidebar>
 }

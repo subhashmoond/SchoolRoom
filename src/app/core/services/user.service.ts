@@ -10,9 +10,19 @@ export class UserService {
 
   constructor(private http: HttpClient, private _dataService: DataMethodService) { }
 
+  getPermissionData(){
+    const url = `${environment.basePath}educator/permission/list/`;
+    return this._dataService.get(url)
+  }
+
   addTeacher(body : any){
     const url = `${environment.basePath}educator/teacher/create/`;
     return this._dataService.post(url, body); 
+  }
+
+  permissionAssignToTeacher(payload : any){
+    const url = `${environment.basePath}educator/permissions/assign/`;
+    return this._dataService.post( url, payload )
   }
 
   getTeacherList(){
