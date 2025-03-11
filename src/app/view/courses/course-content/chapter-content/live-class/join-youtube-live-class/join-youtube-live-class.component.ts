@@ -103,8 +103,9 @@ export class JoinYoutubeLiveClassComponent {
       rejectIcon: "none",
       accept: () => {
 
-        window.history.back();
-        
+        // window.history.back();
+        this.router.navigate(['/dashborad']);
+ 
       },
       reject: () => {
 

@@ -11,41 +11,61 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-digital-product',
   standalone: true,
-  imports: [ButtonModule, TableModule, PaginatorModule, CommonModule, ConfirmDialogModule, TagModule, SidebarModule, AddDigitalProductComponent, ToastModule ],
+  imports: [ButtonModule, TableModule, PaginatorModule, CommonModule, ConfirmDialogModule, TagModule, SidebarModule, AddDigitalProductComponent, ToastModule, TooltipModule ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './digital-product.component.html',
   styleUrl: './digital-product.component.css'
 })
 export class DigitalProductComponent {
 
-  digitalProductList : any;
-  addDigitalProduct : boolean = false
+  digitalProductList: any;
+  addDigitalProduct: boolean = false
 
-  constructor( private _digitalService : DigitalProductService, private _confirmationService: ConfirmationService, private _messageService: MessageService, private router : Router ){}
+  constructor(private _digitalService: DigitalProductService, private _confirmationService: ConfirmationService, private _messageService: MessageService, private router: Router) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.getDigitalProductList()
   }
 
-  addDigitalProducts(){
+  addDigitalProducts() {
     this.addDigitalProduct = true
   }
 
-  getDigitalProductList(){
+  getDigitalProductList() {
     this._digitalService.getDigitalProduct().subscribe(res => {
       this.digitalProductList = res.data
     })
   }
 
-  productDetailPage(id : any){
+  productDetailPage(id: any) {
     this.router.navigate(['digital-product/detail', id])
   }
 
-  deleteProduct(data : any){
+
+  publishProduct(id : any) {
+    const payload = {
+      "isPublished": true
+    }
+
+    this._digitalService.publishDigitalProduct(id, payload).subscribe((res : any) => {
+      if (res.status === true) {
+        this._messageService.add({ severity: 'success', detail: "Digital product published successfully!" });
+       this.getDigitalProductList();
+      }
+
+    });
+
+
+  }
+
+
+
+  deleteProduct(data: any) {
 
     this._confirmationService.confirm({
       header: '',
@@ -59,15 +79,15 @@ export class DigitalProductComponent {
       rejectIcon: "none",
       accept: () => {
 
-        this._digitalService.deleteDigitalProduct(data.id).subscribe((res : any) => {
+        this._digitalService.deleteDigitalProduct(data.id).subscribe((res: any) => {
 
-          if(res.status === true){
-            this._messageService.add({ severity: 'success', detail: "Degital product deleted successfully!" });
+          if (res.status === true) {
+            this._messageService.add({ severity: 'success', detail: "Digital product deleted successfully!" });
             this.getDigitalProductList();
           }
-    
+
         })
-        
+
       },
       reject: () => {
 
@@ -75,7 +95,7 @@ export class DigitalProductComponent {
 
     });
 
-    
+
 
   }
 

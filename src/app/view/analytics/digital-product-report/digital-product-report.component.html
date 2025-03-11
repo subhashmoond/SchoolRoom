@@ -1,0 +1,303 @@
+<!-- <p-toast /> -->
+
+<div class="cards analytics">
+
+    <div class="grid client-dashborad-header mb-4 align-items-center">
+        <div class="col-8">
+            <h4 class="subheading-color">Digital Product Report</h4>
+            <p class="m-0 mt-2">Track and analyze digital product data. </p>
+        </div>
+
+        <div class="col-4">
+
+            <div class="flex justify-content-end">
+
+                <ul class="mb-2 p-0  flex text-xs list-none filter-li">
+                    <li (click)="applicationFilter(null, 'last_7_days')" class="cursor-pointer"> Week </li>
+                    <li (click)="applicationFilter(null, 'last_30_days')" class="cursor-pointer">Month</li>
+                    <li (click)="applicationFilter(null, 'this_month')" class="cursor-pointer">This Month</li>
+                    <li (click)="applicationFilter(null, 'last_month')" class="cursor-pointer">Last Month </li>
+                    <li (click)="applicationFilter(null, 'all_time')" class="cursor-pointer">All Time</li>
+                </ul>
+            </div>
+
+
+            <p-calendar [(ngModel)]="fromToDateValue" (onSelect)="applicationFilter(fromToDateValue, 'custom')"
+                selectionMode="range" placeholder="Start Date - End Date" [readonlyInput]="true" inputId="range"
+                [numberOfMonths]="2" [showIcon]="true" [maxDate]="maxDate" [defaultDate]="prevMonth"
+                [showButtonBar]="true">
+            </p-calendar>
+
+
+        </div>
+
+    </div>
+
+    <p-tabView>
+
+        <p-tabPanel header="Reports">
+            <div class="grid">
+
+                <div class="col-4">
+                    <div class="total-loan-amount-card mb-1 w-full borderall p-3"
+                        style="background: #F3F4F9; border-radius: 5px;">
+                        <div class="grid grid-nogutter">
+                            <div class="col-8 flex flex-wrap align-items-center">
+                                <div class="w-full">
+                                    <h6 class="line-height-exsm font-medium">Total Sales</h6>
+                                    <h4
+                                        class="font-semibold mt-1  white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                                        {{overViewData.total_sales}}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-4 flex flex-wrap justify-content-end">
+                                <span
+                                    class="block primary-bg-purple h-4rem w-4rem border-circle flex flex-wrap align-items-center justify-content-center">
+                                    <i class="primary-color text-3xl pi pi-credit-card"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="total-loan-amount-card mb-1 w-full borderall p-3"
+                        style="background: #F3F4F9; border-radius: 5px;">
+                        <div class="grid grid-nogutter">
+                            <div class="col-8 flex flex-wrap align-items-center">
+                                <div class="w-full">
+                                    <h6 class="line-height-exsm font-medium"> Total Revenue </h6>
+                                    <h4
+                                        class="font-semibold mt-1  white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                                        {{overViewData.total_revenue}}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-4 flex flex-wrap justify-content-end">
+                                <span
+                                    class="block primary-bg-purple h-4rem w-4rem border-circle flex flex-wrap align-items-center justify-content-center">
+                                    <i class="primary-color text-3xl pi pi-wallet"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="total-loan-amount-card mb-1 w-full borderall p-3"
+                        style="background: #F3F4F9; border-radius: 5px;">
+                        <div class="grid grid-nogutter">
+                            <div class="col-8 flex flex-wrap align-items-center">
+                                <div class="w-full">
+                                    <h6 class="line-height-exsm font-medium"> Confirmed Orders </h6>
+                                    <h4
+                                        class="font-semibold mt-1  white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                                        {{overViewData.total_confirmed_orders}}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-4 flex flex-wrap justify-content-end">
+                                <span
+                                    class="block primary-bg-purple h-4rem w-4rem border-circle flex flex-wrap align-items-center justify-content-center">
+                                    <i class="primary-color text-3xl pi pi-shopping-cart"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="total-loan-amount-card mb-1 w-full borderall p-3"
+                        style="background: #F3F4F9; border-radius: 5px;">
+                        <div class="grid grid-nogutter">
+                            <div class="col-8 flex flex-wrap align-items-center">
+                                <div class="w-full">
+                                    <h6 class="line-height-exsm font-medium">Delivered Orders</h6>
+                                    <h4
+                                        class="font-semibold mt-1  white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                                        {{overViewData.total_delivered_orders}}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-4 flex flex-wrap justify-content-end">
+                                <span
+                                    class="block primary-bg-purple h-4rem w-4rem border-circle flex flex-wrap align-items-center justify-content-center">
+                                    <i class="primary-color text-3xl pi pi-wallet"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="total-loan-amount-card mb-1 w-full borderall p-3"
+                        style="background: #F3F4F9; border-radius: 5px;">
+                        <div class="grid grid-nogutter">
+                            <div class="col-8 flex flex-wrap align-items-center">
+                                <div class="w-full">
+                                    <h6 class="line-height-exsm font-medium"> Confirmed Sales </h6>
+                                    <h4
+                                        class="font-semibold mt-1  white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                                        {{overViewData.total_confirmed_sales}}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-4 flex flex-wrap justify-content-end">
+                                <span
+                                    class="block primary-bg-purple h-4rem w-4rem border-circle flex flex-wrap align-items-center justify-content-center">
+                                    <i class="primary-color text-3xl pi pi-credit-card"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="total-loan-amount-card mb-1 w-full borderall p-3"
+                        style="background: #F3F4F9; border-radius: 5px;">
+                        <div class="grid grid-nogutter">
+                            <div class="col-8 flex flex-wrap align-items-center">
+                                <div class="w-full">
+                                    <h6 class="line-height-exsm font-medium"> Delivered Sales </h6>
+                                    <h4
+                                        class="font-semibold mt-1  white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                                        {{overViewData.total_delivered_sales}}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="col-4 flex flex-wrap justify-content-end">
+                                <span
+                                    class="block primary-bg-purple h-4rem w-4rem border-circle flex flex-wrap align-items-center justify-content-center">
+                                    <i class="primary-color text-3xl pi pi-credit-card"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12 mt-3">
+                    <h6> Report </h6>
+                    <app-line-chart></app-line-chart>
+                </div>
+
+                <div class="col-12 mt-3">
+                    <h6> Sales </h6>
+
+                    <app-line-chart></app-line-chart>
+                </div>
+
+            </div>
+        </p-tabPanel>
+
+        <p-tabPanel header="Transactions">
+
+            <form [formGroup]="filterForm">
+
+                <div class="grid py-3">
+                    <div class="col-3">
+                        <!-- <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Select
+                            Product</label> -->
+
+                        <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid"
+                            class="text-sm w-full" [required]="true" formControlName="productcategory"
+                            [options]="digitalProductList" optionValue="id" optionLabel="title"
+                            placeholder="Select Product"></p-dropdown>
+
+                    </div>
+
+                    <div class="col-3">
+                        <!-- <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Status</label> -->
+
+                        <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid"
+                            class="text-sm w-full" [required]="true" formControlName="status" [options]="statusValue"
+                            optionValue="id" optionLabel="name" placeholder="Select Status"></p-dropdown>
+                    </div>
+
+                    <div class="col-3">
+                        <!-- <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Date</label> -->
+
+                        <p-calendar [(ngModel)]="fromToDateValue"
+                            (onSelect)="applicationFilter(fromToDateValue, 'custom')" formControlName="date"
+                            selectionMode="range" placeholder="Start Date - End Date" [readonlyInput]="true"
+                            inputId="range" [numberOfMonths]="2" [showIcon]="true" [maxDate]="maxDate"
+                            [defaultDate]="prevMonth" [showButtonBar]="true">
+                        </p-calendar>
+
+                    </div>
+
+                    <div class="col-3">
+                        <button type="button" (click)="applyFilter()" pButton pRipple label="Apply" class="secondary-button px-6 "></button>
+                    </div>
+                    
+                </div>
+
+            </form>
+
+
+            <p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
+                selectionMode="single" class="client-data-table" [value]="transctionListData">
+
+                <ng-template pTemplate="header" class="p-4">
+                    <tr class="w-full flex flex-wrap">
+                        <th style="width:80%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Category
+                            Name</th>
+                        <!-- <th style="width:60%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Create Date</th> -->
+
+                        <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Action
+                        </th>
+                    </tr>
+
+                </ng-template>
+
+                <ng-template pTemplate="body" let-data>
+                    <tr class="w-full flex flex-wrap">
+                        <td style="width: 80%;word-break:break-all;" class="pl-4 capitalize">
+                            {{data.category_name}}
+                        </td>
+                        <!-- <td style="width: 60%;word-break:break-all;" class="pl-4">
+                           {{data.create_at}}
+                        </td> -->
+
+                        <td style="width: 20%;" class="pl-4">
+
+                            <!-- <i class="pi pi-plus cursor-pointer" pTooltip="Add New Subcategory" tooltipPosition="top"
+                                (click)="addSubCategory(data.category_id)" style="font-size: 1rem"></i>
+                            <i class="pi pi-eye ml-3 cursor-pointer" pTooltip="View Details" tooltipPosition="top"
+                                (click)="viewDetails(data)" style="font-size: 1rem"></i> -->
+
+                            <i class="pi pi-trash ml-3 cursor-pointer" [style]="{color : 'red'}"
+                                pTooltip="Delete Category" tooltipPosition="top" style="font-size: 1rem"></i>
+
+                        </td>
+
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <!-- <tr>
+                        <td colspan="5">No customers found.</td>
+                    </tr> -->
+                    <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+                        <img src="../../../assets/images/icon/no-data.svg">
+                        <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Exam Category</p>
+                        <p class="text-primary-purple text-base font-normal mt-2">There is no exam category to show you
+                            right now.</p>
+                    </div>
+                </ng-template>
+
+            </p-table>
+
+
+
+
+        </p-tabPanel>
+
+
+    </p-tabView>
+
+
+
+
+</div>

@@ -95,7 +95,7 @@ export class DigitalProductInfoComponent {
         edition: res.data.edition,
         label: res.data.label,
         language: res.data.language,
-        lifetime: res.data.isLifeTimeAccess,
+        // lifetime: res.data.isLifeTimeAccess,
         productcategory : res.data.category.id
         // ispublished: res.data.is_published,
         // validitydays: [],
@@ -115,7 +115,7 @@ export class DigitalProductInfoComponent {
 
     const payload = {
       "title": formValue.name,
-      "is_life_time_access": formValue.lifetime,
+      // "is_life_time_access": formValue.lifetime,
       // "validity":200,
       "edition": formValue.edition,
       "aboutus": formValue.description,

@@ -44,6 +44,11 @@ export class DigitalProductDetailComponent {
     this._sharedService.settoggleButtonValue(false);
 
     this.getProductDetail();
+
+    this._digitalService.currentUpdateDigitalProduct.subscribe(res => {
+      this.getProductDetail();
+    });
+    
   }
 
   getProductDetail(){

@@ -42,7 +42,7 @@ export class AddDigitalProductComponent {
   addProductPrice!: FormGroup;
   activeIndex: number = 0;
   items: any;
-  digitalProductCategoryListData : any;
+  digitalProductCategoryListData: any;
   // selectedFileObjectUrl: any;
   // fileUpload: any;
   // selectedFile: any;
@@ -93,7 +93,7 @@ export class AddDigitalProductComponent {
     this.addDigitalProductForm = this._fb.group({
       title: ['', Validators.required],
       productlabel: [''],
-      productcategory : ['']
+      productcategory: ['']
     })
 
     this.addProductFile = this._fb.group({
@@ -107,7 +107,8 @@ export class AddDigitalProductComponent {
       price: [],
       mrp: [],
       timelimit: [],
-      pgfees: []
+      pgfees: [],
+      days: []
     })
 
     this.addDecThumb = this._fb.group({
@@ -125,7 +126,7 @@ export class AddDigitalProductComponent {
   }
 
 
-  getDigitalProductCategory(){
+  getDigitalProductCategory() {
     this._digitalService.getDigitalProductCategoryList().subscribe(res => {
       this.digitalProductCategoryListData = res.data
     })
@@ -260,15 +261,12 @@ export class AddDigitalProductComponent {
     if (this.activeIndex === 1) {
 
       const payload = {
-
         "isPaid": this.addProductPrice.get('ispaid')?.value,
         "mrp": this.addProductPrice.get('mrp')?.value,
         "price": this.addProductPrice.get('price')?.value,
         "isDownloadable": false,
         "is_life_time_access": this.addProductPrice.get('timelimit')?.value,
-        "validity": this.addProductPrice.get('days')?.value,
         "allow_handling_fees": this.addProductPrice.get('pgfees')?.value
-        // "allow_handling_fees"
       }
 
       this._digitalService.updateDigitalProduct(this.productId, payload).subscribe(res => {
@@ -285,8 +283,8 @@ export class AddDigitalProductComponent {
       }
 
       this._digitalService.updateDigitalProduct(this.productId, payload).subscribe(res => {
-        
-    this.router.navigate(['digital-product/detail', this.productId])
+
+        this.router.navigate(['digital-product/detail', this.productId])
 
       })
 

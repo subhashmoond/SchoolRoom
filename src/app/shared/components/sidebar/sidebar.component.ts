@@ -85,7 +85,7 @@ export class SidebarComponent {
   //   return this.isOpenSubmenus[menuItem.title] || false;
   // }
   isSubMenuOpen(menuItem: any): boolean {
-    console.log("Checking submenu for", menuItem.title, "State:", this.activeSubMenu === menuItem);
+    // console.log("Checking submenu for", menuItem.title, "State:", this.activeSubMenu === menuItem);
     return this.activeSubMenu === menuItem;
   }
   

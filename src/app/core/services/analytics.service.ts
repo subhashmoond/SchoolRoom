@@ -19,6 +19,11 @@ export class AnalyticsService {
     this.dataSource.next(newData);
   }
 
+  getLiveSessionsList(){
+    const url = `${environment.basePath}content/live/session-list/`;
+    return this._dataService.get(url);
+  }
+
 
   getDashboradAnalyticsData() {
     const url = `${environment.basePath}educator/overview/analytics`;
@@ -69,6 +74,12 @@ export class AnalyticsService {
   getTransactionsReport() {
     const url = `${environment.basePath}educator/transactions?product_ids=008da9dbbaf348c4816cd5ef697c53ba&product_ids=ec26884c735e44a38742059392b12f5c`;
     return this._dataService.get(url);
+  }
+
+  // Get Digital Products 
+  getDigitalProductOverview(){
+    const url = `${environment.basePath}digital-product/overviews/analytics`;
+    return this._dataService.get(url)
   }
 
 }

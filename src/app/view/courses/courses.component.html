@@ -106,7 +106,8 @@
                         <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
                                 <img src="../../../assets/images/icon/no-data.svg">
                                 <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Course</p>
-                                <p class="text-primary-purple text-base font-normal mt-2">There is no course to show you right now.</p>
+                                <p class="text-primary-purple text-base font-normal mt-2">There is no course to show you
+                                        right now.</p>
                         </div>
 
 
@@ -123,45 +124,43 @@
 
         <div class="grid">
 
-                @if (coursesList.lenght > 0 ) {
 
-                        @for(data of coursesList; track data){
-        
-                        <div class="col-3">
-        
-                                <div class="shadow-1 cursor-pointer course-card secondry-color-border border-round-md"
-                                        (click)="courseBullder(data.id)">
-                                        <img class="w-full border-round-md" src="../../../assets/images/course-tham.png">
-        
-                                        <div class="c-content p-3">
-                                                <h5
-                                                        class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full capitalize ">
-                                                        {{data.title}}</h5>
+                @for(data of coursesList; track data){
+
+                <div class="col-3">
+                        <div class="shadow-1 cursor-pointer course-card secondry-color-border border-round-md"
+                                (click)="courseBullder(data.id)">
+                                <img class="w-full border-round-md" src="../../../assets/images/course-tham.png">
+
+                                <div class="c-content p-3">
+                                        <h5 class="white-space-nowrap overflow-hidden text-overflow-ellipsis w-full capitalize ">
+                                                {{data.title}}</h5>
+                                </div>
+
+                                <div class="c-footer flex border-top-1 primary-purple-border p-3">
+                                        <div class="flex-1 flex justify-content-start">
+                                                @if(data.publish === true){
+                                                <p-tag severity="success" value="Published" />
+                                                }@else {
+                                                <p-tag severity="secondary" value="Unpublished" />
+                                                }
                                         </div>
-        
-                                        <div class="c-footer flex border-top-1 primary-purple-border p-3">
-                                                <div class="flex-1 flex justify-content-start">
-                                                        @if(data.publish === true){
-                                                        <p-tag severity="success" value="Published" />
-                                                        }@else {
-                                                        <p-tag severity="secondary" value="Unpublished" />
-                                                        }
-                                                </div>
-                                                <div class="flex-1 flex justify-content-end">
-                                                        {{data.number_students}} <i class="pi pi-users ml-2"></i>
-                                                </div>
+                                        <div class="flex-1 flex justify-content-end">
+                                                {{data.number_students}} <i class="pi pi-users ml-2"></i>
                                         </div>
                                 </div>
                         </div>
-                        }
+                </div>
                 }
-                @else {
-                        <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
-                                <img src="../../../assets/images/icon/no-data.svg">
-                                <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Course</p>
-                                <p class="text-primary-purple text-base font-normal mt-2">There is no course to show you right now.</p>
-                            </div>
-                }
+                
+                <!-- @else {
+                <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+                        <img src="../../../assets/images/icon/no-data.svg">
+                        <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Course</p>
+                        <p class="text-primary-purple text-base font-normal mt-2">There is no course to show you right
+                                now.</p>
+                </div>
+                } -->
 
         </div>
 

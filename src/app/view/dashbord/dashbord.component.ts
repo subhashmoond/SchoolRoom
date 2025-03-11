@@ -4,6 +4,7 @@ import { AnalyticsService } from '../../core/services/analytics.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { LiveWebsocketService } from '../../core/services/live-websocket.service';
 
 @Component({
   selector: 'app-dashbord',
@@ -14,13 +15,19 @@ import { ButtonModule } from 'primeng/button';
 })
 export class DashbordComponent {
 
-  reportData: any
-  constructor(private _analyticsService: AnalyticsService, private _router: Router) { }
+  reportData: any;
+  liveSessionData : any
+  constructor(private _analyticsService: AnalyticsService, private _router: Router, private _liveWebsocketService : LiveWebsocketService, private router : Router ) { }
 
   ngOnInit() {
 
     this._analyticsService.getDashboradAnalyticsData().subscribe(res => {
       this.reportData = res
+    })
+
+
+    this._analyticsService.getLiveSessionsList().subscribe(res => {
+      this.liveSessionData = res.data
     })
 
   }
@@ -64,7 +71,9 @@ export class DashbordComponent {
 
 
   liveOpen(data : any){
-    
+      this.router.navigate(['/join/youtubelive']);
+      this._liveWebsocketService.openLiveClass(data)
   }
+
 
 }

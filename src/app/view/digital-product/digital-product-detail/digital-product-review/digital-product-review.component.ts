@@ -65,6 +65,7 @@ export class DigitalProductReviewComponent {
     this._digitalService.allowReviews(this.digitalProductId, payload).subscribe((res: any) => {
       if (res.status === true) {
         this._messageService.add({ severity: 'success', detail: 'Review Allow Successfull !' });
+        this._digitalService.changeDigitalProduct('allow')
       }
     })
 

@@ -14,7 +14,7 @@
 @if (!isLoader) {
 
 
-@if (chapterDataList.content.length < 1 ) { 
+@if ( chapterDataList.live.length < 1 && chapterDataList.content.length < 1 ) { 
     <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
     <img src="../../../../../assets/images/icon/no-loan-application.svg">
     <p class="text-primary-purple text-xl font-semibold mt-6 mb-1">No Contents</p>
@@ -24,7 +24,7 @@
     }
     @else {
 
-    @if(chapterDataList.live.length > 0){
+    @if( chapterDataList.live.length > 0 ){                                                 
 
     <div class="mt-5 mb-3">
         <h5> Live Class </h5>

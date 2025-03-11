@@ -121,6 +121,7 @@ export class ChapterContentComponent {
 
 
   joinLive(data : any) {
+
     this.router.navigate(['/join/youtubelive']);
     this._liveWebsocketService.openLiveClass(data)
   }

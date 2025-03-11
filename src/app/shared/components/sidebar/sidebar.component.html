@@ -94,7 +94,7 @@
 
         <ul class="sidebar-menu p-0	m-0 pt-4">
             @for(menuItem of menuItems; track menuItem.title){
-            <li class="fl relative" [class.hover-remove]="isHoverRemoved" appUserPermissions
+            <li class="fl relative" appUserPermissions
                 [accessType]="menuItem?.permission">
                 <!-- for sub menu -->
                 @if(menuItem.type === 'sub'){
@@ -125,7 +125,6 @@
                             class="flex align-items-center px-3">
                             <img [src]=childernItem.icon>
                         </a>
-
                     </li>
                     }
                 </ul>
@@ -139,9 +138,9 @@
 
     <div class="w-full grid sidebar-footer flex justify-content-center relative mt-auto mb-0">
 
-        <div class="col-12 flex justify-content-center">
+        <!-- <div class="col-12 flex justify-content-center">
             <p-button [raised]="true"> <img src="../../../../assets/images/icon/command-center.svg"> </p-button>
-        </div>
+        </div> -->
         <!-- <div class="col-12 flex justify-content-center mt-2">
 
 
