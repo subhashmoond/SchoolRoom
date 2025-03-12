@@ -1,18 +1,34 @@
 <p-toast></p-toast>
-@if(editItemData){
+<!-- @if(editItemData){
     <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Edit Coupons </h4>
 }@else {
     <h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Create Coupons </h4>
-}
+} -->
 
-<form [formGroup]="createCouponsForm" (ngSubmit)="createCoupon()" class="w-full flex flex-wrap">
+<p-toast></p-toast>
 
-    <div class="grid nested-grid mt-3">
+<span class="absolute mt-4 ml-6"> 1/2</span>
 
-        <div class="col-12">
-            <div class="grid">
+<div class="add-courses mt-4 pb-7">
 
-                <!-- <div class="col-12">
+    <div class="text-center mb-5">
+        @if(editItemData){
+        <h3 class="m-0 pb-2">Edit Coupons</h3>
+        }@else {
+        <h3 class="m-0 pb-2">Create Coupons</h3>
+        }
+
+        <p class="m-0 text-color-secondary line-height-3">Create Coupons</p>
+    </div>
+
+    <form [formGroup]="createCouponsForm" (ngSubmit)="createCoupon()" class="w-full flex w-6 m-0-a flex-wrap">
+
+        <div class="grid nested-grid mt-3">
+
+            <div class="col-12">
+                <div class="grid nested-grid">
+
+                    <!-- <div class="col-12">
                             <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Select Student
                                 <span>*</span></label>
                             <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
@@ -21,45 +37,92 @@
                             placeholder="Select Student"></p-dropdown>
                         </div> -->
 
-                <div class="col-12">
-                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Discount</label>
-                    <input class="w-full capitalize" pKeyFilter="num" pInputText formControlName="discount" />
-                </div>
-
-                <div class="col-12">
-                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Valid To </label>
-                    <p-calendar formControlName="valid_to" />
-                </div>
-
-                <div class="col-12">
-                    <div class="w-full formgrid grid permissions">
-                        <label class="col-10 inline-block">Suggest During Checkout</label>
-                        <p-inputSwitch formControlName="suggest" class="col-2" />
+                    <div class="col-6">
+                        <div (click)="selectOption(1)"
+                            class="p-4 cursor-pointer border-solid main-border-color border-round-lg border-2 flex flex-column w-full h-full px-3 justify-content-center align-items-center"
+                            [ngClass]="{'selected': selectedOption === 1}">
+                            <!-- <i class="pi pi-percentage"></i> -->
+                            <h5 class="m-0 text-color">Percentage</h5>
+                            <!-- <span class="text-xs text-color-secondary mt-2">Skip this step for now, I will add it later</span> -->
+                        </div>
                     </div>
-                </div>
 
+                    <div class="col-6">
+                        <div (click)="selectOption(2)"
+                            class="p-4 cursor-pointer border-solid main-border-color border-round-lg border-2 flex flex-column w-full h-full px-3 justify-content-center align-items-center"
+                            [ngClass]="{'selected': selectedOption === 2}">
+                            <!-- <i class="pi pi-check"></i> -->
+                            <h5 class="m-0 text-color">Flat</h5>
+                            <!-- <span class="text-xs text-color-secondary mt-2">Proceed with the next step</span> -->
+                        </div>
+                    </div>
+
+
+                    <div class="col-12">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Code Text </label>
+                        <input class="w-full capitalize" pInputText formControlName="codetext" placeholder="Enter code text" />
+                    </div>
+
+                    <div class="col-6">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Start Date
+                        </label>
+                        <p-calendar type="date" formControlName="startdate" placeholder="dd/mm/yyyy" />
+                    </div>
+
+                    <div class="col-6">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> End Date </label>
+                        <p-calendar type="date" formControlName="enddate" placeholder="dd/mm/yyyy" />
+                    </div>
+
+                    <div class="col-12">
+                        <div class="w-full formgrid grid permissions">
+                            <label class="col-10 inline-block">Suggest During Checkout</label>
+                            <p-inputSwitch formControlName="suggest" class="col-2" />
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <span (click)="advanceOption()" class="primary-color text-lg" > Advanced Options </span>
+                    </div>
+
+                    @if(isAdvance){
+
+                    <div class="grid">
+                        <div class="col-6">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Max Use </label>
+                            <input class="w-full capitalize" pKeyFilter="num" pInputText formControlName="discount" />
+                        </div>
+
+
+                        <div class="col-6">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Min Order Value</label>
+                            <input class="w-full capitalize" pKeyFilter="num" pInputText formControlName="discount" />
+                        </div>
+
+                        <div class="col-12">
+                            <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Max Discount</label>
+                            <input class="w-full capitalize" pKeyFilter="num" pInputText formControlName="discount" />
+                        </div>
+                    </div>
+
+
+                    }
+
+
+
+                </div>
             </div>
+
+
+
         </div>
 
+        <div
+            class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+            <button pButton pRipple label="Cancel" (click)="closeSideBar()"
+                class="primary-border-button px-5 mr-3 text-sm"></button>
+            <button type="submit" pButton pRipple label="Add" class="primary-button px-5 text-sm"></button>
+        </div>
+    </form>
 
-
-    </div>
-
-    <div class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
-        <button pButton pRipple label="Cancel" (click)="closeSideBar()"
-            class="primary-border-button px-5 mr-3 text-sm"></button>
-        <button type="submit" pButton pRipple label="Add" class="primary-button px-5 text-sm"></button>
-    </div>
-</form>
-
-
-
-
-
-
-
-
-
-
-
-
+</div>

@@ -11,11 +11,13 @@ import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DigitalProductService } from '../../../core/services/digital-product.service';
 import { DropdownModule } from 'primeng/dropdown';
+import { AvatarModule } from 'primeng/avatar';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-digital-product-report',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MultiSelectModule, DropdownModule, ToastModule, CardModule, LineChartComponent, CalendarModule, FormsModule, TabViewModule, TableModule],
+  imports: [CommonModule, ReactiveFormsModule, MultiSelectModule, TagModule, DropdownModule, ToastModule, CardModule, LineChartComponent, CalendarModule, FormsModule, TabViewModule, TableModule, AvatarModule ],
   providers: [DatePipe],
   templateUrl: './digital-product-report.component.html',
   styleUrl: './digital-product-report.component.css'
@@ -31,6 +33,7 @@ export class DigitalProductReportComponent {
   overViewData: any;
   transctionListData: any;
   digitalProductList: any[] = [];
+  reportData : any
 
   statusValue = [
     { name: "Confirmed", id: 'CONFIRMED' },
@@ -47,16 +50,15 @@ export class DigitalProductReportComponent {
 
   ngOnInit() {
     this.getDigitalProductList();
-    this.getOverViewData();
     this.applicationFilter(null, 'last_7_days');
 
     this.filterForm = this._fb.group({
       selectProduct: [''],
-      status : [''],
-      date : ['']
+      status: [''],
+      date: ['']
     });
 
-
+    this.applyFilter();
 
   }
 
@@ -66,14 +68,6 @@ export class DigitalProductReportComponent {
     })
   }
 
-
-  getOverViewData() {
-
-    this._analyticsService.getDigitalProductOverview().subscribe(res => {
-      this.overViewData = res
-    })
-
-  }
 
   applicationFilter(event: any, type: any) {
 
@@ -87,18 +81,32 @@ export class DigitalProductReportComponent {
       payload.filter_type = type
     }
 
-    this._analyticsService.getRevenueReport(payload).subscribe(res => {
+    this._analyticsService.getDigitalProductRevenueReport(payload).subscribe(res => {
 
-      this.chartData = res;
-      this._analyticsService.updateData(res.revenue_data);
+      this.reportData = res;
+      // this._analyticsService.updateData(res.revenue_data);
 
     })
 
   }
 
 
-  applyFilter(){
-    
+  applyFilter() {
+
+
+    const dateData = this.filterForm.get('date')?.value
+    const payload: any = {}
+
+    payload.start_date = this._datePipe.transform(dateData[0], 'yyyy-MM-dd');
+    payload.end_date = this._datePipe.transform(dateData[1], 'yyyy-MM-dd');
+    payload.status = this.filterForm.get('status')?.value
+    payload.product_ids = this.filterForm.get('selectProduct')?.value;
+
+    this._analyticsService.getDigitalProductTransactionData(payload).subscribe(res => {
+      this.transctionListData = res.transactions
+    })
+
+    // console.log(this.filterForm.value, "Form Value Data")
   }
 
 

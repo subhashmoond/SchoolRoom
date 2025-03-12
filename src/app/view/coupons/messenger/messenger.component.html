@@ -8,8 +8,14 @@
         </div>
         <div class="col-6 flex justify-content-end	">
 
+            <p-dropdown class="capitalize text-sm mr-4 w-14rem" [filter]="true" filterBy="name" id="officeid"
+                [required]="true" [(ngModel)]="typeFilter" [options]="notificationType" optionValue="name" optionLabel="name"
+                placeholder="Select Notification Type" (onChange)="onSelectNotificationType($event)">
+            </p-dropdown>
+
+
             <p-button class="create-button border-round-md" (click)="openSidebar()"> + Add Campaign</p-button>
-            
+
         </div>
 
     </div>
@@ -21,15 +27,13 @@
 
         <ng-template pTemplate="header" class="p-4">
             <tr class="w-full flex flex-wrap">
-                <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Code</th>
-                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Discount</th>
-                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Used Count
+                <th style="width:20%;word-break:break-all;" class="pl-3 pt-3 border-none primary-color">Title</th>
+                <th style="width:40%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Message</th>
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Schedule Date
                 </th>
-                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Valid To
+                <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Status
                 </th>
-                <th style="width:10%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Status
-                </th>
-                <th style="width:10%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color"> Action</th>
+
             </tr>
 
         </ng-template>
@@ -37,30 +41,21 @@
         <ng-template pTemplate="body" let-data>
             <tr class="w-full flex flex-wrap">
                 <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
-                    {{data.code}}
+                    {{data.title}}
+                </td>
+                <td style="width: 40%;word-break:break-all;" class="pl-4">
+                    {{data.message}}
                 </td>
                 <td style="width: 20%;word-break:break-all;" class="pl-4">
-                    {{data.discount}}
-                </td>
-                <td style="width: 20%;word-break:break-all;" class="pl-4">
-                    {{data.used_count}}
+                    {{ data.schedule_on | date:'dd/MM/yyyy HH:mm:ss' }}
                 </td>
                 <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
-                    {{data.valid_date }}
-                </td>
-
-                <td style="width: 10%;" class="pl-4">
-                    @if(data.actvie === true){
-                    Actvie
-                    }@else {
-                    Deactive
+                    @if(data.status){
+                    Send
                     }
-                </td>
-
-                <td style="width: 10%;" class="pl-4">
-
-                    zxc
-
+                    @else{
+                    Scheduled
+                    }
                 </td>
 
             </tr>
@@ -74,12 +69,12 @@
 
     </p-table>
     <p-paginator class="paginator-row paginator-dropdown" (onPageChange)="onPageChange($event)" [first]="offset"
-        [rows]="limit" [rowsPerPageOptions]="[15, 30, 50]" [totalRecords]=totalRecorde></p-paginator>
+        [rows]="limit" [rowsPerPageOptions]="[10, 20, 50, 100 ]" [totalRecords]=totalRecorde></p-paginator>
     }
     @else {
     <div class="table-view big-card mb-3">
         <div class="card py-3 px-2">
-            
+
             <table class="mt-4 w-full">
                 <tr class="grid mt-2 gap justify-content-between">
                     <td class="col-9"><p-skeleton
@@ -202,7 +197,7 @@
 
 
 @if(addMessenger){
-<p-sidebar [(visible)]="addMessenger" position="right" styleClass="w-6">
-    <app-add-push-message></app-add-push-message>
+<p-sidebar class="p-0 pt-1 pb-1" [(visible)]="addMessenger" [fullScreen]="true">
+    <app-add-push-message (closeform)="closeSideBar($event)"></app-add-push-message>
 </p-sidebar>
 }

@@ -71,15 +71,70 @@ export class AnalyticsService {
     return this._dataService.get(url);
   }
 
-  getTransactionsReport() {
-    const url = `${environment.basePath}educator/transactions?product_ids=008da9dbbaf348c4816cd5ef697c53ba&product_ids=ec26884c735e44a38742059392b12f5c`;
+  // getTransactionsReport(payload : any) {
+  //   const url = `${environment.basePath}educator/transactions?`;
+
+  //   if (payload.start_date && payload.end_date) {
+  //     url += `&start_date=${payload.start_date}&end_date=${payload.end_date}`;
+  //   }
+  //   if(payload.status){
+  //     url += `&status=${payload.status}`;
+  //   }
+  //   if(payload.product_type){
+  //     url += `&product_type=${payload.product_type}`;
+  //   }
+  //   if(payload.product_ids){
+  //     url += `&product_id=${payload.product_ids}`;
+  //   }
+
+  //   return this._dataService.get(url);
+  // }
+
+  getTransactionsReport(payload: any) {
+    let url = `${environment.basePath}educator/transactions?`;  // Changed const to let
+
+    if (payload.start_date && payload.end_date) {
+      url += `&start_date=${payload.start_date}&end_date=${payload.end_date}`;
+    }
+    if (payload.status) {
+      url += `&status=${payload.status}`;
+    }
+   
+    if (payload.product_ids) {
+      url += `&product_ids=${payload.product_ids}`;
+    }
+
     return this._dataService.get(url);
-  }
+}
+
 
   // Get Digital Products 
   getDigitalProductOverview(){
     const url = `${environment.basePath}digital-product/overviews/analytics`;
     return this._dataService.get(url)
   }
+
+  getDigitalProductRevenueReport(payload: any) {
+    let url = `${environment.basePath}digital-product/revenue/analytics?filter_type=${payload.filter_type}`;
+    if (payload.fromDate && payload.toDate) {
+      url += `&start_date=${payload.fromDate}&end_date=${payload.toDate}`;
+    }
+    return this._dataService.get(url);
+  }
+
+  getDigitalProductTransactionData(payload: any) {
+    let url = `${environment.basePath}digital-product/transaction/list?`;
+    if (payload.start_date && payload.end_date) {
+      url += `&start_date=${payload.start_date}&end_date=${payload.end_date}`;
+    }
+    if(payload.status){
+      url += `&status=${payload.status}`;
+    }
+    if(payload.product_ids){
+      url += `&product_ids=${payload.product_ids}`;
+    }
+    return this._dataService.get(url);
+  }
+
 
 }

@@ -25,6 +25,7 @@ export type ChartOptions = {
   styleUrl: './line-chart.component.css'
 })
 export class LineChartComponent {
+  @Input() data: any;
 
   chartData: any
   @ViewChild("chart") chart: ChartComponent | undefined;
@@ -36,10 +37,13 @@ export class LineChartComponent {
 
   ngOnInit() {
 
-    this._analyticsService.currentData.subscribe(data => {
-      this.processChartData(data);
-    });
-
+    if (this.data) {
+      this.processChartData(this.data);
+    } else {
+      this._analyticsService.currentData.subscribe(data => {
+        this.processChartData(data);
+      });
+    }
 
   }
 

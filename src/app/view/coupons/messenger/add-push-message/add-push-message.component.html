@@ -1,43 +1,210 @@
-<h4 class="pt-4 pb-4 m-0 font-semibold line-height-sm">Create New Campaign</h4>
+<p-toast></p-toast>
 
-<form [formGroup]="campaignFrom" class="w-full flex flex-wrap">
+<div class="add-courses mt-4 pb-7 w-8 mx-4">
 
-    <div class="grid nested-grid mt-3">
+    <div class="text-left mb-5">
+        <h3 class="m-0 pb-2">Create New Campaign</h3>
+        <p class="m-0 text-color-secondary line-height-3">Create New Campaign subheading</p>
+    </div>
 
-        <div class="col-12 w-full">
-            <div class="grid w-full">
 
-                <div class="col-12 w-full">
-                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Title <span>*</span> </label>
-                    <input class="w-full capitalize" pKeyFilter="num" pInputText formControlName="title" placeholder="Enter push message title" />
+    <form [formGroup]="campaignFrom" class=" flex flex-wrap">
+
+        <div class="grid nested-grid mt-3">
+
+            <div class="col-12 w-full">
+                <div class="grid w-full">
+
+                    <div class="col-12 w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Title
+                            <span>*</span> </label>
+                        <input class="w-full capitalize" pInputText formControlName="title"
+                            placeholder="Enter title" />
+                    </div>
+
+
+                    <div class="col-12 w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Select Device Type<span>*</span> </label>
+                        <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid"
+                            class="text-sm w-full" [required]="true" formControlName="deviceType"
+                            [options]="deviceType" optionValue="id" optionLabel="name"
+                            placeholder="Select Device Type"></p-dropdown>
+                    </div>
+
+
                 </div>
 
-                <div class="col-12 w-full">
-                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Target Audience<span>*</span> </label>
-                    <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
-                            [required]="true" formControlName="targetAudience" [options]="targetAudience"
-                            optionValue="name" optionLabel="name"
-                            placeholder="Select Audience" (onChange)="onTargetAudienceChange($event)" ></p-dropdown>
+
+                <h6 class="pb-2 pt-4">Targeting Audience</h6>
+
+                <div class="grid borderall p-2 border-round-md my-2">
+
+                    <!-- <div class="col-12">
+                        <h6>Targeting Audience</h6>
+                    </div> -->
+
+                    <div class="col-12 w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Target Audience
+                            Type<span>*</span> </label>
+                        <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid"
+                            class="text-sm w-full" [required]="true" formControlName="targetAudience"
+                            [options]="targetAudienceType" optionValue="id" optionLabel="name"
+                            placeholder="Select Audience" (onChange)="onTargetAudienceChange($event)"></p-dropdown>
+                    </div>
+
+                    <div class="col-12 w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Target Product </label>
+                        <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid"
+                            class="text-sm w-full" [required]="true" formControlName="targetAudienceProduct"
+                            [options]="targetAuidenseItemDataList" optionValue="id" optionLabel="title"
+                            placeholder="Select Target Product"></p-dropdown>
+                    </div>
+
                 </div>
 
 
-                <div class="col-12 w-full">
-                    <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Valid To </label>
-                    <p-calendar formControlName="valid_to" />
+                <h6 class='pb-2 pt-4'> Targeting Screen </h6>
+
+                <div class="grid borderall p-2 border-round-md my-2 ">
+
+                    <!-- <div class="col-12">
+                        <h6> Targeting Screen </h6>
+                    </div> -->
+
+                    <div class="col-12 w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Target Screen
+                            Type<span>*</span> </label>
+                        <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid"
+                            class="text-sm w-full" [required]="true" formControlName="targetScreenType"
+                            [options]="targetPageType" optionValue="id" optionLabel="name" placeholder="Select Audience"
+                            (onChange)="onTargetPageChange($event)"></p-dropdown>
+                    </div>
+
+                    <div class="col-12 w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Target Screen</label>
+                        <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid"
+                            class="text-sm w-full" [required]="true" formControlName="targetScreenPoint"
+                            [options]="targetPageProductDataList" optionValue="id" optionLabel="title"
+                            placeholder="Select Target Product"></p-dropdown>
+                    </div>
+
                 </div>
 
-                
+
+                <h6 class="pb-2 pt-4">Notification Builder</h6>
+
+                <div class="grid borderall p-2 border-round-md my-2 ">
+
+                    <!-- <div class="col-12">
+                        <h6>Notification Builder</h6>
+                    </div> -->
+
+                    <div class="col-12 w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block"> Notification Title <span>*</span> </label>
+                        <input class="w-full capitalize" pInputText formControlName="notificationtitle"
+                            placeholder="Enter notification title" />
+                    </div>
+
+                    <div class="col-12 w-full">
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Message <span>*</span> </label>
+                        <textarea rows="5" class="w-full" pTextarea formControlName="message"></textarea>
+                    </div>
+
+                    <div class="col-12">
+
+                        <div class="border-solid border-round-lg main-border-color border-2 p-4 flex flex-column flex-wrap align-items-center justify-content-center user-image relative">
+
+                            <img width="100" height="100"
+                                [src]="selectedFileObjectUrl ? selectedFileObjectUrl : '../../../../assets/images/icon/Image.svg'"
+                                alt="Image Preview"
+                                [ngClass]="selectedFileObjectUrl ? 'w-full h-full' : 'w-4rem h-4rem'" />
+                            @if(selectedFileObjectUrl){
+                            <i class="pi pi-times profile-remove-icon" (click)="profileImageRemove()"
+                                style="font-size: 1rem"></i>
+                            }
+
+                            @if(!selectedFileObjectUrl){
+                            <span class="text-xs text-color-secondary mt-3"> Max file size is 200 MB </span>
+                            }
+
+                            <span class="flex flex-wrap align-items-center justify-content-center mt-2 mb-1">
+                                @if(!selectedFileObjectUrl){
+                                <img class="h-1rem w-1rem" src="../../../../assets/images/icon/upload-icon.svg">
+                                }
+                                <p-fileUpload #fileUpload [showUploadButton]="true" mode="basic"
+                                    class="bg-none text-base text-700 border-0 z-2 required-upload profile-message-remove"
+                                    chooseLabel="Upload Image*" name="demo[]"
+                                    url="https://www.primefaces.org/cdn/api/upload.php" accept=".png, .jpg"
+                                    [maxFileSize]="maxFileSizeLimit" (onSelect)="onFileSelect($event)"></p-fileUpload>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <h6 class="pb-2 pt-4">When Scheduled</h6>
+
+                <div class="grid borderall p-2 border-round-md my-2 ">
+
+                    <div class="col-6">
+                        <button pButton pRipple label="Now" class="w-full px-5 mr-3 text-sm"
+                            [ngClass]="{'primary-button': activeButton === 'now', 'primary-border-button': activeButton !== 'now'}"
+                            (click)="setActiveButton('now')">
+                        </button>
+                    </div>
+
+                    <div class="col-6">
+                        <button pButton pRipple label="Scheduled" class="w-full px-5 mr-3 text-sm"
+                            [ngClass]="{'primary-button': activeButton === 'scheduled', 'primary-border-button': activeButton !== 'scheduled'}"
+                            (click)="setActiveButton('scheduled')">
+                        </button>
+                    </div>
+
+                    @if(scheduledTime){
+                    <div class="col-12">
+                        <!-- <p-datepicker inputId="calendar-12h" formControlName="scheduleddate" [showTime]="true" [hourFormat]="12" /> -->
+                        <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Send on </label>
+                        <p-calendar type="date" inputId="calendar-12h" formControlName="scheduleddate" [showTime]="true" placeholder="DD/MM/YYYY - HH:MM"
+                            hourFormat="12">
+                        </p-calendar>
+                    </div>
+                    }
+
+                </div>
+
 
             </div>
+
+
+
         </div>
 
+        <!-- <div
+            class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
+            <button pButton pRipple label="Cancel" (click)="closeSideBar()"
+                class="primary-border-button px-5 mr-3 text-sm"></button>
+            <button type="submit" pButton pRipple label="Add"  class="primary-button px-5 text-sm"></button>
+        </div> -->
+    </form>
+
+</div>
 
 
-    </div>
 
-    <div class="assign-fix-buttons bg-white py-3 px-5 fixed flex flex-wrap aign-items-center justify-content-end mt-5">
-        <button pButton pRipple label="Cancel" (click)="closeSideBar()"
+
+<!-- Navigation Buttons -->
+<div class="w-98 border-top-1 border-color-main bg-white fixed bottom-0 grid m-0-a">
+
+
+    <div class="col-6">
+        <button type="button" pButton pRipple (click)="back()" label="Back"
             class="primary-border-button px-5 mr-3 text-sm"></button>
-        <button type="submit" pButton pRipple label="Add" class="primary-button px-5 text-sm"></button>
     </div>
-</form>
+    <div class="col-6 flex justify-content-end">
+        <button type="button" pButton pRipple (click)="submit()" label="Submit" class="secondary-button px-6 "></button>
+    </div>
+
+</div>

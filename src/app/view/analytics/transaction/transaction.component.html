@@ -1,1 +1,140 @@
-<p>transaction works!</p>
+<div class="grid client-dashborad-header mb-4 align-items-center">
+    <div class="col-12">
+        <h4 class="subheading-color">Transactions Record</h4>
+        <p class="m-0 mt-2">All transactions data. </p>
+    </div>
+</div>
+
+<form [formGroup]="filterForm">
+
+    <div class="grid py-3">
+        <!-- <div class="col-2">
+
+            <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
+                [required]="true" formControlName="selectProductType" [options]="productType" optionValue="id"
+                optionLabel="name" placeholder="Select Product" (onChange)="onProductTypeSelect($event)"></p-dropdown>
+
+        </div> -->
+
+        <div class="col-3">
+
+            <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
+                [required]="true" formControlName="selectProduct" [options]="productDataList" optionValue="id"
+                optionLabel="title" placeholder="Select Product"></p-dropdown>
+
+        </div>
+
+        <div class="col-3">
+            <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
+                [required]="true" formControlName="status" [options]="statusValue" optionValue="id" optionLabel="name"
+                placeholder="Select Status"></p-dropdown>
+        </div>
+
+        <!-- <div class="col-2">
+            <p-dropdown class="capitalize" [filter]="true" filterBy="name" id="officeid" class="text-sm w-full"
+                [required]="true" formControlName="channel" [options]="channelType" optionValue="id" optionLabel="name"
+                placeholder="Select Channel"></p-dropdown>
+        </div> -->
+
+        <div class="col-3">
+            <!-- <label class="w-full mb-1 text-sm font-medium line-height-exsm inline-block">Date</label> -->
+
+            <p-calendar
+                formControlName="date" selectionMode="range" placeholder="Start Date - End Date" [readonlyInput]="true"
+                inputId="range" [numberOfMonths]="2" [showIcon]="true" [maxDate]="maxDate" [defaultDate]="prevMonth"
+                [showButtonBar]="true">
+            </p-calendar>
+
+        </div>
+
+        <div class="col-3">
+            <button type="button" (click)="applyFilter()" pButton pRipple label="Apply"
+                class="secondary-button px-6 "></button>
+        </div>
+
+    </div>
+
+</form>
+
+
+<p-table [rows]="10" [showLoader]="true" [responsive]="true" [scrollable]="true" scrollHeight="37.938rem"
+    selectionMode="single" class="client-data-table" [value]="transctionListData">
+
+    <ng-template pTemplate="header" class="p-4">
+
+        <tr class="w-full flex flex-wrap">
+            <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Payment
+                Date</th>
+            <th style="width:10%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Amount
+            </th>
+            <th style="width:30%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">User
+            </th>
+            <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">Product
+                Name</th>
+            <th style="width:20%;word-break:break-all;" class="pl-4 pt-3 border-none primary-color">
+                Settlement Status</th>
+        </tr>
+
+    </ng-template>
+
+    <ng-template pTemplate="body" let-data>
+        <tr class="w-full flex flex-wrap">
+            <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
+                {{data.pay_date | date:'yyyy-MM-dd HH:mm:ss'}}
+            </td>
+            <td style="width: 10%;word-break:break-all;" class="pl-4 capitalize">
+                ₹ {{data.amount}}
+            </td>
+            <td style="width: 30%;word-break:break-all;" class="pl-4 ">
+                <div class="flex">
+                    <p-avatar label="{{data.student__name | uppercase | slice:0:1}}" class="uppercase" styleClass="mr-2"
+                        size="large" [style]="{ 'background-color': '#ece9fc', color: '#2a1261' }" shape="circle" />
+                    <div>
+                        <div class="capitalize">
+                            {{data.student__name}}
+                        </div>
+                        {{data.student__email}}
+                    </div>
+                </div>
+                <!-- <p>{{data.student__email}}</p> -->
+            </td>
+            <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
+                {{data.product__title}}
+            </td>
+            <td style="width: 20%;word-break:break-all;" class="pl-4 capitalize">
+
+
+                @if(data.payment_status === "completed"){
+                <p-tag severity="success" value="{{data.payment_status}}" />
+                }
+
+                @if(data.payment_status === "offline"){
+                <p-tag severity="info" value="{{data.payment_status}}" />
+                }
+
+                @if(data.payment_status === "pending"){
+                <p-tag severity="warning" value="{{data.payment_status}}" />
+                }
+
+                @if(data.payment_status === "failed"){
+                <p-tag severity="danger" value="{{data.payment_status}}" />
+                }
+
+
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <!-- <tr>
+            <td colspan="5">No customers found.</td>
+        </tr> -->
+        <div class="flex align-items-center justify-content-center flex-column h-full w-full h-30rem">
+            <img src="../../../assets/images/icon/no-data.svg">
+            <p class="text-primary-purple text-xl font-semibold mt-6 mb-1"> No Product Transactions.</p>
+            <p class="text-primary-purple text-base font-normal mt-2"> There is no product
+                transactions to show you right now. </p>
+        </div>
+    </ng-template>
+
+</p-table>

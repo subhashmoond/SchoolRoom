@@ -13,75 +13,100 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AddPushMessageComponent } from './add-push-message/add-push-message.component';
+import { MarketingService } from '../../../core/services/marketing.service';
+import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-messenger',
   standalone: true,
-  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule, 
-    RippleModule, SkeletonModule, ToastModule, AddPushMessageComponent ],
-  providers : [MessageService],
+  imports: [TableModule, InputTextModule, ToolbarModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule, CardModule,
+    RippleModule, SkeletonModule, ToastModule, AddPushMessageComponent, DatePipe, FormsModule],
+  providers: [MessageService],
   templateUrl: './messenger.component.html',
   styleUrl: './messenger.component.css'
 })
 export class MessengerComponent {
 
-  offset = 0;
-    totalRecorde = 100;
-    limit = 15;
-    addMessenger : boolean = false;
-    // openDropdownId: number | null = null;
-    // editItemData : any;
-    isLoader : boolean = false;
-  
-    messengerList: any = [];
-  
-    constructor(private renderer: Renderer2, private _router: Router, private _messageService : MessageService) {
+  limit = 10;
+  offset: number = 0;
+  totalRecorde!: number;
+  currentPage: number = 1;
+
+  addMessenger: boolean = false;
+  // openDropdownId: number | null = null;
+  // editItemData : any;
+  isLoader: boolean = false;
+
+  messengerList: any = [];
+  typeFilter = "All";
+
+  notificationType = [
+    { name: "All" },
+    { name: "Sent" },
+    { name: "Secheduled" }
+  ]
+
+
+  constructor(private renderer: Renderer2, private _router: Router, private _messageService: MessageService, private _marketingService: MarketingService) {
+  }
+
+  ngOnInit() {
+
+
+    this.getMessengerList();
+
+
+  }
+
+  getMessengerList() {
+
+    const param = {
+      "type": this.typeFilter,
+      "page_size": this.limit,
+      "current_page": this.currentPage,
     }
-  
-    ngOnInit() {
-      this.getCouponData();
+
+    console.log(param, " Get Messager Data Lists ")
+
+    this._marketingService.getCampaignDataList(param).subscribe(res => {
+      this.messengerList = res.data;
+
+      this.totalRecorde = res.total_record;
+      this.currentPage = res.current_page;
+    })
+  }
+
+  onSelectNotificationType(event: any) {
+    this.currentPage = 1
+    this.getMessengerList();
+    
+  }
+
+  onPageChange(event: any) {
+    this.offset = event.first;
+    this.limit = event.rows;
+    this.currentPage = event.page + 1;
+    this.getMessengerList();
+
+    console.log(this.currentPage, "after page change data")
+  }
+
+
+  openSidebar() {
+    this.addMessenger = true;
+  }
+
+  closeSideBar(event: any) {
+    this.currentPage = 1
+    this.addMessenger = false;
+    if (event == "done") {
+      this._messageService.add({ severity: 'success', detail: "Campaign created successfully!" });
     }
-  
-  
-    addProduct(){}
-  
-    deleteCoupon(id : any){
-      const payload = {
-        "promo_code": id
-      }
-  
-      // this._couponService.deleteCoupons(payload).subscribe((res:any) => {
-      //   if(res.status === true){
-      //     this._messageService.add({ severity: 'success', detail: res.message });
-      //     this.getCouponData()
-      //   }else{
-      //     this._messageService.add({ severity: 'error', detail: res.message });
-      //   }
-      // })
-  
-    }
-  
-    getCouponData() {
-      this.isLoader = true;
-      // this._couponService.getCouponsList().subscribe(res => {
-      //   this.isLoader = false;
-      //   this.couponstList = res.data;
-      // })
-    }
-  
-    openSidebar() {
-      this.addMessenger = true;
-    }
-  
-    onPageChange(event: any) {
-    }
-  
-    viewDetails() {
-      this._router.navigate(['/user/student-view']);
-    }
-  
-    closeSideBar(){
-      this.addMessenger = false;
-    }
+    this.getMessengerList();
+
+  }
+
+
 
 }

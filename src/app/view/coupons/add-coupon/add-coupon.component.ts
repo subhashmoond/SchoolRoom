@@ -17,12 +17,13 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-coupon',
   standalone: true,
   imports: [TableModule, ToastModule, InputTextModule, ToolbarModule, KeyFilterModule, ButtonModule, SidebarModule, TranslateModule, PaginatorModule,
-    CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule, CheckboxModule,
+    CardModule, RippleModule, SkeletonModule, ReactiveFormsModule, CheckboxModule, CalendarModule, CheckboxModule, CommonModule
   ],
   providers: [MessageService],
   templateUrl: './add-coupon.component.html',
@@ -33,6 +34,10 @@ export class AddCouponComponent {
   createCouponsForm!: FormGroup;
   @Output() closeSideBars = new EventEmitter<any>();
   @Input() editItemData: any;
+
+  isAdvance : boolean = false;
+
+  selectedOption: number | null = null;
 
   constructor(private _fb: FormBuilder, private _couponService: CouponsService, private _messageService: MessageService) { }
 
@@ -55,15 +60,23 @@ export class AddCouponComponent {
 
   }
 
+  selectOption(option: number) {
+    this.selectedOption = option;
+  }
+
+  advanceOption(){
+    this.isAdvance = !this.isAdvance;
+  }
+
   createCoupon() {
 
     const selectedDate = new Date(this.createCouponsForm.get('valid_to')?.value);
-const dateofBirth = selectedDate.toISOString().split('T')[0]; // Extract YYYY-MM-DD format
+    const dateofBirth = selectedDate.toISOString().split('T')[0]; // Extract YYYY-MM-DD format
 
-    
+
     const payload = {
-      "course":["4e7db7bedff542e5bcb10a4eb25961b4"],
-      "suggest_during_checkout":true,
+      "course": ["4e7db7bedff542e5bcb10a4eb25961b4"],
+      "suggest_during_checkout": true,
       "valid_to": dateofBirth,
       "discount": this.createCouponsForm.get('discount')?.value
     };

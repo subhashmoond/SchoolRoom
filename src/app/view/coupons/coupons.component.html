@@ -229,8 +229,9 @@
 
 
 @if(addStudentSideBar){
-<p-sidebar [(visible)]="addStudentSideBar" position="right" styleClass="w-30rem">
-    <!-- <app-add-student (sideBars)="closeSideBar()"></app-add-student> -->
-    <app-add-coupon [editItemData]="editItemData" (closeSideBars)="closeSideBar()"></app-add-coupon>
-</p-sidebar>
+
+    <p-sidebar class="p-0 pt-1 pb-1" [(visible)]="addStudentSideBar" [fullScreen]="true">
+        <app-add-coupon [editItemData]="editItemData" (closeSideBars)="closeSideBar()"></app-add-coupon>
+    </p-sidebar>
+
 }

@@ -30,4 +30,22 @@ export class MarketingService {
     return this._dataService.post(url, payload)
   }
 
+
+  // Create campaign API 
+
+  createCampaign(payload : any){
+    const url = `${environment.basePath}management/create-campaign/`;
+    return this._dataService.post(url, payload)
+  }
+
+  getCampaignDataList(param : any){
+    let url = `${environment.basePath}management/notification/campaign-list/?page_size=${param.page_size}&page=${param.current_page}`;
+
+    if (param.type) {
+      url += `&type=All=${param.type}`;
+    }
+
+    return this._dataService.get(url);
+  }
+
 }
